@@ -1,0 +1,18 @@
+Added Component: Designator=D1(SOP250P670X290-4N)
+Added Component: Designator=FR1(RAXIAL-10mm-0.8mm)
+Added Component: Designator=IC1(SOIC127P600X175-7N)
+Added Component: Designator=J1(Inlet, IEC - Plug)
+Added Component: Designator=T1(WE7508110151)
+Added Pin To Net: NetName=NetD1_1 Pin=D1-1
+Added Pin To Net: NetName=NetD1_1 Pin=FR1-2
+Added Net: Name=NetD1_1
+Added Pin To Net: NetName=NetD1_2 Pin=D1-2
+Added Pin To Net: NetName=NetD1_2 Pin=J1-2
+Added Net: Name=NetD1_2
+Added Pin To Net: NetName=NetFR1_1 Pin=FR1-1
+Added Pin To Net: NetName=NetFR1_1 Pin=J1-1
+Added Net: Name=NetFR1_1
+Added Class: Name=Docking Station
+Added Class: Name=U_Power Supply
+Added Room: Name=Docking Station
+Added Room: Name=U_Power Supply
