@@ -1,0 +1,730 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : sans-serif;
+			color : white;
+			background-color : #21489e;
+			padding: 0.3em;
+		}
+		body {
+			font-family : verdana;
+		}
+		td, th {
+			padding: 0.5em;
+			text-align : center;
+			width : 18%;
+		}
+		th {
+			background-color : #A6CAF0;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+		}
+		
+		.DRC_summary_header {							
+			padding-bottom : 0.1em;
+			border : 0px solid black;							
+			width: 100%;
+                        align: right;
+                        
+		}
+
+		.DRC_summary_header_col1, 
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3
+		{
+			color : black;
+			font-size:150%;
+                        padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2: 0em;
+			border : 0px solid black;
+			width : auto;
+			vertical-align: top;
+			font-weight: bold;				
+		}
+		
+		.DRC_summary_header_col1 	
+		{		                       
+			text-align: right;
+                        width: auto;	
+		}
+
+		.DRC_summary_header_col2 	
+		{		
+			text-align: center;	
+		}
+
+		.DRC_summary_header_col3 	
+		{		
+			text-align: left;	
+		}
+
+
+		
+		.header_holder
+		{
+		Width = 100%;
+		border = 0px solid green;
+		padding = 0;
+		}
+		
+		
+		
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+                {
+			left:0;
+			top:0;
+			padding-top : 0.1em;			
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top
+
+		}
+		.front_matter {	
+			
+			margin-top: 5px;
+ 			margin-left: 0px;					 			
+ 			horizontal-align: left;
+		}
+				
+		
+		.front_matter_column1 {
+			width : 10em;	
+			text-align  : right;
+			padding-right:0.1em;
+			
+		}
+		
+		.front_matter_column2 {
+                        width: 0.1em;
+			align: center;
+			text-align : center;
+			margin-right  : 0.1em;	
+			margin-left   : 0.1em;
+		}
+		.front_matter_column3 {
+			width         : auto;  
+			text-align    : left;	
+			margin-right  : 0.5em;				
+		}
+		
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : right;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #EEEEE0 
+		}
+		tr.onmouseout_even { 
+			background-color : #F3F3E3   
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : lightYellow
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #008000 
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD14\Templates\AD-rgb_logo_223x64.gif
+		"><a href="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports" class="customize"><acronym title="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports">customize</acronym></a><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td Style="width:70%">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">28/05/2015</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">16:40:35</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">00:00:01</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3"><a href="file:///C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc" class="file"><acronym title="C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc">C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td Style="Width:30%">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings</td>
+<td class="DRC_summary_header_col2">:</td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations</td>
+<td class="DRC_summary_header_col2">:</td>
+<td class="DRC_summary_header_col3" style="color : red">105</td></tr>
+</table>
+</td>
+</table>
+<hr><a name="IDASA0RC"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAEB0RC">Room U_Power Supply (Bounding Region = (35.4mm, 25.4mm, 125.4mm, 75.4mm) (InComponentClass('U_Power Supply'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAKB0RC">Room Docking Station (Bounding Region = (22.4mm, 35.4mm, 45.4mm, 65.4mm) (InComponentClass('Docking Station'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAQB0RC">Rule</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAWB0RC">Net Antennae (Tolerance=0mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDA2B0RC">Silk primitive without silk layer</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDACC0RC">Silk to Silk (Clearance=0.254mm) (All),(All)</a></td>
+<td class="column2">18</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAKH0RC">Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)</a></td>
+<td class="column2">37</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDADC1RC">Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAJC1RC">Hole To Hole Clearance (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAPC1RC">Hole Size Constraint (Min=0.025mm) (Max=3mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAVC1RC">Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDA1C1RC">Width Constraint (Min=0.254mm) (Max=0.254mm) (Preferred=0.254mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDABD1RC">Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAHD1RC">Clearance Constraint (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAND1RC">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">50</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDACV1RC">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">105</td>
+</tr>
+</table><br><hr><a name="IDACC0RC"><table>
+<tr>
+<th style="text-align : left" colspan="2" class="rule">Silk to Silk (Clearance=0.254mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3940mil|Location2.X=4059.968mil|Location1.Y=1775mil|Location2.Y=1854.981mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3940mil|Location2.X=4059.968mil|Location1.Y=1775mil|Location2.Y=1854.981mil|Absolute=True">Text "R9" (74.93mm,19.939mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3829.646mil|Location2.X=4233.346mil|Location1.Y=1782.402mil|Location2.Y=2186.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3829.646mil|Location2.X=4233.346mil|Location1.Y=1782.402mil|Location2.Y=2186.102mil|Absolute=True">Arc (77mm,25mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2585.748mil|Location2.X=2735.706mil|Location1.Y=1767.811mil|Location2.Y=1847.792mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2585.748mil|Location2.X=2735.706mil|Location1.Y=1767.811mil|Location2.Y=1847.792mil|Absolute=True">Text "IC1" (40.532mm,19.756mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2569.803mil|Location2.X=2973.504mil|Location1.Y=1782.402mil|Location2.Y=2186.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2569.803mil|Location2.X=2973.504mil|Location1.Y=1782.402mil|Location2.Y=2186.102mil|Absolute=True">Arc (45mm,25mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2137mil|Location2.X=2236.974mil|Location1.Y=2206mil|Location2.Y=2285.981mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2137mil|Location2.X=2236.974mil|Location1.Y=2206mil|Location2.Y=2285.981mil|Absolute=True">Text "C1" (29.134mm,30.886mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1846.457mil|Location2.X=2279.528mil|Location1.Y=2200.787mil|Location2.Y=2633.858mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1846.457mil|Location2.X=2279.528mil|Location1.Y=2200.787mil|Location2.Y=2633.858mil|Absolute=True">Arc (27mm,36mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.78mil|Location2.X=2721.747mil|Location1.Y=1499.74mil|Location2.Y=1579.721mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.78mil|Location2.X=2721.747mil|Location1.Y=1499.74mil|Location2.Y=1579.721mil|Absolute=True">Text "R8" (40.939mm,12.947mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2665.354mil|Location2.X=2799.213mil|Location1.Y=1527.559mil|Location2.Y=1535.433mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2665.354mil|Location2.X=2799.213mil|Location1.Y=1527.559mil|Location2.Y=1535.433mil|Absolute=True">Track (42.4mm,13.5mm)(45.6mm,13.5mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2798.26mil|Location2.X=2918.228mil|Location1.Y=1499.26mil|Location2.Y=1579.24mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2798.26mil|Location2.X=2918.228mil|Location1.Y=1499.26mil|Location2.Y=1579.24mil|Absolute=True">Text "R7" (45.93mm,12.935mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2665.354mil|Location2.X=2799.213mil|Location1.Y=1527.559mil|Location2.Y=1535.433mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2665.354mil|Location2.X=2799.213mil|Location1.Y=1527.559mil|Location2.Y=1535.433mil|Absolute=True">Track (42.4mm,13.5mm)(45.6mm,13.5mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2798.26mil|Location2.X=2918.228mil|Location1.Y=1499.26mil|Location2.Y=1579.24mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2798.26mil|Location2.X=2918.228mil|Location1.Y=1499.26mil|Location2.Y=1579.24mil|Absolute=True">Text "R7" (45.93mm,12.935mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2791.339mil|Location2.X=2799.213mil|Location1.Y=1527.559mil|Location2.Y=1732.284mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2791.339mil|Location2.X=2799.213mil|Location1.Y=1527.559mil|Location2.Y=1732.284mil|Absolute=True">Track (45.6mm,13.5mm)(45.6mm,18.5mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.78mil|Location2.X=2721.747mil|Location1.Y=1499.74mil|Location2.Y=1579.721mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.78mil|Location2.X=2721.747mil|Location1.Y=1499.74mil|Location2.Y=1579.721mil|Absolute=True">Text "R8" (40.939mm,12.947mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2665.354mil|Location2.X=2673.228mil|Location1.Y=1527.559mil|Location2.Y=1732.284mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2665.354mil|Location2.X=2673.228mil|Location1.Y=1527.559mil|Location2.Y=1732.284mil|Absolute=True">Track (42.4mm,13.5mm)(42.4mm,18.5mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.047mil|Location2.X=2721.015mil|Location1.Y=1342.331mil|Location2.Y=1422.311mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.047mil|Location2.X=2721.015mil|Location1.Y=1342.331mil|Location2.Y=1422.311mil|Absolute=True">Text "C5" (40.921mm,8.949mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2673.228mil|Location2.X=2712.598mil|Location1.Y=1397.638mil|Location2.Y=1405.512mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2673.228mil|Location2.X=2712.598mil|Location1.Y=1397.638mil|Location2.Y=1405.512mil|Absolute=True">Track (42.6mm,10.2mm)(43.4mm,10.2mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2798.26mil|Location2.X=2918.228mil|Location1.Y=1341.63mil|Location2.Y=1421.611mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2798.26mil|Location2.X=2918.228mil|Location1.Y=1341.63mil|Location2.Y=1421.611mil|Absolute=True">Text "R6" (45.93mm,8.931mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2870.079mil|Location2.X=2909.449mil|Location1.Y=1397.638mil|Location2.Y=1405.512mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2870.079mil|Location2.X=2909.449mil|Location1.Y=1397.638mil|Location2.Y=1405.512mil|Absolute=True">Track (47.6mm,10.2mm)(48.4mm,10.2mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2380.89mil|Location2.X=2500.858mil|Location1.Y=1447.74mil|Location2.Y=1527.721mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2380.89mil|Location2.X=2500.858mil|Location1.Y=1447.74mil|Location2.Y=1527.721mil|Absolute=True">Text "C4" (35.329mm,11.627mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2405.512mil|Location2.X=2413.386mil|Location1.Y=1531.496mil|Location2.Y=1570.866mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2405.512mil|Location2.X=2413.386mil|Location1.Y=1531.496mil|Location2.Y=1570.866mil|Absolute=True">Track (35.8mm,13.6mm)(35.8mm,14.4mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2839.15mil|Location2.X=2959.117mil|Location1.Y=2428.669mil|Location2.Y=2508.65mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2839.15mil|Location2.X=2959.117mil|Location1.Y=2428.669mil|Location2.Y=2508.65mil|Absolute=True">Text "D3" (46.968mm,36.542mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.819mil|Location2.X=2988.189mil|Location1.Y=2460.63mil|Location2.Y=2468.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.819mil|Location2.X=2988.189mil|Location1.Y=2460.63mil|Location2.Y=2468.504mil|Absolute=True">Track (49.6mm,37.2mm)(50.4mm,37.2mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2570mil|Location2.X=2689.968mil|Location1.Y=2206mil|Location2.Y=2285.981mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2570mil|Location2.X=2689.968mil|Location1.Y=2206mil|Location2.Y=2285.981mil|Absolute=True">Text "C2" (40.132mm,30.886mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2598.425mil|Location2.X=2787.402mil|Location1.Y=2255.905mil|Location2.Y=2263.78mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2598.425mil|Location2.X=2787.402mil|Location1.Y=2255.905mil|Location2.Y=2263.78mil|Absolute=True">Track (40.7mm,32mm)(45.3mm,32mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2570mil|Location2.X=2689.968mil|Location1.Y=2206mil|Location2.Y=2285.981mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2570mil|Location2.X=2689.968mil|Location1.Y=2206mil|Location2.Y=2285.981mil|Absolute=True">Text "C2" (40.132mm,30.886mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2598.425mil|Location2.X=2606.299mil|Location1.Y=2255.905mil|Location2.Y=2284.449mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2598.425mil|Location2.X=2606.299mil|Location1.Y=2255.905mil|Location2.Y=2284.449mil|Absolute=True">Track (40.7mm,32mm)(40.7mm,32.525mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2572.15mil|Location2.X=2692.117mil|Location1.Y=2447.669mil|Location2.Y=2527.65mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2572.15mil|Location2.X=2692.117mil|Location1.Y=2447.669mil|Location2.Y=2527.65mil|Absolute=True">Text "D2" (40.187mm,37.025mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2673.228mil|Location2.X=2712.599mil|Location1.Y=2460.63mil|Location2.Y=2468.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2673.228mil|Location2.X=2712.599mil|Location1.Y=2460.63mil|Location2.Y=2468.504mil|Absolute=True">Track (42.6mm,37.2mm)(43.4mm,37.2mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2572.15mil|Location2.X=2692.117mil|Location1.Y=2447.669mil|Location2.Y=2527.65mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2572.15mil|Location2.X=2692.117mil|Location1.Y=2447.669mil|Location2.Y=2527.65mil|Absolute=True">Text "D2" (40.187mm,37.025mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2673.228mil|Location2.X=2712.599mil|Location1.Y=2523.622mil|Location2.Y=2531.496mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2673.228mil|Location2.X=2712.599mil|Location1.Y=2523.622mil|Location2.Y=2531.496mil|Absolute=True">Track (42.6mm,38.8mm)(43.4mm,38.8mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.37mil|Location2.X=2721.338mil|Location1.Y=2562mil|Location2.Y=2641.981mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.37mil|Location2.X=2721.338mil|Location1.Y=2562mil|Location2.Y=2641.981mil|Absolute=True">Text "C3" (40.929mm,39.929mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2673.228mil|Location2.X=2712.599mil|Location1.Y=2641.732mil|Location2.Y=2649.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2673.228mil|Location2.X=2712.599mil|Location1.Y=2641.732mil|Location2.Y=2649.606mil|Absolute=True">Track (42.6mm,41.8mm)(43.4mm,41.8mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.37mil|Location2.X=2721.338mil|Location1.Y=2562mil|Location2.Y=2641.981mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.37mil|Location2.X=2721.338mil|Location1.Y=2562mil|Location2.Y=2641.981mil|Absolute=True">Text "C3" (40.929mm,39.929mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2673.228mil|Location2.X=2712.599mil|Location1.Y=2578.74mil|Location2.Y=2586.614mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2673.228mil|Location2.X=2712.599mil|Location1.Y=2578.74mil|Location2.Y=2586.614mil|Absolute=True">Track (42.6mm,40.2mm)(43.4mm,40.2mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2450.26mil|Location2.X=2570.228mil|Location1.Y=1662.48mil|Location2.Y=1742.461mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2450.26mil|Location2.X=2570.228mil|Location1.Y=1662.48mil|Location2.Y=1742.461mil|Absolute=True">Text "R5" (37.091mm,17.081mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2332mil|Location2.X=2451.968mil|Location1.Y=1662.26mil|Location2.Y=1742.24mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2332mil|Location2.X=2451.968mil|Location1.Y=1662.26mil|Location2.Y=1742.24mil|Absolute=True">Text "R2" (34.087mm,17.075mm)  Top Overlay</acronym></a></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><a name="IDAKH0RC"><table>
+<tr>
+<th style="text-align : left" colspan="2" class="rule">Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3029.465mil|Location2.X=3065.024mil|Location1.Y=1305.055mil|Location2.Y=1344.551mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3029.465mil|Location2.X=3065.024mil|Location1.Y=1305.055mil|Location2.Y=1344.551mil|Absolute=True">Pad D4-2(52mm,8.25mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3070.866mil|Location2.X=3078.74mil|Location1.Y=1318.898mil|Location2.Y=1326.772mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3070.866mil|Location2.X=3078.74mil|Location1.Y=1318.898mil|Location2.Y=1326.772mil|Absolute=True">Arc (52.7mm,8.2mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2846.394mil|Location2.X=2933.134mil|Location1.Y=2295.213mil|Location2.Y=2381.953mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2846.394mil|Location2.X=2933.134mil|Location1.Y=2295.213mil|Location2.Y=2381.953mil|Absolute=True">Pad D3-2(48mm,34mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2842.52mil|Location2.X=2862.205mil|Location1.Y=2276.575mil|Location2.Y=2296.26mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2842.52mil|Location2.X=2862.205mil|Location1.Y=2276.575mil|Location2.Y=2296.26mil|Absolute=True">Arc (47.05mm,32.675mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3712.535mil|Location2.X=3799.276mil|Location1.Y=2019.622mil|Location2.Y=2106.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3712.535mil|Location2.X=3799.276mil|Location1.Y=2019.622mil|Location2.Y=2106.362mil|Absolute=True">Pad D5-2(70mm,27mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3693.898mil|Location2.X=3713.583mil|Location1.Y=2090.551mil|Location2.Y=2110.236mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3693.898mil|Location2.X=3713.583mil|Location1.Y=2090.551mil|Location2.Y=2110.236mil|Absolute=True">Arc (68.675mm,27.95mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2055.118mil|Location2.X=2064.961mil|Location1.Y=1880.906mil|Location2.Y=1910.433mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2055.118mil|Location2.X=2064.961mil|Location1.Y=1880.906mil|Location2.Y=1910.433mil|Absolute=True">Track (26.925mm,22.5mm)(26.925mm,23mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2021.591mil|Location2.X=2098.488mil|Location1.Y=1914.307mil|Location2.Y=1955.772mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2021.591mil|Location2.X=2098.488mil|Location1.Y=1914.307mil|Location2.Y=1955.772mil|Absolute=True">Pad D1-3(26.925mm,23.75mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2798.26mil|Location2.X=2918.228mil|Location1.Y=1499.26mil|Location2.Y=1579.24mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2798.26mil|Location2.X=2918.228mil|Location1.Y=1499.26mil|Location2.Y=1579.24mil|Absolute=True">Text "R7" (45.93mm,12.935mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.024mil|Location2.X=2872.11mil|Location1.Y=1539.11mil|Location2.Y=1570.732mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.024mil|Location2.X=2872.11mil|Location1.Y=1539.11mil|Location2.Y=1570.732mil|Absolute=True">Pad IC1-5(46.725mm,14.095mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.78mil|Location2.X=2721.747mil|Location1.Y=1499.74mil|Location2.Y=1579.721mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.78mil|Location2.X=2721.747mil|Location1.Y=1499.74mil|Location2.Y=1579.721mil|Absolute=True">Text "R8" (40.939mm,12.947mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2592.457mil|Location2.X=2657.543mil|Location1.Y=1539.11mil|Location2.Y=1570.732mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2592.457mil|Location2.X=2657.543mil|Location1.Y=1539.11mil|Location2.Y=1570.732mil|Absolute=True">Pad IC1-4(41.275mm,14.095mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2535.433mil|Location2.X=2594.488mil|Location1.Y=1360.236mil|Location2.Y=1368.11mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2535.433mil|Location2.X=2594.488mil|Location1.Y=1360.236mil|Location2.Y=1368.11mil|Absolute=True">Track (39.1mm,9.25mm)(40.4mm,9.25mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2460.567mil|Location2.X=2531.559mil|Location1.Y=1309.976mil|Location2.Y=1410.496mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2460.567mil|Location2.X=2531.559mil|Location1.Y=1309.976mil|Location2.Y=1410.496mil|Absolute=True">Pad C4-2(38mm,9.15mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2397.638mil|Location2.X=2456.693mil|Location1.Y=1360.236mil|Location2.Y=1368.11mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2397.638mil|Location2.X=2456.693mil|Location1.Y=1360.236mil|Location2.Y=1368.11mil|Absolute=True">Track (35.6mm,9.25mm)(36.9mm,9.25mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2460.567mil|Location2.X=2531.559mil|Location1.Y=1309.976mil|Location2.Y=1410.496mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2460.567mil|Location2.X=2531.559mil|Location1.Y=1309.976mil|Location2.Y=1410.496mil|Absolute=True">Pad C4-2(38mm,9.15mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2429.134mil|Location2.X=2456.693mil|Location1.Y=1183.071mil|Location2.Y=1190.945mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2429.134mil|Location2.X=2456.693mil|Location1.Y=1183.071mil|Location2.Y=1190.945mil|Absolute=True">Track (36.4mm,4.75mm)(36.9mm,4.75mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2460.567mil|Location2.X=2531.559mil|Location1.Y=1140.685mil|Location2.Y=1241.205mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2460.567mil|Location2.X=2531.559mil|Location1.Y=1140.685mil|Location2.Y=1241.205mil|Absolute=True">Pad C4-1(38mm,4.85mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2535.433mil|Location2.X=2562.992mil|Location1.Y=1183.071mil|Location2.Y=1190.945mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2535.433mil|Location2.X=2562.992mil|Location1.Y=1183.071mil|Location2.Y=1190.945mil|Absolute=True">Track (39.1mm,4.75mm)(39.6mm,4.75mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2460.567mil|Location2.X=2531.559mil|Location1.Y=1140.685mil|Location2.Y=1241.205mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2460.567mil|Location2.X=2531.559mil|Location1.Y=1140.685mil|Location2.Y=1241.205mil|Absolute=True">Pad C4-1(38mm,4.85mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2380.89mil|Location2.X=2500.858mil|Location1.Y=1447.74mil|Location2.Y=1527.721mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2380.89mil|Location2.X=2500.858mil|Location1.Y=1447.74mil|Location2.Y=1527.721mil|Absolute=True">Text "C4" (35.329mm,11.627mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2456.63mil|Location2.X=2535.496mil|Location1.Y=1466.473mil|Location2.Y=1523.685mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2456.63mil|Location2.X=2535.496mil|Location1.Y=1466.473mil|Location2.Y=1523.685mil|Absolute=True">Pad R5-2(38mm,12.575mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.047mil|Location2.X=2721.015mil|Location1.Y=1342.331mil|Location2.Y=1422.311mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.047mil|Location2.X=2721.015mil|Location1.Y=1342.331mil|Location2.Y=1422.311mil|Absolute=True">Text "C5" (40.921mm,8.949mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2720.409mil|Location2.X=2777.622mil|Location1.Y=1393.638mil|Location2.Y=1472.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2720.409mil|Location2.X=2777.622mil|Location1.Y=1393.638mil|Location2.Y=1472.504mil|Absolute=True">Pad R8-2(44.425mm,11mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.047mil|Location2.X=2721.015mil|Location1.Y=1342.331mil|Location2.Y=1422.311mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.047mil|Location2.X=2721.015mil|Location1.Y=1342.331mil|Location2.Y=1422.311mil|Absolute=True">Text "C5" (40.921mm,8.949mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2608.205mil|Location2.X=2665.417mil|Location1.Y=1393.638mil|Location2.Y=1472.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2608.205mil|Location2.X=2665.417mil|Location1.Y=1393.638mil|Location2.Y=1472.504mil|Absolute=True">Pad R8-1(41.575mm,11mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2798.26mil|Location2.X=2918.228mil|Location1.Y=1341.63mil|Location2.Y=1421.611mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2798.26mil|Location2.X=2918.228mil|Location1.Y=1341.63mil|Location2.Y=1421.611mil|Absolute=True">Text "R6" (45.93mm,8.931mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2917.26mil|Location2.X=2974.472mil|Location1.Y=1393.638mil|Location2.Y=1472.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2917.26mil|Location2.X=2974.472mil|Location1.Y=1393.638mil|Location2.Y=1472.504mil|Absolute=True">Pad R7-2(49.425mm,11mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2798.26mil|Location2.X=2918.228mil|Location1.Y=1341.63mil|Location2.Y=1421.611mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2798.26mil|Location2.X=2918.228mil|Location1.Y=1341.63mil|Location2.Y=1421.611mil|Absolute=True">Text "R6" (45.93mm,8.931mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2805.055mil|Location2.X=2862.268mil|Location1.Y=1393.638mil|Location2.Y=1472.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2805.055mil|Location2.X=2862.268mil|Location1.Y=1393.638mil|Location2.Y=1472.504mil|Absolute=True">Pad R7-1(46.575mm,11mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3009.843mil|Location2.X=3025.591mil|Location1.Y=1446.85mil|Location2.Y=1454.724mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3009.843mil|Location2.X=3025.591mil|Location1.Y=1446.85mil|Location2.Y=1454.724mil|Absolute=True">Track (51.15mm,11.45mm)(51.35mm,11.45mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3029.465mil|Location2.X=3065.024mil|Location1.Y=1442.85mil|Location2.Y=1482.346mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3029.465mil|Location2.X=3065.024mil|Location1.Y=1442.85mil|Location2.Y=1482.346mil|Absolute=True">Pad D4-1(52mm,11.75mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3068.898mil|Location2.X=3084.646mil|Location1.Y=1446.85mil|Location2.Y=1454.724mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3068.898mil|Location2.X=3084.646mil|Location1.Y=1446.85mil|Location2.Y=1454.724mil|Absolute=True">Track (52.65mm,11.45mm)(52.85mm,11.45mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3029.465mil|Location2.X=3065.024mil|Location1.Y=1442.85mil|Location2.Y=1482.346mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3029.465mil|Location2.X=3065.024mil|Location1.Y=1442.85mil|Location2.Y=1482.346mil|Absolute=True">Pad D4-1(52mm,11.75mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3009.843mil|Location2.X=3025.591mil|Location1.Y=1332.677mil|Location2.Y=1340.551mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3009.843mil|Location2.X=3025.591mil|Location1.Y=1332.677mil|Location2.Y=1340.551mil|Absolute=True">Track (51.15mm,8.55mm)(51.35mm,8.55mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3029.465mil|Location2.X=3065.024mil|Location1.Y=1305.055mil|Location2.Y=1344.551mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3029.465mil|Location2.X=3065.024mil|Location1.Y=1305.055mil|Location2.Y=1344.551mil|Absolute=True">Pad D4-2(52mm,8.25mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3068.898mil|Location2.X=3084.646mil|Location1.Y=1332.677mil|Location2.Y=1340.551mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3068.898mil|Location2.X=3084.646mil|Location1.Y=1332.677mil|Location2.Y=1340.551mil|Absolute=True">Track (52.65mm,8.55mm)(52.85mm,8.55mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3029.465mil|Location2.X=3065.024mil|Location1.Y=1305.055mil|Location2.Y=1344.551mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3029.465mil|Location2.X=3065.024mil|Location1.Y=1305.055mil|Location2.Y=1344.551mil|Absolute=True">Pad D4-2(52mm,8.25mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2380.89mil|Location2.X=2500.858mil|Location1.Y=1447.74mil|Location2.Y=1527.721mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2380.89mil|Location2.X=2500.858mil|Location1.Y=1447.74mil|Location2.Y=1527.721mil|Absolute=True">Text "C4" (35.329mm,11.627mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2338.52mil|Location2.X=2417.386mil|Location1.Y=1466.473mil|Location2.Y=1523.685mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2338.52mil|Location2.X=2417.386mil|Location1.Y=1466.473mil|Location2.Y=1523.685mil|Absolute=True">Pad R2-2(35mm,12.575mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2874.016mil|Location2.X=2881.89mil|Location1.Y=2275.591mil|Location2.Y=2296.26mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2874.016mil|Location2.X=2881.89mil|Location1.Y=2275.591mil|Location2.Y=2296.26mil|Absolute=True">Track (47.7mm,32.5mm)(47.7mm,32.825mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2846.394mil|Location2.X=2933.134mil|Location1.Y=2295.213mil|Location2.Y=2381.953mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2846.394mil|Location2.X=2933.134mil|Location1.Y=2295.213mil|Location2.Y=2381.953mil|Absolute=True">Pad D3-2(48mm,34mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2874.016mil|Location2.X=2881.89mil|Location1.Y=2380.906mil|Location2.Y=2401.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2874.016mil|Location2.X=2881.89mil|Location1.Y=2380.906mil|Location2.Y=2401.575mil|Absolute=True">Track (47.7mm,35.175mm)(47.7mm,35.5mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2846.394mil|Location2.X=2933.134mil|Location1.Y=2295.213mil|Location2.Y=2381.953mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2846.394mil|Location2.X=2933.134mil|Location1.Y=2295.213mil|Location2.Y=2381.953mil|Absolute=True">Pad D3-2(48mm,34mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3055.118mil|Location2.X=3062.992mil|Location1.Y=2275.591mil|Location2.Y=2296.26mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3055.118mil|Location2.X=3062.992mil|Location1.Y=2275.591mil|Location2.Y=2296.26mil|Absolute=True">Track (52.3mm,32.5mm)(52.3mm,32.825mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3003.874mil|Location2.X=3090.614mil|Location1.Y=2295.213mil|Location2.Y=2381.953mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3003.874mil|Location2.X=3090.614mil|Location1.Y=2295.213mil|Location2.Y=2381.953mil|Absolute=True">Pad D3-1(52mm,34mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3055.118mil|Location2.X=3062.992mil|Location1.Y=2380.906mil|Location2.Y=2401.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3055.118mil|Location2.X=3062.992mil|Location1.Y=2380.906mil|Location2.Y=2401.575mil|Absolute=True">Track (52.3mm,35.175mm)(52.3mm,35.5mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3003.874mil|Location2.X=3090.614mil|Location1.Y=2295.213mil|Location2.Y=2381.953mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3003.874mil|Location2.X=3090.614mil|Location1.Y=2295.213mil|Location2.Y=2381.953mil|Absolute=True">Pad D3-1(52mm,34mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3085.854mil|Location2.X=3185.828mil|Location1.Y=2286.902mil|Location2.Y=2366.882mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3085.854mil|Location2.X=3185.828mil|Location1.Y=2286.902mil|Location2.Y=2366.882mil|Absolute=True">Text "T1" (53.235mm,32.941mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3003.874mil|Location2.X=3090.614mil|Location1.Y=2295.213mil|Location2.Y=2381.953mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3003.874mil|Location2.X=3090.614mil|Location1.Y=2295.213mil|Location2.Y=2381.953mil|Absolute=True">Pad D3-1(52mm,34mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2839.15mil|Location2.X=2959.117mil|Location1.Y=2428.669mil|Location2.Y=2508.65mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2839.15mil|Location2.X=2959.117mil|Location1.Y=2428.669mil|Location2.Y=2508.65mil|Absolute=True">Text "D3" (46.968mm,36.542mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2883.795mil|Location2.X=2941.008mil|Location1.Y=2456.63mil|Location2.Y=2535.496mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2883.795mil|Location2.X=2941.008mil|Location1.Y=2456.63mil|Location2.Y=2535.496mil|Absolute=True">Pad R3-1(48.575mm,38mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3692.913mil|Location2.X=3713.583mil|Location1.Y=2070.866mil|Location2.Y=2078.74mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3692.913mil|Location2.X=3713.583mil|Location1.Y=2070.866mil|Location2.Y=2078.74mil|Absolute=True">Track (68.5mm,27.3mm)(68.825mm,27.3mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3712.535mil|Location2.X=3799.276mil|Location1.Y=2019.622mil|Location2.Y=2106.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3712.535mil|Location2.X=3799.276mil|Location1.Y=2019.622mil|Location2.Y=2106.362mil|Absolute=True">Pad D5-2(70mm,27mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3798.228mil|Location2.X=3818.898mil|Location1.Y=2070.866mil|Location2.Y=2078.74mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3798.228mil|Location2.X=3818.898mil|Location1.Y=2070.866mil|Location2.Y=2078.74mil|Absolute=True">Track (71.175mm,27.3mm)(71.5mm,27.3mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3712.535mil|Location2.X=3799.276mil|Location1.Y=2019.622mil|Location2.Y=2106.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3712.535mil|Location2.X=3799.276mil|Location1.Y=2019.622mil|Location2.Y=2106.362mil|Absolute=True">Pad D5-2(70mm,27mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3692.913mil|Location2.X=3713.583mil|Location1.Y=1889.764mil|Location2.Y=1897.638mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3692.913mil|Location2.X=3713.583mil|Location1.Y=1889.764mil|Location2.Y=1897.638mil|Absolute=True">Track (68.5mm,22.7mm)(68.825mm,22.7mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3712.535mil|Location2.X=3799.276mil|Location1.Y=1862.142mil|Location2.Y=1948.882mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3712.535mil|Location2.X=3799.276mil|Location1.Y=1862.142mil|Location2.Y=1948.882mil|Absolute=True">Pad D5-1(70mm,23mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3798.228mil|Location2.X=3818.898mil|Location1.Y=1889.764mil|Location2.Y=1897.638mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3798.228mil|Location2.X=3818.898mil|Location1.Y=1889.764mil|Location2.Y=1897.638mil|Absolute=True">Track (71.175mm,22.7mm)(71.5mm,22.7mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3712.535mil|Location2.X=3799.276mil|Location1.Y=1862.142mil|Location2.Y=1948.882mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3712.535mil|Location2.X=3799.276mil|Location1.Y=1862.142mil|Location2.Y=1948.882mil|Absolute=True">Pad D5-1(70mm,23mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2572.15mil|Location2.X=2692.117mil|Location1.Y=2447.669mil|Location2.Y=2527.65mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2572.15mil|Location2.X=2692.117mil|Location1.Y=2447.669mil|Location2.Y=2527.65mil|Absolute=True">Text "D2" (40.187mm,37.025mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2608.205mil|Location2.X=2665.417mil|Location1.Y=2456.63mil|Location2.Y=2535.496mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2608.205mil|Location2.X=2665.417mil|Location1.Y=2456.63mil|Location2.Y=2535.496mil|Absolute=True">Pad C3-2(41.575mm,38mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.37mil|Location2.X=2721.338mil|Location1.Y=2562mil|Location2.Y=2641.981mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.37mil|Location2.X=2721.338mil|Location1.Y=2562mil|Location2.Y=2641.981mil|Absolute=True">Text "C3" (40.929mm,39.929mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2608.205mil|Location2.X=2665.417mil|Location1.Y=2574.74mil|Location2.Y=2653.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2608.205mil|Location2.X=2665.417mil|Location1.Y=2574.74mil|Location2.Y=2653.606mil|Absolute=True">Pad R4-2(41.575mm,41mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.37mil|Location2.X=2721.338mil|Location1.Y=2562mil|Location2.Y=2641.981mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2601.37mil|Location2.X=2721.338mil|Location1.Y=2562mil|Location2.Y=2641.981mil|Absolute=True">Text "C3" (40.929mm,39.929mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2720.41mil|Location2.X=2777.622mil|Location1.Y=2574.74mil|Location2.Y=2653.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2720.41mil|Location2.X=2777.622mil|Location1.Y=2574.74mil|Location2.Y=2653.606mil|Absolute=True">Pad R4-1(44.425mm,41mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1521.496mil|Location2.X=1541.496mil|Location1.Y=1462.441mil|Location2.Y=2506.063mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1521.496mil|Location2.X=1541.496mil|Location1.Y=1462.441mil|Location2.Y=2506.063mil|Absolute=True">Track (13.5mm,12mm)(13.5mm,38mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1478.284mil|Location2.X=1781.559mil|Location1.Y=1675.134mil|Location2.Y=1860.299mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1478.284mil|Location2.X=1781.559mil|Location1.Y=1675.134mil|Location2.Y=1860.299mil|Absolute=True">Pad J1-1(16mm,19.5mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1521.496mil|Location2.X=1541.496mil|Location1.Y=1462.441mil|Location2.Y=2506.063mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1521.496mil|Location2.X=1541.496mil|Location1.Y=1462.441mil|Location2.Y=2506.063mil|Absolute=True">Track (13.5mm,12mm)(13.5mm,38mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1478.284mil|Location2.X=1781.559mil|Location1.Y=2108.205mil|Location2.Y=2293.37mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1478.284mil|Location2.X=1781.559mil|Location1.Y=2108.205mil|Location2.Y=2293.37mil|Absolute=True">Pad J1-2(16mm,30.5mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1846mil|Location2.X=1965.968mil|Location1.Y=1788mil|Location2.Y=1867.981mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1846mil|Location2.X=1965.968mil|Location1.Y=1788mil|Location2.Y=1867.981mil|Absolute=True">Text "L2" (21.742mm,20.269mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1909.386mil|Location2.X=1980.378mil|Location1.Y=1751.906mil|Location2.Y=1822.898mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1909.386mil|Location2.X=1980.378mil|Location1.Y=1751.906mil|Location2.Y=1822.898mil|Absolute=True">Pad FR1-1(24mm,20mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3940mil|Location2.X=4059.968mil|Location1.Y=1775mil|Location2.Y=1854.981mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3940mil|Location2.X=4059.968mil|Location1.Y=1775mil|Location2.Y=1854.981mil|Absolute=True">Text "R9" (74.93mm,19.939mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3978.284mil|Location2.X=4084.709mil|Location1.Y=1852.299mil|Location2.Y=1919.354mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3978.284mil|Location2.X=4084.709mil|Location1.Y=1852.299mil|Location2.Y=1919.354mil|Absolute=True">Pad C7-2(77mm,22.5mm)  Multi-Layer</acronym></a></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><a name="IDAND1RC"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Un-Routed Net Constraint ( (All) )</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1478.284mil|Location2.X=1980.378mil|Location1.Y=1675.134mil|Location2.Y=1860.299mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1478.284mil|Location2.X=1980.378mil|Location1.Y=1675.134mil|Location2.Y=1860.299mil|Absolute=True">Un-Routed Net Constraint: Net NetFR1_1 Between Pad J1-1 (16,19.5mm) And Pad FR1-1 (24,20mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1478.284mil|Location2.X=1868.173mil|Location1.Y=1914.307mil|Location2.Y=2293.37mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1478.284mil|Location2.X=1868.173mil|Location1.Y=1914.307mil|Location2.Y=2293.37mil|Absolute=True">Un-Routed Net Constraint: Net NetD1_2 Between Pad J1-2 (16,30.5mm) And Pad D1-2 (21.075,23.75mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1791.276mil|Location2.X=1980.378mil|Location1.Y=2012.732mil|Location2.Y=2216.598mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1791.276mil|Location2.X=1980.378mil|Location1.Y=2012.732mil|Location2.Y=2216.598mil|Absolute=True">Un-Routed Net Constraint: Net NetD1_1 Between Pad D1-1 (21.075,26.25mm) And Pad FR1-2 (24,30mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3712.535mil|Location2.X=4084.709mil|Location1.Y=2019.622mil|Location2.Y=2116.205mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3712.535mil|Location2.X=4084.709mil|Location1.Y=2019.622mil|Location2.Y=2116.205mil|Absolute=True">Un-Routed Net Constraint: Net 5V_SUPPLY Between Pad D5-2 (70,27mm) And Pad C7-1 (77,27.5mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4334.583mil|Location2.X=4628.016mil|Location1.Y=1629.858mil|Location2.Y=1866.205mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4334.583mil|Location2.X=4628.016mil|Location1.Y=1629.858mil|Location2.Y=1866.205mil|Absolute=True">Un-Routed Net Constraint: Net 5V_SUPPLY Between Pad C8-2 (85.425,17mm) And Pad R10-2 (91.425,21mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3978.284mil|Location2.X=4391.795mil|Location1.Y=1629.858mil|Location2.Y=2116.205mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3978.284mil|Location2.X=4391.795mil|Location1.Y=1629.858mil|Location2.Y=2116.205mil|Absolute=True">Un-Routed Net Constraint: Net 5V_SUPPLY Between Pad C7-1 (77,27.5mm) And Pad C8-2 (85.425,17mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4058.992mil|Location2.X=4279.591mil|Location1.Y=1629.858mil|Location2.Y=1748.094mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4058.992mil|Location2.X=4279.591mil|Location1.Y=1629.858mil|Location2.Y=1748.094mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad R9-1 (78.425,18mm) And Pad C8-1 (82.575,17mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3978.284mil|Location2.X=4116.205mil|Location1.Y=1669.228mil|Location2.Y=1919.354mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3978.284mil|Location2.X=4116.205mil|Location1.Y=1669.228mil|Location2.Y=1919.354mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C7-2 (77,22.5mm) And Pad R9-1 (78.425,18mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4222.378mil|Location2.X=4515.811mil|Location1.Y=1629.858mil|Location2.Y=1866.205mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4222.378mil|Location2.X=4515.811mil|Location1.Y=1629.858mil|Location2.Y=1866.205mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C8-1 (82.575,17mm) And Pad R10-1 (88.575,21mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3502.299mil|Location2.X=4084.709mil|Location1.Y=1852.299mil|Location2.Y=2125.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3502.299mil|Location2.X=4084.709mil|Location1.Y=1852.299mil|Location2.Y=2125.85mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad T1-7 (65.16,27.62mm) And Pad C7-2 (77,22.5mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2592.457mil|Location2.X=2657.543mil|Location1.Y=1589.11mil|Location2.Y=1670.732mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2592.457mil|Location2.X=2657.543mil|Location1.Y=1589.11mil|Location2.Y=1670.732mil|Absolute=True">Un-Routed Net Constraint: Net HVGND Between Pad IC1-3 (41.275,15.365mm) And Pad IC1-2 (41.275,16.635mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2592.457mil|Location2.X=2657.543mil|Location1.Y=1639.11mil|Location2.Y=1720.732mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2592.457mil|Location2.X=2657.543mil|Location1.Y=1639.11mil|Location2.Y=1720.732mil|Absolute=True">Un-Routed Net Constraint: Net HVGND Between Pad IC1-2 (41.275,16.635mm) And Pad IC1-1 (41.275,17.905mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2456.63mil|Location2.X=2657.543mil|Location1.Y=1578.677mil|Location2.Y=1635.89mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2456.63mil|Location2.X=2657.543mil|Location1.Y=1578.677mil|Location2.Y=1635.89mil|Absolute=True">Un-Routed Net Constraint: Net HVGND Between Pad R5-1 (38,15.425mm) And Pad IC1-3 (41.275,15.365mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2608.205mil|Location2.X=2665.417mil|Location1.Y=1236.158mil|Location2.Y=1472.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2608.205mil|Location2.X=2665.417mil|Location1.Y=1236.158mil|Location2.Y=1472.504mil|Absolute=True">Un-Routed Net Constraint: Net HVGND Between Pad C5-1 (41.575,7mm) And Pad R8-1 (41.575,11mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2460.567mil|Location2.X=2665.417mil|Location1.Y=1309.976mil|Location2.Y=1472.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2460.567mil|Location2.X=2665.417mil|Location1.Y=1309.976mil|Location2.Y=1472.504mil|Absolute=True">Un-Routed Net Constraint: Net HVGND Between Pad C4-2 (38,9.15mm) And Pad R8-1 (41.575,11mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2338.52mil|Location2.X=2535.496mil|Location1.Y=1466.473mil|Location2.Y=1635.89mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2338.52mil|Location2.X=2535.496mil|Location1.Y=1466.473mil|Location2.Y=1635.89mil|Absolute=True">Un-Routed Net Constraint: Net HVGND Between Pad R2-2 (35,12.575mm) And Pad R5-1 (38,15.425mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2127.89mil|Location2.X=2417.386mil|Location1.Y=1466.473mil|Location2.Y=1604.394mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2127.89mil|Location2.X=2417.386mil|Location1.Y=1466.473mil|Location2.Y=1604.394mil|Absolute=True">Un-Routed Net Constraint: Net HVGND Between Pad L2-2 (29.5,14mm) And Pad R2-2 (35,12.575mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2592.457mil|Location2.X=2824.866mil|Location1.Y=1689.11mil|Location2.Y=1919.354mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2592.457mil|Location2.X=2824.866mil|Location1.Y=1689.11mil|Location2.Y=1919.354mil|Absolute=True">Un-Routed Net Constraint: Net HVGND Between Pad IC1-1 (41.275,17.905mm) And Pad C2-2 (45,22.5mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2718.441mil|Location2.X=3228.409mil|Location1.Y=1848.953mil|Location2.Y=1925.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2718.441mil|Location2.X=3228.409mil|Location1.Y=1848.953mil|Location2.Y=1925.85mil|Absolute=True">Un-Routed Net Constraint: Net HVGND Between Pad C2-2 (45,22.5mm) And Pad T1-2 (55,22.54mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2592.457mil|Location2.X=2665.417mil|Location1.Y=1393.638mil|Location2.Y=1620.732mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2592.457mil|Location2.X=2665.417mil|Location1.Y=1393.638mil|Location2.Y=1620.732mil|Absolute=True">Un-Routed Net Constraint: Net HVGND Between Pad IC1-3 (41.275,15.365mm) And Pad R8-1 (41.575,11mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2285.37mil|Location2.X=2417.386mil|Location1.Y=2049.15mil|Location2.Y=2389.827mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2285.37mil|Location2.X=2417.386mil|Location1.Y=2049.15mil|Location2.Y=2389.827mil|Absolute=True">Un-Routed Net Constraint: Net NetC1_1 Between Pad C1-1 (34,27.5mm) And Pad R1-1 (35,34.575mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2021.591mil|Location2.X=2391.795mil|Location1.Y=1914.307mil|Location2.Y=2116.205mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2021.591mil|Location2.X=2391.795mil|Location1.Y=1914.307mil|Location2.Y=2116.205mil|Absolute=True">Un-Routed Net Constraint: Net NetC1_1 Between Pad D1-3 (26.925,23.75mm) And Pad C1-1 (34,27.5mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1931.039mil|Location2.X=2417.386mil|Location1.Y=2332.614mil|Location2.Y=2470.535mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1931.039mil|Location2.X=2417.386mil|Location1.Y=2332.614mil|Location2.Y=2470.535mil|Absolute=True">Un-Routed Net Constraint: Net NetC1_1 Between Pad L1-1 (24.5,36mm) And Pad R1-1 (35,34.575mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2285.37mil|Location2.X=2417.386mil|Location1.Y=1578.677mil|Location2.Y=1919.354mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2285.37mil|Location2.X=2417.386mil|Location1.Y=1578.677mil|Location2.Y=1919.354mil|Absolute=True">Un-Routed Net Constraint: Net NetC1_2 Between Pad C1-2 (34,22.5mm) And Pad R2-1 (35,15.425mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2021.591mil|Location2.X=2391.795mil|Location1.Y=1852.299mil|Location2.Y=2054.197mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2021.591mil|Location2.X=2391.795mil|Location1.Y=1852.299mil|Location2.Y=2054.197mil|Absolute=True">Un-Routed Net Constraint: Net NetC1_2 Between Pad D1-4 (26.925,26.25mm) And Pad C1-2 (34,22.5mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1931.039mil|Location2.X=2417.386mil|Location1.Y=1497.968mil|Location2.Y=1635.89mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1931.039mil|Location2.X=2417.386mil|Location1.Y=1497.968mil|Location2.Y=1635.89mil|Absolute=True">Un-Routed Net Constraint: Net NetC1_2 Between Pad L2-1 (24.5,14mm) And Pad R2-1 (35,15.425mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2608.205mil|Location2.X=2665.417mil|Location1.Y=2456.63mil|Location2.Y=2653.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2608.205mil|Location2.X=2665.417mil|Location1.Y=2456.63mil|Location2.Y=2653.606mil|Absolute=True">Un-Routed Net Constraint: Net NetC2_1 Between Pad C3-2 (41.575,38mm) And Pad R4-2 (41.575,41mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2573.953mil|Location2.X=2665.417mil|Location1.Y=2291.669mil|Location2.Y=2535.496mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2573.953mil|Location2.X=2665.417mil|Location1.Y=2291.669mil|Location2.Y=2535.496mil|Absolute=True">Un-Routed Net Constraint: Net NetC2_1 Between Pad D2-1 (40.89,34mm) And Pad C3-2 (41.575,38mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2127.89mil|Location2.X=2417.386mil|Location1.Y=2364.11mil|Location2.Y=2502.031mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2127.89mil|Location2.X=2417.386mil|Location1.Y=2364.11mil|Location2.Y=2502.031mil|Absolute=True">Un-Routed Net Constraint: Net NetC2_1 Between Pad L1-2 (29.5,36mm) And Pad R1-2 (35,37.425mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2573.953mil|Location2.X=2824.866mil|Location1.Y=2049.15mil|Location2.Y=2385.496mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2573.953mil|Location2.X=2824.866mil|Location1.Y=2049.15mil|Location2.Y=2385.496mil|Absolute=True">Un-Routed Net Constraint: Net NetC2_1 Between Pad D2-1 (40.89,34mm) And Pad C2-1 (45,27.5mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2718.441mil|Location2.X=3228.409mil|Location1.Y=2049.15mil|Location2.Y=2225.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2718.441mil|Location2.X=3228.409mil|Location1.Y=2049.15mil|Location2.Y=2225.85mil|Absolute=True">Un-Routed Net Constraint: Net NetC2_1 Between Pad C2-1 (45,27.5mm) And Pad T1-5 (55,30.16mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2338.52mil|Location2.X=2665.417mil|Location1.Y=2444.819mil|Location2.Y=2535.496mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2338.52mil|Location2.X=2665.417mil|Location1.Y=2444.819mil|Location2.Y=2535.496mil|Absolute=True">Un-Routed Net Constraint: Net NetC2_1 Between Pad R1-2 (35,37.425mm) And Pad C3-2 (41.575,38mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2720.41mil|Location2.X=2777.622mil|Location1.Y=2456.63mil|Location2.Y=2653.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2720.41mil|Location2.X=2777.622mil|Location1.Y=2456.63mil|Location2.Y=2653.606mil|Absolute=True">Un-Routed Net Constraint: Net NetC3_1 Between Pad C3-1 (44.425,38mm) And Pad R4-1 (44.425,41mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2720.41mil|Location2.X=3053.213mil|Location1.Y=2456.63mil|Location2.Y=2535.496mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2720.41mil|Location2.X=3053.213mil|Location1.Y=2456.63mil|Location2.Y=2535.496mil|Absolute=True">Un-Routed Net Constraint: Net NetC3_1 Between Pad C3-1 (44.425,38mm) And Pad R3-2 (51.425,38mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2720.409mil|Location2.X=2862.268mil|Location1.Y=1236.158mil|Location2.Y=1315.024mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2720.409mil|Location2.X=2862.268mil|Location1.Y=1236.158mil|Location2.Y=1315.024mil|Absolute=True">Un-Routed Net Constraint: Net NetC4_1 Between Pad C5-2 (44.425,7mm) And Pad R6-1 (46.575,7mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2805.055mil|Location2.X=2872.11mil|Location1.Y=1236.158mil|Location2.Y=1620.732mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2805.055mil|Location2.X=2872.11mil|Location1.Y=1236.158mil|Location2.Y=1620.732mil|Absolute=True">Un-Routed Net Constraint: Net NetC4_1 Between Pad R6-1 (46.575,7mm) And Pad IC1-6 (46.725,15.365mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2460.567mil|Location2.X=2777.622mil|Location1.Y=1140.685mil|Location2.Y=1315.024mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2460.567mil|Location2.X=2777.622mil|Location1.Y=1140.685mil|Location2.Y=1315.024mil|Absolute=True">Un-Routed Net Constraint: Net NetC4_1 Between Pad C4-1 (38,4.85mm) And Pad C5-2 (44.425,7mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3822.772mil|Location2.X=4004mil|Location1.Y=1669.228mil|Location2.Y=1748.094mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3822.772mil|Location2.X=4004mil|Location1.Y=1669.228mil|Location2.Y=1748.094mil|Absolute=True">Un-Routed Net Constraint: Net NetC6_1 Between Pad C6-1 (72.425,18mm) And Pad R9-2 (75.575,18mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3502.299mil|Location2.X=3799.276mil|Location1.Y=1848.953mil|Location2.Y=1948.882mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3502.299mil|Location2.X=3799.276mil|Location1.Y=1848.953mil|Location2.Y=1948.882mil|Absolute=True">Un-Routed Net Constraint: Net NetC6_2 Between Pad T1-9 (65.16,22.54mm) And Pad D5-1 (70,23mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3710.567mil|Location2.X=3799.276mil|Location1.Y=1669.228mil|Location2.Y=1948.882mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3710.567mil|Location2.X=3799.276mil|Location1.Y=1669.228mil|Location2.Y=1948.882mil|Absolute=True">Un-Routed Net Constraint: Net NetC6_2 Between Pad C6-2 (69.575,18mm) And Pad D5-1 (70,23mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2740.095mil|Location2.X=2933.134mil|Location1.Y=2291.669mil|Location2.Y=2385.496mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2740.095mil|Location2.X=2933.134mil|Location1.Y=2291.669mil|Location2.Y=2385.496mil|Absolute=True">Un-Routed Net Constraint: Net NetD2_2 Between Pad D2-2 (45.11,34mm) And Pad D3-2 (48,34mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2846.394mil|Location2.X=2941.008mil|Location1.Y=2295.213mil|Location2.Y=2535.496mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2846.394mil|Location2.X=2941.008mil|Location1.Y=2295.213mil|Location2.Y=2535.496mil|Absolute=True">Un-Routed Net Constraint: Net NetD2_2 Between Pad D3-2 (48,34mm) And Pad R3-1 (48.575,38mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3003.874mil|Location2.X=3228.409mil|Location1.Y=1948.953mil|Location2.Y=2381.953mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3003.874mil|Location2.X=3228.409mil|Location1.Y=1948.953mil|Location2.Y=2381.953mil|Absolute=True">Un-Routed Net Constraint: Net NetD3_1 Between Pad D3-1 (52,34mm) And Pad T1-3 (55,25.08mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.024mil|Location2.X=3228.409mil|Location1.Y=1689.11mil|Location2.Y=2025.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.024mil|Location2.X=3228.409mil|Location1.Y=1689.11mil|Location2.Y=2025.85mil|Absolute=True">Un-Routed Net Constraint: Net NetD3_1 Between Pad IC1-8 (46.725,17.905mm) And Pad T1-3 (55,25.08mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2917.26mil|Location2.X=3065.024mil|Location1.Y=1393.638mil|Location2.Y=1482.346mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2917.26mil|Location2.X=3065.024mil|Location1.Y=1393.638mil|Location2.Y=1482.346mil|Absolute=True">Un-Routed Net Constraint: Net NetD4_1 Between Pad R7-2 (49.425,11mm) And Pad D4-1 (52,11.75mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3029.465mil|Location2.X=3228.409mil|Location1.Y=1442.85mil|Location2.Y=1825.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3029.465mil|Location2.X=3228.409mil|Location1.Y=1442.85mil|Location2.Y=1825.85mil|Absolute=True">Un-Routed Net Constraint: Net NetD4_1 Between Pad D4-1 (52,11.75mm) And Pad T1-1 (55,20mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2917.26mil|Location2.X=3065.024mil|Location1.Y=1236.158mil|Location2.Y=1344.551mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2917.26mil|Location2.X=3065.024mil|Location1.Y=1236.158mil|Location2.Y=1344.551mil|Absolute=True">Un-Routed Net Constraint: Net NetD4_2 Between Pad R6-2 (49.425,7mm) And Pad D4-2 (52,8.25mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2456.63mil|Location2.X=2657.543mil|Location1.Y=1466.473mil|Location2.Y=1570.732mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2456.63mil|Location2.X=2657.543mil|Location1.Y=1466.473mil|Location2.Y=1570.732mil|Absolute=True">Un-Routed Net Constraint: Net NetIC1_4 Between Pad R5-2 (38,12.575mm) And Pad IC1-4 (41.275,14.095mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2720.409mil|Location2.X=2862.268mil|Location1.Y=1393.638mil|Location2.Y=1472.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2720.409mil|Location2.X=2862.268mil|Location1.Y=1393.638mil|Location2.Y=1472.504mil|Absolute=True">Un-Routed Net Constraint: Net NetIC1_5 Between Pad R8-2 (44.425,11mm) And Pad R7-1 (46.575,11mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2805.055mil|Location2.X=2872.11mil|Location1.Y=1393.638mil|Location2.Y=1570.732mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\slopez\workspace\github\tiic-2015\Docking Station.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2805.055mil|Location2.X=2872.11mil|Location1.Y=1393.638mil|Location2.Y=1570.732mil|Absolute=True">Un-Routed Net Constraint: Net NetIC1_5 Between Pad R7-1 (46.575,11mm) And Pad IC1-5 (46.725,14.095mm)</acronym></a><br></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br></body>
+</html>
