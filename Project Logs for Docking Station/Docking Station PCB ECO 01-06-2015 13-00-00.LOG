@@ -1,0 +1,6 @@
+Removed Member From Class: ClassName=Primary Side Member=NetC3_1
+Removed Member From Class: ClassName=Primary Side Member=NetD2_2
+Change Net Name : Old Net Name=NetC3_1 New Net Name=SNUBB_DIV
+Change Net Name : Old Net Name=NetD2_2 New Net Name=SNUBB_CATHODE
+Added Member To Class: ClassName=Primary Side Member=Wire SNUBB_CATHODE
+Added Member To Class: ClassName=Primary Side Member=Wire SNUBB_DIV
