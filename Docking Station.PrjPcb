@@ -206,8 +206,73 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
+[Document11]
+DocumentPath=Output.OutJob
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=
+
 [GeneratedDocument1]
-DocumentPath=Project Outputs for Docking Station\Design Rule Check - Docking Station.html
+DocumentPath=Gerber\Docking Station\NC Drill\Docking Station-Plated.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument2]
+DocumentPath=Gerber\Docking Station\NC Drill\Docking Station.DRR
+DItemRevisionGUID=
+
+[GeneratedDocument3]
+DocumentPath=Gerber\Docking Station\Gerber\Docking Station.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument4]
+DocumentPath=Gerber\Docking Station\Gerber\Docking Station.GBL
+DItemRevisionGUID=
+
+[GeneratedDocument5]
+DocumentPath=Gerber\Docking Station\Gerber\Docking Station.GBO
+DItemRevisionGUID=
+
+[GeneratedDocument6]
+DocumentPath=Gerber\Docking Station\Gerber\Docking Station.GBS
+DItemRevisionGUID=
+
+[GeneratedDocument7]
+DocumentPath=Gerber\Docking Station\Gerber\Docking Station.GM1
+DItemRevisionGUID=
+
+[GeneratedDocument8]
+DocumentPath=Gerber\Docking Station\Gerber\Docking Station.GTL
+DItemRevisionGUID=
+
+[GeneratedDocument9]
+DocumentPath=Gerber\Docking Station\Gerber\Docking Station.GTO
+DItemRevisionGUID=
+
+[GeneratedDocument10]
+DocumentPath=Gerber\Docking Station\Gerber\Docking Station.GTS
+DItemRevisionGUID=
+
+[GeneratedDocument11]
+DocumentPath=Gerber\Docking Station\NC Drill\Docking Station.LDP
+DItemRevisionGUID=
+
+[GeneratedDocument12]
+DocumentPath=Gerber\Docking Station\Gerber\Docking Station.REP
+DItemRevisionGUID=
+
+[GeneratedDocument13]
+DocumentPath=Gerber\Docking Station\Gerber\Docking Station.RUL
 DItemRevisionGUID=
 
 [Configuration1]
