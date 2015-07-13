@@ -1,0 +1,3 @@
+Change Component DesignItemId : Designator=FB1 Old DesignItemId=Ferrite New DesignItemId=Ferrita
+Change Component Footprint: Designator=FB1 Old Footprint=INDUCTOR-5MM New Footprint=0805 Ind
+Change Component Comment : Designator=FB1 Old Comment=100 omh 1Mhz New Comment=220 ohm 100 Mhz
