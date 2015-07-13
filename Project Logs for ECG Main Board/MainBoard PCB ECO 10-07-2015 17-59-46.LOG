@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=NetC19_1 Pin=C19-1
+Removed Pin From Net: NetName=NetC20_1 Pin=C20-1
+Removed Pin From Net: NetName=NetC19_1 Pin=IC2-51
+Removed Pin From Net: NetName=NetC20_1 Pin=IC2-52
+Removed Member From Class: ClassName=U_MCU Member=X2
+Added Component: Designator=AB26T(xtal_32768)
+Added Pin To Net: NetName=NetC20_1 Pin=C19-1
+Added Pin To Net: NetName=NetC19_1 Pin=C20-1
+Added Pin To Net: NetName=NetC20_1 Pin=IC2-51
+Added Pin To Net: NetName=NetC19_1 Pin=IC2-52
+Change Net Name : Old Net Name=NetC19_1 New Net Name=NetAB26T_OUT
+Change Net Name : Old Net Name=NetC20_1 New Net Name=NetAB26T_IN
+Added Member To Class: ClassName=U_MCU Member=Component AB26T XTAL_32768_Hz
