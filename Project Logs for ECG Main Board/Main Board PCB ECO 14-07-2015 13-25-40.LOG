@@ -1,0 +1,4 @@
+Change Component DesignItemId : Designator=J5 Old DesignItemId=10pin_conector New DesignItemId=Header 5X2H
+Change Component DesignItemId : Designator=J4 Old DesignItemId=14pin_conector New DesignItemId=Header 7X2H
+Change Component Footprint: Designator=J5 Old Footprint=10pin_conector New Footprint=HDR2X5H
+Change Component Footprint: Designator=J4 Old Footprint=14pin_conector New Footprint=HDR2X7H
