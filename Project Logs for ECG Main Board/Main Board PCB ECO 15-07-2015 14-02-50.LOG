@@ -1,0 +1,6 @@
+Removed Member From Class: ClassName=U_RF Member=C40
+Removed Member From Class: ClassName=U_RF Member=C41
+Change Component Designator: OldDesignator=C40 NewDesignator=C50
+Change Component Designator: OldDesignator=C41 NewDesignator=C51
+Added Member To Class: ClassName=U_RF Member=Component C50 0.1u
+Added Member To Class: ClassName=U_RF Member=Component C51 0.1u
