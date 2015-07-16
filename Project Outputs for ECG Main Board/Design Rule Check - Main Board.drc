@@ -1,7 +1,7 @@
 Protel Design System Design Rule Check
 PCB File : C:\Users\slopez\workspace\github\tiic-2015\Main Board.PcbDoc
 Date     : 16/07/2015
-Time     : 16:17:59
+Time     : 19:00:20
 
 Processing Rule : Room U_Supply (Bounding Region = (15.4mm, 25.4mm, 55.4mm, 105.4mm) (InComponentClass('U_Supply'))
 Rule Violations :0
@@ -25,10 +25,10 @@ Processing Rule : Net Antennae (Tolerance=0mm) (All)
 Rule Violations :0
 
 Processing Rule : Silk primitive without silk layer
-   Violation between Silk To Board Region Clearance (Out of silkscreen region) : Track (29.75mm,27mm)(29.75mm,53mm)  Top Overlay
    Violation between Silk To Board Region Clearance (Out of silkscreen region) : Track (-30mm,25.75mm)(-21.5mm,25.75mm)  Top Overlay
    Violation between Silk To Board Region Clearance (Out of silkscreen region) : Track (-30mm,34.25mm)(-21.5mm,34.25mm)  Top Overlay
    Violation between Silk To Board Region Clearance (Out of silkscreen region) : Track (-30mm,25.75mm)(-30mm,34.25mm)  Top Overlay
+   Violation between Silk To Board Region Clearance (Out of silkscreen region) : Track (29.75mm,27mm)(29.75mm,53mm)  Top Overlay
    Violation between Silk To Board Region Clearance (Out of silkscreen region) : Text "40" (27.559mm,5.048mm)  Top Overlay
 Rule Violations :5
 
@@ -39,31 +39,73 @@ Processing Rule : Silk to Silk (Clearance=0.1mm) (All),(All)
                      Arc (12.75mm,52.3mm)  Top Overlay
    Violation between Text "C18" (18.479mm,28.095mm)  Top Overlay and 
                      Track (20.25mm,27mm)(20.25mm,31mm)  Top Overlay
-   Violation between Text "C51" (8.463mm,45.92mm)  Top Overlay and 
-                     Track (7.55mm,44.15mm)(7.55mm,47.85mm)  Top Overlay
-   Violation between Text "IC8" (-11.562mm,19.09mm)  Top Overlay and 
-                     Track (-10.5mm,19.14mm)(-10.5mm,22.24mm)  Top Overlay
-   Violation between Text "IC8" (-11.562mm,19.09mm)  Top Overlay and 
-                     Track (-10.5mm,19.14mm)(-9.5mm,19.14mm)  Top Overlay
-   Violation between Text "C32" (12.905mm,52.479mm)  Top Overlay and 
-                     Text "X4" (12.447mm,54.336mm)  Top Overlay
-   Violation between Text "C6" (-2.92mm,55.463mm)  Top Overlay and 
-                     Text "R5" (-5.029mm,54.537mm)  Top Overlay
-   Violation between Text "C4" (-5.463mm,62.079mm)  Top Overlay and 
-                     Text "R3" (-5.029mm,60.537mm)  Top Overlay
+   Violation between Text "IC6" (-11.867mm,27.807mm)  Top Overlay and 
+                     Track (-10.5mm,27.45mm)(-10.5mm,30.55mm)  Top Overlay
+   Violation between Text "IC7" (-11.867mm,23.807mm)  Top Overlay and 
+                     Track (-10.5mm,23.45mm)(-10.5mm,26.55mm)  Top Overlay
+   Violation between Text "IC8" (-11.562mm,19.4mm)  Top Overlay and 
+                     Track (-10.5mm,19.45mm)(-10.5mm,22.55mm)  Top Overlay
+   Violation between Text "IC8" (-11.562mm,19.4mm)  Top Overlay and 
+                     Track (-10.5mm,19.45mm)(-9.5mm,19.45mm)  Top Overlay
+   Violation between Text "C58" (6.479mm,13.096mm)  Top Overlay and 
+                     Text "R58" (8.276mm,13.477mm)  Top Overlay
+   Violation between Text "R3" (-5.029mm,60.537mm)  Top Overlay and 
+                     Text "C4" (-5.463mm,62.079mm)  Top Overlay
    Violation between Text "IC1" (-5.06mm,60.924mm)  Top Overlay and 
-                     Text "R3" (-5.029mm,60.537mm)  Top Overlay
-   Violation between Text "C4" (-5.463mm,62.079mm)  Top Overlay and 
-                     Text "IC1" (-5.06mm,60.924mm)  Top Overlay
-   Violation between Text "C28" (11.479mm,52.095mm)  Top Overlay and 
+                     Text "C4" (-5.463mm,62.079mm)  Top Overlay
+   Violation between Text "R5" (-5.029mm,54.537mm)  Top Overlay and 
+                     Text "C6" (-2.92mm,55.463mm)  Top Overlay
+   Violation between Text "R66" (-12.521mm,52.045mm)  Top Overlay and 
+                     Text "C13" (-10.095mm,50.479mm)  Top Overlay
+   Violation between Text "C32" (12.905mm,52.479mm)  Top Overlay and 
+                     Text "C28" (11.479mm,52.095mm)  Top Overlay
+   Violation between Text "X4" (12.447mm,54.336mm)  Top Overlay and 
                      Text "C32" (12.905mm,52.479mm)  Top Overlay
-   Violation between Text "R58" (8.276mm,13.477mm)  Top Overlay and 
-                     Text "C58" (6.479mm,13.096mm)  Top Overlay
-Rule Violations :13
+   Violation between Text "R3" (-5.029mm,60.537mm)  Top Overlay and 
+                     Text "IC1" (-5.06mm,60.924mm)  Top Overlay
+Rule Violations :15
 
 Processing Rule : Silk To Solder Mask (Clearance=0.1mm) (IsPad),(All)
    Violation between Pad C4-2(-7mm,60.31mm)  Top Layer and 
                      Arc (-7.55mm,60.2mm)  Top Overlay
+   Violation between Text "C3" (-11.08mm,64.537mm)  Top Overlay and 
+                     Pad C2-1(-11mm,65.31mm)  Top Layer
+   Violation between Text "R2" (-11.463mm,67.029mm)  Top Overlay and 
+                     Pad C2-2(-11mm,66.69mm)  Top Layer
+   Violation between Text "R4" (-5.029mm,56.537mm)  Top Overlay and 
+                     Pad C6-2(-4.69mm,57mm)  Top Layer
+   Violation between Text "C7" (-17.08mm,58.537mm)  Top Overlay and 
+                     Pad C8-1(-16.69mm,59mm)  Top Layer
+   Violation between Text "C8" (-17.08mm,60.537mm)  Top Overlay and 
+                     Pad C9-1(-16.69mm,61mm)  Top Layer
+   Violation between Text "C5" (-14.537mm,59.92mm)  Top Overlay and 
+                     Pad C9-2(-15.31mm,61mm)  Top Layer
+   Violation between Text "IC2" (1.536mm,27.48mm)  Top Overlay and 
+                     Pad C17-2(3mm,28.31mm)  Top Layer
+   Violation between Text "X3" (10.857mm,30.359mm)  Top Overlay and 
+                     Pad C21-2(11mm,29.69mm)  Top Layer
+   Violation between Text "C25" (5.904mm,62.479mm)  Top Overlay and 
+                     Pad C23-2(5.69mm,63mm)  Top Layer
+   Violation between Text "C23" (7.096mm,63.521mm)  Top Overlay and 
+                     Pad C25-2(7.31mm,63mm)  Top Layer
+   Violation between Text "C33" (17.479mm,58.095mm)  Top Overlay and 
+                     Pad C26-1(17.31mm,59mm)  Top Layer
+   Violation between Text "C33" (17.479mm,58.095mm)  Top Overlay and 
+                     Pad C26-2(18.69mm,59mm)  Top Layer
+   Violation between Text "IC3" (12.737mm,51.247mm)  Top Overlay and 
+                     Pad C28-2(12mm,50.69mm)  Top Layer
+   Violation between Text "C30" (12.905mm,60.479mm)  Top Overlay and 
+                     Pad C31-1(12mm,62.31mm)  Top Layer
+   Violation between Text "F1" (12.978mm,64.397mm)  Top Overlay and 
+                     Pad C31-2(12mm,63.69mm)  Top Layer
+   Violation between Text "IC9" (8.747mm,49.67mm)  Top Overlay and 
+                     Pad C34-1(10mm,49.31mm)  Top Layer
+   Violation between Text "C36" (-14.521mm,27.096mm)  Top Overlay and 
+                     Pad C42-1(-14mm,28mm)  Top Layer
+   Violation between Text "C10" (-13.905mm,55.521mm)  Top Overlay and 
+                     Pad IC1-16(-13.2mm,55.25mm)  Top Layer
+   Violation between Text "C10" (-13.905mm,55.521mm)  Top Overlay and 
+                     Pad IC1-15(-13.2mm,55.75mm)  Top Layer
    Violation between Text "C22" (5.521mm,26.905mm)  Top Overlay and 
                      Pad IC2-64(4.25mm,25.725mm)  Top Layer
    Violation between Text "C22" (5.521mm,26.905mm)  Top Overlay and 
@@ -124,48 +166,12 @@ Processing Rule : Silk To Solder Mask (Clearance=0.1mm) (IsPad),(All)
                      Pad IC3-A39(10.1mm,52.975mm)  Top Layer
    Violation between Text "C34" (9.479mm,52.095mm)  Top Overlay and 
                      Pad IC3-A38(9.5mm,52.975mm)  Top Layer
-   Violation between Text "IC8" (-11.562mm,19.09mm)  Top Overlay and 
-                     Pad IC7-3(-11.375mm,19.74mm)  Top Layer
-   Violation between Text "C10" (-13.905mm,55.521mm)  Top Overlay and 
-                     Pad IC1-16(-13.2mm,55.25mm)  Top Layer
-   Violation between Text "C10" (-13.905mm,55.521mm)  Top Overlay and 
-                     Pad IC1-15(-13.2mm,55.75mm)  Top Layer
-   Violation between Text "C21" (9.463mm,27.921mm)  Top Overlay and 
-                     Pad X3-4(9.05mm,28.25mm)  Top Layer
-   Violation between Text "C21" (9.463mm,27.921mm)  Top Overlay and 
-                     Pad X3-1(9.05mm,29.75mm)  Top Layer
-   Violation between Text "C3" (-11.08mm,64.537mm)  Top Overlay and 
-                     Pad C2-1(-11mm,65.31mm)  Top Layer
-   Violation between Text "R2" (-11.463mm,67.029mm)  Top Overlay and 
-                     Pad C2-2(-11mm,66.69mm)  Top Layer
-   Violation between Text "R4" (-5.029mm,56.537mm)  Top Overlay and 
-                     Pad C6-2(-4.69mm,57mm)  Top Layer
-   Violation between Text "C7" (-17.08mm,58.537mm)  Top Overlay and 
-                     Pad C8-1(-16.69mm,59mm)  Top Layer
-   Violation between Text "C8" (-17.08mm,60.537mm)  Top Overlay and 
-                     Pad C9-1(-16.69mm,61mm)  Top Layer
-   Violation between Text "C5" (-14.537mm,59.92mm)  Top Overlay and 
-                     Pad C9-2(-15.31mm,61mm)  Top Layer
-   Violation between Text "IC2" (1.536mm,27.48mm)  Top Overlay and 
-                     Pad C17-2(3mm,28.31mm)  Top Layer
-   Violation between Text "X3" (10.857mm,30.359mm)  Top Overlay and 
-                     Pad C21-2(11mm,29.69mm)  Top Layer
-   Violation between Text "C25" (5.904mm,62.479mm)  Top Overlay and 
-                     Pad C23-2(5.69mm,63mm)  Top Layer
-   Violation between Text "C23" (7.096mm,63.521mm)  Top Overlay and 
-                     Pad C25-2(7.31mm,63mm)  Top Layer
-   Violation between Text "C33" (17.479mm,58.095mm)  Top Overlay and 
-                     Pad C26-1(17.31mm,59mm)  Top Layer
-   Violation between Text "C33" (17.479mm,58.095mm)  Top Overlay and 
-                     Pad C26-2(18.69mm,59mm)  Top Layer
-   Violation between Text "IC3" (12.737mm,51.247mm)  Top Overlay and 
-                     Pad C28-2(12mm,50.69mm)  Top Layer
-   Violation between Text "C30" (12.905mm,60.479mm)  Top Overlay and 
-                     Pad C31-1(12mm,62.31mm)  Top Layer
-   Violation between Text "F1" (12.978mm,64.397mm)  Top Overlay and 
-                     Pad C31-2(12mm,63.69mm)  Top Layer
-   Violation between Text "IC9" (8.747mm,49.67mm)  Top Overlay and 
-                     Pad C34-1(10mm,49.31mm)  Top Layer
+   Violation between Text "IC6" (-11.867mm,27.807mm)  Top Overlay and 
+                     Pad IC5-3(-11.375mm,28.05mm)  Top Layer
+   Violation between Text "IC7" (-11.867mm,23.807mm)  Top Overlay and 
+                     Pad IC6-3(-11.375mm,24.05mm)  Top Layer
+   Violation between Text "IC8" (-11.562mm,19.4mm)  Top Overlay and 
+                     Pad IC7-3(-11.375mm,20.05mm)  Top Layer
    Violation between Text "C1" (-7.463mm,67.08mm)  Top Overlay and 
                      Pad R1-1(-7mm,66.675mm)  Top Layer
    Violation between Text "C2" (-12.537mm,64.921mm)  Top Overlay and 
@@ -176,7 +182,19 @@ Processing Rule : Silk To Solder Mask (Clearance=0.1mm) (IsPad),(All)
                      Pad R4-1(-4.675mm,55mm)  Top Layer
    Violation between Text "C6" (-2.92mm,55.463mm)  Top Overlay and 
                      Pad R4-2(-3.325mm,55mm)  Top Layer
-Rule Violations :57
+   Violation between Text "C21" (9.463mm,27.921mm)  Top Overlay and 
+                     Pad X3-4(9.05mm,28.25mm)  Top Layer
+   Violation between Text "C21" (9.463mm,27.921mm)  Top Overlay and 
+                     Pad X3-1(9.05mm,29.75mm)  Top Layer
+   Violation between Text "C51" (12.08mm,45.463mm)  Top Overlay and 
+                     Pad C50-1(11.69mm,45mm)  Top Layer
+   Violation between Text "C51" (12.08mm,45.463mm)  Top Overlay and 
+                     Pad C50-2(10.31mm,45mm)  Top Layer
+   Violation between Text "IC4" (-19.149mm,19.159mm)  Top Overlay and 
+                     Pad R99-2(-20.675mm,18mm)  Top Layer
+   Violation between Text "IC4" (-19.149mm,19.159mm)  Top Overlay and 
+                     Pad R99-1(-19.325mm,18mm)  Top Layer
+Rule Violations :64
 
 Processing Rule : Minimum Solder Mask Sliver (Gap=0.1mm) (All),(All)
    Violation between Pad F1-1(12.762mm,67mm)  Top Layer and 
@@ -187,34 +205,34 @@ Processing Rule : Minimum Solder Mask Sliver (Gap=0.1mm) (All),(All)
                      Pad F1-3(11.238mm,67mm)  Top Layer
    Violation between Pad F1-2(12mm,68.27mm)  Top Layer and 
                      Pad F1-1(12.762mm,67mm)  Top Layer
-   Violation between Pad IC8-2(-11.125mm,16.69mm)  Top Layer and 
-                     Pad IC8-1(-11.125mm,17.34mm)  Top Layer
-   Violation between Pad IC8-3(-11.125mm,16.04mm)  Top Layer and 
-                     Pad IC8-2(-11.125mm,16.69mm)  Top Layer
-   Violation between Pad IC4-A2(-20mm,20.19mm)  Top Layer and 
-                     Pad IC4-A1(-19.5mm,20.19mm)  Top Layer
-   Violation between Pad IC4-B1(-19.5mm,20.69mm)  Top Layer and 
-                     Pad IC4-A1(-19.5mm,20.19mm)  Top Layer
-   Violation between Pad IC4-A3(-20.5mm,20.19mm)  Top Layer and 
-                     Pad IC4-A2(-20mm,20.19mm)  Top Layer
-   Violation between Pad IC4-B2(-20mm,20.69mm)  Top Layer and 
-                     Pad IC4-A2(-20mm,20.19mm)  Top Layer
-   Violation between Pad IC4-B3(-20.5mm,20.69mm)  Top Layer and 
-                     Pad IC4-A3(-20.5mm,20.19mm)  Top Layer
-   Violation between Pad IC4-B2(-20mm,20.69mm)  Top Layer and 
-                     Pad IC4-B1(-19.5mm,20.69mm)  Top Layer
-   Violation between Pad IC4-C1(-19.5mm,21.19mm)  Top Layer and 
-                     Pad IC4-B1(-19.5mm,20.69mm)  Top Layer
-   Violation between Pad IC4-B3(-20.5mm,20.69mm)  Top Layer and 
-                     Pad IC4-B2(-20mm,20.69mm)  Top Layer
-   Violation between Pad IC4-C2(-20mm,21.19mm)  Top Layer and 
-                     Pad IC4-B2(-20mm,20.69mm)  Top Layer
-   Violation between Pad IC4-C3(-20.5mm,21.19mm)  Top Layer and 
-                     Pad IC4-B3(-20.5mm,20.69mm)  Top Layer
-   Violation between Pad IC4-C2(-20mm,21.19mm)  Top Layer and 
-                     Pad IC4-C1(-19.5mm,21.19mm)  Top Layer
-   Violation between Pad IC4-C3(-20.5mm,21.19mm)  Top Layer and 
-                     Pad IC4-C2(-20mm,21.19mm)  Top Layer
+   Violation between Pad IC4-B1(-19.5mm,21mm)  Top Layer and 
+                     Pad IC4-A1(-19.5mm,20.5mm)  Top Layer
+   Violation between Pad IC4-A2(-20mm,20.5mm)  Top Layer and 
+                     Pad IC4-A1(-19.5mm,20.5mm)  Top Layer
+   Violation between Pad IC4-B2(-20mm,21mm)  Top Layer and 
+                     Pad IC4-A2(-20mm,20.5mm)  Top Layer
+   Violation between Pad IC4-A3(-20.5mm,20.5mm)  Top Layer and 
+                     Pad IC4-A2(-20mm,20.5mm)  Top Layer
+   Violation between Pad IC4-B3(-20.5mm,21mm)  Top Layer and 
+                     Pad IC4-A3(-20.5mm,20.5mm)  Top Layer
+   Violation between Pad IC4-B2(-20mm,21mm)  Top Layer and 
+                     Pad IC4-B1(-19.5mm,21mm)  Top Layer
+   Violation between Pad IC4-C1(-19.5mm,21.5mm)  Top Layer and 
+                     Pad IC4-B1(-19.5mm,21mm)  Top Layer
+   Violation between Pad IC4-B3(-20.5mm,21mm)  Top Layer and 
+                     Pad IC4-B2(-20mm,21mm)  Top Layer
+   Violation between Pad IC4-C2(-20mm,21.5mm)  Top Layer and 
+                     Pad IC4-B2(-20mm,21mm)  Top Layer
+   Violation between Pad IC4-C3(-20.5mm,21.5mm)  Top Layer and 
+                     Pad IC4-B3(-20.5mm,21mm)  Top Layer
+   Violation between Pad IC4-C2(-20mm,21.5mm)  Top Layer and 
+                     Pad IC4-C1(-19.5mm,21.5mm)  Top Layer
+   Violation between Pad IC4-C3(-20.5mm,21.5mm)  Top Layer and 
+                     Pad IC4-C2(-20mm,21.5mm)  Top Layer
+   Violation between Pad IC8-2(-11.125mm,17mm)  Top Layer and 
+                     Pad IC8-1(-11.125mm,17.65mm)  Top Layer
+   Violation between Pad IC8-3(-11.125mm,16.35mm)  Top Layer and 
+                     Pad IC8-2(-11.125mm,17mm)  Top Layer
    Violation between Pad X1-2(13mm,29.432mm)  Multi-Layer and 
                      Pad X1-1(13mm,28.568mm)  Multi-Layer
 Rule Violations :19
@@ -282,15 +300,15 @@ Processing Rule : Un-Routed Net Constraint ( (All) )
    Violation between Un-Routed Net Constraint: Net AGND Between Pad C8-1 (-16.69,59mm) And Pad C9-1 (-16.69,61mm)
    Violation between Un-Routed Net Constraint: Net AGND Between Pad C2-2 (-11,66.69mm) And Pad C1-1 (-9,66.69mm)
    Violation between Un-Routed Net Constraint: Net AGND Between Pad R4-2 (-3.325,55mm) And Pad C6-1 (-3.31,57mm)
+   Violation between Un-Routed Net Constraint: Net AGND Between Pad C36-1 (-14,24.31mm) And Pad IC6-2 (-11.375,25mm)
    Violation between Un-Routed Net Constraint: Net AGND Between Pad IC1-24 (-8.25,53.8mm) And Pad C13-1 (-7.31,51mm)
    Violation between Un-Routed Net Constraint: Net AGND Between Pad C2-2 (-11,66.69mm) And Pad J1-2 (-10,70mm)
-   Violation between Un-Routed Net Constraint: Net AGND Between Pad C36-1 (-14,24mm) And Pad C37-1 (-6,24mm)
-   Violation between Un-Routed Net Constraint: Net AGND Between Pad C37-1 (-6,24mm) And Pad IC6-2 (-4.375,35mm)
+   Violation between Un-Routed Net Constraint: Net AGND Between Pad IC6-2 (-11.375,25mm) And Pad C37-1 (-6,24.31mm)
    Violation between Un-Routed Net Constraint: Net AGND Between Pad C10-1 (-16.69,55mm) And Pad C7-1 (-16.69,57mm)
    Violation between Un-Routed Net Constraint: Net AGND Between Pad C7-1 (-16.69,57mm) And Pad IC1-13 (-13.2,56.75mm)
    Violation between Un-Routed Net Constraint: Net AGND Between Pad IC1-24 (-8.25,53.8mm) And Pad R5-2 (-3.325,53mm)
    Violation between Un-Routed Net Constraint: Net AGND Between Pad IC1-10 (-13.2,58.25mm) And Pad C2-2 (-11,66.69mm)
-   Violation between Un-Routed Net Constraint: Net AGND Between Pad C11-1 (-7.31,49mm) And Pad IC6-2 (-4.375,35mm)
+   Violation between Un-Routed Net Constraint: Net AGND Between Pad C11-1 (-7.31,49mm) And Pad C37-1 (-6,24.31mm)
    Violation between Un-Routed Net Constraint: Net AGND Between Pad IC1-13 (-13.2,56.75mm) And Pad IC1-24 (-8.25,53.8mm)
    Violation between Un-Routed Net Constraint: Net NetJ2_2 Between Pad SW1-2 (-24.75,55mm) And Pad SW1-5 (-22.25,55mm)
    Violation between Un-Routed Net Constraint: Net NetJ2_2 Between Pad SW1-5 (-22.25,55mm) And Pad J2-2 (-19,74mm)
@@ -303,44 +321,39 @@ Processing Rule : Un-Routed Net Constraint ( (All) )
    Violation between Un-Routed Net Constraint: Net TDI Between Pad IC2-22 (6.75,14.275mm) And Pad J4-3 (16.75,45.08mm)
    Violation between Un-Routed Net Constraint: Net TCK Between Pad IC2-24 (7.75,14.275mm) And Pad R88-1 (11,11.675mm)
    Violation between Un-Routed Net Constraint: Net TCK Between Pad R88-1 (11,11.675mm) And Pad J4-7 (16.75,40mm)
-   Violation between Un-Routed Net Constraint: Net SDA Between Pad IC4-A2 (-20,20.19mm) And Pad R6-1 (-17,24.675mm)
-   Violation between Un-Routed Net Constraint: Net SDA Between Pad IC4-A2 (-20,20.19mm) And Pad IC2-16 (2.275,16.25mm)
-   Violation between Un-Routed Net Constraint: Net SCL Between Pad IC4-A3 (-20.5,20.19mm) And Pad R7-1 (-20,24.675mm)
-   Violation between Un-Routed Net Constraint: Net SCL Between Pad IC4-A3 (-20.5,20.19mm) And Pad IC2-15 (2.275,16.75mm)
+   Violation between Un-Routed Net Constraint: Net SDA Between Pad IC4-A2 (-20,20.5mm) And Pad R61-1 (-17,24.675mm)
+   Violation between Un-Routed Net Constraint: Net SDA Between Pad IC4-A2 (-20,20.5mm) And Pad IC2-16 (2.275,16.25mm)
+   Violation between Un-Routed Net Constraint: Net SCL Between Pad IC4-A3 (-20.5,20.5mm) And Pad R7-1 (-20,24.675mm)
+   Violation between Un-Routed Net Constraint: Net SCL Between Pad IC4-A3 (-20.5,20.5mm) And Pad IC2-15 (2.275,16.75mm)
    Violation between Un-Routed Net Constraint: Net RTS Between Pad IC2-3 (2.275,22.75mm) And Pad IC9-11 (5,43.05mm)
-   Violation between Un-Routed Net Constraint: Net DISP_RS Between Pad DISP-17 (-16.51,2mm) And Pad IC2-10 (2.275,19.25mm)
    Violation between Un-Routed Net Constraint: Net RFVDD Between Pad IC3-B22 (4.875,57.6mm) And Pad IC3-B21 (4.875,58.2mm)
    Violation between Un-Routed Net Constraint: Net RFVDD Between Pad IC3-B21 (4.875,58.2mm) And Pad IC3-B19 (4.875,59.4mm)
    Violation between Un-Routed Net Constraint: Net RFVDD Between Pad IC3-B19 (4.875,59.4mm) And Pad IC3-B18 (5.6,60.125mm)
    Violation between Un-Routed Net Constraint: Net RFVDD Between Pad IC3-B25 (4.875,55.8mm) And Pad IC3-B22 (4.875,57.6mm)
    Violation between Un-Routed Net Constraint: Net RFVDD Between Pad IC3-A34 (7.1,52.975mm) And Pad IC3-A38 (9.5,52.975mm)
    Violation between Un-Routed Net Constraint: Net RFVDD Between Pad IC3-B18 (5.6,60.125mm) And Pad IC3-A17 (7.1,61.025mm)
-   Violation between Un-Routed Net Constraint: Net RFVDD Between Pad IC7-5 (-8.625,21.64mm) And Pad C39-2 (-6,21.38mm)
+   Violation between Un-Routed Net Constraint: Net RFVDD Between Pad IC7-5 (-8.625,21.95mm) And Pad C39-2 (-6,21.69mm)
    Violation between Un-Routed Net Constraint: Net RFVDD Between Pad C24-2 (1.69,57mm) And Pad IC3-B22 (4.875,57.6mm)
    Violation between Un-Routed Net Constraint: Net RFVDD Between Pad IC9-1 (6.95,48.95mm) And Pad IC3-A34 (7.1,52.975mm)
-   Violation between Un-Routed Net Constraint: Net RFVDD Between Pad IC9-1 (6.95,48.95mm) And Pad C51-2 (10,47.69mm)
+   Violation between Un-Routed Net Constraint: Net RFVDD Between Pad IC9-1 (6.95,48.95mm) And Pad C51-2 (10.31,47mm)
    Violation between Un-Routed Net Constraint: Net RFVDD Between Pad IC3-B25 (4.875,55.8mm) And Pad IC3-A34 (7.1,52.975mm)
-   Violation between Un-Routed Net Constraint: Net RFVDD Between Pad C39-2 (-6,21.38mm) And Pad IC9-1 (6.95,48.95mm)
+   Violation between Un-Routed Net Constraint: Net RFVDD Between Pad C39-2 (-6,21.69mm) And Pad IC9-1 (6.95,48.95mm)
    Violation between Un-Routed Net Constraint: Net DISP_REST Between Pad IC2-34 (13.725,16.75mm) And Pad DISP-4 (16.51,2mm)
    Violation between Un-Routed Net Constraint: Net DISP_RD Between Pad DISP-15 (-11.43,2mm) And Pad IC2-7 (2.275,20.75mm)
-   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC4-B2 (-20,20.69mm) And Pad IC4-C1 (-19.5,21.19mm)
-   Violation between Un-Routed Net Constraint: Net PACK- Between Pad R9-1 (-17,18.365mm) And Pad C41-2 (-17,20mm)
-   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C40-1 (-23,20mm) And Pad IC4-B2 (-20,20.69mm)
-   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC4-C1 (-19.5,21.19mm) And Pad J2-1 (-19,76mm)
-   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC4-B2 (-20,20.69mm) And Pad C41-2 (-17,20mm)
    Violation between Un-Routed Net Constraint: Net PACK+ Between Pad SW1-3 (-24.75,51mm) And Pad SW1-6 (-22.25,51mm)
-   Violation between Un-Routed Net Constraint: Net PACK+ Between Pad C40-2 (-23,21.38mm) And Pad IC4-C3 (-20.5,21.19mm)
-   Violation between Un-Routed Net Constraint: Net PACK+ Between Pad C40-2 (-23,21.38mm) And Pad SW1-6 (-22.25,51mm)
+   Violation between Un-Routed Net Constraint: Net PACK+ Between Pad C40-2 (-23,21.69mm) And Pad IC4-C3 (-20.5,21.5mm)
+   Violation between Un-Routed Net Constraint: Net PACK+ Between Pad C40-2 (-23,21.69mm) And Pad SW1-6 (-22.25,51mm)
    Violation between Un-Routed Net Constraint: Net NetJ1_3 Between Pad R2-1 (-13,66.675mm) And Pad J1-3 (-12,70mm)
    Violation between Un-Routed Net Constraint: Net NetJ1_1 Between Pad J1-1 (-8,70mm) And Pad R1-1 (-7,66.675mm)
-   Violation between Un-Routed Net Constraint: Net NetIC4_B1 Between Pad IC4-B1 (-19.5,20.69mm) And Pad R9-2 (-17,17.015mm)
+   Violation between Un-Routed Net Constraint: Net NetIC4_B1 Between Pad IC4-B1 (-19.5,21mm) And Pad R9-2 (-17,16.325mm)
    Violation between Un-Routed Net Constraint: Net NetIC2_64 Between Pad IC2-64 (4.25,25.725mm) And Pad IC9-12 (5.65,43.05mm)
    Violation between Un-Routed Net Constraint: Net NetIC2_25 Between Pad IC2-25 (8.25,14.275mm) And Pad IC3-A6 (12.025,57.3mm)
    Violation between Un-Routed Net Constraint: Net NetIC2_1 Between Pad IC2-1 (2.275,23.75mm) And Pad IC9-13 (6.3,43.05mm)
    Violation between Un-Routed Net Constraint: Net NetIC1_30 Between Pad IC1-30 (-6.8,57.75mm) And Pad R3-1 (-4.675,59mm)
    Violation between Un-Routed Net Constraint: Net NetIC1_26 Between Pad IC1-26 (-6.8,55.75mm) And Pad R4-1 (-4.675,55mm)
    Violation between Un-Routed Net Constraint: Net NetIC1_25 Between Pad IC1-25 (-6.8,55.25mm) And Pad R5-1 (-4.675,53mm)
-   Violation between Un-Routed Net Constraint: Net NetIC1_21 Between Pad IC1-21 (-9.75,53.8mm) And Pad IC2-61 (5.75,25.725mm)
+   Violation between Un-Routed Net Constraint: Net NetIC1_21 Between Pad R66-2 (-12,50.675mm) And Pad IC1-21 (-9.75,53.8mm)
+   Violation between Un-Routed Net Constraint: Net NetIC1_21 Between Pad R66-2 (-12,50.675mm) And Pad IC2-61 (5.75,25.725mm)
    Violation between Un-Routed Net Constraint: Net NetIC1_20 Between Pad IC1-20 (-10.25,53.8mm) And Pad IC2-59 (6.75,25.725mm)
    Violation between Un-Routed Net Constraint: Net NetIC1_19 Between Pad IC1-19 (-10.75,53.8mm) And Pad IC2-60 (6.25,25.725mm)
    Violation between Un-Routed Net Constraint: Net NetIC1_18 Between Pad IC1-18 (-11.25,53.8mm) And Pad IC2-58 (7.25,25.725mm)
@@ -389,141 +402,153 @@ Processing Rule : Un-Routed Net Constraint ( (All) )
    Violation between Un-Routed Net Constraint: Net NetC1_2 Between Pad C3-2 (-9.31,63mm) And Pad C1-2 (-9,65.31mm)
    Violation between Un-Routed Net Constraint: Net NetC1_2 Between Pad C3-2 (-9.31,63mm) And Pad IC1-3 (-9.25,60.2mm)
    Violation between Un-Routed Net Constraint: Net MR Between Pad C58-2 (7,11.69mm) And Pad R58-2 (9,11.675mm)
-   Violation between Un-Routed Net Constraint: Net MR Between Pad IC8-4 (-8.875,16.04mm) And Pad R8-1 (-6,16.015mm)
+   Violation between Un-Routed Net Constraint: Net MR Between Pad IC8-4 (-8.875,16.35mm) And Pad R8-1 (-6,16.325mm)
    Violation between Un-Routed Net Constraint: Net MR Between Pad IC2-20 (5.75,14.275mm) And Pad C58-2 (7,11.69mm)
-   Violation between Un-Routed Net Constraint: Net MR Between Pad R8-1 (-6,16.015mm) And Pad IC2-20 (5.75,14.275mm)
+   Violation between Un-Routed Net Constraint: Net MR Between Pad R8-1 (-6,16.325mm) And Pad IC2-20 (5.75,14.275mm)
    Violation between Un-Routed Net Constraint: Net HFXOUT Between Pad X3-1 (9.05,29.75mm) And Pad C21-2 (11,29.69mm)
    Violation between Un-Routed Net Constraint: Net HFXOUT Between Pad X3-1 (9.05,29.75mm) And Pad IC2-54 (9.25,25.725mm)
    Violation between Un-Routed Net Constraint: Net HFXIN Between Pad C22-2 (5,28.31mm) And Pad X3-3 (6.95,28.25mm)
    Violation between Un-Routed Net Constraint: Net HFXIN Between Pad X3-3 (6.95,28.25mm) And Pad IC2-55 (8.75,25.725mm)
-   Violation between Un-Routed Net Constraint: Net GPOUT Between Pad IC4-A1 (-19.5,20.19mm) And Pad IC2-4 (2.275,22.25mm)
+   Violation between Un-Routed Net Constraint: Net GPOUT Between Pad IC4-A1 (-19.5,20.5mm) And Pad R99-1 (-19.325,18mm)
+   Violation between Un-Routed Net Constraint: Net GPOUT Between Pad IC4-A1 (-19.5,20.5mm) And Pad IC2-4 (2.275,22.25mm)
    Violation between Un-Routed Net Constraint: Net DISP_F_CS Between Pad IC2-30 (10.75,14.275mm) And Pad DISP-5 (13.97,2mm)
    Violation between Un-Routed Net Constraint: Net DVDD Between Pad IC3-B5 (11.125,57mm) And Pad IC3-B6 (11.125,57.6mm)
    Violation between Un-Routed Net Constraint: Net DVDD Between Pad R87-2 (15,10.325mm) And Pad Q5-2 (16.925,10.35mm)
    Violation between Un-Routed Net Constraint: Net DVDD Between Pad C14-2 (17,26.69mm) And Pad C18-2 (19,26.69mm)
-   Violation between Un-Routed Net Constraint: Net DVDD Between Pad IC5-5 (-8.625,29.64mm) And Pad C43-2 (-6,29.38mm)
-   Violation between Un-Routed Net Constraint: Net DVDD Between Pad R7-2 (-20,23.325mm) And Pad R6-2 (-17,23.325mm)
-   Violation between Un-Routed Net Constraint: Net DVDD Between Pad IC9-14 (6.95,43.05mm) And Pad C50-2 (10,43.31mm)
-   Violation between Un-Routed Net Constraint: Net DVDD Between Pad C43-2 (-6,29.38mm) And Pad FB1-1 (-3,29.74mm)
+   Violation between Un-Routed Net Constraint: Net DVDD Between Pad IC5-5 (-8.625,29.95mm) And Pad C43-2 (-6,29.69mm)
+   Violation between Un-Routed Net Constraint: Net DVDD Between Pad IC8-5 (-8.875,17.65mm) And Pad R8-2 (-6,17.675mm)
+   Violation between Un-Routed Net Constraint: Net DVDD Between Pad R7-2 (-20,23.325mm) And Pad R61-2 (-17,23.325mm)
+   Violation between Un-Routed Net Constraint: Net DVDD Between Pad C43-2 (-6,29.69mm) And Pad FB1-1 (-3,30.05mm)
    Violation between Un-Routed Net Constraint: Net DVDD Between Pad IC9-8 (3.05,43.05mm) And Pad IC9-14 (6.95,43.05mm)
    Violation between Un-Routed Net Constraint: Net DVDD Between Pad R88-2 (11,10.325mm) And Pad R87-2 (15,10.325mm)
    Violation between Un-Routed Net Constraint: Net DVDD Between Pad IC2-40 (13.725,19.75mm) And Pad C16-2 (17,20.69mm)
    Violation between Un-Routed Net Constraint: Net DVDD Between Pad IC2-18 (4.75,14.275mm) And Pad C15-2 (5,10.31mm)
    Violation between Un-Routed Net Constraint: Net DVDD Between Pad C17-2 (3,28.31mm) And Pad IC2-63 (4.75,25.725mm)
+   Violation between Un-Routed Net Constraint: Net DVDD Between Pad IC9-14 (6.95,43.05mm) And Pad C50-2 (10.31,45mm)
+   Violation between Un-Routed Net Constraint: Net DVDD Between Pad R99-2 (-20.675,18mm) And Pad R7-2 (-20,23.325mm)
    Violation between Un-Routed Net Constraint: Net DVDD Between Pad IC2-49 (11.75,25.725mm) And Pad C14-2 (17,26.69mm)
    Violation between Un-Routed Net Constraint: Net DVDD Between Pad IC3-B6 (11.125,57.6mm) And Pad C30-2 (14.31,61mm)
-   Violation between Un-Routed Net Constraint: Net DVDD Between Pad C50-2 (10,43.31mm) And Pad J4-4 (19.29,45.08mm)
-   Violation between Un-Routed Net Constraint: Net DVDD Between Pad R8-2 (-6,17.365mm) And Pad C43-2 (-6,29.38mm)
-   Violation between Un-Routed Net Constraint: Net DVDD Between Pad DISP-19 (-21.59,2mm) And Pad R7-2 (-20,23.325mm)
+   Violation between Un-Routed Net Constraint: Net DVDD Between Pad C50-2 (10.31,45mm) And Pad J4-4 (19.29,45.08mm)
+   Violation between Un-Routed Net Constraint: Net DVDD Between Pad DISP-19 (-21.59,2mm) And Pad R99-2 (-20.675,18mm)
    Violation between Un-Routed Net Constraint: Net DVDD Between Pad C16-2 (17,20.69mm) And Pad C14-2 (17,26.69mm)
    Violation between Un-Routed Net Constraint: Net DVDD Between Pad C15-2 (5,10.31mm) And Pad R88-2 (11,10.325mm)
    Violation between Un-Routed Net Constraint: Net DVDD Between Pad IC2-63 (4.75,25.725mm) And Pad IC2-49 (11.75,25.725mm)
-   Violation between Un-Routed Net Constraint: Net DVDD Between Pad FB1-1 (-3,29.74mm) And Pad C17-2 (3,28.31mm)
-   Violation between Un-Routed Net Constraint: Net DVDD Between Pad R6-2 (-17,23.325mm) And Pad IC5-5 (-8.625,29.64mm)
-   Violation between Un-Routed Net Constraint: Net DVDD Between Pad C17-2 (3,28.31mm) And Pad IC9-8 (3.05,43.05mm)
-   Violation between Un-Routed Net Constraint: Net DVDD Between Pad C50-2 (10,43.31mm) And Pad IC3-B5 (11.125,57mm)
+   Violation between Un-Routed Net Constraint: Net DVDD Between Pad FB1-1 (-3,30.05mm) And Pad C17-2 (3,28.31mm)
+   Violation between Un-Routed Net Constraint: Net DVDD Between Pad R8-2 (-6,17.675mm) And Pad C43-2 (-6,29.69mm)
+   Violation between Un-Routed Net Constraint: Net DVDD Between Pad R99-2 (-20.675,18mm) And Pad IC8-5 (-8.875,17.65mm)
+   Violation between Un-Routed Net Constraint: Net DVDD Between Pad C50-2 (10.31,45mm) And Pad IC3-B5 (11.125,57mm)
    Violation between Un-Routed Net Constraint: Net DVDD Between Pad Q5-2 (16.925,10.35mm) And Pad C16-2 (17,20.69mm)
+   Violation between Un-Routed Net Constraint: Net DVDD Between Pad C17-2 (3,28.31mm) And Pad IC9-8 (3.05,43.05mm)
    Violation between Un-Routed Net Constraint: Net DISP_DOUT Between Pad DISP-33 (6.35,4.54mm) And Pad IC2-27 (9.25,14.275mm)
    Violation between Un-Routed Net Constraint: Net DISP_DIN Between Pad DISP-31 (1.27,4.54mm) And Pad IC2-26 (8.75,14.275mm)
    Violation between Un-Routed Net Constraint: Net DISP_CS Between Pad DISP-30 (-1.27,4.54mm) And Pad IC2-29 (10.25,14.275mm)
    Violation between Un-Routed Net Constraint: Net DISP_CLK Between Pad DISP-29 (-3.81,4.54mm) And Pad IC2-28 (9.75,14.275mm)
    Violation between Un-Routed Net Constraint: Net CTS Between Pad IC2-2 (2.275,23.25mm) And Pad IC9-10 (4.35,43.05mm)
    Violation between Un-Routed Net Constraint: Net DISP_H_CS Between Pad DISP-6 (11.43,2mm) And Pad IC2-35 (13.725,17.25mm)
-   Violation between Un-Routed Net Constraint: Net CHARGING Between Pad J3-2 (-23.5,30mm) And Pad IC2-36 (13.725,17.75mm)
-   Violation between Un-Routed Net Constraint: Net CHARGER+ Between Pad IC5-3 (-11.375,27.74mm) And Pad IC5-1 (-11.375,29.64mm)
-   Violation between Un-Routed Net Constraint: Net CHARGER+ Between Pad IC7-3 (-11.375,19.74mm) And Pad IC7-1 (-11.375,21.64mm)
-   Violation between Un-Routed Net Constraint: Net CHARGER+ Between Pad IC6-3 (-4.375,34.05mm) And Pad IC6-1 (-4.375,35.95mm)
-   Violation between Un-Routed Net Constraint: Net CHARGER+ Between Pad C42-2 (-14,29.38mm) And Pad IC5-1 (-11.375,29.64mm)
-   Violation between Un-Routed Net Constraint: Net CHARGER+ Between Pad C38-2 (-14,21.38mm) And Pad IC7-1 (-11.375,21.64mm)
-   Violation between Un-Routed Net Constraint: Net CHARGER+ Between Pad C36-2 (-14,25.38mm) And Pad C42-2 (-14,29.38mm)
-   Violation between Un-Routed Net Constraint: Net CHARGER+ Between Pad IC7-3 (-11.375,19.74mm) And Pad IC8-5 (-8.875,17.34mm)
-   Violation between Un-Routed Net Constraint: Net CHARGER+ Between Pad IC4-C2 (-20,21.19mm) And Pad C38-2 (-14,21.38mm)
-   Violation between Un-Routed Net Constraint: Net CHARGER+ Between Pad J3-1 (-23.5,32mm) And Pad C42-2 (-14,29.38mm)
-   Violation between Un-Routed Net Constraint: Net CHARGER+ Between Pad C38-2 (-14,21.38mm) And Pad C36-2 (-14,25.38mm)
-   Violation between Un-Routed Net Constraint: Net CHARGER+ Between Pad IC5-1 (-11.375,29.64mm) And Pad IC6-3 (-4.375,34.05mm)
-   Violation between Un-Routed Net Constraint: Net BYPASS Between Pad IC4-B3 (-20.5,20.69mm) And Pad C41-1 (-17,21.38mm)
+   Violation between Un-Routed Net Constraint: Net CHARGING Between Pad J3-2 (-23.5,30mm) And Pad R70-2 (-14,16.325mm)
+   Violation between Un-Routed Net Constraint: Net CHARGING Between Pad R70-2 (-14,16.325mm) And Pad IC2-36 (13.725,17.75mm)
+   Violation between Un-Routed Net Constraint: Net VBUS Between Pad IC7-3 (-11.375,20.05mm) And Pad IC7-1 (-11.375,21.95mm)
+   Violation between Un-Routed Net Constraint: Net VBUS Between Pad IC5-3 (-11.375,28.05mm) And Pad IC5-1 (-11.375,29.95mm)
+   Violation between Un-Routed Net Constraint: Net VBUS Between Pad IC6-3 (-11.375,24.05mm) And Pad IC6-1 (-11.375,25.95mm)
+   Violation between Un-Routed Net Constraint: Net VBUS Between Pad C38-2 (-14,21.69mm) And Pad IC7-1 (-11.375,21.95mm)
+   Violation between Un-Routed Net Constraint: Net VBUS Between Pad C36-2 (-14,25.69mm) And Pad IC6-1 (-11.375,25.95mm)
+   Violation between Un-Routed Net Constraint: Net VBUS Between Pad C42-2 (-14,29.38mm) And Pad IC5-1 (-11.375,29.95mm)
+   Violation between Un-Routed Net Constraint: Net VBUS Between Pad IC4-C2 (-20,21.5mm) And Pad C38-2 (-14,21.69mm)
+   Violation between Un-Routed Net Constraint: Net VBUS Between Pad J3-1 (-23.5,32mm) And Pad C42-2 (-14,29.38mm)
+   Violation between Un-Routed Net Constraint: Net VBUS Between Pad IC7-1 (-11.375,21.95mm) And Pad IC6-3 (-11.375,24.05mm)
+   Violation between Un-Routed Net Constraint: Net VBUS Between Pad IC6-1 (-11.375,25.95mm) And Pad IC5-3 (-11.375,28.05mm)
+   Violation between Un-Routed Net Constraint: Net NetC41_2 Between Pad IC4-B3 (-20.5,21mm) And Pad C41-2 (-17,20.31mm)
    Violation between Un-Routed Net Constraint: Net BSL_TX Between Pad IC2-33 (13.725,16.25mm) And Pad J4-12 (19.29,34.92mm)
    Violation between Un-Routed Net Constraint: Net BSL_RX Between Pad IC2-32 (11.75,14.275mm) And Pad J4-14 (19.29,32.38mm)
    Violation between Un-Routed Net Constraint: Net AVDD Between Pad IC1-6 (-10.75,60.2mm) And Pad IC1-5 (-10.25,60.2mm)
    Violation between Un-Routed Net Constraint: Net AVDD Between Pad IC1-28 (-6.8,56.75mm) And Pad IC1-29 (-6.8,57.25mm)
    Violation between Un-Routed Net Constraint: Net AVDD Between Pad IC1-31 (-6.8,58.25mm) And Pad IC1-32 (-6.8,58.75mm)
    Violation between Un-Routed Net Constraint: Net AVDD Between Pad C12-2 (-15.31,53mm) And Pad C10-2 (-15.31,55mm)
+   Violation between Un-Routed Net Constraint: Net AVDD Between Pad IC6-5 (-8.625,25.95mm) And Pad C37-2 (-6,25.69mm)
    Violation between Un-Routed Net Constraint: Net AVDD Between Pad IC1-32 (-6.8,58.75mm) And Pad R3-2 (-3.325,59mm)
    Violation between Un-Routed Net Constraint: Net AVDD Between Pad C10-2 (-15.31,55mm) And Pad IC1-12 (-13.2,57.25mm)
-   Violation between Un-Routed Net Constraint: Net AVDD Between Pad C37-2 (-6,25.38mm) And Pad IC6-5 (-1.625,35.95mm)
    Violation between Un-Routed Net Constraint: Net AVDD Between Pad IC1-29 (-6.8,57.25mm) And Pad IC1-31 (-6.8,58.25mm)
    Violation between Un-Routed Net Constraint: Net AVDD Between Pad IC1-5 (-10.25,60.2mm) And Pad IC1-32 (-6.8,58.75mm)
    Violation between Un-Routed Net Constraint: Net AVDD Between Pad IC1-12 (-13.2,57.25mm) And Pad IC1-6 (-10.75,60.2mm)
-   Violation between Un-Routed Net Constraint: Net AVDD Between Pad R3-2 (-3.325,59mm) And Pad IC6-5 (-1.625,35.95mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC3-B11 (9.8,60.125mm) And Pad IC3-B10 (10.4,60.125mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC3-B9 (11.125,59.4mm) And Pad IC3-A10 (12.025,59.7mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC3-B10 (10.4,60.125mm) And Pad IC3-A11 (10.7,61.025mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC2-56 (8.25,25.725mm) And Pad IC2-53 (9.75,25.725mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC2-53 (9.75,25.725mm) And Pad IC2-50 (11.25,25.725mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad F1-3 (11.238,67mm) And Pad F1-1 (12.762,67mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C50-1 (10,44.69mm) And Pad C51-1 (10,46.31mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C29-1 (15.69,59mm) And Pad C26-1 (17.31,59mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C30-1 (15.69,61mm) And Pad C27-1 (17.31,61mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C34-1 (10,49.31mm) And Pad C28-1 (12,49.31mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C17-1 (3,29.69mm) And Pad C22-1 (5,29.69mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C14-1 (17,25.31mm) And Pad C18-1 (19,25.31mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C35-1 (0.31,55mm) And Pad C24-1 (0.31,57mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C22-1 (5,29.69mm) And Pad X3-2 (6.95,29.75mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad X3-4 (9.05,28.25mm) And Pad C21-1 (11,28.31mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C32-1 (15.69,53mm) And Pad X4-2 (15.762,54.984mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC3-A28 (3.975,55.5mm) And Pad IC3-A24 (3.975,57.9mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad X4-2 (15.762,54.984mm) And Pad C33-1 (18,55.31mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC2-62 (5.25,25.725mm) And Pad IC2-56 (8.25,25.725mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C42-1 (-14,28mm) And Pad IC5-2 (-11.375,28.69mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C38-1 (-14,20mm) And Pad IC7-2 (-11.375,20.69mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC2-39 (13.725,19.25mm) And Pad C16-1 (17,19.31mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC2-17 (4.25,14.275mm) And Pad C15-1 (5,11.69mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C15-1 (5,11.69mm) And Pad C58-1 (7,10.31mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad X4-4 (14.238,57.016mm) And Pad C29-1 (15.69,59mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC3-B3 (11.125,55.8mm) And Pad IC3-B9 (11.125,59.4mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C20-2 (13.69,32mm) And Pad C19-2 (15,29.69mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC3-B34 (9.2,53.875mm) And Pad IC3-B3 (11.125,55.8mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C25-1 (8.69,63mm) And Pad IC3-B11 (9.8,60.125mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C23-1 (4.31,63mm) And Pad C25-1 (8.69,63mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC7-2 (-11.375,20.69mm) And Pad IC8-3 (-11.125,16.04mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC5-2 (-11.375,28.69mm) And Pad C43-1 (-6,28mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC7-2 (-11.375,20.69mm) And Pad C39-1 (-6,20mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC9-7 (3.05,48.95mm) And Pad C34-1 (10,49.31mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C20-2 (13.69,32mm) And Pad J4-9 (16.75,37.46mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad J3-3 (-23.5,28mm) And Pad C42-1 (-14,28mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad DISP-20 (-24.13,2mm) And Pad J3-3 (-23.5,28mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC3-B10 (10.4,60.125mm) And Pad IC3-B9 (11.125,59.4mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C29-1 (15.69,59mm) And Pad C30-1 (15.69,61mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C21-1 (11,28.31mm) And Pad IC2-50 (11.25,25.725mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C51-1 (10,46.31mm) And Pad C34-1 (10,49.31mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad X4-4 (14.238,57.016mm) And Pad X4-2 (15.762,54.984mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad X3-2 (6.95,29.75mm) And Pad X3-4 (9.05,28.25mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C35-1 (0.31,55mm) And Pad IC3-A28 (3.975,55.5mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C21-1 (11,28.31mm) And Pad C19-2 (15,29.69mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C16-1 (17,19.31mm) And Pad C14-1 (17,25.31mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC3-A11 (10.7,61.025mm) And Pad F1-3 (11.238,67mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC7-2 (-11.375,20.69mm) And Pad IC5-2 (-11.375,28.69mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC2-17 (4.25,14.275mm) And Pad IC2-62 (5.25,25.725mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC3-B3 (11.125,55.8mm) And Pad X4-4 (14.238,57.016mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC3-B34 (9.2,53.875mm) And Pad C34-1 (10,49.31mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC3-A24 (3.975,57.9mm) And Pad C23-1 (4.31,63mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad IC2-50 (11.25,25.725mm) And Pad C14-1 (17,25.31mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C43-1 (-6,28mm) And Pad C17-1 (3,29.69mm)
-   Violation between Un-Routed Net Constraint: Net DGND Between Pad C50-1 (10,44.69mm) And Pad J4-9 (16.75,37.46mm)
+   Violation between Un-Routed Net Constraint: Net AVDD Between Pad IC1-28 (-6.8,56.75mm) And Pad C37-2 (-6,25.69mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC3-B11 (9.8,60.125mm) And Pad IC3-B10 (10.4,60.125mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC4-B2 (-20,21mm) And Pad IC4-C1 (-19.5,21.5mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC3-B9 (11.125,59.4mm) And Pad IC3-A10 (12.025,59.7mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC3-B10 (10.4,60.125mm) And Pad IC3-A11 (10.7,61.025mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC2-56 (8.25,25.725mm) And Pad IC2-53 (9.75,25.725mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC2-53 (9.75,25.725mm) And Pad IC2-50 (11.25,25.725mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad F1-3 (11.238,67mm) And Pad F1-1 (12.762,67mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C30-1 (15.69,61mm) And Pad C27-1 (17.31,61mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C29-1 (15.69,59mm) And Pad C26-1 (17.31,59mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C34-1 (10,49.31mm) And Pad C28-1 (12,49.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C14-1 (17,25.31mm) And Pad C18-1 (19,25.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C17-1 (3,29.69mm) And Pad C22-1 (5,29.69mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C50-1 (11.69,45mm) And Pad C51-1 (11.69,47mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C35-1 (0.31,55mm) And Pad C24-1 (0.31,57mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C22-1 (5,29.69mm) And Pad X3-2 (6.95,29.75mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad X3-4 (9.05,28.25mm) And Pad C21-1 (11,28.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C32-1 (15.69,53mm) And Pad X4-2 (15.762,54.984mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC3-A28 (3.975,55.5mm) And Pad IC3-A24 (3.975,57.9mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad X4-2 (15.762,54.984mm) And Pad C33-1 (18,55.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad R70-1 (-14,17.675mm) And Pad C38-1 (-14,20.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC4-C1 (-19.5,21.5mm) And Pad C41-1 (-17,21.69mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad R9-1 (-17,17.675mm) And Pad R70-1 (-14,17.675mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC2-62 (5.25,25.725mm) And Pad IC2-56 (8.25,25.725mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C38-1 (-14,20.31mm) And Pad IC7-2 (-11.375,21mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC2-17 (4.25,14.275mm) And Pad C15-1 (5,11.69mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC2-39 (13.725,19.25mm) And Pad C16-1 (17,19.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C15-1 (5,11.69mm) And Pad C58-1 (7,10.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad X4-4 (14.238,57.016mm) And Pad C29-1 (15.69,59mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC3-B3 (11.125,55.8mm) And Pad IC3-B9 (11.125,59.4mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C20-2 (13.69,32mm) And Pad C19-2 (15,29.69mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C42-1 (-14,28mm) And Pad IC5-2 (-11.375,29mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C40-1 (-23,20.31mm) And Pad IC4-B2 (-20,21mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC3-B34 (9.2,53.875mm) And Pad IC3-B3 (11.125,55.8mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C25-1 (8.69,63mm) And Pad IC3-B11 (9.8,60.125mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad R70-1 (-14,17.675mm) And Pad IC8-3 (-11.125,16.35mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C23-1 (4.31,63mm) And Pad C25-1 (8.69,63mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC7-2 (-11.375,21mm) And Pad C39-1 (-6,20.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC5-2 (-11.375,29mm) And Pad C43-1 (-6,28.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC9-7 (3.05,48.95mm) And Pad C34-1 (10,49.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad J3-3 (-23.5,28mm) And Pad C40-1 (-23,20.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C20-2 (13.69,32mm) And Pad J4-9 (16.75,37.46mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad R66-1 (-12,49.325mm) And Pad IC9-7 (3.05,48.95mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad DISP-20 (-24.13,2mm) And Pad C40-1 (-23,20.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad J2-1 (-19,76mm) And Pad R66-1 (-12,49.325mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC3-B10 (10.4,60.125mm) And Pad IC3-B9 (11.125,59.4mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C29-1 (15.69,59mm) And Pad C30-1 (15.69,61mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C51-1 (11.69,47mm) And Pad C28-1 (12,49.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C21-1 (11,28.31mm) And Pad IC2-50 (11.25,25.725mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad X4-4 (14.238,57.016mm) And Pad X4-2 (15.762,54.984mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad X3-2 (6.95,29.75mm) And Pad X3-4 (9.05,28.25mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad R9-1 (-17,17.675mm) And Pad C41-1 (-17,21.69mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C35-1 (0.31,55mm) And Pad IC3-A28 (3.975,55.5mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C21-1 (11,28.31mm) And Pad C19-2 (15,29.69mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C16-1 (17,19.31mm) And Pad C14-1 (17,25.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC3-A11 (10.7,61.025mm) And Pad F1-3 (11.238,67mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C38-1 (-14,20.31mm) And Pad C42-1 (-14,28mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC2-17 (4.25,14.275mm) And Pad IC2-62 (5.25,25.725mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC3-B3 (11.125,55.8mm) And Pad X4-4 (14.238,57.016mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC3-B34 (9.2,53.875mm) And Pad C34-1 (10,49.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC3-A24 (3.975,57.9mm) And Pad C23-1 (4.31,63mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad IC2-50 (11.25,25.725mm) And Pad C14-1 (17,25.31mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C43-1 (-6,28.31mm) And Pad C17-1 (3,29.69mm)
+   Violation between Un-Routed Net Constraint: Net PACK- Between Pad C50-1 (11.69,45mm) And Pad J4-9 (16.75,37.46mm)
    Violation between Un-Routed Net Constraint: Net AFEVDD Between Pad C11-2 (-8.69,49mm) And Pad C13-2 (-8.69,51mm)
    Violation between Un-Routed Net Constraint: Net AFEVDD Between Pad IC1-23 (-8.75,53.8mm) And Pad C13-2 (-8.69,51mm)
-   Violation between Un-Routed Net Constraint: Net AFEVDD Between Pad C11-2 (-8.69,49mm) And Pad FB1-2 (-3,27.64mm)
+   Violation between Un-Routed Net Constraint: Net AFEVDD Between Pad C11-2 (-8.69,49mm) And Pad FB1-2 (-3,27.95mm)
    Violation between Un-Routed Net Constraint: Net AFE_DRDY Between Pad IC1-22 (-9.25,53.8mm) And Pad IC2-42 (13.725,20.75mm)
    Violation between Un-Routed Net Constraint: Net DISP_DRDY Between Pad DISP-34 (8.89,4.54mm) And Pad IC2-41 (13.725,20.25mm)
-   Violation between Un-Routed Net Constraint: Net DISP_LED_VDD Between Pad R87-1 (15,11.675mm) And Pad Q5-1 (16.925,11.65mm)
-   Violation between Un-Routed Net Constraint: Net DISP_LED_VDD Between Pad IC2-11 (2.275,18.75mm) And Pad R87-1 (15,11.675mm)
+   Violation between Un-Routed Net Constraint: Net DISP_SLEEP Between Pad R87-1 (15,11.675mm) And Pad Q5-1 (16.925,11.65mm)
+   Violation between Un-Routed Net Constraint: Net DISP_SLEEP Between Pad IC2-10 (2.275,19.25mm) And Pad R87-1 (15,11.675mm)
    Violation between Un-Routed Net Constraint: Net JTAG_RST Between Pad R58-1 (9,10.325mm) And Pad J4-11 (16.75,34.92mm)
    Violation between Un-Routed Net Constraint: Net NetDISP_2 Between Pad Q5-3 (19.075,11mm) And Pad DISP-2 (21.59,2mm)
+   Violation between Un-Routed Net Constraint: Net NetDISP_2 Between Pad DISP-17 (-16.51,2mm) And Pad DISP-2 (21.59,2mm)
    Violation between Un-Routed Net Constraint: Net NetIC3_A26 Between Pad IC3-A26 (3.975,56.7mm) And Pad IC9-3 (5.65,48.95mm)
    Violation between Un-Routed Net Constraint: Net NetIC3_A29 Between Pad IC3-A29 (3.975,54.9mm) And Pad IC9-5 (4.35,48.95mm)
    Violation between Un-Routed Net Constraint: Net NetIC3_A32 Between Pad IC9-4 (5,48.95mm) And Pad IC3-A32 (5.9,52.975mm)
    Violation between Un-Routed Net Constraint: Net NetIC3_A33 Between Pad IC9-2 (6.3,48.95mm) And Pad IC3-A33 (6.5,52.975mm)
-Rule Violations :249
+Rule Violations :256
 
 Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
    Violation between Track (12.07mm,72.465mm)(12.07mm,74.495mm)  Top Layer and 
@@ -553,5 +578,5 @@ Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
 Rule Violations :12
 
 
-Violations Detected : 391
+Violations Detected : 407
 Time Elapsed        : 00:00:01
