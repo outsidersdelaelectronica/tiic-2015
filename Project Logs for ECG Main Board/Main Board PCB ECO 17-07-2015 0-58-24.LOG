@@ -1,0 +1,31 @@
+Removed Pin From Net: NetName=NetIC2_25 Pin=IC3-A6
+Removed Pin From Net: NetName=TMS Pin=IC3-A25
+Removed Pin From Net: NetName=RFVDD Pin=IC9-1
+Removed Pin From Net: NetName=NetIC3_A33 Pin=IC9-2
+Removed Pin From Net: NetName=DGND Pin=IC9-7
+Removed Pin From Net: NetName=DVDD Pin=IC9-8
+Removed Pin From Net: NetName=CTS Pin=IC9-10
+Removed Pin From Net: NetName=RTS Pin=IC9-11
+Removed Pin From Net: NetName=NetIC2_64 Pin=IC9-12
+Removed Pin From Net: NetName=NetIC2_1 Pin=IC9-13
+Removed Pin From Net: NetName=DVDD Pin=IC9-14
+Change Component DesignItemId : Designator=IC9 Old DesignItemId=LSF0204 New DesignItemId=TXB0106
+Change Component Footprint: Designator=IC9 Old Footprint=LSF0204 New Footprint=TXB0106
+Change Component Comment : Designator=IC9 Old Comment=LSF0204 New Comment=TXB0106
+Added Pin To Net: NetName=NetIC3_A33 Pin=IC9-1
+Added Pin To Net: NetName=RFVDD Pin=IC9-2
+Added Pin To Net: NetName=RFVDD Pin=IC9-8
+Added Pin To Net: NetName=DGND Pin=IC9-9
+Added Pin To Net: NetName=NetIC2_25 Pin=IC9-10
+Added Pin To Net: NetName=TMS Pin=IC9-11
+Added Pin To Net: NetName=CTS Pin=IC9-12
+Added Pin To Net: NetName=RTS Pin=IC9-13
+Added Pin To Net: NetName=NetIC2_64 Pin=IC9-14
+Added Pin To Net: NetName=DVDD Pin=IC9-15
+Added Pin To Net: NetName=NetIC2_1 Pin=IC9-16
+Added Pin To Net: NetName=ACLK_RF_RFVDD Pin=IC3-A25
+Added Pin To Net: NetName=ACLK_RF_RFVDD Pin=IC9-6
+Added Net: Name=ACLK_RF_RFVDD
+Added Pin To Net: NetName=NSHUTD_RFVDD Pin=IC3-A6
+Added Pin To Net: NetName=NSHUTD_RFVDD Pin=IC9-7
+Added Net: Name=NSHUTD_RFVDD
