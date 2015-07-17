@@ -1,0 +1,10 @@
+Added Component: Designator=con3(14pin_conector)
+Added Component: Designator=con4(40pin_conector)
+Added Component: Designator=con5(10pin_conector)
+Added Pin To Net: NetName=AGND Pin=con4-21
+Added Pin To Net: NetName=DVDD Pin=con4-22
+Added Pin To Net: NetName=DVDD Pin=con4-39
+Added Pin To Net: NetName=AGND Pin=con5-5
+Added Member To Class: ClassName=U_MCU Member=Component con3 14pin_conector
+Added Member To Class: ClassName=U_MCU Member=Component con4 40pin_conector
+Added Member To Class: ClassName=U_MCU Member=Component con5 10pin_conector

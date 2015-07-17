@@ -1,0 +1,6 @@
+Change Component DesignItemId : Designator=DISP Old DesignItemId=DISPLAY New DesignItemId=Touchscreen
+Change Component Comment : Designator=DISP Old Comment=DISPLAY New Comment=Touchscreen
+Added Component: Designator=R88(R0603)
+Added Pin To Net: NetName=TCK Pin=R88-1
+Added Pin To Net: NetName=DVDD Pin=R88-2
+Added Member To Class: ClassName=U_MCU Member=Component R88 10K

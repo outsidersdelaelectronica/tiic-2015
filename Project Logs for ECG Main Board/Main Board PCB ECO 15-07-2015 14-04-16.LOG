@@ -1,0 +1,10 @@
+Removed Pin From Net: NetName=AGND Pin=C50-1
+Removed Pin From Net: NetName=DVDD Pin=C50-2
+Removed Pin From Net: NetName=AGND Pin=C51-1
+Removed Pin From Net: NetName=RFVDD Pin=C51-2
+Removed Member From Class: ClassName=U_RF Member=C50
+Removed Member From Class: ClassName=U_Supply Member=C50
+Removed Member From Class: ClassName=U_RF Member=C51
+Removed Member From Class: ClassName=U_Supply Member=C51
+Added Member To Class: ClassName=U_Supply Member=Component C40 1u
+Added Member To Class: ClassName=U_Supply Member=Component C41 0.47u

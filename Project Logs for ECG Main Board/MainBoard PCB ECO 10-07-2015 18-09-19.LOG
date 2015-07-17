@@ -1,0 +1,10 @@
+Removed Member From Class: ClassName=U_MCU Member=AB26T
+Removed Member From Class: ClassName=U_RF Member=X3
+Change Component Designator: OldDesignator=X3 NewDesignator=X4
+Added Component: Designator=X1(xtal_32768)
+Added Pin To Net: NetName=NetAB26T_IN Pin=X1-1
+Added Pin To Net: NetName=NetAB26T_OUT Pin=X1-2
+Change Net Name : Old Net Name=NetAB26T_IN New Net Name=NetC19_1
+Change Net Name : Old Net Name=NetAB26T_OUT New Net Name=NetC20_1
+Added Member To Class: ClassName=U_MCU Member=Component X1 XTAL_32768
+Added Member To Class: ClassName=U_RF Member=Component X4 XTAL_26_MHZ
