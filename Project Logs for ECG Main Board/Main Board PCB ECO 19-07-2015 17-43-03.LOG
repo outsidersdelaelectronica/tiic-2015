@@ -1,0 +1,7 @@
+Change Net Name : Old Net Name=NetIC1_18 New Net Name=AFE_CS
+Change Net Name : Old Net Name=NetIC1_19 New Net Name=AFE_DIN
+Change Net Name : Old Net Name=NetIC1_20 New Net Name=AFE_SCLK
+Change Net Name : Old Net Name=NetIC1_21 New Net Name=AFE_DOUT
+Change Net Name : Old Net Name=NetIC2_25 New Net Name=NSHUTD_DVDD
+Change Net Name : Old Net Name=TMS New Net Name=ACLK_RF_DVDD
+Added Member To Class: ClassName=U_MCU Member=Component R87 10K
