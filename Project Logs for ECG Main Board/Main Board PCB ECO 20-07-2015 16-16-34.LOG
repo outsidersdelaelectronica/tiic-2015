@@ -1,0 +1,47 @@
+Removed Pin From Net: NetName=BUZZER Pin=Q9-1
+Added Component: Designator=D1(LED3015M)
+Added Component: Designator=D2(LED3015M)
+Added Component: Designator=D3(LED3015M)
+Added Component: Designator=Q10(SOT65P210X110-3N)
+Added Component: Designator=Q12(SOT65P210X110-3N)
+Added Component: Designator=R210(R0603)
+Added Component: Designator=R211(R0603)
+Added Component: Designator=R212(R0603)
+Added Pin To Net: NetName=DGND Pin=D1-2
+Added Pin To Net: NetName=CHARGING Pin=Q9-1
+Added Pin To Net: NetName=DGND Pin=Q10-2
+Added Pin To Net: NetName=BUZZER Pin=Q12-1
+Added Pin To Net: NetName=DGND Pin=Q12-2
+Added Pin To Net: NetName=DVDD Pin=R210-2
+Added Pin To Net: NetName=DVDD Pin=R211-2
+Added Pin To Net: NetName=DVDD Pin=R212-2
+Added Pin To Net: NetName=LED Pin=IC2-5
+Added Pin To Net: NetName=LED Pin=Q10-1
+Added Net: Name=LED
+Added Pin To Net: NetName=NetD1_1 Pin=D1-1
+Added Pin To Net: NetName=NetD1_1 Pin=R210-1
+Added Net: Name=NetD1_1
+Added Pin To Net: NetName=NetD2_1 Pin=D2-1
+Added Pin To Net: NetName=NetD2_1 Pin=R211-1
+Added Net: Name=NetD2_1
+Added Pin To Net: NetName=NetD2_2 Pin=D2-2
+Added Pin To Net: NetName=NetD2_2 Pin=Q9-3
+Added Net: Name=NetD2_2
+Added Pin To Net: NetName=NetD3_1 Pin=D3-1
+Added Pin To Net: NetName=NetD3_1 Pin=R212-1
+Added Net: Name=NetD3_1
+Added Pin To Net: NetName=NetD3_2 Pin=D3-2
+Added Pin To Net: NetName=NetD3_2 Pin=Q10-3
+Added Net: Name=NetD3_2
+Added Pin To Net: NetName=NetQ12_3 Pin=Q12-3
+Added Pin To Net: NetName=NetQ12_3 Pin=Z1-2
+Added Pin To Net: NetName=NetQ12_3 Pin=Z1-2
+Added Net: Name=NetQ12_3
+Added Member To Class: ClassName=U_Supply Member=Component D1 LED
+Added Member To Class: ClassName=U_Supply Member=Component D2 LED
+Added Member To Class: ClassName=U_MCU Member=Component D3 LED
+Added Member To Class: ClassName=U_Supply Member=Component Q9 2N7002
+Added Member To Class: ClassName=U_MCU Member=Component Q10 2N7002
+Added Member To Class: ClassName=U_Supply Member=Component R210 2.2K
+Added Member To Class: ClassName=U_Supply Member=Component R211 2.2K
+Added Member To Class: ClassName=U_MCU Member=Component R212 2.2K
