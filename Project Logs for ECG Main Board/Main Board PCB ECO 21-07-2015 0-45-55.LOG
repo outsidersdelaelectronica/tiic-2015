@@ -1,0 +1,16 @@
+Added Component: Designator=SP1(Spacer 11mm M3x0.5)
+Added Component: Designator=SP2(Spacer 11mm M3x0.5)
+Added Component: Designator=SP3(Spacer 11mm M3x0.5)
+Added Component: Designator=SP4(Spacer 11mm M3x0.5)
+Added Component: Designator=SP5(Spacer 7mm M3x0.5 Screw)
+Added Component: Designator=SP6(Spacer 7mm M3x0.5 Screw)
+Added Component: Designator=SP7(Spacer 7mm M3x0.5 Screw)
+Added Component: Designator=SP8(Spacer 7mm M3x0.5 Screw)
+Added Member To Class: ClassName=U_Mechanical Member=Component SP1 Spacer
+Added Member To Class: ClassName=U_Mechanical Member=Component SP2 Spacer
+Added Member To Class: ClassName=U_Mechanical Member=Component SP3 Spacer
+Added Member To Class: ClassName=U_Mechanical Member=Component SP4 Spacer
+Added Member To Class: ClassName=U_Mechanical Member=Component SP5 Spacer
+Added Member To Class: ClassName=U_Mechanical Member=Component SP6 Spacer
+Added Member To Class: ClassName=U_Mechanical Member=Component SP7 Spacer
+Added Member To Class: ClassName=U_Mechanical Member=Component SP8 Spacer
