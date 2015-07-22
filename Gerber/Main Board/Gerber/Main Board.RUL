@@ -7,4 +7,3 @@ RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion|Scope=Board|Minimum=4.
 RuleKind=Clearance|RuleName=ClearanceBLE|Scope=Board|Minimum=4.92
 RuleKind=Clearance|RuleName=ClearanceTrackPolygon|Scope=Board|Minimum=4.92
 RuleKind=Clearance|RuleName=ClearanceFuelGauge|Scope=Board|Minimum=4.92
-RuleKind=ShortCircuit|RuleName=ShortCircuitANT|Scope=Board|Allowed=1

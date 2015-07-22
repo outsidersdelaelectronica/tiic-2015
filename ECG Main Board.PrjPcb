@@ -309,10 +309,14 @@ GenerateClassCluster=0
 DocumentUniqueId=
 
 [GeneratedDocument1]
-DocumentPath=Project Outputs for ECG Main Board\Design Rule Check - Main Board.html
+DocumentPath=BOM\Main Board\BOM\Bill of Materials-ECG Main Board.xls
 DItemRevisionGUID=
 
 [GeneratedDocument2]
+DocumentPath=Project Outputs for ECG Main Board\Design Rule Check - Main Board.html
+DItemRevisionGUID=
+
+[GeneratedDocument3]
 DocumentPath=Project Outputs for ECG Main Board\Move Component(s) Origin To Grid - Main Board.html
 DItemRevisionGUID=
 
