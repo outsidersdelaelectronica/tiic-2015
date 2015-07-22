@@ -1,0 +1,4 @@
+Change Component DesignItemId : Designator=F1 Old DesignItemId=LFB212G45BA1A234 New DesignItemId=LFB212G45SG8A127
+Change Component Comment : Designator=F1 Old Comment=LFB212G45BA1A234 New Comment=RF Filter
+Change Component Description : Designator=F1 Old Description= New Description=RF Filter 2.4 GHz
+Change Component Kind : Designator=ANT Old Kind=Standard New Kind=Standard (No BOM)
