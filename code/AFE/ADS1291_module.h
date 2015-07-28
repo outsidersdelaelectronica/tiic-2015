@@ -10,6 +10,9 @@
 #ifndef AFE_ADS1291_MODULE_H_
 #define AFE_ADS1291_MODULE_H_
 
+#include <stdint.h>
+
+void	ADS1291_setup();
 void	ADS1291_initialize();
 
 void 	ADS1291_command(uint8_t command);
