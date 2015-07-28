@@ -11,8 +11,6 @@
 #include "ADS1291_constants.h"
 #include <stdint.h>
 
-#define ADS1291REGNUM	12
-
 void ADS1291_initialize()
 {
 	//Configure AFE control lines
@@ -30,6 +28,7 @@ void ADS1291_initialize()
 														//P7.4 = AFE clock select
 
 		PM5CTL0 &= ~LOCKLPM5;						//Disable the GPIO power-on default high-impedance mode
+
 
 	//Hardware AFE reset, clock selection and conversion start
 		P5OUT &= ~BIT7;								//Hold start signal low
@@ -57,7 +56,6 @@ void ADS1291_initialize()
 		UCB1CTLW0 &= ~UCSWRST;						//Get USCI_B1 out of reset state
 
 
-
 	//AFE reset and stop continuous data conversion mode
 		P7OUT |= BIT3;								//Power-On-Reset: hold reset line high for 1 second
 		__delay_cycles(1000);							//1 second
@@ -80,7 +78,6 @@ void ADS1291_initialize()
 		ADS1291_command(OFFSETCAL);					// | Calibrate
 		ADS1291_write_register(REG_CH1SET, 0x00);	// |
 		ADS1291_write_register(REG_RESP2, 0x07);	//Disable calibration
-
 
 
 	//Start capturing data
