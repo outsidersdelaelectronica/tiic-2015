@@ -204,16 +204,19 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 #error Compiler not supported!
 #endif
 {
-	switch (__even_in_range(P1IV, ))
+	switch (__even_in_range(P1IV, 16))
 	{
-		case :							//If AFE has data ready for transmission
+		case 6:	//P1.2								//If AFE has data ready for transmission
 			if (UCB1IFG & UCTXIFG)					//If SPI TX buffer is empty
 			{
 				P4OUT &= ~BIT4;							//Enable CS
 				UCB1TXBUF = txBuffer[txBufferIdx];			//Transmit dummy byte
 				P4OUT |= BIT4;							//Disable CS
 
-				UCB1RXBUF;
+				if(!circularBuffer_isFull(&ecgSignal))	//If circular buffer is not full
+				{
+					circularBuffer_write(&ecgSignal, UCB1RXBUF);	//Write value
+				}
 
 				P1IFG &= ~BIT2;                           // Clear P1.2 flag
 			}
