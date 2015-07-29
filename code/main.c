@@ -13,8 +13,9 @@ int main(void) {
 
 	//Setups
 		clocks_setup();								//Clock configuration
-		ADS1291_setup();							//AFE ports and serial configuration
 		circularBuffer_setup(&ecgSignal);			//ECG signal storing buffer setup
+		ADS1291_setup();							//AFE ports and serial configuration
+		touch_setup();								//Touchpad ports and serial configuration
 
 	PM5CTL0 &= ~LOCKLPM5;						//Disable the GPIO power-on default high-impedance mode
 
