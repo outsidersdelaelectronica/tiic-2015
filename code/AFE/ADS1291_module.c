@@ -163,6 +163,9 @@ void ADS1291_write_register(uint8_t address, uint8_t value)
 }
 
 
+/*
+ * SPI B1 ISR
+ */
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
 #pragma vector=USCI_B1_VECTOR
 __interrupt void USCI_B1_ISR(void)
@@ -192,36 +195,4 @@ void __attribute__ ((interrupt(USCI_B1_VECTOR))) USCI_B1_ISR (void)
 		default:
 			break;
   }
-}
-
-
-#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
-#pragma vector=PORT1_VECTOR
-__interrupt void Port_1(void)
-#elif defined(__GNUC__)
-void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
-#else
-#error Compiler not supported!
-#endif
-{
-	switch (__even_in_range(P1IV, 16))
-	{
-		case 6:	//P1.2								//If AFE has data ready for transmission
-			if (UCB1IFG & UCTXIFG)					//If SPI TX buffer is empty
-			{
-				P4OUT &= ~BIT4;							//Enable CS
-				UCB1TXBUF = txBuffer[txBufferIdx];			//Transmit dummy byte
-				P4OUT |= BIT4;							//Disable CS
-
-				if(!circularBuffer_isFull(&ecgSignal))	//If circular buffer is not full
-				{
-					circularBuffer_write(&ecgSignal, UCB1RXBUF);	//Write received value to circular buffer
-				}
-
-				P1IFG &= ~BIT2;                           // Clear P1.2 flag
-			}
-			break;
-		default:
-			break;
-	}
 }
