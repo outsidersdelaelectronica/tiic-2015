@@ -23,7 +23,7 @@ typedef struct circularBuffer
 
 	uint8_t buffer[BUFFER_SIZE];
 }
-circularBuffer;
+volatile circularBuffer;
 
 void	circularBuffer_setup(circularBuffer* buf);
 

@@ -1,10 +1,10 @@
 ******************************************************************************
                   MSP430 Linker PC v4.4.3                      
 ******************************************************************************
->> Linked Wed Jul 29 13:23:54 2015
+>> Linked Wed Jul 29 17:54:14 2015
 
 OUTPUT FILE NAME:   <tiic_2015_code.out>
-ENTRY POINT SYMBOL: "_c_int00_noargs_noexit"  address: 00004476
+ENTRY POINT SYMBOL: "_c_int00_noargs_noexit"  address: 00004512
 
 
 MEMORY CONFIGURATION
@@ -18,8 +18,8 @@ MEMORY CONFIGURATION
   INFOC                 00001880   00000080  00000000  00000080  RWIX
   INFOB                 00001900   00000080  00000000  00000080  RWIX
   INFOA                 00001980   00000080  00000000  00000080  RWIX
-  RAM                   00001c00   00000800  000001ae  00000652  RWIX
-  FRAM                  00004400   0000bb80  000000c0  0000bac0  RWIX
+  RAM                   00001c00   00000800  000001b6  0000064a  RWIX
+  FRAM                  00004400   0000bb80  0000015e  0000ba22  RWIX
   JTAGSIGNATURE         0000ff80   00000004  00000004  00000000  RWIX  ffff 
   BSLSIGNATURE          0000ff84   00000004  00000004  00000000  RWIX  ffff 
   IPESIGNATURE          0000ff88   00000008  00000008  00000000  RWIX  ffff 
@@ -79,7 +79,7 @@ MEMORY CONFIGURATION
   INT53                 0000fffa   00000002  00000002  00000000  RWIX
   INT54                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FRAM2                 00010000   00004000  000003aa  00003c56  RWIX
+  FRAM2                 00010000   00004000  00000416  00003bea  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -87,12 +87,15 @@ SECTION ALLOCATION MAP
  output                                  attributes/
 section   page    origin      length       input sections
 --------  ----  ----------  ----------   ----------------
-.bss       0    00001c00    0000010c     UNINITIALIZED
+.bss       0    00001c00    00000112     UNINITIALIZED
                   00001c00    00000108     (.common:ecgSignal)
-                  00001d08    00000004     (.common:txBuffer)
+                  00001d08    00000004     (.common:txBufferAFE)
+                  00001d0c    00000004     (.common:txBufferTouch)
+                  00001d10    00000001     (.common:posX)
+                  00001d11    00000001     (.common:posY)
 
-.data      0    00001d0c    00000002     UNINITIALIZED
-                  00001d0c    00000002     ADS1291_module.obj (.data)
+.data      0    00001d12    00000004     UNINITIALIZED
+                  00001d12    00000004     main.obj (.data)
 
 .stack     0    00002360    000000a0     UNINITIALIZED
                   00002360    00000004     rts430x_lc_rd_eabi.lib : boot.obj (.stack)
@@ -106,11 +109,12 @@ section   page    origin      length       input sections
 .sysmem    0    00004400    00000000     UNINITIALIZED
 
 .text:_isr 
-*          0    00004400    00000096     
-                  00004400    0000003e     ADS1291_module.obj (.text:_isr:Port_1)
-                  0000443e    00000038     ADS1291_module.obj (.text:_isr:USCI_B1_ISR)
-                  00004476    0000001a     rts430x_lc_rd_eabi.lib : boot_special.obj (.text:_isr:_c_int00_noargs_noexit)
-                  00004490    00000006                            : isr_trap.obj (.text:_isr:__TI_ISR_TRAP)
+*          0    00004400    00000132     
+                  00004400    000000a2     main.obj (.text:_isr:Port_1)
+                  000044a2    00000038     main.obj (.text:_isr:USCI_A1_ISR)
+                  000044da    00000038     main.obj (.text:_isr:USCI_B1_ISR)
+                  00004512    0000001a     rts430x_lc_rd_eabi.lib : boot_special.obj (.text:_isr:_c_int00_noargs_noexit)
+                  0000452c    00000006                            : isr_trap.obj (.text:_isr:__TI_ISR_TRAP)
 
 .ipestruct 
 *          0    00004400    00000000     UNINITIALIZED
@@ -120,11 +124,12 @@ section   page    origin      length       input sections
 .ipe:_isr 
 *          0    00004400    00000000     UNINITIALIZED
 
-.cinit     0    00004496    0000002a     
-                  00004496    0000000c     (__TI_handler_table)
-                  000044a2    00000008     (.cinit..data.load) [load image, compression = rle]
-                  000044aa    00000006     (.cinit..bss.load) [load image, compression = zero_init]
-                  000044b0    00000010     (__TI_cinit_table)
+.cinit     0    00004532    0000002c     
+                  00004532    0000000c     (__TI_handler_table)
+                  0000453e    00000009     (.cinit..data.load) [load image, compression = rle]
+                  00004547    00000001     --HOLE-- [fill = 0]
+                  00004548    00000006     (.cinit..bss.load) [load image, compression = zero_init]
+                  0000454e    00000010     (__TI_cinit_table)
 
 .init_array 
 *          0    00004400    00000000     UNINITIALIZED
@@ -170,7 +175,7 @@ TIMER2_A0
                   0000ffd8    00000002     rts430x_lc_rd_eabi.lib : int36.obj (.int36)
 
 PORT1      0    0000ffda    00000002     
-                  0000ffda    00000002     ADS1291_module.obj (.int37)
+                  0000ffda    00000002     main.obj (.int37)
 
 TIMER1_A1 
 *          0    0000ffdc    00000002     
@@ -184,10 +189,10 @@ DMA        0    0000ffe0    00000002
                   0000ffe0    00000002     rts430x_lc_rd_eabi.lib : int40.obj (.int40)
 
 USCI_B1    0    0000ffe2    00000002     
-                  0000ffe2    00000002     ADS1291_module.obj (.int41)
+                  0000ffe2    00000002     main.obj (.int41)
 
 USCI_A1    0    0000ffe4    00000002     
-                  0000ffe4    00000002     rts430x_lc_rd_eabi.lib : int42.obj (.int42)
+                  0000ffe4    00000002     main.obj (.int42)
 
 TIMER0_A1 
 *          0    0000ffe6    00000002     
@@ -229,36 +234,37 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.obj (.reset)
 
-.text      0    00010000    000003aa     
-                  00010000    0000008c     ADS1291_module.obj (.text:ADS1291_initialize)
-                  0001008c    00000074     ADS1291_module.obj (.text:ADS1291_setup)
-                  00010100    0000006c     rts430x_lc_rd_eabi.lib : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
-                  0001016c    00000068                            : copy_decompress_rle.obj (.text:__TI_decompress_rle_core)
-                  000101d4    00000060     clocks.obj (.text:clocks_setup)
-                  00010234    00000054     ADS1291_module.obj (.text:ADS1291_write_register)
-                  00010288    00000036     circularBuffer.obj (.text:circularBuffer_write)
-                  000102be    00000028     ADS1291_module.obj (.text:ADS1291_command)
-                  000102e6    00000028     circularBuffer.obj (.text:circularBuffer_setup)
-                  0001030e    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
-                  00010332    00000022     circularBuffer.obj (.text:circularBuffer_isFull)
-                  00010354    00000022     main.obj (.text:main)
-                  00010376    00000014     rts430x_lc_rd_eabi.lib : memcpy.obj (.text:memcpy)
-                  0001038a    00000012                            : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
-                  0001039c    00000006                            : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
-                  000103a2    00000004                            : pre_init.obj (.text:_system_pre_init)
-                  000103a6    00000004                            : exit.obj (.text:abort)
+.text      0    00010000    00000416     
+                  00010000    00000096     ADS1291_module.obj (.text:ADS1291_initialize)
+                  00010096    00000074     ADS1291_module.obj (.text:ADS1291_setup)
+                  0001010a    0000006c     rts430x_lc_rd_eabi.lib : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
+                  00010176    00000068                            : copy_decompress_rle.obj (.text:__TI_decompress_rle_core)
+                  000101de    00000060     clocks.obj (.text:clocks_setup)
+                  0001023e    00000060     touch_module.obj (.text:touch_setup)
+                  0001029e    00000054     ADS1291_module.obj (.text:ADS1291_write_register)
+                  000102f2    00000036     circularBuffer.obj (.text:circularBuffer_write)
+                  00010328    00000028     ADS1291_module.obj (.text:ADS1291_command)
+                  00010350    00000028     circularBuffer.obj (.text:circularBuffer_setup)
+                  00010378    00000026     main.obj (.text:main)
+                  0001039e    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
+                  000103c2    00000020     circularBuffer.obj (.text:circularBuffer_isFull)
+                  000103e2    00000014     rts430x_lc_rd_eabi.lib : memcpy.obj (.text:memcpy)
+                  000103f6    00000012                            : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
+                  00010408    00000006                            : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
+                  0001040e    00000004                            : pre_init.obj (.text:_system_pre_init)
+                  00010412    00000004                            : exit.obj (.text:abort)
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 000044b0 records: 2, size/record: 8, table size: 16
-	.data: load addr=000044a2, load size=00000008 bytes, run addr=00001d0c, run size=00000002 bytes, compression=rle
-	.bss: load addr=000044aa, load size=00000006 bytes, run addr=00001c00, run size=0000010c bytes, compression=zero_init
+__TI_cinit_table @ 0000454e records: 2, size/record: 8, table size: 16
+	.data: load addr=0000453e, load size=00000009 bytes, run addr=00001d12, run size=00000004 bytes, compression=rle
+	.bss: load addr=00004548, load size=00000006 bytes, run addr=00001c00, run size=00000112 bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 00004496 records: 3, size/record: 4, table size: 12
+__TI_handler_table @ 00004532 records: 3, size/record: 4, table size: 12
 	index: 0, handler: __TI_zero_init
 	index: 1, handler: __TI_decompress_rle24
 	index: 2, handler: __TI_decompress_none
@@ -499,10 +505,10 @@ address   name
 00000872  ADC12MEM9               
 00000873  ADC12MEM9_H             
 00000872  ADC12MEM9_L             
-000102be  ADS1291_command         
+00010328  ADS1291_command         
 00010000  ADS1291_initialize      
-0001008c  ADS1291_setup           
-00010234  ADS1291_write_register  
+00010096  ADS1291_setup           
+0001029e  ADS1291_write_register  
 000009c0  AESACTL0                
 000009c1  AESACTL0_H              
 000009c0  AESACTL0_L              
@@ -529,7 +535,7 @@ address   name
 000009ce  AESAXIN_L               
 000004be  BCD2BIN                 
 000004bc  BIN2BCD                 
-000103a6  C$$EXIT                 
+00010412  C$$EXIT                 
 0000043e  CAPTIO0CTL              
 0000043f  CAPTIO0CTL_H            
 0000043e  CAPTIO0CTL_L            
@@ -1240,21 +1246,22 @@ address   name
 0000068e  UCB1TXBUF               
 0000068f  UCB1TXBUF_H             
 0000068e  UCB1TXBUF_L             
-0000443e  USCI_B1_ISR             
+000044a2  USCI_A1_ISR             
+000044da  USCI_B1_ISR             
 0000015c  WDTCTL                  
 0000015d  WDTCTL_H                
 0000015c  WDTCTL_L                
 00002400  __STACK_END             
 000000a0  __STACK_SIZE            
-000044b0  __TI_CINIT_Base         
-000044c0  __TI_CINIT_Limit        
-00004496  __TI_Handler_Table_Base 
-000044a2  __TI_Handler_Table_Limit
+0000454e  __TI_CINIT_Base         
+0000455e  __TI_CINIT_Limit        
+00004532  __TI_Handler_Table_Base 
+0000453e  __TI_Handler_Table_Limit
 UNDEFED   __TI_INITARRAY_Base     
 UNDEFED   __TI_INITARRAY_Limit    
-00004490  __TI_ISR_TRAP           
-0001038a  __TI_decompress_none    
-0001039c  __TI_decompress_rle24   
+0000452c  __TI_ISR_TRAP           
+000103f6  __TI_decompress_none    
+00010408  __TI_decompress_rle24   
 0000ffc6  __TI_int27              
 0000ffc8  __TI_int28              
 0000ffcc  __TI_int30              
@@ -1281,28 +1288,33 @@ UNDEFED   __TI_INITARRAY_Limit
 0000fff8  __TI_int52              
 0000fffa  __TI_int53              
 0000fffc  __TI_int54              
-0001030e  __TI_zero_init          
+0001039e  __TI_zero_init          
 ffffffff  __binit__               
 ffffffff  __c_args__              
-00010100  _auto_init_hold_wdt     
-00004476  _c_int00_noargs_noexit  
+0001010a  _auto_init_hold_wdt     
+00004512  _c_int00_noargs_noexit  
 0000fffe  _reset_vector           
 00002360  _stack                  
-000103a2  _system_pre_init        
-000103a6  abort                   
+0001040e  _system_pre_init        
+00010412  abort                   
 ffffffff  binit                   
-00010332  circularBuffer_isFull   
-000102e6  circularBuffer_setup    
-00010288  circularBuffer_write    
-000101d4  clocks_setup            
+000103c2  circularBuffer_isFull   
+00010350  circularBuffer_setup    
+000102f2  circularBuffer_write    
+000101de  clocks_setup            
 00001c00  ecgSignal               
 00004400  fram_ipe_end            
 00004400  fram_ipe_start          
 00004400  fram_rx_start           
-00010354  main                    
-00010376  memcpy                  
-00001d08  txBuffer                
-00001d0c  txBufferIdx             
+00010378  main                    
+000103e2  memcpy                  
+00001d10  posX                    
+00001d11  posY                    
+0001023e  touch_setup             
+00001d08  txBufferAFE             
+00001d12  txBufferAFEIdx          
+00001d0c  txBufferTouch           
+00001d14  txBufferTouchIdx        
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -2280,21 +2292,26 @@ address   name
 000009ce  AESAXIN_L               
 000009cf  AESAXIN_H               
 00001c00  ecgSignal               
-00001d08  txBuffer                
-00001d0c  txBufferIdx             
+00001d08  txBufferAFE             
+00001d0c  txBufferTouch           
+00001d10  posX                    
+00001d11  posY                    
+00001d12  txBufferAFEIdx          
+00001d14  txBufferTouchIdx        
 00002360  _stack                  
 00002400  __STACK_END             
 00004400  Port_1                  
 00004400  fram_ipe_end            
 00004400  fram_ipe_start          
 00004400  fram_rx_start           
-0000443e  USCI_B1_ISR             
-00004476  _c_int00_noargs_noexit  
-00004490  __TI_ISR_TRAP           
-00004496  __TI_Handler_Table_Base 
-000044a2  __TI_Handler_Table_Limit
-000044b0  __TI_CINIT_Base         
-000044c0  __TI_CINIT_Limit        
+000044a2  USCI_A1_ISR             
+000044da  USCI_B1_ISR             
+00004512  _c_int00_noargs_noexit  
+0000452c  __TI_ISR_TRAP           
+00004532  __TI_Handler_Table_Base 
+0000453e  __TI_Handler_Table_Limit
+0000454e  __TI_CINIT_Base         
+0000455e  __TI_CINIT_Limit        
 0000ffc6  __TI_int27              
 0000ffc8  __TI_int28              
 0000ffcc  __TI_int30              
@@ -2323,26 +2340,27 @@ address   name
 0000fffc  __TI_int54              
 0000fffe  _reset_vector           
 00010000  ADS1291_initialize      
-0001008c  ADS1291_setup           
-00010100  _auto_init_hold_wdt     
-000101d4  clocks_setup            
-00010234  ADS1291_write_register  
-00010288  circularBuffer_write    
-000102be  ADS1291_command         
-000102e6  circularBuffer_setup    
-0001030e  __TI_zero_init          
-00010332  circularBuffer_isFull   
-00010354  main                    
-00010376  memcpy                  
-0001038a  __TI_decompress_none    
-0001039c  __TI_decompress_rle24   
-000103a2  _system_pre_init        
-000103a6  C$$EXIT                 
-000103a6  abort                   
+00010096  ADS1291_setup           
+0001010a  _auto_init_hold_wdt     
+000101de  clocks_setup            
+0001023e  touch_setup             
+0001029e  ADS1291_write_register  
+000102f2  circularBuffer_write    
+00010328  ADS1291_command         
+00010350  circularBuffer_setup    
+00010378  main                    
+0001039e  __TI_zero_init          
+000103c2  circularBuffer_isFull   
+000103e2  memcpy                  
+000103f6  __TI_decompress_none    
+00010408  __TI_decompress_rle24   
+0001040e  _system_pre_init        
+00010412  C$$EXIT                 
+00010412  abort                   
 ffffffff  __binit__               
 ffffffff  __c_args__              
 ffffffff  binit                   
 UNDEFED   __TI_INITARRAY_Base     
 UNDEFED   __TI_INITARRAY_Limit    
 
-[1035 symbols]
+[1041 symbols]

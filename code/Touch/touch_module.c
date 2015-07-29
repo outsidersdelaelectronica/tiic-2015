@@ -7,11 +7,13 @@
  *      Author: slopez
  */
 
+#include "touch_constants.h"
 #include <msp430.h>
 #include <stdint.h>
 
-volatile uint8_t txBuffer[3];						//SPI TX buffer
-volatile unsigned int txBufferIdx = 0;				//SPI TX buffer index
+extern volatile uint8_t txBufferTouch[3];				//SPI TX buffer
+extern volatile unsigned int txBufferTouchIdx;			//SPI TX buffer index
+extern volatile uint8_t posX, posY;						//Touch event position
 
 void touch_setup()
 {
@@ -57,83 +59,14 @@ void touch_setup()
 		UCA1CTLW0 &= ~UCSWRST;						//Get USCI_A1 out of reset state
 }
 
-
-/*
- * SPI A1 ISR
- */
-#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
-#pragma vector=USCI_A1_VECTOR
-__interrupt void USCI_A1_ISR(void)
-#elif defined(__GNUC__)
-void __attribute__ ((interrupt(USCI_A1_VECTOR))) USCI_A1_ISR (void)
-#else
-#error Compiler not supported!
-#endif
+void touch_command(uint8_t command)
 {
-	switch (__even_in_range(UCA1IV, USCI_SPI_UCTXIFG))
-	{
-		case USCI_NONE:
-			break;
-		case USCI_SPI_UCRXIFG:
-			break;
-		case USCI_SPI_UCTXIFG:
-			if (txBufferIdx > 0){					//If there are bytes left to be sent
-				P3OUT &= ~BIT7;							//Enable CS
-				txBufferIdx--;								//Decrease buffer index
-				UCA1TXBUF = txBuffer[txBufferIdx];			//Transmit last byte in txBuffer
-																//TX flag is automatically cleared when writing to UCB1TXBUF
-				P3OUT |= BIT7;							//Disable CS
-				UCA1IE &= ~UCTXIE;						//Disable TX interrupts
-				__bic_SR_register_on_exit(LPM0_bits); 	//Wake up
-			}
-			break;
-		default:
-			break;
-  }
-}
+		txBufferTouch[txBufferTouchIdx] = command;		//Write command to be sent into TX buffer
+		txBufferTouchIdx++;								//Increment buffer index
 
-#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
-#pragma vector=PORT1_VECTOR
-__interrupt void Port_1(void)
-#elif defined(__GNUC__)
-void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
-#else
-#error Compiler not supported!
-#endif
-{
-	switch (__even_in_range(P1IV, 16))
-	{
-		case 6:	//P1.2								//If AFE has data ready for transmission
-			if (UCB1IFG & UCTXIFG)					//If SPI TX buffer is empty
-			{
-				P4OUT &= ~BIT4;							//Enable CS
-				UCB1TXBUF = txBuffer[txBufferIdx];			//Transmit dummy byte
-				P4OUT |= BIT4;							//Disable CS
-
-				if(!circularBuffer_isFull(&ecgSignal))	//If circular buffer is not full
-				{
-					circularBuffer_write(&ecgSignal, UCB1RXBUF);	//Write received value to circular buffer
-				}
-
-				P1IFG &= ~BIT2;                           // Clear P1.2 flag
-			}
-			break;
-		case 8:	//P1.3								//If a touch event is detected
-			if (UCA1IFG & UCTXIFG)					//If SPI TX buffer is empty
-			{
-				P4OUT &= ~BIT4;							//Enable CS
-				UCB1TXBUF = txBuffer[txBufferIdx];			//Transmit dummy byte
-				P4OUT |= BIT4;							//Disable CS
-
-				if(!circularBuffer_isFull(&ecgSignal))	//If circular buffer is not full
-				{
-					circularBuffer_write(&ecgSignal, UCB1RXBUF);	//Write received value to circular buffer
-				}
-
-				P1IFG &= ~BIT2;                           // Clear P1.2 flag
-			}
-			break;
-		default:
-			break;
-	}
+		UCA1IE |= UCTXIE;							//Enable TX interrupts
+		__bis_SR_register(LPM0_bits | GIE);     	//Enter LPM0 mode, enabling global interrupts
+	    __no_operation();                       	//Wait for TX interrupt
+	    	//Data transmission on ISR
+	    __delay_cycles(1000);						//Delay before next transmission
 }

@@ -13,8 +13,8 @@
 #include <msp430.h>
 #include <stdint.h>
 
-volatile uint8_t txBuffer[3];						//SPI TX buffer
-volatile unsigned int txBufferIdx = 0;				//SPI TX buffer index
+extern volatile uint8_t txBufferAFE[3];						//SPI TX buffer
+extern volatile unsigned int txBufferAFEIdx;				//SPI TX buffer index
 
 extern volatile circularBuffer ecgSignal;
 
@@ -106,8 +106,8 @@ void ADS1291_initialize()
 
 void ADS1291_command(uint8_t command)
 {
-		txBuffer[txBufferIdx] = command;			//Write command to be sent into TX buffer
-		txBufferIdx++;								//Increment buffer index
+		txBufferAFE[txBufferAFEIdx] = command;			//Write command to be sent into TX buffer
+		txBufferAFEIdx++;								//Increment buffer index
 
 		UCB1IE |= UCTXIE;							//Enable TX interrupts
 		__bis_SR_register(LPM0_bits | GIE);     	//Enter LPM0 mode, enabling global interrupts
@@ -118,15 +118,15 @@ void ADS1291_command(uint8_t command)
 
 uint8_t	ADS1291_read_register(uint8_t address)
 {
-	txBuffer[txBufferIdx] = 0;						//Dummy byte for RX
-	txBufferIdx++;
-	txBuffer[txBufferIdx] = 0;						//Build command: number of registers to be read - 1
-	txBufferIdx++;
-	txBuffer[txBufferIdx] = RREG | address;			//Build command: read content from 'address'
-	txBufferIdx++;
+	txBufferAFE[txBufferAFEIdx] = 0;						//Dummy byte for RX
+	txBufferAFEIdx++;
+	txBufferAFE[txBufferAFEIdx] = 0;						//Build command: number of registers to be read - 1
+	txBufferAFEIdx++;
+	txBufferAFE[txBufferAFEIdx] = RREG | address;			//Build command: read content from 'address'
+	txBufferAFEIdx++;
 
 	int i;
-	int numberOfBytes = txBufferIdx;
+	int numberOfBytes = txBufferAFEIdx;
 	for (i = 0; i < numberOfBytes; i++)				//Send all the bytes
 	{
 		UCB1IE |= UCTXIE;								//Enable TX interrupts
@@ -143,15 +143,15 @@ uint8_t	ADS1291_read_register(uint8_t address)
 void ADS1291_write_register(uint8_t address, uint8_t value)
 {
 
-	txBuffer[txBufferIdx] = value;					//Build command: byte to be written
-	txBufferIdx++;
-	txBuffer[txBufferIdx] = 0;						//Build command: number of registers to be read - 1
-	txBufferIdx++;
-	txBuffer[txBufferIdx] = WREG | address;			//Build command: write content to 'address'
-	txBufferIdx++;
+	txBufferAFE[txBufferAFEIdx] = value;					//Build command: byte to be written
+	txBufferAFEIdx++;
+	txBufferAFE[txBufferAFEIdx] = 0;						//Build command: number of registers to be read - 1
+	txBufferAFEIdx++;
+	txBufferAFE[txBufferAFEIdx] = WREG | address;			//Build command: write content to 'address'
+	txBufferAFEIdx++;
 
 	int i;
-	int numberOfBytes = txBufferIdx;
+	int numberOfBytes = txBufferAFEIdx;
 	for (i = 0; i < numberOfBytes; i++)				//Send all the bytes
 	{
 		UCB1IE |= UCTXIE;								//Enable TX interrupts
@@ -162,37 +162,3 @@ void ADS1291_write_register(uint8_t address, uint8_t value)
 	}
 }
 
-
-/*
- * SPI B1 ISR
- */
-#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
-#pragma vector=USCI_B1_VECTOR
-__interrupt void USCI_B1_ISR(void)
-#elif defined(__GNUC__)
-void __attribute__ ((interrupt(USCI_B1_VECTOR))) USCI_B1_ISR (void)
-#else
-#error Compiler not supported!
-#endif
-{
-	switch (__even_in_range(UCB1IV, USCI_SPI_UCTXIFG))
-	{
-		case USCI_NONE:
-			break;
-		case USCI_SPI_UCRXIFG:
-			break;
-		case USCI_SPI_UCTXIFG:
-			if (txBufferIdx > 0){					//If there are bytes left to be sent
-				P4OUT &= ~BIT4;							//Enable CS
-				txBufferIdx--;								//Decrease buffer index
-				UCB1TXBUF = txBuffer[txBufferIdx];			//Transmit last byte in txBuffer
-																//TX flag is automatically cleared when writing to UCB1TXBUF
-				P4OUT |= BIT4;							//Disable CS
-				UCB1IE &= ~UCTXIE;						//Disable TX interrupts
-				__bic_SR_register_on_exit(LPM0_bits); 	//Wake up
-			}
-			break;
-		default:
-			break;
-  }
-}
