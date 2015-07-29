@@ -1,7 +1,7 @@
 ******************************************************************************
                   MSP430 Linker PC v4.4.3                      
 ******************************************************************************
->> Linked Wed Jul 29 18:33:23 2015
+>> Linked Wed Jul 29 20:46:33 2015
 
 OUTPUT FILE NAME:   <tiic_2015_code.out>
 ENTRY POINT SYMBOL: "_c_int00_noargs_noexit_mpu"  address: 00004512
@@ -19,7 +19,7 @@ MEMORY CONFIGURATION
   INFOB                 00001900   00000080  00000000  00000080  RWIX
   INFOA                 00001980   00000080  00000000  00000080  RWIX
   RAM                   00001c00   00000800  000001b6  0000064a  RWIX
-  FRAM                  00004400   0000bb80  0000016a  0000ba16  RWIX
+  FRAM                  00004400   0000bb80  00000170  0000ba10  RWIX
   JTAGSIGNATURE         0000ff80   00000004  00000004  00000000  RWIX  ffff 
   BSLSIGNATURE          0000ff84   00000004  00000004  00000000  RWIX  ffff 
   IPESIGNATURE          0000ff88   00000008  00000008  00000000  RWIX  ffff 
@@ -109,13 +109,13 @@ section   page    origin      length       input sections
 .sysmem    0    00004400    00000000     UNINITIALIZED
 
 .text:_isr 
-*          0    00004400    0000013e     
+*          0    00004400    00000144     
                   00004400    000000a2     main.obj (.text:_isr:Port_1)
                   000044a2    00000038     main.obj (.text:_isr:USCI_A1_ISR)
                   000044da    00000038     main.obj (.text:_isr:USCI_B1_ISR)
                   00004512    0000001e     rts430x_lc_rd_eabi.lib : boot_special.obj (.text:_isr:_c_int00_noargs_noexit_mpu)
-                  00004530    00000008     display.obj (.text:_isr:Timer1_A0_ISR)
-                  00004538    00000006     rts430x_lc_rd_eabi.lib : isr_trap.obj (.text:_isr:__TI_ISR_TRAP)
+                  00004530    0000000e     display.obj (.text:_isr:Timer1_A0_ISR)
+                  0000453e    00000006     rts430x_lc_rd_eabi.lib : isr_trap.obj (.text:_isr:__TI_ISR_TRAP)
 
 .ipestruct 
 *          0    00004400    00000000     UNINITIALIZED
@@ -125,12 +125,12 @@ section   page    origin      length       input sections
 .ipe:_isr 
 *          0    00004400    00000000     UNINITIALIZED
 
-.cinit     0    0000453e    0000002c     
-                  0000453e    0000000c     (__TI_handler_table)
-                  0000454a    00000009     (.cinit..data.load) [load image, compression = rle]
-                  00004553    00000001     --HOLE-- [fill = 0]
-                  00004554    00000006     (.cinit..bss.load) [load image, compression = zero_init]
-                  0000455a    00000010     (__TI_cinit_table)
+.cinit     0    00004544    0000002c     
+                  00004544    0000000c     (__TI_handler_table)
+                  00004550    00000009     (.cinit..data.load) [load image, compression = rle]
+                  00004559    00000001     --HOLE-- [fill = 0]
+                  0000455a    00000006     (.cinit..bss.load) [load image, compression = zero_init]
+                  00004560    00000010     (__TI_cinit_table)
 
 .init_array 
 *          0    00004400    00000000     UNINITIALIZED
@@ -266,14 +266,14 @@ SYSNMI     0    0000fffc    00000002
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 0000455a records: 2, size/record: 8, table size: 16
-	.data: load addr=0000454a, load size=00000009 bytes, run addr=00001d12, run size=00000004 bytes, compression=rle
-	.bss: load addr=00004554, load size=00000006 bytes, run addr=00001c00, run size=00000112 bytes, compression=zero_init
+__TI_cinit_table @ 00004560 records: 2, size/record: 8, table size: 16
+	.data: load addr=00004550, load size=00000009 bytes, run addr=00001d12, run size=00000004 bytes, compression=rle
+	.bss: load addr=0000455a, load size=00000006 bytes, run addr=00001c00, run size=00000112 bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 0000453e records: 3, size/record: 4, table size: 12
+__TI_handler_table @ 00004544 records: 3, size/record: 4, table size: 12
 	index: 0, handler: __TI_zero_init
 	index: 1, handler: __TI_decompress_rle24
 	index: 2, handler: __TI_decompress_none
@@ -1267,13 +1267,13 @@ address   name
 0000015c  WDTCTL_L                  
 00002400  __STACK_END               
 000000a0  __STACK_SIZE              
-0000455a  __TI_CINIT_Base           
-0000456a  __TI_CINIT_Limit          
-0000453e  __TI_Handler_Table_Base   
-0000454a  __TI_Handler_Table_Limit  
+00004560  __TI_CINIT_Base           
+00004570  __TI_CINIT_Limit          
+00004544  __TI_Handler_Table_Base   
+00004550  __TI_Handler_Table_Limit  
 UNDEFED   __TI_INITARRAY_Base       
 UNDEFED   __TI_INITARRAY_Limit      
-00004538  __TI_ISR_TRAP             
+0000453e  __TI_ISR_TRAP             
 00010984  __TI_decompress_none      
 000109a2  __TI_decompress_rle24     
 0000ffc6  __TI_int27                
@@ -2335,11 +2335,11 @@ address   name
 000044da  USCI_B1_ISR               
 00004512  _c_int00_noargs_noexit_mpu
 00004530  Timer1_A0_ISR             
-00004538  __TI_ISR_TRAP             
-0000453e  __TI_Handler_Table_Base   
-0000454a  __TI_Handler_Table_Limit  
-0000455a  __TI_CINIT_Base           
-0000456a  __TI_CINIT_Limit          
+0000453e  __TI_ISR_TRAP             
+00004544  __TI_Handler_Table_Base   
+00004550  __TI_Handler_Table_Limit  
+00004560  __TI_CINIT_Base           
+00004570  __TI_CINIT_Limit          
 0000a501  mpu_ctl0_value            
 0000ffc6  __TI_int27                
 0000ffc8  __TI_int28                

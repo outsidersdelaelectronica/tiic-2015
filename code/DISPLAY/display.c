@@ -11,6 +11,7 @@ void __attribute__ ((interrupt(TIMER1_A0_VECTOR))) Timer1_A0_ISR (void)
 #endif
 {
 	TA1CTL = TASSEL__ACLK | MC_0  ;                      // hailts the timer
+	__bic_SR_register_on_exit(LPM3_bits);
 }
 
 void delay_ms(int ms)
