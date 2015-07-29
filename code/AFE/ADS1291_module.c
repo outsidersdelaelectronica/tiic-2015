@@ -75,7 +75,7 @@ void ADS1291_initialize()
 {
 	//AFE reset and stop continuous data conversion mode
 		P7OUT |= BIT3;								//Power-On-Reset: hold reset line high for 1 second
-		__delay_cycles(1000);							//1 second
+		__delay_cycles(8000000);						//1 second
 
 		P7OUT &= ~BIT3;								//Reset pulse: (>= 18 t_clk) => (>= 10 us)
 		__delay_cycles(1000);							//At least 10 useconds
@@ -215,7 +215,7 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 
 				if(!circularBuffer_isFull(&ecgSignal))	//If circular buffer is not full
 				{
-					circularBuffer_write(&ecgSignal, UCB1RXBUF);	//Write value
+					circularBuffer_write(&ecgSignal, UCB1RXBUF);	//Write received value to circular buffer
 				}
 
 				P1IFG &= ~BIT2;                           // Clear P1.2 flag
