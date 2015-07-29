@@ -9,8 +9,14 @@
 
 #include "ADS1291_module.h"
 #include "ADS1291_constants.h"
+#include "../circularBuffer.h"
 #include <msp430.h>
 #include <stdint.h>
+
+volatile uint8_t txBuffer[3];						//SPI TX buffer
+volatile unsigned int txBufferIdx = 0;				//SPI TX buffer index
+
+extern volatile circularBuffer ecgSignal;
 
 void ADS1291_setup()
 {
@@ -34,6 +40,17 @@ void ADS1291_setup()
 													//and select external clock
 
 	//Configure USCI_B1 for SPI operation
+		P4SEL0 &= ~BIT5;							//Set P4.5 as UCB1CLK
+		P4SEL1 |= BIT5;								// |
+		P4SEL0 &= ~BIT6;							//Set P4.6 as UCB1SIMO
+		P4SEL1 |= BIT6;								// |
+		P4SEL0 &= ~BIT7;							//Set P4.7 as UCB1SOMI
+		P4SEL1 |= BIT7;								// |
+		P4DIR |= BIT4;								//Set P4.4 as output (CS)
+		P4SEL0 &= ~BIT4;							// |
+		P4SEL1 &= ~BIT4;							// |
+		P4OUT |= BIT4;								//Hold CS high by default
+
 		UCB1CTLW0 = UCSWRST;						//Hold USCI_B1 in reset state - necessary while configuring registers
 
 		UCB1CTLW0 |= UCCKPH | UCMSB | UCMST | UCMODE_2 | UCSYNC | UCSSEL_2 | UCSTEM;
@@ -87,4 +104,121 @@ void ADS1291_initialize()
 														//before other commands can be sent to the device
 }
 
+void ADS1291_command(uint8_t command)
+{
+		txBuffer[txBufferIdx] = command;			//Write command to be sent into TX buffer
+		txBufferIdx++;								//Increment buffer index
 
+		UCB1IE |= UCTXIE;							//Enable TX interrupts
+		__bis_SR_register(LPM0_bits | GIE);     	//Enter LPM0 mode, enabling global interrupts
+	    __no_operation();                       	//Wait for TX interrupt
+	    	//Data transmission on ISR
+	    __delay_cycles(1000);						//Delay before next transmission
+}
+
+uint8_t	ADS1291_read_register(uint8_t address)
+{
+	txBuffer[txBufferIdx] = 0;						//Dummy byte for RX
+	txBufferIdx++;
+	txBuffer[txBufferIdx] = 0;						//Build command: number of registers to be read - 1
+	txBufferIdx++;
+	txBuffer[txBufferIdx] = RREG | address;			//Build command: read content from 'address'
+	txBufferIdx++;
+
+	int i;
+	int numberOfBytes = txBufferIdx;
+	for (i = 0; i < numberOfBytes; i++)				//Send all the bytes
+	{
+		UCB1IE |= UCTXIE;								//Enable TX interrupts
+		__bis_SR_register(LPM0_bits | GIE);     		//Enter LPM0 mode, enabling global interrupts
+		__no_operation();                       		//Wait for TX interrupt
+			//Data transmission on ISR
+		__delay_cycles(1000);							//Delay before next transmission
+	}
+
+	uint8_t value = UCB1RXBUF;						//Read value from RX buffer
+	return value;
+}
+
+void ADS1291_write_register(uint8_t address, uint8_t value)
+{
+
+	txBuffer[txBufferIdx] = value;					//Build command: byte to be written
+	txBufferIdx++;
+	txBuffer[txBufferIdx] = 0;						//Build command: number of registers to be read - 1
+	txBufferIdx++;
+	txBuffer[txBufferIdx] = WREG | address;			//Build command: write content to 'address'
+	txBufferIdx++;
+
+	int i;
+	int numberOfBytes = txBufferIdx;
+	for (i = 0; i < numberOfBytes; i++)				//Send all the bytes
+	{
+		UCB1IE |= UCTXIE;								//Enable TX interrupts
+		__bis_SR_register(LPM0_bits | GIE);     		//Enter LPM0 mode, enabling global interrupts
+		__no_operation();                       		//Wait for TX interrupt
+			//Data transmission on ISR
+		__delay_cycles(1000);							//Delay before next transmission
+	}
+}
+
+
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector=USCI_B1_VECTOR
+__interrupt void USCI_B1_ISR(void)
+#elif defined(__GNUC__)
+void __attribute__ ((interrupt(USCI_B1_VECTOR))) USCI_B1_ISR (void)
+#else
+#error Compiler not supported!
+#endif
+{
+	switch (__even_in_range(UCB1IV, USCI_SPI_UCTXIFG))
+	{
+		case USCI_NONE:
+			break;
+		case USCI_SPI_UCRXIFG:
+			break;
+		case USCI_SPI_UCTXIFG:
+			if (txBufferIdx > 0){					//If there are bytes left to be sent
+				P4OUT &= ~BIT4;							//Enable CS
+				txBufferIdx--;								//Decrease buffer index
+				UCB1TXBUF = txBuffer[txBufferIdx];			//Transmit last byte in txBuffer
+																//TX flag is automatically cleared when writing to UCB1TXBUF
+				P4OUT |= BIT4;							//Disable CS
+				UCB1IE &= ~UCTXIE;						//Disable TX interrupts
+				__bic_SR_register_on_exit(LPM0_bits); 	//Wake up
+			}
+			break;
+		default:
+			break;
+  }
+}
+
+
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector=PORT1_VECTOR
+__interrupt void Port_1(void)
+#elif defined(__GNUC__)
+void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
+#else
+#error Compiler not supported!
+#endif
+{
+	switch (__even_in_range(P1IV, ))
+	{
+		case :							//If AFE has data ready for transmission
+			if (UCB1IFG & UCTXIFG)					//If SPI TX buffer is empty
+			{
+				P4OUT &= ~BIT4;							//Enable CS
+				UCB1TXBUF = txBuffer[txBufferIdx];			//Transmit dummy byte
+				P4OUT |= BIT4;							//Disable CS
+
+				UCB1RXBUF;
+
+				P1IFG &= ~BIT2;                           // Clear P1.2 flag
+			}
+			break;
+		default:
+			break;
+	}
+}
