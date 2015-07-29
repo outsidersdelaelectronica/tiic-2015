@@ -12,6 +12,7 @@ void __attribute__ ((interrupt(TIMER1_A0_VECTOR))) Timer1_A0_ISR (void)
 {
 	TA1CTL = TASSEL__ACLK | MC_0  ;                      // hailts the timer
 }
+
 void delay_ms(int ms)
 {
 	TA1CCTL0 = CCIE;                          // TACCR0 interrupt enabled
@@ -31,7 +32,8 @@ void delay_ns(int ns)
 	__bis_SR_register(LPM3_bits | GIE);       // Enter LPM3, enable interrupts
 	__no_operation();                         // For debugger
 }
-void LCD_set_reg(char b1, char reg)
+
+void LCD_set_reg(uint8_t b1, uint8_t reg)
 {
 	P6DIR |= 0x7F;					//Set P6.0 to P6.6 as output
 	P6DIR |= BIT0;					//Set P7.0 as output
@@ -60,58 +62,15 @@ void LCD_set_reg(char b1, char reg)
 
 }
 
-void LCD_write_data(char dataH, char dataL)
+
+void LCD_setup()
 {
-	P6DIR |= 0x7F;					//Set P6.0 to P6.6 as output
-	P6DIR |= BIT0;					//Set P7.0 as output
-
-	P6OUT &= 0xFF80;				//Clear P6.0 to P6.6
-	P6OUT |= (dataH >> 1);			//Write data[0,6] to P6.0 to P6.6
-	P7OUT &= ~ BIT0;				//Clear P7.0
-	P6OUT |= (dataH & ~ BIT0);		//Write data(7) to P7.0
-	P9OUT &= ~BIT4;					//Write 0 to LCD_WR
-	delay_ns(200);
-	P9OUT |= BIT4;					//Write 1 to LCD_WR
-	delay_ns(500);
-	P6OUT &= 0xFF80;				//Clear P6.0 to P6.6
-	P6OUT |= (dataL >> 1);			//Write data[0,6] to P6.0 to P6.6
-	P7OUT &= ~ BIT0;				//Clear P7.0
-	P6OUT |= (dataL & ~ BIT0);		//Write data(7) to P7.0
-	P9OUT &= ~BIT4;					//Write 0 to LCD_WR
-	delay_ns(200);
-	P9OUT |= BIT4;					//Write 1 to LCD_WR
-	delay_ns(100);
-
+	P7DIR |= BIT1;					//Set LCD_RESET(P7.1) as output
+	P9DIR |= BIT7|BIT5|BIT4;		//Set LCD_CS, LCD_WR and LCD_WR (P9.7, P9.5 and P9.4) as output
 }
-int LCD_read_data()
+
+void LCD_initialize()
 {
-	char data_H = 0x00,data_L = 0x00;
-	int data_out = 0x0000;
-	P6DIR &= ~0x7F;					//Set P6.0 to P6.6 as input
-	P6DIR &= ~BIT0;					//Set P7.0 as input
-
-	P9OUT &= ~BIT5;					//Write 0 to LCD_RD
-	data_H |= P6IN;
-	data_H = data_H>>1;
-	data_H |= (P7IN & BIT0);
-	P9OUT |= BIT5;
-	delay_ns(100);
-	P9OUT &= ~BIT5;					//Write 0 to LCD_RD
-	data_L |= P6IN;
-	data_L = data_L>>1;
-	data_L |= (P7IN & BIT0);
-	P9OUT |= BIT5;
-	data_out |= data_H;
-	data_out = data_out<<8;
-	data_out |= data_L;
-
-	return data_out;
-}
-void display_init()
-{
-	P7DIR |= BIT1;					//Set LCD_RESET(P7.1) as ouput
-	P9DIR |= BIT7|BIT5|BIT4;	//Set LCD_CS, LCD_WR and LCD_WR (P9.7, P9.5 and P9.4) as ouput
-
 	P7OUT |= BIT1;					//Write 1 to LCD_RESET
 	delay_ms(5);
 	P7OUT &= ~BIT1;  ;				//Write 0 to LCD_RESET
@@ -241,4 +200,54 @@ void display_init()
 	LCD_write_data(0x06,0x00);
 	LCD_set_reg(0x00,0x07);
 	LCD_write_data(0x01,0x33); // 262K color and display ON
+}
+
+
+void LCD_write_data(uint8_t dataH, uint8_t dataL)
+{
+	P6DIR |= 0x7F;					//Set P6.0 to P6.6 as output
+	P6DIR |= BIT0;					//Set P7.0 as output
+
+	P6OUT &= 0xFF80;				//Clear P6.0 to P6.6
+	P6OUT |= (dataH >> 1);			//Write data[0,6] to P6.0 to P6.6
+	P7OUT &= ~ BIT0;				//Clear P7.0
+	P6OUT |= (dataH & ~ BIT0);		//Write data(7) to P7.0
+	P9OUT &= ~BIT4;					//Write 0 to LCD_WR
+	delay_ns(200);
+	P9OUT |= BIT4;					//Write 1 to LCD_WR
+	delay_ns(500);
+	P6OUT &= 0xFF80;				//Clear P6.0 to P6.6
+	P6OUT |= (dataL >> 1);			//Write data[0,6] to P6.0 to P6.6
+	P7OUT &= ~ BIT0;				//Clear P7.0
+	P6OUT |= (dataL & ~ BIT0);		//Write data(7) to P7.0
+	P9OUT &= ~BIT4;					//Write 0 to LCD_WR
+	delay_ns(200);
+	P9OUT |= BIT4;					//Write 1 to LCD_WR
+	delay_ns(100);
+
+}
+
+int LCD_read_data()
+{
+	uint8_t data_H = 0x00,data_L = 0x00;
+	int data_out = 0x0000;
+	P6DIR &= ~0x7F;					//Set P6.0 to P6.6 as input
+	P6DIR &= ~BIT0;					//Set P7.0 as input
+
+	P9OUT &= ~BIT5;					//Write 0 to LCD_RD
+	data_H |= P6IN;
+	data_H = data_H>>1;
+	data_H |= (P7IN & BIT0);
+	P9OUT |= BIT5;
+	delay_ns(100);
+	P9OUT &= ~BIT5;					//Write 0 to LCD_RD
+	data_L |= P6IN;
+	data_L = data_L>>1;
+	data_L |= (P7IN & BIT0);
+	P9OUT |= BIT5;
+	data_out |= data_H;
+	data_out = data_out<<8;
+	data_out |= data_L;
+
+	return data_out;
 }

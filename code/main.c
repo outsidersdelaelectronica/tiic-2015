@@ -4,6 +4,7 @@
 #include "Touch/touch_constants.h"
 #include "Touch/touch_module.h"
 #include "AFE/ADS1291_module.h"
+#include "Display/display.h"
 
 volatile circularBuffer ecgSignal;
 
@@ -163,11 +164,13 @@ int main(void) {
 		circularBuffer_setup(&ecgSignal);			//ECG signal storing buffer setup
 		ADS1291_setup();							//AFE ports and serial configuration
 		touch_setup();								//Touchpad ports and serial configuration
+		LCD_setup();								//Screen configuration
 
 	PM5CTL0 &= ~LOCKLPM5;						//Disable the GPIO power-on default high-impedance mode
 
 	//Initializations
 		ADS1291_initialize();						//AFE power-up and initialization
+		LCD_initialize();							//Screen initialization
 
 	return 0;
 }

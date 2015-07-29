@@ -2,9 +2,12 @@
 #define DISPLAY_H
 
 #include <msp430.h>
+#include <stdint.h>
 
-void LCD_set_reg(char b1, char reg);
-void LCD_write_data(char dataH, char dataL);
-int LCD_read_data();
+void	LCD_setup();
+void	LCD_initialize();
+
+void	LCD_write_data(uint8_t dataH, uint8_t dataL);
+int		LCD_read_data();
 
 #endif

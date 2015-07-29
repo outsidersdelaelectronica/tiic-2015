@@ -1,13 +1,15 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=origin/Display
 eclipse.preferences.version=1
-<<<<<<< HEAD
 encoding//Debug/AFE/subdir_rules.mk=UTF-8
 encoding//Debug/AFE/subdir_vars.mk=UTF-8
-encoding//Debug/Touch/subdir_rules.mk=UTF-8
-encoding//Debug/Touch/subdir_vars.mk=UTF-8
-=======
 encoding//Debug/DISPLAY/subdir_rules.mk=UTF-8
 encoding//Debug/DISPLAY/subdir_vars.mk=UTF-8
->>>>>>> origin/Display
+encoding//Debug/Display/subdir_rules.mk=UTF-8
+encoding//Debug/Display/subdir_vars.mk=UTF-8
+encoding//Debug/Touch/subdir_rules.mk=UTF-8
+encoding//Debug/Touch/subdir_vars.mk=UTF-8
 encoding//Debug/makefile=UTF-8
 encoding//Debug/objects.mk=UTF-8
 encoding//Debug/sources.mk=UTF-8

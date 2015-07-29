@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-"./circularBuffer.obj" "./clocks.obj" "./main.obj" "./Touch/touch_module.obj" "./AFE/ADS1291_module.obj" "../lnk_msp430fr5972.cmd" -l"libmath.a" -l"libc.a" 
-=======
-"./main.obj" "./DISPLAY/display.obj" "../lnk_msp430fr5972.cmd" -l"libmath.a" -l"libc.a" 
->>>>>>> origin/Display
+"./circularBuffer.obj" "./clocks.obj" "./main.obj" "./Touch/touch_module.obj" "./Display/display.obj" "./AFE/ADS1291_module.obj" "../lnk_msp430fr5972.cmd" -llibmpu_init.a -l"libmath.a" -l"libc.a" 
