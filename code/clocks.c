@@ -46,6 +46,8 @@ void clocks_setup()
 		CSCTL4 &= ~HFXTOFF & ~LFXTOFF;
 													//Turn HFXT oscillator on
 													//Turn LFXT oscillator on
+		CSCTL5 &= ~HFXTOFFG & ~LFXTOFFG;
+													//Clear oscillator fault flags
 
 	//Oscillator stabilization
 		do

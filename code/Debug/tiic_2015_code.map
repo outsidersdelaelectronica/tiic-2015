@@ -1,7 +1,7 @@
 ******************************************************************************
-                  MSP430 Linker PC v4.4.4                      
+                  MSP430 Linker PC v4.4.3                      
 ******************************************************************************
->> Linked Thu Jul 30 18:18:06 2015
+>> Linked Thu Aug 06 16:47:21 2015
 
 OUTPUT FILE NAME:   <tiic_2015_code.out>
 ENTRY POINT SYMBOL: "_c_int00_noargs_noexit_mpu"  address: 00004512
@@ -79,7 +79,7 @@ MEMORY CONFIGURATION
   INT53                 0000fffa   00000002  00000002  00000000  RWIX
   INT54                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FRAM2                 00010000   00004000  000009b2  0000364e  RWIX
+  FRAM2                 00010000   00004000  00000c34  000033cc  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -235,33 +235,37 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.obj (.reset)
 
-.text      0    00010000    000009b2     
+.text      0    00010000    00000c34     
                   00010000    0000041a     display.obj (.text:LCD_initialize)
-                  0001041a    00000096     ADS1291_module.obj (.text:ADS1291_initialize)
-                  000104b0    0000007c     display.obj (.text:LCD_set_reg)
-                  0001052c    00000074     ADS1291_module.obj (.text:ADS1291_setup)
-                  000105a0    00000074     display.obj (.text:LCD_write_data)
-                  00010614    0000006c     rts430x_lc_rd_eabi.lib : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
-                  00010680    00000068                            : copy_decompress_rle.obj (.text:__TI_decompress_rle_core)
-                  000106e8    00000060     clocks.obj (.text:clocks_setup)
-                  00010748    00000060     touch_module.obj (.text:touch_setup)
-                  000107a8    00000054     ADS1291_module.obj (.text:ADS1291_write_register)
-                  000107fc    00000036     circularBuffer.obj (.text:circularBuffer_write)
-                  00010832    0000002e     main.obj (.text:main)
-                  00010860    00000028     ADS1291_module.obj (.text:ADS1291_command)
-                  00010888    00000028     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
-                  000108b0    00000028     circularBuffer.obj (.text:circularBuffer_setup)
-                  000108d8    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
-                  000108fc    00000024     display.obj (.text:delay_ms)
-                  00010920    00000020     circularBuffer.obj (.text:circularBuffer_isFull)
-                  00010940    0000001c     display.obj (.text:delay_ns)
-                  0001095c    00000016     rts430x_lc_rd_eabi.lib : mult16_f5hw.obj (.text)
-                  00010972    00000014                            : memcpy.obj (.text:memcpy)
-                  00010986    00000012                            : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
-                  00010998    0000000c     display.obj (.text:LCD_setup)
-                  000109a4    00000006     rts430x_lc_rd_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
-                  000109aa    00000004                            : pre_init.obj (.text:_system_pre_init)
-                  000109ae    00000004                            : exit.obj (.text:abort)
+                  0001041a    00000264     main.obj (.text:main)
+                  0001067e    00000096     ADS1291_module.obj (.text:ADS1291_initialize)
+                  00010714    00000082     display.obj (.text:LCD_set_reg)
+                  00010796    00000074     ADS1291_module.obj (.text:ADS1291_setup)
+                  0001080a    00000074     display.obj (.text:LCD_write_data)
+                  0001087e    0000006c     rts430x_lc_rd_eabi.lib : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
+                  000108ea    00000068                            : copy_decompress_rle.obj (.text:__TI_decompress_rle_core)
+                  00010952    00000060     touch_module.obj (.text:touch_setup)
+                  000109b2    00000054     ADS1291_module.obj (.text:ADS1291_write_register)
+                  00010a06    00000054     clocks.obj (.text:clocks_setup)
+                  00010a5a    00000036     circularBuffer.obj (.text:circularBuffer_write)
+                  00010a90    00000028     ADS1291_module.obj (.text:ADS1291_command)
+                  00010ab8    00000028     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
+                  00010ae0    00000028     circularBuffer.obj (.text:circularBuffer_setup)
+                  00010b08    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
+                  00010b2c    00000024     display.obj (.text:delay_ms)
+                  00010b50    00000020     buzzer_module.obj (.text:buzzer_setup)
+                  00010b70    00000020     circularBuffer.obj (.text:circularBuffer_isFull)
+                  00010b90    0000001c     display.obj (.text:delay_ns)
+                  00010bac    00000016     rts430x_lc_rd_eabi.lib : mult16_f5hw.obj (.text)
+                  00010bc2    00000014                            : memcpy.obj (.text:memcpy)
+                  00010bd6    00000012     display.obj (.text:LCD_setup)
+                  00010be8    00000012     buzzer_module.obj (.text:buzzer_start)
+                  00010bfa    00000012     rts430x_lc_rd_eabi.lib : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
+                  00010c0c    00000010     buzzer_module.obj (.text:buzzer_stop)
+                  00010c1c    0000000a     buzzer_module.obj (.text:buzzer_set_freq)
+                  00010c26    00000006     rts430x_lc_rd_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
+                  00010c2c    00000004                            : pre_init.obj (.text:_system_pre_init)
+                  00010c30    00000004                            : exit.obj (.text:abort)
 
 
 LINKER GENERATED COPY TABLES
@@ -514,10 +518,10 @@ address   name
 00000872  ADC12MEM9                 
 00000873  ADC12MEM9_H               
 00000872  ADC12MEM9_L               
-00010860  ADS1291_command           
-0001041a  ADS1291_initialize        
-0001052c  ADS1291_setup             
-000107a8  ADS1291_write_register    
+00010a90  ADS1291_command           
+0001067e  ADS1291_initialize        
+00010796  ADS1291_setup             
+000109b2  ADS1291_write_register    
 000009c0  AESACTL0                  
 000009c1  AESACTL0_H                
 000009c0  AESACTL0_L                
@@ -544,7 +548,7 @@ address   name
 000009ce  AESAXIN_L                 
 000004be  BCD2BIN                   
 000004bc  BIN2BCD                   
-000109ae  C$$EXIT                   
+00010c30  C$$EXIT                   
 0000043e  CAPTIO0CTL                
 0000043f  CAPTIO0CTL_H              
 0000043e  CAPTIO0CTL_L              
@@ -705,9 +709,9 @@ address   name
 00000147  GCCTL1_H                  
 00000146  GCCTL1_L                  
 00010000  LCD_initialize            
-000104b0  LCD_set_reg               
-00010998  LCD_setup                 
-000105a0  LCD_write_data            
+00010714  LCD_set_reg               
+00010bd6  LCD_setup                 
+0001080a  LCD_write_data            
 000004c4  MAC                       
 000004da  MAC32H                    
 000004db  MAC32H_H                  
@@ -1274,8 +1278,8 @@ address   name
 UNDEFED   __TI_INITARRAY_Base       
 UNDEFED   __TI_INITARRAY_Limit      
 0000453e  __TI_ISR_TRAP             
-00010986  __TI_decompress_none      
-000109a4  __TI_decompress_rle24     
+00010bfa  __TI_decompress_none      
+00010c26  __TI_decompress_rle24     
 0000ffc6  __TI_int27                
 0000ffc8  __TI_int28                
 0000ffcc  __TI_int30                
@@ -1302,38 +1306,41 @@ UNDEFED   __TI_INITARRAY_Limit
 0000fff8  __TI_int52                
 0000fffa  __TI_int53                
 0000fffc  __TI_int54                
-000108d8  __TI_zero_init            
+00010b08  __TI_zero_init            
 ffffffff  __binit__                 
 ffffffff  __c_args__                
 00000001  __mpu_enable              
-00010888  __mpu_init                
-0001095c  __mspabi_mpyi_f5hw        
-00010614  _auto_init_hold_wdt       
+00010ab8  __mpu_init                
+00010bac  __mspabi_mpyi_f5hw        
+0001087e  _auto_init_hold_wdt       
 00004512  _c_int00_noargs_noexit_mpu
 0000fffe  _reset_vector             
 00002360  _stack                    
-000109aa  _system_pre_init          
-000109ae  abort                     
+00010c2c  _system_pre_init          
+00010c30  abort                     
 ffffffff  binit                     
-00010920  circularBuffer_isFull     
-000108b0  circularBuffer_setup      
-000107fc  circularBuffer_write      
-000106e8  clocks_setup              
-000108fc  delay_ms                  
-00010940  delay_ns                  
+00010b50  buzzer_setup              
+00010be8  buzzer_start              
+00010c0c  buzzer_stop               
+00010b70  circularBuffer_isFull     
+00010ae0  circularBuffer_setup      
+00010a5a  circularBuffer_write      
+00010a06  clocks_setup              
+00010b2c  delay_ms                  
+00010b90  delay_ns                  
 00001c00  ecgSignal                 
 00004400  fram_ipe_end              
 00004400  fram_ipe_start            
 00004400  fram_rx_start             
-00010832  main                      
-00010972  memcpy                    
+0001041a  main                      
+00010bc2  memcpy                    
 0000a501  mpu_ctl0_value            
 00001513  mpu_sam_value             
 00000440  mpu_segment_border1       
 00000440  mpu_segment_border2       
 00001d10  posX                      
 00001d11  posY                      
-00010748  touch_setup               
+00010952  touch_setup               
 00001d08  txBufferAFE               
 00001d12  txBufferAFEIdx            
 00001d0c  txBufferTouch             
@@ -2369,35 +2376,38 @@ address   name
 0000fffc  __TI_int54                
 0000fffe  _reset_vector             
 00010000  LCD_initialize            
-0001041a  ADS1291_initialize        
-000104b0  LCD_set_reg               
-0001052c  ADS1291_setup             
-000105a0  LCD_write_data            
-00010614  _auto_init_hold_wdt       
-000106e8  clocks_setup              
-00010748  touch_setup               
-000107a8  ADS1291_write_register    
-000107fc  circularBuffer_write      
-00010832  main                      
-00010860  ADS1291_command           
-00010888  __mpu_init                
-000108b0  circularBuffer_setup      
-000108d8  __TI_zero_init            
-000108fc  delay_ms                  
-00010920  circularBuffer_isFull     
-00010940  delay_ns                  
-0001095c  __mspabi_mpyi_f5hw        
-00010972  memcpy                    
-00010986  __TI_decompress_none      
-00010998  LCD_setup                 
-000109a4  __TI_decompress_rle24     
-000109aa  _system_pre_init          
-000109ae  C$$EXIT                   
-000109ae  abort                     
+0001041a  main                      
+0001067e  ADS1291_initialize        
+00010714  LCD_set_reg               
+00010796  ADS1291_setup             
+0001080a  LCD_write_data            
+0001087e  _auto_init_hold_wdt       
+00010952  touch_setup               
+000109b2  ADS1291_write_register    
+00010a06  clocks_setup              
+00010a5a  circularBuffer_write      
+00010a90  ADS1291_command           
+00010ab8  __mpu_init                
+00010ae0  circularBuffer_setup      
+00010b08  __TI_zero_init            
+00010b2c  delay_ms                  
+00010b50  buzzer_setup              
+00010b70  circularBuffer_isFull     
+00010b90  delay_ns                  
+00010bac  __mspabi_mpyi_f5hw        
+00010bc2  memcpy                    
+00010bd6  LCD_setup                 
+00010be8  buzzer_start              
+00010bfa  __TI_decompress_none      
+00010c0c  buzzer_stop               
+00010c26  __TI_decompress_rle24     
+00010c2c  _system_pre_init          
+00010c30  C$$EXIT                   
+00010c30  abort                     
 ffffffff  __binit__                 
 ffffffff  __c_args__                
 ffffffff  binit                     
 UNDEFED   __TI_INITARRAY_Base       
 UNDEFED   __TI_INITARRAY_Limit      
 
-[1055 symbols]
+[1058 symbols]

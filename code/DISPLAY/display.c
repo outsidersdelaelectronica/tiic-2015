@@ -10,7 +10,7 @@ void __attribute__ ((interrupt(TIMER1_A0_VECTOR))) Timer1_A0_ISR (void)
 #error Compiler not supported!
 #endif
 {
-	TA1CTL = TASSEL__ACLK | MC_0  ;                      // hailts the timer
+	TA1CTL = TASSEL__ACLK | MC_0  ;                      // halts the timer
 	__bic_SR_register_on_exit(LPM3_bits);
 }
 
@@ -33,6 +33,20 @@ void delay_ns(int ns)
 	__bis_SR_register(LPM3_bits | GIE);       // Enter LPM3); enable interrupts
 	__no_operation();                         // For debugger
 }
+
+
+void LCD_setup()
+{
+	P7DIR |= BIT1;							//Set LCD_RESET (P7.1) as output
+	P9DIR |= BIT7 | BIT6 | BIT5 | BIT4;		//Set LCD_CS (P9.7),
+											//    LCD_SLEEP (P9.6),
+											//    LCD_RD (P9.5) and
+											//    LCD_WR (P9.4) as outputs
+
+	P9OUT |= BIT6;					//Turn off display light: LCD_SLEEP = 1
+
+}
+
 
 void LCD_set_reg(uint8_t b1, uint8_t reg)
 {
@@ -61,13 +75,8 @@ void LCD_set_reg(uint8_t b1, uint8_t reg)
 
 	P2OUT |= BIT3;					//Write 1 to LCD_RS
 
-}
+	P9OUT |= BIT4;					//Write 1 to LCD_WR
 
-
-void LCD_setup()
-{
-	P7DIR |= BIT1;					//Set LCD_RESET(P7.1) as output
-	P9DIR |= BIT7|BIT5|BIT4;		//Set LCD_CS); LCD_WR and LCD_WR (P9.7); P9.5 and P9.4) as output
 }
 
 void LCD_write_data(uint8_t dataH, uint8_t dataL)
