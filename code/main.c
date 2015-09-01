@@ -4,6 +4,8 @@
 #include "Touch/touch_constants.h"
 #include "Touch/touch_module.h"
 #include "AFE/ADS1291_module.h"
+#include "Buzzer/buzzer_module.h"
+#include "Buzzer/buzzer_notes.h"
 #include "Display/display.h"
 
 volatile circularBuffer ecgSignal;
@@ -165,10 +167,53 @@ int main(void) {
 		ADS1291_setup();							//AFE ports and serial configuration
 		touch_setup();								//Touchpad ports and serial configuration
 		LCD_setup();								//Screen configuration
+		buzzer_setup();
 
 	PM5CTL0 &= ~LOCKLPM5;						//Disable the GPIO power-on default high-impedance mode
 
+<<<<<<< HEAD
 	P9OUT &= ~BIT6;					//Turn on screen
+=======
+
+	buzzer_start(E5);
+	__delay_cycles(1000000);
+	__delay_cycles(1000000);
+	__delay_cycles(1000000);
+	buzzer_start(D5);
+	__delay_cycles(1000000);
+	buzzer_start(C5);
+	__delay_cycles(1000000);
+	buzzer_start(B4);
+	__delay_cycles(1000000);
+	buzzer_start(A4);
+	__delay_cycles(1000000);
+	__delay_cycles(1000000);
+
+	buzzer_start(A4);
+	__delay_cycles(1000000);
+	buzzer_start(C5);
+	__delay_cycles(1000000);
+	buzzer_start(B4);
+	__delay_cycles(1000000);
+	buzzer_start(A4);
+	__delay_cycles(1000000);
+	buzzer_start(G4);
+	__delay_cycles(1000000);
+	buzzer_start(A4);
+	__delay_cycles(1000000);
+	buzzer_start(E4);
+	__delay_cycles(1000000);
+	buzzer_start(D4);
+	__delay_cycles(1000000);
+	buzzer_start(E4);
+	__delay_cycles(1000000);
+	__delay_cycles(1000000);
+	__delay_cycles(1000000);
+	__delay_cycles(1000000);
+	buzzer_stop();
+
+	P9OUT &= ~BIT6;		//Turn on display light
+>>>>>>> origin/code
 
 	//Initializations
 		ADS1291_initialize();						//AFE power-up and initialization

@@ -12,6 +12,8 @@ main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h
 main.obj: ../Touch/touch_constants.h
 main.obj: ../Touch/touch_module.h
 main.obj: ../AFE/ADS1291_module.h
+main.obj: ../Buzzer/buzzer_module.h
+main.obj: ../Buzzer/buzzer_notes.h
 main.obj: ../Display/display.h
 
 ../main.c: 
@@ -26,4 +28,6 @@ C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h:
 ../Touch/touch_constants.h: 
 ../Touch/touch_module.h: 
 ../AFE/ADS1291_module.h: 
+../Buzzer/buzzer_module.h: 
+../Buzzer/buzzer_notes.h: 
 ../Display/display.h: 
