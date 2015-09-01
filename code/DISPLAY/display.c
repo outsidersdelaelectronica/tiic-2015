@@ -66,8 +66,11 @@ void LCD_set_reg(uint8_t b1, uint8_t reg)
 
 void LCD_setup()
 {
-	P7DIR |= BIT1;					//Set LCD_RESET(P7.1) as output
-	P9DIR |= BIT7|BIT5|BIT4;		//Set LCD_CS); LCD_WR and LCD_WR (P9.7); P9.5 and P9.4) as output
+	P7DIR |= BIT1;					//Set LCD_RESET (P7.1) as output
+	P9DIR |= BIT7|BIT5|BIT4;		//Set LCD_CS (P9.7), LCD_WR (P9.4) and LCD_RD (P9.5) as outputs
+
+	P9DIR |= BIT6;					//Set LCD_SLEEP (P9.6) as output
+	P9OUT |= BIT6;					//Turn off screen
 }
 
 void LCD_write_data(uint8_t dataH, uint8_t dataL)

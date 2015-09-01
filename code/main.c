@@ -157,7 +157,7 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
  * main.c
  */
 int main(void) {
-	WDTCTL = WDTPW | WDTHOLD;						//Stop watchdog timer
+	//WDTCTL = WDTPW | WDTHOLD;						//Stop watchdog timer
 
 	//Setups
 		clocks_setup();								//Clock configuration
@@ -167,6 +167,8 @@ int main(void) {
 		LCD_setup();								//Screen configuration
 
 	PM5CTL0 &= ~LOCKLPM5;						//Disable the GPIO power-on default high-impedance mode
+
+	P9OUT &= ~BIT6;					//Turn on screen
 
 	//Initializations
 		ADS1291_initialize();						//AFE power-up and initialization
