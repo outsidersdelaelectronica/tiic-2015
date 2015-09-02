@@ -12,10 +12,7 @@
 #include <stdint.h>
 #include "../utils.h"
 
-void		LCD_setup();
-
 void		LCD_IO_write_reg(uint8_t reg, uint8_t data_hi_af, uint8_t data_lo);
 uint16_t	LCD_IO_read_reg(uint8_t reg);
-
 
 #endif /* DISPLAY_DISPLAY_UTILS_H_ */

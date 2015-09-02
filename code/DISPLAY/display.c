@@ -7,11 +7,21 @@
 
 #include "display.h"
 
+void LCD_setup()
+{
+	P7DIR |= BIT1;					//Set LCD_RESET (P7.1) as output
+	P9DIR |= BIT7 | BIT5 | BIT4;	//Set LCD_CS (P9.7), LCD_WR (P9.4) and LCD_RD (P9.5) as outputs
+	P2DIR |= BIT3;					//Set LCD_RS (P2.3) as output
+	P9DIR |= BIT6;					//Set LCD_SLEEP (P9.6) as output
+
+	P9OUT |= BIT7 | BIT5 | BIT4;	//Set LCD_CS, LCD_WR and LCD_RD
+	P2OUT |= BIT3;					//Set LCD_RS
+	P9OUT &= ~BIT6;					//Turn on screen
+}
+
 void LCD_initialize()
 {
 	 //************* Reset LCD Driver ****************//
-	LCD_setup();
-
 	P7OUT |= BIT1;					//Write 1 to LCD_RESET
 	delay_ms(1);
 	P7OUT &= ~BIT1;  				//Write 0 to LCD_RESET

@@ -14,7 +14,9 @@
 #include "display_utils.h"
 #include "../utils.h"
 
+void	LCD_setup();
 void	LCD_initialize();
+
 void	LCD_sleep();
 void	LCD_wakeUp();
 

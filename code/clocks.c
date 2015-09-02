@@ -8,7 +8,6 @@
  */
 
 #include "clocks.h"
-#include <msp430.h>
 
 void clocks_setup()
 {
@@ -34,11 +33,11 @@ void clocks_setup()
 
 	//Clock control registers
 		CSCTL0 = CSKEY;								//Unlock clock registers
-		CSCTL1 = DCOFSEL_0;							//DCO frecuency set to 1 MHz (not used)
-		CSCTL2 = SELA__LFXTCLK | SELS__HFXTCLK | SELM__HFXTCLK;
+		CSCTL1 = DCORSEL | DCOFSEL_6;				//DCO frecuency set to 16 MHz
+		CSCTL2 = SELA__LFXTCLK | SELS__DCOCLK | SELM__DCOCLK;
 													//ACLK source = LFXTCLK
-													//SMCLK source = HFXTCLK
-													//MCLK source = HFXTCLK
+													//SMCLK source = DCOCLK
+													//MCLK source = DCOCLK
 		CSCTL3 = DIVA_0 | DIVS_3 | DIVM_0;
 													//ACLK divider = /1 => ACLK @ 32.768 KHz
 													//SMCLK divider = /8 => SMCLK @ 2 MHz
@@ -49,7 +48,7 @@ void clocks_setup()
 		CSCTL5 &= ~HFXTOFFG & ~LFXTOFFG;
 													//Clear oscillator fault flags
 
-	//Oscillator stabilization
+/*	//Oscillator stabilization
 		do
 		{
 			CSCTL5 &= ~LFXTOFFG;                    //Clear LFXT fault flag
@@ -58,4 +57,5 @@ void clocks_setup()
 		}
 		while (SFRIFG1 & OFIFG);                	//Test oscillator fault flag until there are no faults
 													//to let the oscillators stabilize
+*/
 }

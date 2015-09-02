@@ -8,6 +8,8 @@
 #ifndef DISPLAY_UTILS_H_
 #define DISPLAY_UTILS_H_
 
+#include <msp430.h>
+
 void	delay_ms(int ms);
 void	delay_ns(int ns);
 

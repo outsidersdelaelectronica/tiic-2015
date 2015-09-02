@@ -10,6 +10,8 @@
 #ifndef CLOCKS_H_
 #define CLOCKS_H_
 
+#include <msp430.h>
+
 void	clocks_setup();
 
 #endif /* CLOCKS_H_ */
