@@ -10,6 +10,7 @@
 
 #include <msp430.h>
 #include <stdint.h>
+#include "../utils.h"
 
 void		LCD_setup();
 

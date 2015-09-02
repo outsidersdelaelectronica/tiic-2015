@@ -16,7 +16,7 @@ void LCD_setup()
 
 	P9OUT |= BIT7 | BIT5 | BIT4;	//Set LCD_CS, LCD_WR and LCD_RD
 	P2OUT |= BIT3;					//Set LCD_RS
-	P9OUT |= BIT6;					//Turn off screen
+	P9OUT &= ~BIT6;					//Turn on screen
 
 }
 
@@ -64,24 +64,24 @@ void LCD_IO_write_reg(uint8_t reg, uint8_t data_hi_af, uint8_t data_lo)
 
 	LCD_IO_write(0x00);
 	P9OUT &= ~BIT4;			//Set LCD_WR to '0'
-//--------delay					//Wait
+	delay_ms(1);			//Wait
 	P9OUT |= BIT4;			//Set LCD_WR to '1'
 
 	LCD_IO_write(reg);
 	P9OUT &= ~BIT4;			//Set LCD_WR to '0'
-//--------delay					//Wait
+	delay_ms(1);			//Wait
 	P9OUT |= BIT4;			//Set LCD_WR to '1'
 
 	P2OUT |= BIT3;			//Set LCD_RS to '1'
 
 	LCD_IO_write(data_hi_af);
 	P9OUT &= ~BIT4;			//Set LCD_WR to '0'
-//--------delay					//Wait
+	delay_ms(1);			//Wait
 	P9OUT |= BIT4;			//Set LCD_WR to '1'
 
 	LCD_IO_write(data_lo);
 	P9OUT &= ~BIT4;			//Set LCD_WR to '0'
-//--------delay					//Wait
+	delay_ms(1);			//Wait
 	P9OUT |= BIT4;			//Set LCD_WR to '1'
 
 	P9OUT |= BIT7;			//Set LCD_CS to '1'
@@ -98,24 +98,24 @@ uint16_t LCD_IO_read_reg(uint8_t reg)
 
 	LCD_IO_write(0x00);
 	P9OUT &= ~BIT4;			//Set LCD_WR to '0'
-//--------delay					//Wait
+	delay_ms(1);			//Wait
 	P9OUT |= BIT4;			//Set LCD_WR to '1'
 
 	LCD_IO_write(reg);
 	P9OUT &= ~BIT4;			//Set LCD_WR to '0'
-//--------delay					//Wait
+	delay_ms(1);			//Wait
 	P9OUT |= BIT4;			//Set LCD_WR to '1'
 
 	P2OUT |= BIT3;			//Set LCD_RS to '1'
 
 	P9OUT &= ~BIT5;			//Set LCD_RD to '0'
-//--------delay					//Wait
+	delay_ms(1);			//Wait
 	data_hi_af = LCD_IO_read();
 	P9OUT |= BIT5;			//Set LCD_RD to '1'
 
 
 	P9OUT &= ~BIT4;			//Set LCD_RD to '0'
-//--------delay					//Wait
+	delay_ms(1);			//Wait
 	data_lo = LCD_IO_read();
 	P9OUT |= BIT4;			//Set LCD_RD to '1'
 

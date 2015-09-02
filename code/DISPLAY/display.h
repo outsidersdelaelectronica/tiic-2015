@@ -15,7 +15,7 @@
 #include "../utils.h"
 
 void	LCD_initialize();
-void	LCD_EnterSleep_ILI9325();
-void	LCD_ExitSleep_ILI9325();
+void	LCD_sleep();
+void	LCD_wakeUp();
 
 #endif
