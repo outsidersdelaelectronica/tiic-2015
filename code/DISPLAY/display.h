@@ -14,10 +14,10 @@
 #include "display_utils.h"
 #include "../utils.h"
 
-void	LCD_setup();
-void	LCD_initialize();
+void	display_setup();
+void	display_initialize();
 
-void	LCD_sleep();
-void	LCD_wakeUp();
+void	display_sleep();
+void	display_wake_up();
 
 #endif

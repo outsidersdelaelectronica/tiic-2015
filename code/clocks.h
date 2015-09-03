@@ -1,10 +1,8 @@
 /*
  * clocks.h
  *
- * Clock configuration
- *
- *  Created on: 28/7/2015
- *      Author: Smau
+ *  Created on: 2/9/2015
+ *      Author: slopez
  */
 
 #ifndef CLOCKS_H_
@@ -12,6 +10,6 @@
 
 #include <msp430.h>
 
-void	clocks_setup();
+void clocks_setup();
 
 #endif /* CLOCKS_H_ */

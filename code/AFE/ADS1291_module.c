@@ -9,7 +9,7 @@
 
 #include "ADS1291_module.h"
 #include "ADS1291_constants.h"
-#include "../circularBuffer.h"
+#include "../CircularBuffer/circularBuffer.h"
 #include <msp430.h>
 #include <stdint.h>
 

@@ -3,22 +3,37 @@
 ################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
+CMD_SRCS += \
+../lnk_msp430fr5972.cmd 
+
 C_SRCS += \
-../Buzzer/buzzer.c 
+../clocks.c \
+../main.c \
+../utils.c 
 
 OBJS += \
-./Buzzer/buzzer.obj 
+./clocks.obj \
+./main.obj \
+./utils.obj 
 
 C_DEPS += \
-./Buzzer/buzzer.pp 
+./clocks.pp \
+./main.pp \
+./utils.pp 
 
 C_DEPS__QUOTED += \
-"Buzzer\buzzer.pp" 
+"clocks.pp" \
+"main.pp" \
+"utils.pp" 
 
 OBJS__QUOTED += \
-"Buzzer\buzzer.obj" 
+"clocks.obj" \
+"main.obj" \
+"utils.obj" 
 
 C_SRCS__QUOTED += \
-"../Buzzer/buzzer.c" 
+"../clocks.c" \
+"../main.c" \
+"../utils.c" 
 
 

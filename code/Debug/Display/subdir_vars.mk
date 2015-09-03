@@ -4,21 +4,27 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Buzzer/buzzer.c 
+../Display/display.c \
+../Display/display_utils.c 
 
 OBJS += \
-./Buzzer/buzzer.obj 
+./Display/display.obj \
+./Display/display_utils.obj 
 
 C_DEPS += \
-./Buzzer/buzzer.pp 
+./Display/display.pp \
+./Display/display_utils.pp 
 
 C_DEPS__QUOTED += \
-"Buzzer\buzzer.pp" 
+"Display\display.pp" \
+"Display\display_utils.pp" 
 
 OBJS__QUOTED += \
-"Buzzer\buzzer.obj" 
+"Display\display.obj" \
+"Display\display_utils.obj" 
 
 C_SRCS__QUOTED += \
-"../Buzzer/buzzer.c" 
+"../Display/display.c" \
+"../Display/display_utils.c" 
 
 

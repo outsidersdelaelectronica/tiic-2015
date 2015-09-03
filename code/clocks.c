@@ -1,10 +1,8 @@
 /*
  * clocks.c
  *
- * Clock configuration
- *
- *  Created on: 28/7/2015
- *      Author: Smau
+ *  Created on: 2/9/2015
+ *      Author: slopez
  */
 
 #include "clocks.h"
@@ -31,9 +29,13 @@ void clocks_setup()
 		PJSEL1 &= ~BIT2;							// |
 
 
+	//FRAM wait states
+		FRCTL0 = FRCTLPW | NWAITS_1;				//Unlock FRAM registers
+													//Add 1 waitstate
+
 	//Clock control registers
 		CSCTL0 = CSKEY;								//Unlock clock registers
-		CSCTL1 = DCORSEL | DCOFSEL_6;				//DCO frecuency set to 16 MHz
+		CSCTL1 = DCORSEL | DCOFSEL_4;				//DCO frecuency set to 16 MHz
 		CSCTL2 = SELA__LFXTCLK | SELS__DCOCLK | SELM__DCOCLK;
 													//ACLK source = LFXTCLK
 													//SMCLK source = DCOCLK
@@ -42,20 +44,4 @@ void clocks_setup()
 													//ACLK divider = /1 => ACLK @ 32.768 KHz
 													//SMCLK divider = /8 => SMCLK @ 2 MHz
 													//MCLK divider = /1 => MCLK @ 16 MHz
-		CSCTL4 &= ~HFXTOFF & ~LFXTOFF;
-													//Turn HFXT oscillator on
-													//Turn LFXT oscillator on
-		CSCTL5 &= ~HFXTOFFG & ~LFXTOFFG;
-													//Clear oscillator fault flags
-
-/*	//Oscillator stabilization
-		do
-		{
-			CSCTL5 &= ~LFXTOFFG;                    //Clear LFXT fault flag
-			CSCTL5 &= ~HFXTOFFG;                    //Clear HFXT fault flag
-			SFRIFG1 &= ~OFIFG;						//Clear general oscillator fault flag
-		}
-		while (SFRIFG1 & OFIFG);                	//Test oscillator fault flag until there are no faults
-													//to let the oscillators stabilize
-*/
 }
