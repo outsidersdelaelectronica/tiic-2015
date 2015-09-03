@@ -41,14 +41,20 @@ int main(void) {
 		for(i = 0 ; i < 40L * 320L ; i++)
     	{
     		//display_IO_write_GRAM(0xF3, 0x38);
-    		display_IO_write_reg(0x22,0xF3, 0x38);
+			display_IO_write_GRAM(0xf0, 0x00, 0xff);
     	}
     	delay_ms(1000);
 
     	for(i = 0 ; i < 40L * 320L ; i++)
     	{
     		//display_IO_write_GRAM(0x03, 0x38);
-    		display_IO_write_reg(0x22,0x03, 0x38);
+    		display_IO_write_GRAM(0x00, 0xff, 0x00);
+    	}
+    	delay_ms(1000);
+    	for(i = 0 ; i < 40L * 320L ; i++)
+    	{
+    		//display_IO_write_GRAM(0x03, 0x38);
+    		display_IO_write_GRAM(0xff, 0x00, 0x00);
     	}
     	delay_ms(1000);
     }

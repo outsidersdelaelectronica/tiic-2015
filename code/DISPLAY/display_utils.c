@@ -115,7 +115,7 @@ uint16_t display_IO_read_reg(uint8_t reg)
 	return data;
 }
 
-void display_IO_write_GRAM(uint8_t data_hi_af, uint8_t data_lo)
+void display_IO_write_GRAM(uint8_t first_byte, uint8_t second_byte, uint8_t third_byte)
 {
 	//Start operation
 		P9OUT &= ~BIT7;			//Set display_CS to '0'
@@ -133,32 +133,17 @@ void display_IO_write_GRAM(uint8_t data_hi_af, uint8_t data_lo)
 		P9OUT |= BIT4;			//Set display_WR to '1'
 
 	//Write data
-	//FIRST WORD
 		P2OUT |= BIT3;			//Set display_RS to '1'
 
-		display_IO_write(data_hi_af);
+		display_IO_write(first_byte);
 		P9OUT &= ~BIT4;			//Set display_WR to '0'
 		P9OUT |= BIT4;			//Set display_WR to '1'
 
-		display_IO_write(data_lo);
+		display_IO_write(second_byte);
 		P9OUT &= ~BIT4;			//Set display_WR to '0'
 		P9OUT |= BIT4;			//Set display_WR to '1'
 
-	//SECOND WORD
-		display_IO_write(data_hi_af);
-		P9OUT &= ~BIT4;			//Set display_WR to '0'
-		P9OUT |= BIT4;			//Set display_WR to '1'
-
-		display_IO_write(data_lo);
-		P9OUT &= ~BIT4;			//Set display_WR to '0'
-		P9OUT |= BIT4;			//Set display_WR to '1'
-
-	//THIRD WORD
-		display_IO_write(data_hi_af);
-		P9OUT &= ~BIT4;			//Set display_WR to '0'
-		P9OUT |= BIT4;			//Set display_WR to '1'
-
-		display_IO_write(data_lo);
+		display_IO_write(third_byte);
 		P9OUT &= ~BIT4;			//Set display_WR to '0'
 		P9OUT |= BIT4;			//Set display_WR to '1'
 
