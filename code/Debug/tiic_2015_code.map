@@ -1,7 +1,7 @@
 ******************************************************************************
-                  MSP430 Linker PC v4.4.3                      
+                  MSP430 Linker PC v4.4.5                      
 ******************************************************************************
->> Linked Thu Sep 03 19:18:58 2015
+>> Linked Mon Sep 07 19:56:56 2015
 
 OUTPUT FILE NAME:   <tiic_2015_code.out>
 ENTRY POINT SYMBOL: "_c_int00_noargs_noexit_mpu"  address: 00004400

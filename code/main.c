@@ -38,20 +38,20 @@ int main(void) {
 	long i = 0;
 	while(1)
     {
-		for(i = 0 ; i < 40L * 320L ; i++)
+		for(i = 0 ; i < 40L * 240L ; i++)
     	{
     		//display_IO_write_GRAM(0xF3, 0x38);
 			display_IO_write_GRAM(0xfc, 0x00, 0x00);
     	}
     	delay_ms(1000);
 
-    	for(i = 0 ; i < 40L * 320L ; i++)
+    	for(i = 0 ; i < 40L * 240L ; i++)
     	{
     		//display_IO_write_GRAM(0x03, 0x38);
     		display_IO_write_GRAM(0x00, 0xfc, 0x00);
     	}
     	delay_ms(1000);
-    	for(i = 0 ; i < 40L * 320L ; i++)
+    	for(i = 0 ; i < 40L * 240L ; i++)
     	{
     		//display_IO_write_GRAM(0x03, 0x38);
     		display_IO_write_GRAM(0x00, 0x00, 0xfc);
