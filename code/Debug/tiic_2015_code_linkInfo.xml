@@ -2,7 +2,7 @@
 <link_info>
    <banner>MSP430 Linker PC v4.4.3</banner>
    <copyright>Copyright (c) 2003-2015 Texas Instruments Incorporated</copyright>
-   <link_time>0x55e875d0</link_time>
+   <link_time>0x55e88102</link_time>
    <link_errors>0x0</link_errors>
    <output_file>tiic_2015_code.out</output_file>
    <entry_point>
@@ -356,111 +356,111 @@
          <name>.text:main</name>
          <load_address>0x102de</load_address>
          <run_address>0x102de</run_address>
-         <size>0xce</size>
+         <size>0xd2</size>
          <input_file_ref idref="fl-3"/>
       </object_component>
       <object_component id="oc-192">
          <name>.text:display_IO_write_GRAM</name>
-         <load_address>0x103ac</load_address>
-         <run_address>0x103ac</run_address>
+         <load_address>0x103b0</load_address>
+         <run_address>0x103b0</run_address>
          <size>0x74</size>
          <input_file_ref idref="fl-7"/>
       </object_component>
       <object_component id="oc-111">
          <name>.text:_auto_init_hold_wdt</name>
-         <load_address>0x10420</load_address>
-         <run_address>0x10420</run_address>
+         <load_address>0x10424</load_address>
+         <run_address>0x10424</run_address>
          <size>0x6c</size>
          <input_file_ref idref="fl-69"/>
       </object_component>
       <object_component id="oc-18c">
          <name>.text:display_IO_read_reg</name>
-         <load_address>0x1048c</load_address>
-         <run_address>0x1048c</run_address>
+         <load_address>0x10490</load_address>
+         <run_address>0x10490</run_address>
          <size>0x68</size>
          <input_file_ref idref="fl-7"/>
       </object_component>
       <object_component id="oc-1c6">
          <name>.text:display_IO_write_reg</name>
-         <load_address>0x104f4</load_address>
-         <run_address>0x104f4</run_address>
+         <load_address>0x104f8</load_address>
+         <run_address>0x104f8</run_address>
          <size>0x60</size>
          <input_file_ref idref="fl-7"/>
       </object_component>
       <object_component id="oc-174">
          <name>.text:clocks_setup</name>
-         <load_address>0x10554</load_address>
-         <run_address>0x10554</run_address>
+         <load_address>0x10558</load_address>
+         <run_address>0x10558</run_address>
          <size>0x50</size>
          <input_file_ref idref="fl-2"/>
       </object_component>
       <object_component id="oc-124">
          <name>.text:__mpu_init</name>
-         <load_address>0x105a4</load_address>
-         <run_address>0x105a4</run_address>
+         <load_address>0x105a8</load_address>
+         <run_address>0x105a8</run_address>
          <size>0x28</size>
          <input_file_ref idref="fl-6b"/>
       </object_component>
       <object_component id="oc-17a">
          <name>.text:display_setup</name>
-         <load_address>0x105cc</load_address>
-         <run_address>0x105cc</run_address>
+         <load_address>0x105d0</load_address>
+         <run_address>0x105d0</run_address>
          <size>0x26</size>
          <input_file_ref idref="fl-6"/>
       </object_component>
       <object_component id="oc-180">
          <name>.text:buzzer_setup</name>
-         <load_address>0x105f2</load_address>
-         <run_address>0x105f2</run_address>
+         <load_address>0x105f6</load_address>
+         <run_address>0x105f6</run_address>
          <size>0x20</size>
          <input_file_ref idref="fl-9"/>
       </object_component>
       <object_component id="oc-1cd">
          <name>.text:display_IO_write</name>
-         <load_address>0x10612</load_address>
-         <run_address>0x10612</run_address>
+         <load_address>0x10616</load_address>
+         <run_address>0x10616</run_address>
          <size>0x1e</size>
          <input_file_ref idref="fl-7"/>
       </object_component>
       <object_component id="oc-198">
          <name>.text:delay_ms</name>
-         <load_address>0x10630</load_address>
-         <run_address>0x10630</run_address>
+         <load_address>0x10634</load_address>
+         <run_address>0x10634</run_address>
          <size>0x1a</size>
          <input_file_ref idref="fl-4"/>
       </object_component>
       <object_component id="oc-1d3">
          <name>.text:display_IO_read</name>
-         <load_address>0x1064a</load_address>
-         <run_address>0x1064a</run_address>
+         <load_address>0x1064e</load_address>
+         <run_address>0x1064e</run_address>
          <size>0x1a</size>
          <input_file_ref idref="fl-7"/>
       </object_component>
       <object_component id="oc-1f0">
          <name>.text:display_IO_input</name>
-         <load_address>0x10664</load_address>
-         <run_address>0x10664</run_address>
+         <load_address>0x10668</load_address>
+         <run_address>0x10668</run_address>
          <size>0x12</size>
          <input_file_ref idref="fl-7"/>
       </object_component>
       <object_component id="oc-1e9">
          <name>.text:display_IO_output</name>
-         <load_address>0x10676</load_address>
-         <run_address>0x10676</run_address>
+         <load_address>0x1067a</load_address>
+         <run_address>0x1067a</run_address>
          <size>0x12</size>
          <input_file_ref idref="fl-7"/>
       </object_component>
       <object_component id="oc-10b">
          <name>.text:_system_pre_init</name>
-         <load_address>0x10688</load_address>
-         <run_address>0x10688</run_address>
+         <load_address>0x1068c</load_address>
+         <run_address>0x1068c</run_address>
          <size>0x4</size>
          <input_file_ref idref="fl-6c"/>
       </object_component>
       <object_component id="oc-133">
          <name>.text:abort</name>
-         <load_address>0x1068c</load_address>
-         <run_address>0x1068c</run_address>
+         <load_address>0x10690</load_address>
+         <run_address>0x10690</run_address>
          <size>0x4</size>
          <input_file_ref idref="fl-6d"/>
       </object_component>
@@ -1811,7 +1811,7 @@
          <name>.text</name>
          <load_address>0x10000</load_address>
          <run_address>0x10000</run_address>
-         <size>0x690</size>
+         <size>0x694</size>
          <contents>
             <object_component_ref idref="oc-186"/>
             <object_component_ref idref="oc-12b"/>
@@ -2729,7 +2729,7 @@
          <name>SEGMENT_5</name>
          <load_address>0xfff2</load_address>
          <run_address>0xfff2</run_address>
-         <size>0x69e</size>
+         <size>0x6a2</size>
          <flags>0x5</flags>
          <contents>
             <logical_group_ref idref="lg-65"/>
@@ -3684,18 +3684,18 @@
          <page_id>0x0</page_id>
          <origin>0x10000</origin>
          <length>0x4000</length>
-         <used_space>0x690</used_space>
-         <unused_space>0x3970</unused_space>
+         <used_space>0x694</used_space>
+         <unused_space>0x396c</unused_space>
          <attributes>RWIX</attributes>
          <usage_details>
             <allocated_space>
                <start_address>0x10000</start_address>
-               <size>0x690</size>
+               <size>0x694</size>
                <logical_group_ref idref="lg-25e"/>
             </allocated_space>
             <available_space>
-               <start_address>0x10690</start_address>
-               <size>0x3970</size>
+               <start_address>0x10694</start_address>
+               <size>0x396c</size>
             </available_space>
          </usage_details>
       </memory_area>
@@ -7631,7 +7631,7 @@
       </symbol>
       <symbol id="sm-442">
          <name>clocks_setup</name>
-         <value>0x10554</value>
+         <value>0x10558</value>
          <object_component_ref idref="oc-174"/>
       </symbol>
       <symbol id="sm-45a">
@@ -7651,7 +7651,7 @@
       </symbol>
       <symbol id="sm-470">
          <name>delay_ms</name>
-         <value>0x10630</value>
+         <value>0x10634</value>
          <object_component_ref idref="oc-198"/>
       </symbol>
       <symbol id="sm-481">
@@ -7661,47 +7661,47 @@
       </symbol>
       <symbol id="sm-482">
          <name>display_setup</name>
-         <value>0x105cc</value>
+         <value>0x105d0</value>
          <object_component_ref idref="oc-17a"/>
       </symbol>
       <symbol id="sm-4b5">
          <name>display_IO_write</name>
-         <value>0x10612</value>
+         <value>0x10616</value>
          <object_component_ref idref="oc-1cd"/>
       </symbol>
       <symbol id="sm-4b6">
          <name>display_IO_input</name>
-         <value>0x10664</value>
+         <value>0x10668</value>
          <object_component_ref idref="oc-1f0"/>
       </symbol>
       <symbol id="sm-4b7">
          <name>display_IO_output</name>
-         <value>0x10676</value>
+         <value>0x1067a</value>
          <object_component_ref idref="oc-1e9"/>
       </symbol>
       <symbol id="sm-4b8">
          <name>display_IO_write_GRAM</name>
-         <value>0x103ac</value>
+         <value>0x103b0</value>
          <object_component_ref idref="oc-192"/>
       </symbol>
       <symbol id="sm-4b9">
          <name>display_IO_read_reg</name>
-         <value>0x1048c</value>
+         <value>0x10490</value>
          <object_component_ref idref="oc-18c"/>
       </symbol>
       <symbol id="sm-4ba">
          <name>display_IO_write_reg</name>
-         <value>0x104f4</value>
+         <value>0x104f8</value>
          <object_component_ref idref="oc-1c6"/>
       </symbol>
       <symbol id="sm-4bb">
          <name>display_IO_read</name>
-         <value>0x1064a</value>
+         <value>0x1064e</value>
          <object_component_ref idref="oc-1d3"/>
       </symbol>
       <symbol id="sm-4c5">
          <name>buzzer_setup</name>
-         <value>0x105f2</value>
+         <value>0x105f6</value>
          <object_component_ref idref="oc-180"/>
       </symbol>
       <symbol id="sm-4cc">
@@ -7846,7 +7846,7 @@
       </symbol>
       <symbol id="sm-57a">
          <name>_auto_init_hold_wdt</name>
-         <value>0x10420</value>
+         <value>0x10424</value>
          <object_component_ref idref="oc-111"/>
       </symbol>
       <symbol id="sm-585">
@@ -7856,22 +7856,22 @@
       </symbol>
       <symbol id="sm-58e">
          <name>__mpu_init</name>
-         <value>0x105a4</value>
+         <value>0x105a8</value>
          <object_component_ref idref="oc-124"/>
       </symbol>
       <symbol id="sm-597">
          <name>_system_pre_init</name>
-         <value>0x10688</value>
+         <value>0x1068c</value>
          <object_component_ref idref="oc-10b"/>
       </symbol>
       <symbol id="sm-5a2">
          <name>C$$EXIT</name>
-         <value>0x1068c</value>
+         <value>0x10690</value>
          <object_component_ref idref="oc-133"/>
       </symbol>
       <symbol id="sm-5a3">
          <name>abort</name>
-         <value>0x1068c</value>
+         <value>0x10690</value>
          <object_component_ref idref="oc-133"/>
       </symbol>
       <symbol id="sm-5a6">

@@ -36,7 +36,7 @@ void display_initialize()
 	display_IO_write_reg(0xEF, 0x12, 0x31); // Set internal timing
 	display_IO_write_reg(0x01, 0x01, 0x00); // set SS and SM bit
 	display_IO_write_reg(0x02, 0x07, 0x00); // set 1 line inversion
-	display_IO_write_reg(0x03, 0x10, 0x30); // set GRAM write direction and BGR=1.
+	display_IO_write_reg(0x03, 0xC2, 0x80); // set GRAM write direction and BGR=1.
 	display_IO_write_reg(0x04, 0x00, 0x00); // Resize register
 	display_IO_write_reg(0x08, 0x02, 0x02); // set the back porch and front porch
 	display_IO_write_reg(0x09, 0x00, 0x00); // set non-display area refresh cycle ISC[3:0]
