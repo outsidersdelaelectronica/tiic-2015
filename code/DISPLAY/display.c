@@ -22,7 +22,8 @@ void display_setup()
 
 void display_initialize()
 {
-	 //************* Reset display Driver ****************//
+	display_IO_output();
+	//************* Reset display Driver ****************//
 	P7OUT |= BIT1;					//Write 1 to display_RESET
 	delay_ms(5);
 	P7OUT &= ~BIT1;  				//Write 0 to display_RESET
@@ -36,7 +37,7 @@ void display_initialize()
 	display_IO_write_reg(0xEF, 0x12, 0x31); // Set internal timing
 	display_IO_write_reg(0x01, 0x00, 0x00); // set SS and SM bit
 	display_IO_write_reg(0x02, 0x06, 0x00); // set 1 line inversion
-	display_IO_write_reg(0x03, 0xC2, 0x80); // set GRAM write direction and BGR=1.
+	display_IO_write_reg(0x03, 0xC0, 0x88); // set GRAM write direction and BGR=1.
 	display_IO_write_reg(0x04, 0x00, 0x00); // Resize register
 	display_IO_write_reg(0x08, 0x02, 0x02); // set the back porch and front porch
 	display_IO_write_reg(0x09, 0x00, 0x00); // set non-display area refresh cycle ISC[3:0]
@@ -57,7 +58,7 @@ void display_initialize()
 	delay_ms(50); // Delay 50ms
 	display_IO_write_reg(0x13, 0x19, 0x00); // Set VDV[4:0] for VCOM amplitude
 	display_IO_write_reg(0x29, 0x00, 0x0F); // SetVCM[5:0] for VCOMH
-	display_IO_write_reg(0x2B, 0x00, 0x0C); // Set Frame Rate
+	display_IO_write_reg(0x2B, 0x00, 0x0D); // Set Frame Rate
 	delay_ms(50); // Delay 50ms
 	display_IO_write_reg(0x20, 0x00, 0x00); // GRAM horizontal Address
 	display_IO_write_reg(0x21, 0x00, 0x00); // GRAM Vertical Address

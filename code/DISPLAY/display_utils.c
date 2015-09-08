@@ -23,7 +23,7 @@ void display_IO_output()
 
 void display_IO_write(uint8_t data_out)
 {
-	display_IO_output();			//Set GPIO as output
+	//display_IO_output();			//Set GPIO as output
 
 	P6OUT &= ~0x7F;					//Clear P6.0 to P6.6
 	P6OUT |= 0x7F & (data_out >> 1);	//Write 7 MSB of data to P6.0 to P6.6
@@ -35,7 +35,7 @@ void display_IO_write(uint8_t data_out)
 uint8_t display_IO_read()
 {
 	uint8_t data_in = 0x00;			//Returned value
-	display_IO_input();				//Set GPIO as input
+	//display_IO_input();				//Set GPIO as input
 
 	data_in |= (P6IN & 0x7F) << 1;	//Read from P6.0 to P6.6
 	data_in &= ~0x01;				//Clear LSB in data_in

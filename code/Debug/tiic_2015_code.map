@@ -1,7 +1,7 @@
 ******************************************************************************
                   MSP430 Linker PC v4.4.5                      
 ******************************************************************************
->> Linked Mon Sep 07 19:56:56 2015
+>> Linked Tue Sep 08 18:41:52 2015
 
 OUTPUT FILE NAME:   <tiic_2015_code.out>
 ENTRY POINT SYMBOL: "_c_int00_noargs_noexit_mpu"  address: 00004400
@@ -79,7 +79,7 @@ MEMORY CONFIGURATION
   INT53                 0000fffa   00000002  00000002  00000000  RWIX
   INT54                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FRAM2                 00010000   00004000  00000694  0000396c  RWIX
+  FRAM2                 00010000   00004000  00000c32  000033ce  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -166,7 +166,7 @@ TIMER1_A1
 
 TIMER1_A0 
 *          0    0000ffde    00000002     
-                  0000ffde    00000002     utils.obj (.int39)
+                  0000ffde    00000002     <whole-program> (.int39)
 
 DMA        0    0000ffe0    00000002     
                   0000ffe0    00000002     rts430x_lc_rd_eabi.lib : int40.obj (.int40)
@@ -217,24 +217,16 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.obj (.reset)
 
-.text      0    00010000    00000694     
-                  00010000    000002de     display.obj (.text:display_initialize)
-                  000102de    000000d2     main.obj (.text:main)
-                  000103b0    00000074     display_utils.obj (.text:display_IO_write_GRAM)
-                  00010424    0000006c     rts430x_lc_rd_eabi.lib : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
-                  00010490    00000068     display_utils.obj (.text:display_IO_read_reg)
-                  000104f8    00000060     display_utils.obj (.text:display_IO_write_reg)
-                  00010558    00000050     clocks.obj (.text:clocks_setup)
-                  000105a8    00000028     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
-                  000105d0    00000026     display.obj (.text:display_setup)
-                  000105f6    00000020     buzzer.obj (.text:buzzer_setup)
-                  00010616    0000001e     display_utils.obj (.text:display_IO_write)
-                  00010634    0000001a     utils.obj (.text:delay_ms)
-                  0001064e    0000001a     display_utils.obj (.text:display_IO_read)
-                  00010668    00000012     display_utils.obj (.text:display_IO_input)
-                  0001067a    00000012     display_utils.obj (.text:display_IO_output)
-                  0001068c    00000004     rts430x_lc_rd_eabi.lib : pre_init.obj (.text:_system_pre_init)
-                  00010690    00000004                            : exit.obj (.text:abort)
+.text      0    00010000    00000c32     
+                  00010000    0000058a     main.obj (.text:main)
+                  0001058a    0000051c     display.obj (.text:display_initialize)
+                  00010aa6    00000076     display_utils.obj (.text:display_IO_write_GRAM)
+                  00010b1c    0000006c     rts430x_lc_rd_eabi.lib : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
+                  00010b88    00000060     display_utils.obj (.text:display_IO_write_reg)
+                  00010be8    00000028     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
+                  00010c10    0000001a     display_utils.obj (.text:display_IO_write)
+                  00010c2a    00000004     rts430x_lc_rd_eabi.lib : pre_init.obj (.text:_system_pre_init)
+                  00010c2e    00000004                            : exit.obj (.text:abort)
 
 
 GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
@@ -498,7 +490,7 @@ address   name
 000009ce  AESAXIN_L                 
 000004be  BCD2BIN                   
 000004bc  BIN2BCD                   
-00010690  C$$EXIT                   
+00010c2e  C$$EXIT                   
 0000043e  CAPTIO0CTL                
 0000043f  CAPTIO0CTL_H              
 0000043e  CAPTIO0CTL_L              
@@ -1250,30 +1242,22 @@ UNDEFED   __TI_INITARRAY_Limit
 ffffffff  __binit__                 
 ffffffff  __c_args__                
 00000001  __mpu_enable              
-000105a8  __mpu_init                
-00010424  _auto_init_hold_wdt       
+00010be8  __mpu_init                
+00010b1c  _auto_init_hold_wdt       
 00004400  _c_int00_noargs_noexit_mpu
 0000fffe  _reset_vector             
 00002360  _stack                    
-0001068c  _system_pre_init          
-00010690  abort                     
+00010c2a  _system_pre_init          
+00010c2e  abort                     
 ffffffff  binit                     
-000105f6  buzzer_setup              
-00010558  clocks_setup              
-00010634  delay_ms                  
-00010668  display_IO_input          
-0001067a  display_IO_output         
-0001064e  display_IO_read           
-00010490  display_IO_read_reg       
-00010616  display_IO_write          
-000103b0  display_IO_write_GRAM     
-000104f8  display_IO_write_reg      
-00010000  display_initialize        
-000105d0  display_setup             
+00010c10  display_IO_write          
+00010aa6  display_IO_write_GRAM     
+00010b88  display_IO_write_reg      
+0001058a  display_initialize        
 00004400  fram_ipe_end              
 00004400  fram_ipe_start            
 00004400  fram_rx_start             
-000102de  main                      
+00010000  main                      
 0000a501  mpu_ctl0_value            
 00001513  mpu_sam_value             
 00000440  mpu_segment_border1       
@@ -2294,24 +2278,16 @@ address   name
 0000fffa  __TI_int53                
 0000fffc  __TI_int54                
 0000fffe  _reset_vector             
-00010000  display_initialize        
-000102de  main                      
-000103b0  display_IO_write_GRAM     
-00010424  _auto_init_hold_wdt       
-00010490  display_IO_read_reg       
-000104f8  display_IO_write_reg      
-00010558  clocks_setup              
-000105a8  __mpu_init                
-000105d0  display_setup             
-000105f6  buzzer_setup              
-00010616  display_IO_write          
-00010634  delay_ms                  
-0001064e  display_IO_read           
-00010668  display_IO_input          
-0001067a  display_IO_output         
-0001068c  _system_pre_init          
-00010690  C$$EXIT                   
-00010690  abort                     
+00010000  main                      
+0001058a  display_initialize        
+00010aa6  display_IO_write_GRAM     
+00010b1c  _auto_init_hold_wdt       
+00010b88  display_IO_write_reg      
+00010be8  __mpu_init                
+00010c10  display_IO_write          
+00010c2a  _system_pre_init          
+00010c2e  C$$EXIT                   
+00010c2e  abort                     
 ffffffff  __binit__                 
 ffffffff  __c_args__                
 ffffffff  binit                     
@@ -2322,4 +2298,4 @@ UNDEFED   __TI_Handler_Table_Limit
 UNDEFED   __TI_INITARRAY_Base       
 UNDEFED   __TI_INITARRAY_Limit      
 
-[1037 symbols]
+[1029 symbols]
