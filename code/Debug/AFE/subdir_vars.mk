@@ -4,21 +4,27 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../AFE/ADS1291_module.c 
+../AFE/AFE.c \
+../AFE/AFE_serial.c 
 
 OBJS += \
-./AFE/ADS1291_module.obj 
+./AFE/AFE.obj \
+./AFE/AFE_serial.obj 
 
 C_DEPS += \
-./AFE/ADS1291_module.pp 
+./AFE/AFE.pp \
+./AFE/AFE_serial.pp 
 
 C_DEPS__QUOTED += \
-"AFE\ADS1291_module.pp" 
+"AFE\AFE.pp" \
+"AFE\AFE_serial.pp" 
 
 OBJS__QUOTED += \
-"AFE\ADS1291_module.obj" 
+"AFE\AFE.obj" \
+"AFE\AFE_serial.obj" 
 
 C_SRCS__QUOTED += \
-"../AFE/ADS1291_module.c" 
+"../AFE/AFE.c" \
+"../AFE/AFE_serial.c" 
 
 

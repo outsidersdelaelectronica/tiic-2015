@@ -5,9 +5,6 @@
  *      Author: slopez
  */
 
-#include "buzzer_notes.h"
-#include <msp430.h>
-#include <stdint.h>
 #include "buzzer.h"
 
 void buzzer_setup()

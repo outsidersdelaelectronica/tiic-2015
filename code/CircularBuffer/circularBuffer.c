@@ -8,7 +8,6 @@
  */
 
 #include "circularBuffer.h"
-#include <stdint.h>
 
 void circularBuffer_setup(circularBuffer* buf)
 {

@@ -10,13 +10,14 @@
 #ifndef AFE_AFE_H_
 #define AFE_AFE_H_
 
+#include <msp430.h>
 #include <stdint.h>
+
+#include "ADS1291_constants.h"
+#include "AFE_serial.h"
+#include "../CircularBuffer/circularBuffer.h"
 
 void	AFE_setup();
 void	AFE_initialize();
-
-void 	AFE_command(uint8_t command);
-uint8_t	AFE_read_register(uint8_t address);
-void	AFE_write_register(uint8_t address, uint8_t value);
 
 #endif /* AFE_AFE_H_ */

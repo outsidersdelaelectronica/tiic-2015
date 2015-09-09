@@ -21,7 +21,7 @@ void display_IO_output()
 	P7DIR |= BIT0;					//Set P7.0 as output
 }
 
-void display_IO_write(uint8_t data_out)
+static void display_IO_write(uint8_t data_out)
 {
 	//display_IO_output();			//Set GPIO as output
 
@@ -32,7 +32,7 @@ void display_IO_write(uint8_t data_out)
 	P7OUT |= 0x01 & data_out;			//Write LSB of data to P7.0
 }
 
-uint8_t display_IO_read()
+static uint8_t display_IO_read()
 {
 	uint8_t data_in = 0x00;			//Returned value
 	//display_IO_input();				//Set GPIO as input

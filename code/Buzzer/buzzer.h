@@ -8,6 +8,11 @@
 #ifndef BUZZER_BUZZER_H_
 #define BUZZER_BUZZER_H_
 
+#include <msp430.h>
+#include <stdint.h>
+
+#include "buzzer_notes.h"
+
 void	buzzer_setup();
 
 void	buzzer_stop();

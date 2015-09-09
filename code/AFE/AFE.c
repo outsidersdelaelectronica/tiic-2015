@@ -8,15 +8,43 @@
  */
 
 #include "AFE.h"
-#include "AFE_constants.h"
-#include "../CircularBuffer/circularBuffer.h"
-#include <msp430.h>
-#include <stdint.h>
 
-extern volatile uint8_t txBufferAFE[3];						//SPI TX buffer
-extern volatile unsigned int txBufferAFEIdx;				//SPI TX buffer index
+static void AFE_command(uint8_t command)
+{
+	P4OUT &= ~BIT4;							//Enable CS
 
-extern volatile circularBuffer ecgSignal;
+	AFE_send(command);
+
+	P4OUT |= BIT4;							//Disable CS
+}
+
+static void AFE_write_register(uint8_t address, uint8_t value)
+{
+	P4OUT &= ~BIT4;							//Enable CS
+
+	AFE_send(WREG | address);
+	AFE_send(0x00);
+	AFE_send(value);
+
+	P4OUT |= BIT4;							//Disable CS
+}
+
+/* NOT USED
+static uint8_t AFE_read_register(uint8_t address)
+{
+	uint8_t value = 0x00;
+
+	P4OUT &= ~BIT4;							//Enable CS
+
+	AFE_send(RREG | address);
+	AFE_send(0x00);
+	value = AFE_send(0x00);					//Read value from RX buffer
+
+	P4OUT |= BIT4;							//Disable CS
+
+	return value;
+}
+*/
 
 void AFE_setup()
 {
@@ -75,90 +103,33 @@ void AFE_initialize()
 {
 	//AFE reset and stop continuous data conversion mode
 		P7OUT |= BIT3;								//Power-On-Reset: hold reset line high for 1 second
-		__delay_cycles(8000000);						//1 second
+		__delay_cycles(16000000);						//1 second
 
 		P7OUT &= ~BIT3;								//Reset pulse: (>= 18 t_clk) => (>= 10 us)
-		__delay_cycles(1000);							//At least 10 useconds
+		__delay_cycles(2000);							//At least 10 useconds
 		P7OUT |= BIT3;
 
-		AFE_command(SDATAC);					//Stop continuous data conversion mode (activated by default)
+		AFE_command(SDATAC);						//Stop continuous data conversion mode (activated by default)
 
 
 	//Write config commands to AFE
-		AFE_write_register(REG_CONFIG2, 0xE0);	//Enable voltage reference
+		AFE_write_register(REG_CONFIG2, 0xE0);		//Enable voltage reference
 													//Enable lead-off comparators
-		AFE_write_register(REG_CH2SET, 0x81);	//Channel 2 power down
+		AFE_write_register(REG_CH2SET, 0x81);		//Channel 2 power down
 													//Channel 2 input shorted
-		AFE_write_register(REG_LOFF_STAT, 0x40);//Clock divider selection: Clock input set to 2.048 MHz
-		AFE_write_register(REG_RESP2, 0x87);	//Enable calibration
-		AFE_write_register(REG_CH1SET, 0x01);	// |
-		AFE_command(OFFSETCAL);					// | Calibrate
-		AFE_write_register(REG_CH1SET, 0x00);	// |
-		AFE_write_register(REG_RESP2, 0x07);	//Disable calibration
+		AFE_write_register(REG_LOFF_STAT, 0x40);	//Clock divider selection: Clock input set to 2.048 MHz
+		AFE_write_register(REG_RESP2, 0x87);		//Enable calibration
+		AFE_write_register(REG_CH1SET, 0x01);		// |
+		AFE_command(OFFSETCAL);						// | Calibrate
+		AFE_write_register(REG_CH1SET, 0x00);		// |
+		AFE_write_register(REG_RESP2, 0x07);		//Disable calibration
 
 
 	//Start capturing data
 		P5OUT |= BIT7;								//Start conversions
-		AFE_command(RDATAC);					//Enable continuous output of conversion data
+		AFE_command(RDATAC);						//Enable continuous output of conversion data
 														//In this mode, a SDATAC command must be issued
 														//before other commands can be sent to the device
+
+		P1IE |= BIT2;								//Enable DRDY interrupt
 }
-
-void AFE_command(uint8_t command)
-{
-		txBufferAFE[txBufferAFEIdx] = command;			//Write command to be sent into TX buffer
-		txBufferAFEIdx++;								//Increment buffer index
-
-		UCB1IE |= UCTXIE;							//Enable TX interrupts
-		__bis_SR_register(LPM0_bits | GIE);     	//Enter LPM0 mode, enabling global interrupts
-	    __no_operation();                       	//Wait for TX interrupt
-	    	//Data transmission on ISR
-	    __delay_cycles(1000);						//Delay before next transmission
-}
-
-uint8_t	AFE_read_register(uint8_t address)
-{
-	txBufferAFE[txBufferAFEIdx] = 0;						//Dummy byte for RX
-	txBufferAFEIdx++;
-	txBufferAFE[txBufferAFEIdx] = 0;						//Build command: number of registers to be read - 1
-	txBufferAFEIdx++;
-	txBufferAFE[txBufferAFEIdx] = RREG | address;			//Build command: read content from 'address'
-	txBufferAFEIdx++;
-
-	int i;
-	int numberOfBytes = txBufferAFEIdx;
-	for (i = 0; i < numberOfBytes; i++)				//Send all the bytes
-	{
-		UCB1IE |= UCTXIE;								//Enable TX interrupts
-		__bis_SR_register(LPM0_bits | GIE);     		//Enter LPM0 mode, enabling global interrupts
-		__no_operation();                       		//Wait for TX interrupt
-			//Data transmission on ISR
-		__delay_cycles(1000);							//Delay before next transmission
-	}
-
-	uint8_t value = UCB1RXBUF;						//Read value from RX buffer
-	return value;
-}
-
-void AFE_write_register(uint8_t address, uint8_t value)
-{
-
-	txBufferAFE[txBufferAFEIdx] = value;					//Build command: byte to be written
-	txBufferAFEIdx++;
-	txBufferAFE[txBufferAFEIdx] = 0;						//Build command: number of registers to be read - 1
-	txBufferAFEIdx++;
-	txBufferAFE[txBufferAFEIdx] = WREG | address;			//Build command: write content to 'address'
-	txBufferAFEIdx++;
-
-	int i;
-	int numberOfBytes = txBufferAFEIdx;
-	for (i = 0; i < numberOfBytes; i++)				//Send all the bytes
-	{
-		UCB1IE |= UCTXIE;								//Enable TX interrupts
-		__bis_SR_register(LPM0_bits | GIE);     		//Enter LPM0 mode, enabling global interrupts
-		__no_operation();                       		//Wait for TX interrupt
-			//Data transmission on ISR
-		__delay_cycles(1000);							//Delay before next transmission
-	}
-}
-
