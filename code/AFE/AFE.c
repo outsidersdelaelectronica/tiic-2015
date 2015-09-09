@@ -1,14 +1,14 @@
 /*
- * ADS1291_module.c
+ * AFE_module.c
  *
- * ADS1291 Medical AFE functions
+ * AFE Medical AFE functions
  *
  *  Created on: 28/7/2015
  *      Author: slopez
  */
 
-#include "ADS1291_module.h"
-#include "ADS1291_constants.h"
+#include "AFE.h"
+#include "AFE_constants.h"
 #include "../CircularBuffer/circularBuffer.h"
 #include <msp430.h>
 #include <stdint.h>
@@ -18,7 +18,7 @@ extern volatile unsigned int txBufferAFEIdx;				//SPI TX buffer index
 
 extern volatile circularBuffer ecgSignal;
 
-void ADS1291_setup()
+void AFE_setup()
 {
 	//Configure AFE control lines
 		//AFE data ready
@@ -71,7 +71,7 @@ void ADS1291_setup()
 }
 
 
-void ADS1291_initialize()
+void AFE_initialize()
 {
 	//AFE reset and stop continuous data conversion mode
 		P7OUT |= BIT3;								//Power-On-Reset: hold reset line high for 1 second
@@ -81,30 +81,30 @@ void ADS1291_initialize()
 		__delay_cycles(1000);							//At least 10 useconds
 		P7OUT |= BIT3;
 
-		ADS1291_command(SDATAC);					//Stop continuous data conversion mode (activated by default)
+		AFE_command(SDATAC);					//Stop continuous data conversion mode (activated by default)
 
 
 	//Write config commands to AFE
-		ADS1291_write_register(REG_CONFIG2, 0xE0);	//Enable voltage reference
+		AFE_write_register(REG_CONFIG2, 0xE0);	//Enable voltage reference
 													//Enable lead-off comparators
-		ADS1291_write_register(REG_CH2SET, 0x81);	//Channel 2 power down
+		AFE_write_register(REG_CH2SET, 0x81);	//Channel 2 power down
 													//Channel 2 input shorted
-		ADS1291_write_register(REG_LOFF_STAT, 0x40);//Clock divider selection: Clock input set to 2.048 MHz
-		ADS1291_write_register(REG_RESP2, 0x87);	//Enable calibration
-		ADS1291_write_register(REG_CH1SET, 0x01);	// |
-		ADS1291_command(OFFSETCAL);					// | Calibrate
-		ADS1291_write_register(REG_CH1SET, 0x00);	// |
-		ADS1291_write_register(REG_RESP2, 0x07);	//Disable calibration
+		AFE_write_register(REG_LOFF_STAT, 0x40);//Clock divider selection: Clock input set to 2.048 MHz
+		AFE_write_register(REG_RESP2, 0x87);	//Enable calibration
+		AFE_write_register(REG_CH1SET, 0x01);	// |
+		AFE_command(OFFSETCAL);					// | Calibrate
+		AFE_write_register(REG_CH1SET, 0x00);	// |
+		AFE_write_register(REG_RESP2, 0x07);	//Disable calibration
 
 
 	//Start capturing data
 		P5OUT |= BIT7;								//Start conversions
-		ADS1291_command(RDATAC);					//Enable continuous output of conversion data
+		AFE_command(RDATAC);					//Enable continuous output of conversion data
 														//In this mode, a SDATAC command must be issued
 														//before other commands can be sent to the device
 }
 
-void ADS1291_command(uint8_t command)
+void AFE_command(uint8_t command)
 {
 		txBufferAFE[txBufferAFEIdx] = command;			//Write command to be sent into TX buffer
 		txBufferAFEIdx++;								//Increment buffer index
@@ -116,7 +116,7 @@ void ADS1291_command(uint8_t command)
 	    __delay_cycles(1000);						//Delay before next transmission
 }
 
-uint8_t	ADS1291_read_register(uint8_t address)
+uint8_t	AFE_read_register(uint8_t address)
 {
 	txBufferAFE[txBufferAFEIdx] = 0;						//Dummy byte for RX
 	txBufferAFEIdx++;
@@ -140,7 +140,7 @@ uint8_t	ADS1291_read_register(uint8_t address)
 	return value;
 }
 
-void ADS1291_write_register(uint8_t address, uint8_t value)
+void AFE_write_register(uint8_t address, uint8_t value)
 {
 
 	txBufferAFE[txBufferAFEIdx] = value;					//Build command: byte to be written
