@@ -1,10 +1,10 @@
 ******************************************************************************
                   MSP430 Linker PC v4.4.5                      
 ******************************************************************************
->> Linked Tue Sep 08 18:41:52 2015
+>> Linked Thu Sep 10 19:12:38 2015
 
 OUTPUT FILE NAME:   <tiic_2015_code.out>
-ENTRY POINT SYMBOL: "_c_int00_noargs_noexit_mpu"  address: 00004400
+ENTRY POINT SYMBOL: "_c_int00_noargs_noexit_mpu"  address: 0000445a
 
 
 MEMORY CONFIGURATION
@@ -18,8 +18,8 @@ MEMORY CONFIGURATION
   INFOC                 00001880   00000080  00000000  00000080  RWIX
   INFOB                 00001900   00000080  00000000  00000080  RWIX
   INFOA                 00001980   00000080  00000000  00000080  RWIX
-  RAM                   00001c00   00000800  000000a0  00000760  RWIX
-  FRAM                  00004400   0000bb80  00000032  0000bb4e  RWIX
+  RAM                   00001c00   00000800  000003ae  00000452  RWIX
+  FRAM                  00004400   0000bb80  000000b6  0000baca  RWIX
   JTAGSIGNATURE         0000ff80   00000004  00000004  00000000  RWIX  ffff 
   BSLSIGNATURE          0000ff84   00000004  00000004  00000000  RWIX  ffff 
   IPESIGNATURE          0000ff88   00000008  00000008  00000000  RWIX  ffff 
@@ -79,7 +79,7 @@ MEMORY CONFIGURATION
   INT53                 0000fffa   00000002  00000002  00000000  RWIX
   INT54                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FRAM2                 00010000   00004000  00000c32  000033ce  RWIX
+  FRAM2                 00010000   00004000  00000a62  0000359e  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -87,6 +87,17 @@ SECTION ALLOCATION MAP
  output                                  attributes/
 section   page    origin      length       input sections
 --------  ----  ----------  ----------   ----------------
+.bss       0    00001c00    0000030d     UNINITIALIZED
+                  00001c00    0000030a     (.common:ecgSignalBuffer)
+                  00001f0a    00000003     (.common:AFE_ecgData)
+
+.data      0    00001f0d    00000001     UNINITIALIZED
+                  00001f0d    00000001     AFE_serial.obj (.data)
+
+.stack     0    00002360    000000a0     UNINITIALIZED
+                  00002360    00000004     rts430x_lc_rd_eabi.lib : boot.obj (.stack)
+                  00002364    0000009c     --HOLE--
+
 .TI.persistent 
 *          0    00004400    00000000     UNINITIALIZED
 
@@ -94,20 +105,12 @@ section   page    origin      length       input sections
 
 .sysmem    0    00004400    00000000     UNINITIALIZED
 
-.cinit     0    00004400    00000000     UNINITIALIZED
-
-.init_array 
-*          0    00004400    00000000     UNINITIALIZED
-
-.stack     0    00002360    000000a0     UNINITIALIZED
-                  00002360    00000004     rts430x_lc_rd_eabi.lib : boot.obj (.stack)
-                  00002364    0000009c     --HOLE--
-
 .text:_isr 
-*          0    00004400    00000032     
-                  00004400    0000001e     rts430x_lc_rd_eabi.lib : boot_special.obj (.text:_isr:_c_int00_noargs_noexit_mpu)
-                  0000441e    0000000e     utils.obj (.text:_isr:Timer1_A0_ISR)
-                  0000442c    00000006     rts430x_lc_rd_eabi.lib : isr_trap.obj (.text:_isr:__TI_ISR_TRAP)
+*          0    00004400    0000008c     
+                  00004400    0000005a     AFE_serial.obj (.text:_isr:Port_1)
+                  0000445a    0000001e     rts430x_lc_rd_eabi.lib : boot_special.obj (.text:_isr:_c_int00_noargs_noexit_mpu)
+                  00004478    0000000e     utils.obj (.text:_isr:Timer1_A0_ISR)
+                  00004486    00000006     rts430x_lc_rd_eabi.lib : isr_trap.obj (.text:_isr:__TI_ISR_TRAP)
 
 .ipestruct 
 *          0    00004400    00000000     UNINITIALIZED
@@ -115,6 +118,16 @@ section   page    origin      length       input sections
 .ipe       0    00004400    00000000     UNINITIALIZED
 
 .ipe:_isr 
+*          0    00004400    00000000     UNINITIALIZED
+
+.cinit     0    0000448c    0000002a     
+                  0000448c    0000000c     (__TI_handler_table)
+                  00004498    00000007     (.cinit..data.load) [load image, compression = rle]
+                  0000449f    00000001     --HOLE-- [fill = 0]
+                  000044a0    00000006     (.cinit..bss.load) [load image, compression = zero_init]
+                  000044a6    00000010     (__TI_cinit_table)
+
+.init_array 
 *          0    00004400    00000000     UNINITIALIZED
 
 $fill000   0    0000ff80    00000004     
@@ -158,7 +171,7 @@ TIMER2_A0
                   0000ffd8    00000002     rts430x_lc_rd_eabi.lib : int36.obj (.int36)
 
 PORT1      0    0000ffda    00000002     
-                  0000ffda    00000002     rts430x_lc_rd_eabi.lib : int37.obj (.int37)
+                  0000ffda    00000002     <whole-program> (.int37)
 
 TIMER1_A1 
 *          0    0000ffdc    00000002     
@@ -217,16 +230,38 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.obj (.reset)
 
-.text      0    00010000    00000c32     
-                  00010000    0000058a     main.obj (.text:main)
-                  0001058a    0000051c     display.obj (.text:display_initialize)
-                  00010aa6    00000076     display_utils.obj (.text:display_IO_write_GRAM)
-                  00010b1c    0000006c     rts430x_lc_rd_eabi.lib : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
-                  00010b88    00000060     display_utils.obj (.text:display_IO_write_reg)
-                  00010be8    00000028     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
-                  00010c10    0000001a     display_utils.obj (.text:display_IO_write)
-                  00010c2a    00000004     rts430x_lc_rd_eabi.lib : pre_init.obj (.text:_system_pre_init)
-                  00010c2e    00000004                            : exit.obj (.text:abort)
+.text      0    00010000    00000a62     
+                  00010000    0000051c     display.obj (.text:display_initialize)
+                  0001051c    00000284     main.obj (.text:main)
+                  000107a0    00000078     circularBuffer.obj (.text:circularBuffer_write)
+                  00010818    0000006c     rts430x_lc_rd_eabi.lib : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
+                  00010884    00000068                            : copy_decompress_rle.obj (.text:__TI_decompress_rle_core$12)
+                  000108ec    00000060     display_utils.obj (.text:display_IO_write_reg)
+                  0001094c    00000058     AFE.obj (.text:AFE_write_register$9)
+                  000109a4    00000028     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
+                  000109cc    00000026     AFE.obj (.text:AFE_command$9)
+                  000109f2    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
+                  00010a16    0000001a     display_utils.obj (.text:display_IO_write$6)
+                  00010a30    00000012     rts430x_lc_rd_eabi.lib : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
+                  00010a42    00000012                            : memcpy.obj (.text:memcpy)
+                  00010a54    00000006                            : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
+                  00010a5a    00000004                            : pre_init.obj (.text:_system_pre_init)
+                  00010a5e    00000004                            : exit.obj (.text:abort)
+
+
+LINKER GENERATED COPY TABLES
+
+__TI_cinit_table @ 000044a6 records: 2, size/record: 8, table size: 16
+	.data: load addr=00004498, load size=00000007 bytes, run addr=00001f0d, run size=00000001 bytes, compression=rle
+	.bss: load addr=000044a0, load size=00000006 bytes, run addr=00001c00, run size=0000030d bytes, compression=zero_init
+
+
+LINKER GENERATED HANDLER TABLE
+
+__TI_handler_table @ 0000448c records: 3, size/record: 4, table size: 12
+	index: 0, handler: __TI_zero_init
+	index: 1, handler: __TI_decompress_rle24
+	index: 2, handler: __TI_decompress_none
 
 
 GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
@@ -488,9 +523,11 @@ address   name
 000009ce  AESAXIN                   
 000009cf  AESAXIN_H                 
 000009ce  AESAXIN_L                 
+00001f0d  AFE_RX_data               
+00001f0a  AFE_ecgData               
 000004be  BCD2BIN                   
 000004bc  BIN2BCD                   
-00010c2e  C$$EXIT                   
+00010a5e  C$$EXIT                   
 0000043e  CAPTIO0CTL                
 0000043f  CAPTIO0CTL_H              
 0000043e  CAPTIO0CTL_L              
@@ -879,6 +916,7 @@ address   name
 0000012a  PMMIFG                    
 0000012b  PMMIFG_H                  
 0000012a  PMMIFG_L                  
+00004400  Port_1                    
 00000158  RCCTL0                    
 00000159  RCCTL0_H                  
 00000158  RCCTL0_L                  
@@ -1042,7 +1080,7 @@ address   name
 000003e0  TB0EX0                    
 000003ee  TB0IV                     
 000003d0  TB0R                      
-0000441e  Timer1_A0_ISR             
+00004478  Timer1_A0_ISR             
 000005d0  UCA0ABCTL                 
 000005c6  UCA0BRW                   
 000005c7  UCA0BRW_H                 
@@ -1206,13 +1244,15 @@ address   name
 0000015c  WDTCTL_L                  
 00002400  __STACK_END               
 000000a0  __STACK_SIZE              
-UNDEFED   __TI_CINIT_Base           
-UNDEFED   __TI_CINIT_Limit          
-UNDEFED   __TI_Handler_Table_Base   
-UNDEFED   __TI_Handler_Table_Limit  
+000044a6  __TI_CINIT_Base           
+000044b6  __TI_CINIT_Limit          
+0000448c  __TI_Handler_Table_Base   
+00004498  __TI_Handler_Table_Limit  
 UNDEFED   __TI_INITARRAY_Base       
 UNDEFED   __TI_INITARRAY_Limit      
-0000442c  __TI_ISR_TRAP             
+00004486  __TI_ISR_TRAP             
+00010a30  __TI_decompress_none      
+00010a54  __TI_decompress_rle24     
 0000ffc6  __TI_int27                
 0000ffc8  __TI_int28                
 0000ffcc  __TI_int30                
@@ -1239,25 +1279,27 @@ UNDEFED   __TI_INITARRAY_Limit
 0000fff8  __TI_int52                
 0000fffa  __TI_int53                
 0000fffc  __TI_int54                
+000109f2  __TI_zero_init            
 ffffffff  __binit__                 
 ffffffff  __c_args__                
 00000001  __mpu_enable              
-00010be8  __mpu_init                
-00010b1c  _auto_init_hold_wdt       
-00004400  _c_int00_noargs_noexit_mpu
+000109a4  __mpu_init                
+00010818  _auto_init_hold_wdt       
+0000445a  _c_int00_noargs_noexit_mpu
 0000fffe  _reset_vector             
 00002360  _stack                    
-00010c2a  _system_pre_init          
-00010c2e  abort                     
+00010a5a  _system_pre_init          
+00010a5e  abort                     
 ffffffff  binit                     
-00010c10  display_IO_write          
-00010aa6  display_IO_write_GRAM     
-00010b88  display_IO_write_reg      
-0001058a  display_initialize        
+000107a0  circularBuffer_write      
+000108ec  display_IO_write_reg      
+00010000  display_initialize        
+00001c00  ecgSignalBuffer           
 00004400  fram_ipe_end              
 00004400  fram_ipe_start            
 00004400  fram_rx_start             
-00010000  main                      
+0001051c  main                      
+00010a42  memcpy                    
 0000a501  mpu_ctl0_value            
 00001513  mpu_sam_value             
 00000440  mpu_segment_border1       
@@ -2242,14 +2284,22 @@ address   name
 000009ce  AESAXIN_L                 
 000009cf  AESAXIN_H                 
 00001513  mpu_sam_value             
+00001c00  ecgSignalBuffer           
+00001f0a  AFE_ecgData               
+00001f0d  AFE_RX_data               
 00002360  _stack                    
 00002400  __STACK_END               
-00004400  _c_int00_noargs_noexit_mpu
+00004400  Port_1                    
 00004400  fram_ipe_end              
 00004400  fram_ipe_start            
 00004400  fram_rx_start             
-0000441e  Timer1_A0_ISR             
-0000442c  __TI_ISR_TRAP             
+0000445a  _c_int00_noargs_noexit_mpu
+00004478  Timer1_A0_ISR             
+00004486  __TI_ISR_TRAP             
+0000448c  __TI_Handler_Table_Base   
+00004498  __TI_Handler_Table_Limit  
+000044a6  __TI_CINIT_Base           
+000044b6  __TI_CINIT_Limit          
 0000a501  mpu_ctl0_value            
 0000ffc6  __TI_int27                
 0000ffc8  __TI_int28                
@@ -2278,24 +2328,23 @@ address   name
 0000fffa  __TI_int53                
 0000fffc  __TI_int54                
 0000fffe  _reset_vector             
-00010000  main                      
-0001058a  display_initialize        
-00010aa6  display_IO_write_GRAM     
-00010b1c  _auto_init_hold_wdt       
-00010b88  display_IO_write_reg      
-00010be8  __mpu_init                
-00010c10  display_IO_write          
-00010c2a  _system_pre_init          
-00010c2e  C$$EXIT                   
-00010c2e  abort                     
+00010000  display_initialize        
+0001051c  main                      
+000107a0  circularBuffer_write      
+00010818  _auto_init_hold_wdt       
+000108ec  display_IO_write_reg      
+000109a4  __mpu_init                
+000109f2  __TI_zero_init            
+00010a30  __TI_decompress_none      
+00010a42  memcpy                    
+00010a54  __TI_decompress_rle24     
+00010a5a  _system_pre_init          
+00010a5e  C$$EXIT                   
+00010a5e  abort                     
 ffffffff  __binit__                 
 ffffffff  __c_args__                
 ffffffff  binit                     
-UNDEFED   __TI_CINIT_Base           
-UNDEFED   __TI_CINIT_Limit          
-UNDEFED   __TI_Handler_Table_Base   
-UNDEFED   __TI_Handler_Table_Limit  
 UNDEFED   __TI_INITARRAY_Base       
 UNDEFED   __TI_INITARRAY_Limit      
 
-[1029 symbols]
+[1036 symbols]

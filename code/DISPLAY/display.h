@@ -11,8 +11,8 @@
 #include <msp430.h>
 #include <stdint.h>
 
-#include "display_utils.h"
 #include "../utils.h"
+#include "display_utils.h"
 
 void	display_setup();
 void	display_initialize();
