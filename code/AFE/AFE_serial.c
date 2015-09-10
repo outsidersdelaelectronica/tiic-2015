@@ -10,7 +10,11 @@
 volatile uint8_t AFE_TX_data = 0x00;
 volatile uint8_t AFE_RX_data = 0x00;
 
-volatile uint8_t AFE_ECG_data[3] = {0x00, 0x00, 0x00};
+volatile ecgData AFE_ecgData;
+
+//Global ecg signal storage buffer (located at main.c)
+extern volatile circularBuffer ecgSignalBuffer;
+
 
 uint8_t AFE_send(uint8_t data)
 {
@@ -18,7 +22,6 @@ uint8_t AFE_send(uint8_t data)
 
 	UCB1IE |= UCTXIE;							//Enable TX interrupts
 	__bis_SR_register(LPM0_bits | GIE);     	//Enter LPM0 mode, enabling global interrupts
-
     while(UCB1STATW & UCBUSY){					//Wait for transmission
     }
 
@@ -84,8 +87,11 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 
 	//Read ECG signal - another 3 bytes
 	for (i = 0; i < 3; ++i) {
-		AFE_ECG_data[i] = AFE_send(0x00);
+		AFE_ecgData.signal[i] = AFE_send(0x00);
 	}
+
+	//Store signal data into ecg signal buffer
+	circularBuffer_write(&ecgSignalBuffer, AFE_ecgData);
 
 	P1IFG &= ~BIT2;                           // Clear DRDY (P1.2) flag
 }

@@ -6,6 +6,9 @@
 #include "AFE/AFE.h"
 #include "Buzzer/buzzer.h"
 #include "Display/display.h"
+#include "CircularBuffer/circularBuffer.h"
+
+volatile circularBuffer ecgSignalBuffer;
 
 /*
  * main.c
@@ -16,23 +19,23 @@ int main(void) {
     /*
      * Setups
      */
-    clocks_setup();
-    display_setup();
-    buzzer_setup();
-    AFE_setup();
+    clocks_setup();								//System clocks configuration
+    AFE_setup();								//AFE (ADS1291) port setup
+    buzzer_setup();								//Buzzer PWM configuration
+    display_setup();							//Display port setup
+    circularBuffer_setup(&ecgSignalBuffer);		//Ecg signal storage buffer setup
 
     /*
      * MCU setup
      */
-    PM5CTL0 &= ~LOCKLPM5;		//Disable the GPIO power-on default high-impedance mode
-    __bis_SR_register(GIE);		//Enable global interrupts
+    PM5CTL0 &= ~LOCKLPM5;			//Disable the GPIO power-on default high-impedance mode
+    __bis_SR_register(GIE);			//Enable global interrupts
 
     /*
      * Initializations
      */
-    display_initialize();
-    AFE_initialize();
-
+    AFE_initialize();				//AFE communication start up and configuration commands
+    display_initialize();			//Display communication start up and configuration commands
 
     /*
      * Sheits

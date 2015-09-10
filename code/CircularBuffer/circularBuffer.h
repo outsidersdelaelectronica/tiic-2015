@@ -15,13 +15,15 @@
 
 #include <stdint.h>
 
+#include "../ecgData.h"
+
 typedef struct circularBuffer
 {
 	int bufferReadIndex;
 	int bufferWriteIndex;
 	int bufferSize;
 
-	uint8_t buffer[BUFFER_SIZE];
+	ecgData ecgBuffer[BUFFER_SIZE];
 }
 volatile circularBuffer;
 
@@ -30,7 +32,7 @@ void	circularBuffer_setup(circularBuffer* buf);
 int		circularBuffer_isEmpty(circularBuffer* buf);
 int		circularBuffer_isFull(circularBuffer* buf);
 
-int		circularBuffer_write(circularBuffer* buf, uint8_t value);
-int		circularBuffer_read(circularBuffer* buf);
+int		circularBuffer_write(circularBuffer* buf, ecgData value);
+ecgData	circularBuffer_read(circularBuffer* buf);
 
 #endif /* CIRCULARBUFFER_H_ */

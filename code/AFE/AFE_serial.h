@@ -11,6 +11,9 @@
 #include <msp430.h>
 #include <stdint.h>
 
+#include "../ecgData.h"
+#include "../CircularBuffer/circularBuffer.h"
+
 uint8_t	AFE_send(uint8_t data);
 
 #endif /* AFE_AFE_SERIAL_H_ */

@@ -12,6 +12,7 @@ main.obj: ../AFE/AFE.h
 main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h
 main.obj: ../AFE/ADS1291_constants.h
 main.obj: ../AFE/AFE_serial.h
+main.obj: ../AFE/../ecgData.h
 main.obj: ../AFE/../CircularBuffer/circularBuffer.h
 main.obj: ../Buzzer/buzzer.h
 main.obj: ../Buzzer/buzzer_notes.h
@@ -30,6 +31,7 @@ C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics_legacy_undefs.
 C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h: 
 ../AFE/ADS1291_constants.h: 
 ../AFE/AFE_serial.h: 
+../AFE/../ecgData.h: 
 ../AFE/../CircularBuffer/circularBuffer.h: 
 ../Buzzer/buzzer.h: 
 ../Buzzer/buzzer_notes.h: 
