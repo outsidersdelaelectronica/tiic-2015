@@ -19,7 +19,7 @@
 #define BYTES_PER_CHAR		FONT_HEIGHT * (FONT_WIDTH/8)
 #define FONT_ARRAY_SIZE		BYTES_PER_CHAR * CHAR_NUM
 
-typedef struct font
+typedef const struct font
 {
 	const uint8_t fontHeight;
 	const uint8_t fontWidth;
@@ -30,6 +30,6 @@ typedef struct font
 	const uint8_t fontArray[FONT_ARRAY_SIZE];
 } font;
 
-uint8_t*	font_get_char(font* currentFont, char character);
+uint8_t*	font_get_char(const font* currentFont, char character);
 
 #endif /* DISPLAY_FONT_H_ */

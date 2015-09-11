@@ -7,6 +7,8 @@
 
 #include "display_utils.h"
 
+extern const font displayFont;
+
 void display_IO_input()
 {
 	P6DIR |= 0x7F;					//Clear P6.0 to P6.6
@@ -153,15 +155,49 @@ void display_IO_write_GRAM(uint8_t first_byte, uint8_t second_byte, uint8_t thir
 
 void display_IO_write_pixel(uint8_t red, uint8_t green, uint8_t blue, uint16_t x, uint16_t y)
 {
-	display_IO_write_reg(0x20, (uint8_t)(x>>8), (uint8_t)x);		// y position register
-	display_IO_write_reg(0x21, (uint8_t)(y>>8), (uint8_t)y);		// x position register
+	uint8_t x_low, x_high, y_low, y_high;
 
-	display_IO_write_GRAM(blue, green, red);
+	x_low = (uint8_t) x;
+	x_high = (uint8_t) (x>>8);
+	y_low = (uint8_t) y;
+	y_high = (uint8_t) (y>>8);
+
+	display_IO_write_reg(0x21, x_high, x_low);		//X position register
+	display_IO_write_reg(0x20, y_high, y_low);		//Y position register
+
+	display_IO_write_GRAM(red, green, blue);
 }
 
+void display_IO_write_char(char character, uint8_t red, uint8_t green, uint8_t blue, uint16_t posH, uint16_t posV)
+{
+	uint8_t* charStartingPosition;
+	charStartingPosition = font_get_char(&displayFont, character);		//Pointer to starting byte
 
+	uint16_t line;
+	uint16_t local_posH = posH;
+	uint16_t local_posV = posV;
 
+	int16_t i,j;
+	uint16_t mask;
 
+	for(i = 0; i < displayFont.fontHeight ; i++){
+		line = *charStartingPosition++;
+		line = (line<<8)| (*charStartingPosition++);
 
+		mask = 0x8000;
+		//Draw line
+		for(j = 0; j < displayFont.fontWidth; j++)
+		{
+			if (line & mask)
+			{
+				display_IO_write_pixel(red, green, blue, local_posH, local_posV);
+			}
+			local_posH++;
+			mask = mask >> 1;
+		}
 
-
+		//Move to the beginning of the next line
+		local_posV++;
+		local_posH = posH;
+	}
+}

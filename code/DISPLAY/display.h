@@ -13,7 +13,6 @@
 
 #include "../utils.h"
 #include "display_utils.h"
-#include "font.h"
 
 void	display_setup();
 void	display_initialize();
@@ -21,7 +20,6 @@ void	display_initialize();
 void	display_sleep();
 void	display_wake_up();
 
-void	display_write_char(char character, uint8_t red, uint8_t green, uint8_t blue, uint16_t posH, uint16_t posV);
-
+void	display_write_string(char* string, uint8_t red, uint8_t green, uint8_t blue, uint16_t posH, uint16_t posV);
 
 #endif

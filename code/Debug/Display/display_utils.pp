@@ -9,6 +9,7 @@ Display/display_utils.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/includ
 Display/display_utils.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics_legacy_undefs.h
 Display/display_utils.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h
 Display/display_utils.obj: ../Display/../utils.h
+Display/display_utils.obj: ../Display/font.h
 
 ../Display/display_utils.c: 
 ../Display/display_utils.h: 
@@ -19,3 +20,4 @@ C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics.h:
 C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics_legacy_undefs.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h: 
 ../Display/../utils.h: 
+../Display/font.h: 

@@ -46,29 +46,19 @@ int main(void) {
 	uint8_t ecg_1;
 	uint8_t ecg_2;
 
-	long i;
-//	while(1)
-//	{
-		for(i = 0 ; i < 320L*240L ; i++)
-    	{
-
-			ecg_0 = ecgSignalBuffer.ecgBuffer[i%256].signal[0];
-			ecg_1 = ecgSignalBuffer.ecgBuffer[i%256].signal[1];
-			ecg_2 = ecgSignalBuffer.ecgBuffer[i%256].signal[2];
-			display_IO_write_GRAM(0xf2, ecg_1, ecg_2);
-
-    	}
-
-		display_write_char('y', 0xff, 0xff, 0xff, 0x24, 0x30);
-//		for(i = 0 ; i < 240 ; i++)
-//		{
-//
-//			display_write_pixel(0xff, 0xff, 0xff, (uint16_t)i , (uint16_t)i);
-//
-//		}
-
-
-
-//	}
+	uint8_t i,j,k;
+	while(1)
+	{
+		i++;
+		while(1){
+			j++;
+			while(1){
+				k++;
+				display_write_string("Ya no te ", i, j, k, 0x40, 0x40);
+				display_write_string("pasas por", i, j, k, 0x40, 0x60);
+				display_write_string("el parque", i, j, k, 0x40, 0x80);
+			}
+		}
+	}
 
 }

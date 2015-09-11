@@ -7,7 +7,7 @@
 
 #include "font.h"
 
-uint8_t* font_get_char(font* currentFont, char character)
+uint8_t* font_get_char(const font* currentFont, char character)
 {
 	uint8_t characterNumber;
 	uint16_t characterPosition;
@@ -35,7 +35,7 @@ uint8_t* font_get_char(font* currentFont, char character)
 	return (uint8_t*) characterPointer;
 }
 
-font displayFont =
+const font displayFont =
 {
 	.fontHeight =			FONT_HEIGHT,
 	.fontWidth =			FONT_WIDTH,

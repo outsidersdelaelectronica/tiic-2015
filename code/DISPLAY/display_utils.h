@@ -10,7 +10,9 @@
 
 #include <msp430.h>
 #include <stdint.h>
+
 #include "../utils.h"
+#include "font.h"
 
 void 		display_IO_input();
 void 		display_IO_output();
@@ -20,5 +22,6 @@ uint16_t	display_IO_read_reg(uint8_t reg);
 
 void		display_IO_write_GRAM(uint8_t first_byte, uint8_t second_byte, uint8_t third_byte);
 void 		display_IO_write_pixel(uint8_t red, uint8_t green, uint8_t blue, uint16_t x, uint16_t y);
+void		display_IO_write_char(char character, uint8_t red, uint8_t green, uint8_t blue, uint16_t posH, uint16_t posV);
 
 #endif /* DISPLAY_DISPLAY_UTILS_H_ */
