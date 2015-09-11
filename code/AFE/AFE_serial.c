@@ -14,7 +14,6 @@ volatile ecgData AFE_ecgData;
 //Global ecg signal storage buffer (located at main.c)
 extern volatile circularBuffer ecgSignalBuffer;
 
-
 uint8_t AFE_send(uint8_t data)
 {
 	UCB1TXBUF = data;				//Transmit byte (automatically clears UCTXIFG)

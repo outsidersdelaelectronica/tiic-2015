@@ -7,9 +7,9 @@
  *      Author: slopez
  */
 
-#ifndef TOUCH_TOUCH_MODULE_H_
-#define TOUCH_TOUCH_MODULE_H_
+#ifndef TOUCH_TOUCH_H_
+#define TOUCH_TOUCH_H_
 
 void	touch_setup();
 
-#endif /* TOUCH_TOUCH_MODULE_H_ */
+#endif /* TOUCH_TOUCH_H_ */

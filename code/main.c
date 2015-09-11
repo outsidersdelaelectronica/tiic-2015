@@ -42,22 +42,22 @@ int main(void) {
      */
 	P9OUT &= ~BIT6;				//Turn screen o
 
-//	uint8_t ecg_0;
-//	uint8_t ecg_1;
-//	uint8_t ecg_2;
-//
-//	long i;
-//	while(1)
-//	{
-//		for(i = 0 ; i < 32000 ; i++)
-//    	{
-//
-//			ecg_0 = ecgSignalBuffer.ecgBuffer[i%256].signal[0];
-//			ecg_1 = ecgSignalBuffer.ecgBuffer[i%256].signal[1];
-//			ecg_2 = ecgSignalBuffer.ecgBuffer[i%256].signal[2];
-//			display_IO_write_GRAM(0xf2, ecg_1, ecg_2);
-//
-//    	}
-//	}
+	uint8_t ecg_0;
+	uint8_t ecg_1;
+	uint8_t ecg_2;
+
+	long i;
+	while(1)
+	{
+		for(i = 0 ; i < 32000 ; i++)
+    	{
+
+			ecg_0 = ecgSignalBuffer.ecgBuffer[i%256].signal[0];
+			ecg_1 = ecgSignalBuffer.ecgBuffer[i%256].signal[1];
+			ecg_2 = ecgSignalBuffer.ecgBuffer[i%256].signal[2];
+			display_IO_write_GRAM(0xf2, ecg_1, ecg_2);
+
+    	}
+	}
 
 }

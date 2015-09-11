@@ -4,21 +4,27 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Touch/touch_module.c 
+../Touch/touch.c \
+../Touch/touch_serial.c 
 
 OBJS += \
-./Touch/touch_module.obj 
+./Touch/touch.obj \
+./Touch/touch_serial.obj 
 
 C_DEPS += \
-./Touch/touch_module.pp 
+./Touch/touch.pp \
+./Touch/touch_serial.pp 
 
 C_DEPS__QUOTED += \
-"Touch\touch_module.pp" 
+"Touch\touch.pp" \
+"Touch\touch_serial.pp" 
 
 OBJS__QUOTED += \
-"Touch\touch_module.obj" 
+"Touch\touch.obj" \
+"Touch\touch_serial.obj" 
 
 C_SRCS__QUOTED += \
-"../Touch/touch_module.c" 
+"../Touch/touch.c" \
+"../Touch/touch_serial.c" 
 
 
