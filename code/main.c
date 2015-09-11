@@ -40,45 +40,24 @@ int main(void) {
     /*
      * Sheits
      */
-    volatile int data_read = 0;
-	data_read = display_IO_read_reg(0x00);
+	P9OUT &= ~BIT6;				//Turn screen o
 
-	P9OUT &= ~BIT6;				//Turn screen on
-
-//	uint8_t DA_MUDA_FUCKING_VARIABLE_0;
-//	uint8_t DA_MUDA_FUCKING_VARIABLE_1;
-//	uint8_t DA_MUDA_FUCKING_VARIABLE_2;
+//	uint8_t ecg_0;
+//	uint8_t ecg_1;
+//	uint8_t ecg_2;
 //
 //	long i;
-	while(1)
-	{
-
-//		for(i = 0 ; i < 60L * 320L ; i++)
+//	while(1)
+//	{
+//		for(i = 0 ; i < 32000 ; i++)
 //    	{
 //
-//			DA_MUDA_FUCKING_VARIABLE_0 = ecgSignalBuffer.ecgBuffer[i%256].signal[0];
-//			DA_MUDA_FUCKING_VARIABLE_1 = ecgSignalBuffer.ecgBuffer[i%256].signal[1];
-//			DA_MUDA_FUCKING_VARIABLE_2 = ecgSignalBuffer.ecgBuffer[i%256].signal[2];
-//			display_IO_write_GRAM(DA_MUDA_FUCKING_VARIABLE_0, DA_MUDA_FUCKING_VARIABLE_1, DA_MUDA_FUCKING_VARIABLE_2);
+//			ecg_0 = ecgSignalBuffer.ecgBuffer[i%256].signal[0];
+//			ecg_1 = ecgSignalBuffer.ecgBuffer[i%256].signal[1];
+//			ecg_2 = ecgSignalBuffer.ecgBuffer[i%256].signal[2];
+//			display_IO_write_GRAM(0xf2, ecg_1, ecg_2);
 //
 //    	}
-//    	//delay_ms(1000);
-//
-//    	for(i = 0 ; i < 120L * 320L ; i++)
-//    	{
-//			DA_MUDA_FUCKING_VARIABLE_0 = ecgSignalBuffer.ecgBuffer[i%256].signal[0];
-//			DA_MUDA_FUCKING_VARIABLE_1 = ecgSignalBuffer.ecgBuffer[i%256].signal[1];
-//			DA_MUDA_FUCKING_VARIABLE_2 = ecgSignalBuffer.ecgBuffer[i%256].signal[2];
-//			display_IO_write_GRAM(DA_MUDA_FUCKING_VARIABLE_0, DA_MUDA_FUCKING_VARIABLE_1, DA_MUDA_FUCKING_VARIABLE_2);
-//    	}
-//    	//delay_ms(1000);
-//    	for(i = 0 ; i < 60L * 320L ; i++)
-//    	{
-//			DA_MUDA_FUCKING_VARIABLE_0 = ecgSignalBuffer.ecgBuffer[i%256].signal[0];
-//			DA_MUDA_FUCKING_VARIABLE_1 = ecgSignalBuffer.ecgBuffer[i%256].signal[1];
-//			DA_MUDA_FUCKING_VARIABLE_2 = ecgSignalBuffer.ecgBuffer[i%256].signal[2];
-//			display_IO_write_GRAM(DA_MUDA_FUCKING_VARIABLE_0, DA_MUDA_FUCKING_VARIABLE_1, DA_MUDA_FUCKING_VARIABLE_2);
-//    	}
-	}
+//	}
 
 }

@@ -13,6 +13,7 @@
 
 #include "../utils.h"
 #include "display_utils.h"
+#include "font.h"
 
 void	display_setup();
 void	display_initialize();

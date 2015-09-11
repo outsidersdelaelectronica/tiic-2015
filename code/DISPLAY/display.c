@@ -7,6 +7,8 @@
 
 #include "display.h"
 
+extern font displayFont;
+
 void display_setup()
 {
 	P7DIR |= BIT1;					//Set display_RESET (P7.1) as output
@@ -93,7 +95,25 @@ void display_initialize()
 	display_IO_write_reg(0x92, 0x06, 0x00);
 	display_IO_write_reg(0x07, 0x01, 0x33); // 262K color and display ON
 
+
+	/*
+	 * Paint it black
+	 */
+	long i;
+	for(i = 0 ; i < 240L * 320L ; i++)
+	{
+		display_IO_write_GRAM(0x00, 0x00, 0x00);
+	}
+
 }
+
+
+void display_write_char(char character, uint16_t posH, uint16_t posV)
+{
+	uint8_t* charStartingPosition;
+	charStartingPosition = font_get_char(&displayFont, 'a');
+}
+
 
 void display_sleep()
 {

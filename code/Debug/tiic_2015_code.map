@@ -1,7 +1,7 @@
 ******************************************************************************
-                  MSP430 Linker PC v4.4.5                      
+                  MSP430 Linker PC v4.4.3                      
 ******************************************************************************
->> Linked Thu Sep 10 19:12:38 2015
+>> Linked Fri Sep 11 16:29:41 2015
 
 OUTPUT FILE NAME:   <tiic_2015_code.out>
 ENTRY POINT SYMBOL: "_c_int00_noargs_noexit_mpu"  address: 0000445a
@@ -79,7 +79,7 @@ MEMORY CONFIGURATION
   INT53                 0000fffa   00000002  00000002  00000000  RWIX
   INT54                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FRAM2                 00010000   00004000  00000a62  0000359e  RWIX
+  FRAM2                 00010000   00004000  00000a60  000035a0  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -230,23 +230,23 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.obj (.reset)
 
-.text      0    00010000    00000a62     
-                  00010000    0000051c     display.obj (.text:display_initialize)
-                  0001051c    00000284     main.obj (.text:main)
-                  000107a0    00000078     circularBuffer.obj (.text:circularBuffer_write)
-                  00010818    0000006c     rts430x_lc_rd_eabi.lib : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
-                  00010884    00000068                            : copy_decompress_rle.obj (.text:__TI_decompress_rle_core$12)
-                  000108ec    00000060     display_utils.obj (.text:display_IO_write_reg)
-                  0001094c    00000058     AFE.obj (.text:AFE_write_register$9)
-                  000109a4    00000028     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
-                  000109cc    00000026     AFE.obj (.text:AFE_command$9)
-                  000109f2    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
-                  00010a16    0000001a     display_utils.obj (.text:display_IO_write$6)
-                  00010a30    00000012     rts430x_lc_rd_eabi.lib : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
-                  00010a42    00000012                            : memcpy.obj (.text:memcpy)
-                  00010a54    00000006                            : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
-                  00010a5a    00000004                            : pre_init.obj (.text:_system_pre_init)
-                  00010a5e    00000004                            : exit.obj (.text:abort)
+.text      0    00010000    00000a60     
+                  00010000    000005a2     display.obj (.text:display_initialize)
+                  000105a2    000001fc     main.obj (.text:main)
+                  0001079e    00000078     circularBuffer.obj (.text:circularBuffer_write)
+                  00010816    0000006c     rts430x_lc_rd_eabi.lib : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
+                  00010882    00000068                            : copy_decompress_rle.obj (.text:__TI_decompress_rle_core$13)
+                  000108ea    00000060     display_utils.obj (.text:display_IO_write_reg)
+                  0001094a    00000058     AFE.obj (.text:AFE_write_register$10)
+                  000109a2    00000028     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
+                  000109ca    00000026     AFE.obj (.text:AFE_command$10)
+                  000109f0    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
+                  00010a14    0000001a     display_utils.obj (.text:display_IO_write$6)
+                  00010a2e    00000012     rts430x_lc_rd_eabi.lib : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
+                  00010a40    00000012                            : memcpy.obj (.text:memcpy)
+                  00010a52    00000006                            : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
+                  00010a58    00000004                            : pre_init.obj (.text:_system_pre_init)
+                  00010a5c    00000004                            : exit.obj (.text:abort)
 
 
 LINKER GENERATED COPY TABLES
@@ -527,7 +527,7 @@ address   name
 00001f0a  AFE_ecgData               
 000004be  BCD2BIN                   
 000004bc  BIN2BCD                   
-00010a5e  C$$EXIT                   
+00010a5c  C$$EXIT                   
 0000043e  CAPTIO0CTL                
 0000043f  CAPTIO0CTL_H              
 0000043e  CAPTIO0CTL_L              
@@ -1251,8 +1251,8 @@ address   name
 UNDEFED   __TI_INITARRAY_Base       
 UNDEFED   __TI_INITARRAY_Limit      
 00004486  __TI_ISR_TRAP             
-00010a30  __TI_decompress_none      
-00010a54  __TI_decompress_rle24     
+00010a2e  __TI_decompress_none      
+00010a52  __TI_decompress_rle24     
 0000ffc6  __TI_int27                
 0000ffc8  __TI_int28                
 0000ffcc  __TI_int30                
@@ -1279,27 +1279,27 @@ UNDEFED   __TI_INITARRAY_Limit
 0000fff8  __TI_int52                
 0000fffa  __TI_int53                
 0000fffc  __TI_int54                
-000109f2  __TI_zero_init            
+000109f0  __TI_zero_init            
 ffffffff  __binit__                 
 ffffffff  __c_args__                
 00000001  __mpu_enable              
-000109a4  __mpu_init                
-00010818  _auto_init_hold_wdt       
+000109a2  __mpu_init                
+00010816  _auto_init_hold_wdt       
 0000445a  _c_int00_noargs_noexit_mpu
 0000fffe  _reset_vector             
 00002360  _stack                    
-00010a5a  _system_pre_init          
-00010a5e  abort                     
+00010a58  _system_pre_init          
+00010a5c  abort                     
 ffffffff  binit                     
-000107a0  circularBuffer_write      
-000108ec  display_IO_write_reg      
+0001079e  circularBuffer_write      
+000108ea  display_IO_write_reg      
 00010000  display_initialize        
 00001c00  ecgSignalBuffer           
 00004400  fram_ipe_end              
 00004400  fram_ipe_start            
 00004400  fram_rx_start             
-0001051c  main                      
-00010a42  memcpy                    
+000105a2  main                      
+00010a40  memcpy                    
 0000a501  mpu_ctl0_value            
 00001513  mpu_sam_value             
 00000440  mpu_segment_border1       
@@ -2329,18 +2329,18 @@ address   name
 0000fffc  __TI_int54                
 0000fffe  _reset_vector             
 00010000  display_initialize        
-0001051c  main                      
-000107a0  circularBuffer_write      
-00010818  _auto_init_hold_wdt       
-000108ec  display_IO_write_reg      
-000109a4  __mpu_init                
-000109f2  __TI_zero_init            
-00010a30  __TI_decompress_none      
-00010a42  memcpy                    
-00010a54  __TI_decompress_rle24     
-00010a5a  _system_pre_init          
-00010a5e  C$$EXIT                   
-00010a5e  abort                     
+000105a2  main                      
+0001079e  circularBuffer_write      
+00010816  _auto_init_hold_wdt       
+000108ea  display_IO_write_reg      
+000109a2  __mpu_init                
+000109f0  __TI_zero_init            
+00010a2e  __TI_decompress_none      
+00010a40  memcpy                    
+00010a52  __TI_decompress_rle24     
+00010a58  _system_pre_init          
+00010a5c  C$$EXIT                   
+00010a5c  abort                     
 ffffffff  __binit__                 
 ffffffff  __c_args__                
 ffffffff  binit                     
