@@ -150,3 +150,18 @@ void display_IO_write_GRAM(uint8_t first_byte, uint8_t second_byte, uint8_t thir
 	//End operation
 		P9OUT |= BIT7;			//Set display_CS to '1'
 }
+
+void display_IO_write_pixel(uint8_t red, uint8_t green, uint8_t blue, uint16_t x, uint16_t y)
+{
+	display_IO_write_reg(0x20, (uint8_t)(x>>8), (uint8_t)x);		// y position register
+	display_IO_write_reg(0x21, (uint8_t)(y>>8), (uint8_t)y);		// x position register
+
+	display_IO_write_GRAM(blue, green, red);
+}
+
+
+
+
+
+
+

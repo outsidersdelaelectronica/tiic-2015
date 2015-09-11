@@ -39,7 +39,7 @@ void display_initialize()
 	display_IO_write_reg(0xEF, 0x12, 0x31); // Set internal timing
 	display_IO_write_reg(0x01, 0x00, 0x00); // set SS and SM bit
 	display_IO_write_reg(0x02, 0x06, 0x00); // set 1 line inversion
-	display_IO_write_reg(0x03, 0xC0, 0x88); // set GRAM write direction and BGR=1.
+	display_IO_write_reg(0x03, 0xC0, 0x08); // set GRAM write direction and BGR=1.
 	display_IO_write_reg(0x04, 0x00, 0x00); // Resize register
 	display_IO_write_reg(0x08, 0x02, 0x02); // set the back porch and front porch
 	display_IO_write_reg(0x09, 0x00, 0x00); // set non-display area refresh cycle ISC[3:0]
@@ -108,10 +108,33 @@ void display_initialize()
 }
 
 
-void display_write_char(char character, uint16_t posH, uint16_t posV)
+void display_write_char(char character, uint8_t red, uint8_t green, uint8_t blue, uint16_t posH, uint16_t posV)
 {
 	uint8_t* charStartingPosition;
-	charStartingPosition = font_get_char(&displayFont, 'a');
+	charStartingPosition = font_get_char(&displayFont, 'a');	//pointer to staring byte
+
+	uint16_t line;
+	long i,j;
+	uint16_t local_posH = posH;
+	uint16_t local_posV = posV;
+	for(i = 0; i < displayFont.fontHeight ; i++){
+
+		line = *charStartingPosition++;
+		line = (line<<8) | *charStartingPosition++;
+
+		for(j = 0; j < displayFont.fontWidth; j++)
+		{
+			if (line & (1 << j))
+			{
+				display_IO_write_pixel(red, green, blue, local_posH++, local_posV);
+			}
+
+		}
+		local_posV++;
+		local_posH = posH;
+	}
+
+
 }
 
 

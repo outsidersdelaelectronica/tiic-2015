@@ -47,9 +47,9 @@ int main(void) {
 	uint8_t ecg_2;
 
 	long i;
-	while(1)
-	{
-		for(i = 0 ; i < 32000 ; i++)
+//	while(1)
+//	{
+		for(i = 0 ; i < 320L*240L ; i++)
     	{
 
 			ecg_0 = ecgSignalBuffer.ecgBuffer[i%256].signal[0];
@@ -58,6 +58,17 @@ int main(void) {
 			display_IO_write_GRAM(0xf2, ecg_1, ecg_2);
 
     	}
-	}
+
+		display_write_char('y', 0xff, 0xff, 0xff, 0x24, 0x30);
+//		for(i = 0 ; i < 240 ; i++)
+//		{
+//
+//			display_write_pixel(0xff, 0xff, 0xff, (uint16_t)i , (uint16_t)i);
+//
+//		}
+
+
+
+//	}
 
 }
