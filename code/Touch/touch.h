@@ -10,6 +10,13 @@
 #ifndef TOUCH_TOUCH_H_
 #define TOUCH_TOUCH_H_
 
+#include <msp430.h>
+#include <stdint.h>
+
+#include "touch_constants.h"
+#include "touch_serial.h"
+
 void	touch_setup();
+void	touch_initialize();
 
 #endif /* TOUCH_TOUCH_H_ */

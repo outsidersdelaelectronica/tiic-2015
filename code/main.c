@@ -7,6 +7,7 @@
 #include "Buzzer/buzzer.h"
 #include "CircularBuffer/circularBuffer.h"
 #include "Display/display.h"
+#include "Touch/touch.h"
 
 volatile circularBuffer ecgSignalBuffer;
 
@@ -24,18 +25,21 @@ int main(void) {
     buzzer_setup();								//Buzzer PWM configuration
     display_setup();							//Display port setup
     circularBuffer_setup(&ecgSignalBuffer);		//Ecg signal storage buffer setup
+    touch_setup();								//Touch screen setup
 
     /*
      * MCU setup
      */
     PM5CTL0 &= ~LOCKLPM5;			//Disable the GPIO power-on default high-impedance mode
-    __bis_SR_register(GIE);			//Enable global interrupts
 
     /*
      * Initializations
      */
     AFE_initialize();				//AFE communication start up and configuration commands
     display_initialize();			//Display communication start up and configuration commands
+    touch_initialize();				//Touch screen communication start up and configuration commands
+
+    __bis_SR_register(GIE);			//Enable global interrupts
 
     /*
      * Sheits
@@ -49,16 +53,17 @@ int main(void) {
 	uint8_t i,j,k;
 	while(1)
 	{
-		i++;
-		while(1){
-			j++;
-			while(1){
-				k++;
-				display_write_string("Ya no te ", i, j, k, 0x40, 0x40);
-				display_write_string("pasas por", i, j, k, 0x40, 0x60);
-				display_write_string("el parque", i, j, k, 0x40, 0x80);
+		for(i = 0x80; i < 0xFF; i = i + 0x40)
+		{
+			for(j = 0x80; j < 0xFF; j = j + 0x40)
+			{
+				for(k = 0x80; k < 0xFF; k = k + 0x40)
+				{
+					display_write_string("Ya no te ", i, j, k, 0x40, 0x40);
+					display_write_string("pasas por", k, i, j, 0x40, 0x60);
+					display_write_string("el parque", j, k, i, 0x40, 0x80);
+				}
 			}
 		}
 	}
-
 }

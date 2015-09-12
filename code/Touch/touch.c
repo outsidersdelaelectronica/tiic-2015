@@ -7,13 +7,7 @@
  *      Author: slopez
  */
 
-#include "touch_constants.h"
-#include <msp430.h>
-#include <stdint.h>
-
-extern volatile uint8_t txBufferTouch[3];				//SPI TX buffer
-extern volatile unsigned int txBufferTouchIdx;			//SPI TX buffer index
-extern volatile uint8_t posX, posY;						//Touch event position
+#include "touch.h"
 
 void touch_setup()
 {
@@ -22,7 +16,7 @@ void touch_setup()
 		P1DIR &= ~BIT3;								//Set P1.3 to input
 														//P1.3 = IRQ touch event (interrupt)
 		P1IES |= BIT3;								//Interrupt P1.3 triggered with a high-to-low transition
-		P1IFG |= BIT3;								//Clear P1.3 interrupt flag
+		P1IFG &= ~BIT3;								//Clear P1.3 interrupt flag
 
 		//BUSY signal
 		P3DIR &= ~BIT0;								//Set P3.0 to input
@@ -59,14 +53,7 @@ void touch_setup()
 		UCA1CTLW0 &= ~UCSWRST;						//Get USCI_A1 out of reset state
 }
 
-void touch_command(uint8_t command)
+void touch_initialize()
 {
-		txBufferTouch[txBufferTouchIdx] = command;		//Write command to be sent into TX buffer
-		txBufferTouchIdx++;								//Increment buffer index
-
-		UCA1IE |= UCTXIE;							//Enable TX interrupts
-		__bis_SR_register(LPM0_bits | GIE);     	//Enter LPM0 mode, enabling global interrupts
-	    __no_operation();                       	//Wait for TX interrupt
-	    	//Data transmission on ISR
-	    __delay_cycles(1000);						//Delay before next transmission
+		P1IE |= BIT3;								//Enable DRDY interrupt
 }

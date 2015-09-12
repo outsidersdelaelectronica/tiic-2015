@@ -7,7 +7,7 @@
 
 #include "AFE_serial.h"
 
-volatile uint8_t AFE_RX_data = 0x00;
+#include "../Buzzer/buzzer.h"
 
 volatile ecgData AFE_ecgData;
 
@@ -20,8 +20,7 @@ uint8_t AFE_send(uint8_t data)
     while(UCB1STATW & UCBUSY){					//Wait for transmission
     }
 
-    AFE_RX_data = UCB1RXBUF;				//Store received data if any
-    return AFE_RX_data;
+    return UCB1RXBUF;				//Return received data if any
 }
 
 /*
@@ -36,19 +35,31 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 #error Compiler not supported!
 #endif
 {
-	//Read 3 ADS1291 status bytes
-	int i;
-	for (i = 0; i < 3; i++) {
-		AFE_send(0x00);
+	if (P1IFG & BIT2)
+	{
+		//Read 3 ADS1291 status bytes
+		int i;
+		for (i = 0; i < 3; i++) {
+			AFE_send(0x00);
+		}
+
+		//Read ECG signal - another 3 bytes
+		for (i = 0; i < 3; ++i) {
+			AFE_ecgData.signal[i] = AFE_send(0x00);
+		}
+
+		//Store signal data into ecg signal buffer
+		circularBuffer_write(&ecgSignalBuffer, AFE_ecgData);
+
+		P1IFG &= ~BIT2;                           // Clear DRDY (P1.2) flag
+	}
+	if (P1IFG & BIT3)
+	{
+		buzzer_start(A5);
+		__delay_cycles(500000);
+		buzzer_stop();
+		__delay_cycles(500000);
+		P1IFG &= ~BIT3;                           // Clear BUSY (P1.3) flag
 	}
 
-	//Read ECG signal - another 3 bytes
-	for (i = 0; i < 3; ++i) {
-		AFE_ecgData.signal[i] = AFE_send(0x00);
-	}
-
-	//Store signal data into ecg signal buffer
-	circularBuffer_write(&ecgSignalBuffer, AFE_ecgData);
-
-	P1IFG &= ~BIT2;                           // Clear DRDY (P1.2) flag
 }

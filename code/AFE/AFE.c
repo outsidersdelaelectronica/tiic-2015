@@ -53,7 +53,7 @@ void AFE_setup()
 		P1DIR &= ~BIT2;								//Set P1.2 to input
 														//P1.2 = AFE data ready (interrupt)
 		P1IES |= BIT2;								//Interrupt P1.2 triggered with a high-to-low transition
-		P1IFG |= BIT2;								//Clear P1.2 interrupt flag
+		P1IFG &= ~BIT2;								//Clear P1.2 interrupt flag
 
 		//Reset, CLKSEL and Start
 		P5DIR |= BIT7;								//Set P5.7 to output
