@@ -9,43 +9,6 @@
 
 #include "AFE.h"
 
-static void AFE_command(uint8_t command)
-{
-	P4OUT &= ~BIT4;							//Enable CS
-
-	AFE_send(command);
-
-	P4OUT |= BIT4;							//Disable CS
-}
-
-static void AFE_write_register(uint8_t address, uint8_t value)
-{
-	P4OUT &= ~BIT4;							//Enable CS
-
-	AFE_send(WREG | address);
-	AFE_send(0x00);
-	AFE_send(value);
-
-	P4OUT |= BIT4;							//Disable CS
-}
-
-/* NOT USED
-static uint8_t AFE_read_register(uint8_t address)
-{
-	uint8_t value = 0x00;
-
-	P4OUT &= ~BIT4;							//Enable CS
-
-	AFE_send(RREG | address);
-	AFE_send(0x00);
-	value = AFE_send(0x00);					//Read value from RX buffer
-
-	P4OUT |= BIT4;							//Disable CS
-
-	return value;
-}
-*/
-
 void AFE_setup()
 {
 	//Configure AFE control lines
@@ -109,7 +72,7 @@ void AFE_initialize()
 		__delay_cycles(2000);							//At least 10 useconds
 		P7OUT |= BIT3;
 
-		AFE_command(SDATAC);						//Stop continuous data conversion mode (activated by default)
+		AFE_send(SDATAC);						//Stop continuous data conversion mode (activated by default)
 
 
 	//Write config commands to AFE
@@ -120,14 +83,14 @@ void AFE_initialize()
 		AFE_write_register(REG_LOFF_STAT, 0x40);	//Clock divider selection: Clock input set to 2.048 MHz
 		AFE_write_register(REG_RESP2, 0x87);		//Enable calibration
 		AFE_write_register(REG_CH1SET, 0x01);		// |
-		AFE_command(OFFSETCAL);						// | Calibrate
+		AFE_send(OFFSETCAL);						// | Calibrate
 		AFE_write_register(REG_CH1SET, 0x00);		// |
 		AFE_write_register(REG_RESP2, 0x07);		//Disable calibration
 
 
 	//Start capturing data
 		P5OUT |= BIT7;								//Start conversions
-		AFE_command(RDATAC);						//Enable continuous output of conversion data
+		AFE_send(RDATAC);						//Enable continuous output of conversion data
 														//In this mode, a SDATAC command must be issued
 														//before other commands can be sent to the device
 

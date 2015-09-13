@@ -8,8 +8,10 @@
 #include "CircularBuffer/circularBuffer.h"
 #include "Display/display.h"
 #include "Touch/touch.h"
+#include "serial.h"
 
-volatile circularBuffer ecgSignalBuffer;
+extern volatile circularBuffer ecgSignalBuffer;
+extern volatile uint8_t touch_xPos, touch_yPos;
 
 /*
  * main.c
@@ -44,26 +46,30 @@ int main(void) {
     /*
      * Sheits
      */
-	P9OUT &= ~BIT6;				//Turn screen o
-
-	uint8_t ecg_0;
-	uint8_t ecg_1;
-	uint8_t ecg_2;
+	P9OUT &= ~BIT6;				//Turn screen on
 
 	uint8_t i,j,k;
+	uint8_t posX, posY;
+	char posX_string[4];
+	char posY_string[4];
+
+	i = 0xFF;
+	j = 0xFF;
+	k = 0xFF;
+
 	while(1)
 	{
-		for(i = 0x80; i < 0xFF; i = i + 0x40)
-		{
-			for(j = 0x80; j < 0xFF; j = j + 0x40)
-			{
-				for(k = 0x80; k < 0xFF; k = k + 0x40)
-				{
-					display_write_string("Ya no te ", i, j, k, 0x40, 0x40);
-					display_write_string("pasas por", k, i, j, 0x40, 0x60);
-					display_write_string("el parque", j, k, i, 0x40, 0x80);
-				}
-			}
-		}
+		posX = touch_xPos;
+		posY = touch_yPos;
+
+		itoa(posX, posX_string);
+		itoa(posY, posY_string);
+
+		//Screen writing
+			display_write_string("Ya no te ", i, j, k, 0x20, 0x20);
+			display_write_string("pasas por", k, i, j, 0x20, 0x20 + 0x10);
+			display_write_string("el parque", j, k, i, 0x20, 0x20 + 0x20);
+			display_write_string(posX_string, j, k, i, 0x20, 0x20 + 0x40);
+			display_write_string(posY_string, j, k, i, 0x20 + 0x40, 0x20 + 0x40);
 	}
 }

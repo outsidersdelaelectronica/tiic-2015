@@ -8,10 +8,7 @@ AFE/AFE_serial.obj: C:/ti/ccsv6/ccs_base/msp430/include/in430.h
 AFE/AFE_serial.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics.h
 AFE/AFE_serial.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics_legacy_undefs.h
 AFE/AFE_serial.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h
-AFE/AFE_serial.obj: ../AFE/../ecgData.h
-AFE/AFE_serial.obj: ../AFE/../CircularBuffer/circularBuffer.h
-AFE/AFE_serial.obj: ../AFE/../Buzzer/buzzer.h
-AFE/AFE_serial.obj: ../AFE/../Buzzer/buzzer_notes.h
+AFE/AFE_serial.obj: ../AFE/ADS1291_constants.h
 
 ../AFE/AFE_serial.c: 
 ../AFE/AFE_serial.h: 
@@ -21,7 +18,4 @@ C:/ti/ccsv6/ccs_base/msp430/include/in430.h:
 C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics_legacy_undefs.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h: 
-../AFE/../ecgData.h: 
-../AFE/../CircularBuffer/circularBuffer.h: 
-../AFE/../Buzzer/buzzer.h: 
-../AFE/../Buzzer/buzzer_notes.h: 
+../AFE/ADS1291_constants.h: 

@@ -13,7 +13,6 @@
 #include <msp430.h>
 #include <stdint.h>
 
-#include "ADS1291_constants.h"
 #include "AFE_serial.h"
 #include "../CircularBuffer/circularBuffer.h"
 

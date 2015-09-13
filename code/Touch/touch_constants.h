@@ -10,7 +10,7 @@
 #ifndef TOUCH_TOUCH_CONSTANTS_H_
 #define TOUCH_TOUCH_CONSTANTS_H_
 
-#define GETX 0x90
-#define GETY 0xD0
+#define TOUCH_X_POS 0xD0
+#define TOUCH_Y_POS 0x90
 
 #endif /* TOUCH_TOUCH_CONSTANTS_H_ */

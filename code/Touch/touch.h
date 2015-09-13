@@ -13,7 +13,6 @@
 #include <msp430.h>
 #include <stdint.h>
 
-#include "touch_constants.h"
 #include "touch_serial.h"
 
 void	touch_setup();

@@ -192,6 +192,10 @@ void display_IO_write_char(char character, uint8_t red, uint8_t green, uint8_t b
 			{
 				display_IO_write_pixel(red, green, blue, local_posH, local_posV);
 			}
+			else
+			{
+				display_IO_write_pixel(0x00, 0x00, 0x00, local_posH, local_posV);
+			}
 			local_posH++;
 			mask = mask >> 1;
 		}
