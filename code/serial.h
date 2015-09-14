@@ -15,7 +15,10 @@
 #include "CircularBuffer/circularBuffer.h"
 #include "CircularBuffer/ecgData.h"
 
+#include "Display/display_functions.h"
 #include "Buzzer/buzzer.h"
-#include "Touch/XPT2406_constants.h"
+
+#include "Touch/touch_coordinate.h"
+#include "Touch/XPT2046_constants.h"
 
 #endif /* SERIAL_H_ */

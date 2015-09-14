@@ -10,10 +10,11 @@ Display/display.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intr
 Display/display.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h
 Display/display.obj: ../Display/display_IO.h
 Display/display.obj: ../Display/display_functions.h
+Display/display.obj: ../Display/display_interface.h
+Display/display.obj: ../Display/display_functions.h
+Display/display.obj: ../Display/../CircularBuffer/ecgData.h
 Display/display.obj: ../Display/font.h
 Display/display.obj: ../Display/../utils.h
-Display/display.obj: ../Display/display_interface.h
-Display/display.obj: ../Display/../CircularBuffer/ecgData.h
 
 ../Display/display.c: 
 ../Display/display.h: 
@@ -25,7 +26,8 @@ C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics_legacy_undefs.
 C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h: 
 ../Display/display_IO.h: 
 ../Display/display_functions.h: 
+../Display/display_interface.h: 
+../Display/display_functions.h: 
+../Display/../CircularBuffer/ecgData.h: 
 ../Display/font.h: 
 ../Display/../utils.h: 
-../Display/display_interface.h: 
-../Display/../CircularBuffer/ecgData.h: 

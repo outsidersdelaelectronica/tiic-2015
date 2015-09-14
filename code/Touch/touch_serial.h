@@ -11,7 +11,7 @@
 #include <msp430.h>
 #include <stdint.h>
 
-#include "XPT2406_constants.h"
+#include "XPT2046_constants.h"
 
 uint8_t	touch_serial_send(uint8_t data);
 

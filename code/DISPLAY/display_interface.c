@@ -7,29 +7,33 @@
 
 #include "display_interface.h"
 
-uint8_t signal_background_color[3]  = {0x00, 0x00, 0x10};
-uint8_t menubar_background_color[3] = {0x20, 0x20, 0x60};
-
-void display_interface_setup()
+static uint16_t display_interface_get_index(display_interface_t* interface, uint16_t offset)
 {
-	display_interface_set_window(signal_background_color, 0, 176);				//Set signal window
-	display_interface_set_window(menubar_background_color, 176, 240);			//Set menubar window
+	uint16_t index;
+	index = (interface->currentIndex + offset) % SIGNAL_COLUMNS;
 
-	uint16_t i;
-	for (i = 0; i < 320; i++)													//White line
-	{
-		display_write_pixel(0xFF, 0xFF, 0xFF, i, 176);
-	}
-
+	return index;
 }
 
-void display_interface_set_window(uint8_t* color, uint16_t line_origin, uint16_t line_end)
+static void display_interface_set_index(display_interface_t* interface, uint16_t index)
+{
+	interface->currentIndex = interface->currentIndex + index;
+	interface->currentIndex = interface->currentIndex % SIGNAL_COLUMNS;
+}
+
+static void display_interface_inc_index(display_interface_t* interface)
+{
+	interface->currentIndex++;
+	interface->currentIndex = interface->currentIndex % SIGNAL_COLUMNS;
+}
+
+static void display_interface_set_window(uint8_t* color, uint16_t line_origin, uint16_t line_end)
 {
 	//Set origin line
 		display_IO_set_GRAM_address(0, line_origin);
 
 	long i;
-	long last_pixel = 320L * (long)(line_end - line_origin);
+	long last_pixel = DISPLAY_COLUMNS * (long)(line_end - line_origin);
 
 	for (i = 0; i < last_pixel; i++)
 	{
@@ -38,7 +42,59 @@ void display_interface_set_window(uint8_t* color, uint16_t line_origin, uint16_t
 
 }
 
-void display_write_signal(ecgData* signalDataPoint)
+void display_interface_setup(display_interface_t* interface)
 {
+	//Set signal index
+		display_interface_set_index(interface, 0);
 
+	//Store window colors
+		interface->signal_background_color[0] = 0x00;
+		interface->signal_background_color[1] = 0x00;
+		interface->signal_background_color[2] = 0x10;
+
+		interface->menubar_background_color[0] = 0x20;
+		interface->menubar_background_color[1] = 0x20;
+		interface->menubar_background_color[2] = 0x40;
+
+	//Write them to GRAM
+		display_interface_set_window(interface->signal_background_color, 0, SIGNAL_LINES);					//Set signal window
+		display_interface_set_window(interface->menubar_background_color, SIGNAL_LINES, DISPLAY_LINES);		//Set menubar window
+
+	//Write a separation line
+		int i;
+		for (i = 0; i < DISPLAY_COLUMNS; i++)
+		{
+			display_write_pixel(0x80, 0x80, 0xA0, i, SIGNAL_LINES - 1);
+		}
+
+}
+
+void display_write_signal(display_interface_t* interface, ecgData_t* signalDataPoint)
+{
+	//Cook ecg data
+
+	//Clear screen
+		uint16_t currentIndex, clearIndex;
+		int i;
+
+		currentIndex = display_interface_get_index(interface, 0);
+		clearIndex = display_interface_get_index(interface, 25);
+
+		for (i = 0; i < SIGNAL_LINES; i++)
+		{
+			//Clear current column
+				display_write_pixel(interface->signal_background_color[0],
+									interface->signal_background_color[1],
+									interface->signal_background_color[2], currentIndex, i);
+			//Clear column 10 pixels ahead signal
+				display_write_pixel(interface->signal_background_color[0],
+									interface->signal_background_color[1],
+									interface->signal_background_color[2], clearIndex, i);
+		}
+
+	//Print data
+		display_write_pixel(0xFF, 0xFF, 0xFF, currentIndex, SIGNAL_OFFSET);
+
+	//Increment index
+		display_interface_inc_index(interface);
 }

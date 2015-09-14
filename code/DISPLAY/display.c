@@ -7,6 +7,8 @@
 
 #include "display.h"
 
+display_interface_t display_interface;
+
 void display_setup()
 {
 	P7DIR |= BIT1;					//Set display_RESET (P7.1) as output
@@ -97,7 +99,7 @@ void display_initialize()
 	/*
 	 * Paint interface
 	 */
-	display_interface_setup();
+	display_interface_setup(&display_interface);
 	display_IO_write_reg(0x03, 0xD0, 0x30); // set GRAM horizontal write direction
 
 }

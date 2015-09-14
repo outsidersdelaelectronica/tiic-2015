@@ -18,22 +18,22 @@
 
 #include "ecgData.h"
 
-typedef struct circularBuffer
+typedef struct circularBuffer_t
 {
 	int bufferReadIndex;
 	int bufferWriteIndex;
 	int bufferSize;
 
-	ecgData ecgBuffer[BUFFER_SIZE];
+	ecgData_t ecgBuffer[BUFFER_SIZE];
 }
-volatile circularBuffer;
+volatile circularBuffer_t;
 
-void	circularBuffer_setup(circularBuffer* buf);
+void	circularBuffer_setup(circularBuffer_t* buf);
 
-int		circularBuffer_isEmpty(circularBuffer* buf);
-int		circularBuffer_isFull(circularBuffer* buf);
+int		circularBuffer_isEmpty(circularBuffer_t* buf);
+int		circularBuffer_isFull(circularBuffer_t* buf);
 
-int		circularBuffer_write(circularBuffer* buf, ecgData* value);
-int		circularBuffer_read(circularBuffer* buf, ecgData* value);
+int		circularBuffer_write(circularBuffer_t* buf, ecgData_t* value);
+int		circularBuffer_read(circularBuffer_t* buf, ecgData_t* value);
 
 #endif /* CIRCULARBUFFER_H_ */

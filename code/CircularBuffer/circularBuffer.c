@@ -9,7 +9,7 @@
 
 #include "circularBuffer.h"
 
-void circularBuffer_setup(circularBuffer* buf)
+void circularBuffer_setup(circularBuffer_t* buf)
 {
 	buf->bufferReadIndex = 0;
 	buf->bufferWriteIndex = 0;
@@ -22,12 +22,12 @@ void circularBuffer_setup(circularBuffer* buf)
 	}
 }
 
-int circularBuffer_isEmpty(circularBuffer* buf)
+int circularBuffer_isEmpty(circularBuffer_t* buf)
 {
 	return buf->bufferReadIndex == buf->bufferWriteIndex;				//If both pointers are pointing to the same slot, the buffer is empty
 }
 
-int circularBuffer_isFull(circularBuffer* buf)
+int circularBuffer_isFull(circularBuffer_t* buf)
 {
 	if (buf->bufferReadIndex - 1 >= 0)
 	{
@@ -40,7 +40,7 @@ int circularBuffer_isFull(circularBuffer* buf)
 }
 
 
-int circularBuffer_write(circularBuffer* buf, ecgData* value)
+int circularBuffer_write(circularBuffer_t* buf, ecgData_t* value)
 {
 	if (circularBuffer_isFull(buf))							//If the buffer is full, return a null value
 	{
@@ -67,7 +67,7 @@ int circularBuffer_write(circularBuffer* buf, ecgData* value)
 }
 
 
-int circularBuffer_read(circularBuffer* buf, ecgData* value)
+int circularBuffer_read(circularBuffer_t* buf, ecgData_t* value)
 {
 	ecgData_setup(value);			//Fill with zeros
 

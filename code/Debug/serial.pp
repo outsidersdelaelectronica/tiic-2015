@@ -11,12 +11,18 @@ serial.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics_le
 serial.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h
 serial.obj: ../AFE/ADS1291_constants.h
 serial.obj: ../Touch/touch_serial.h
-serial.obj: ../Touch/XPT2406_constants.h
+serial.obj: ../Touch/XPT2046_constants.h
 serial.obj: ../utils.h
 serial.obj: ../CircularBuffer/circularBuffer.h
 serial.obj: ../CircularBuffer/ecgData.h
+serial.obj: ../Display/display_functions.h
+serial.obj: ../Display/display_IO.h
+serial.obj: ../Display/display_interface.h
+serial.obj: ../Display/display_functions.h
+serial.obj: ../Display/font.h
 serial.obj: ../Buzzer/buzzer.h
 serial.obj: ../Buzzer/buzzer_notes.h
+serial.obj: ../Touch/touch_coordinate.h
 
 ../serial.c: 
 ../serial.h: 
@@ -29,9 +35,15 @@ C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics_legacy_undefs.
 C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h: 
 ../AFE/ADS1291_constants.h: 
 ../Touch/touch_serial.h: 
-../Touch/XPT2406_constants.h: 
+../Touch/XPT2046_constants.h: 
 ../utils.h: 
 ../CircularBuffer/circularBuffer.h: 
 ../CircularBuffer/ecgData.h: 
+../Display/display_functions.h: 
+../Display/display_IO.h: 
+../Display/display_interface.h: 
+../Display/display_functions.h: 
+../Display/font.h: 
 ../Buzzer/buzzer.h: 
 ../Buzzer/buzzer_notes.h: 
+../Touch/touch_coordinate.h: 

@@ -14,13 +14,13 @@
 /*
  * 24 bit AFE data structure (MSB on signal[0])
  */
-typedef struct ecgData
+typedef struct ecgData_t
 {
 	uint8_t signal[3];
 }
-volatile ecgData;
+volatile ecgData_t;
 
-void	ecgData_setup(ecgData* data);
-void	ecgData_write(ecgData* data, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte);
+void	ecgData_setup(ecgData_t* data);
+void	ecgData_write(ecgData_t* data, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte);
 
 #endif /* ECGDATA_H_ */

@@ -8,6 +8,7 @@
 #include "display_functions.h"
 
 extern const font displayFont;
+extern display_interface_t display_interface;
 
 void display_sleep()
 {
@@ -76,7 +77,9 @@ void display_write_char(char character, uint8_t red, uint8_t green, uint8_t blue
 			}
 			else
 			{
-				//display_write_pixel(0x00, 0x00, 0x00, local_posH, local_posV);
+				display_write_pixel(display_interface.menubar_background_color[0],
+									display_interface.menubar_background_color[1],
+									display_interface.menubar_background_color[2], local_posH, local_posV);
 			}
 			local_posH++;
 			mask = mask >> 1;

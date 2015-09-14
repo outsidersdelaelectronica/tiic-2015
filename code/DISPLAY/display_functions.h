@@ -12,6 +12,7 @@
 #include <stdint.h>
 
 #include "display_IO.h"
+#include "display_interface.h"
 
 #include "font.h"
 #include "../utils.h"

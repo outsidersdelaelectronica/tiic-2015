@@ -16,9 +16,30 @@
 
 #include "../CircularBuffer/ecgData.h"
 
-void 	display_interface_setup();
-void	display_interface_set_window(uint8_t* color, uint16_t line_origin, uint16_t line_end);
+#define SIGNAL_OFFSET	0x57
 
-void	display_write_signal(ecgData* signalDataPoint);
+#define DISPLAY_LINES	240
+#define DISPLAY_COLUMNS	320
+
+#define SIGNAL_LINES	176
+#define SIGNAL_COLUMNS	320
+
+typedef struct display_interface_t
+{
+	uint16_t currentIndex;
+
+	uint16_t signal_line_origin;
+	uint16_t signal_line_end;
+
+	uint16_t menubar_line_origin;
+	uint16_t menubar_line_end;
+
+	uint8_t signal_background_color[3];
+	uint8_t menubar_background_color[3];
+}
+display_interface_t;
+
+void 	display_interface_setup(display_interface_t* interface);
+void	display_write_signal(display_interface_t* interface, ecgData_t* signalDataPoint);
 
 #endif /* DISPLAY_DISPLAY_INTERFACE_H_ */

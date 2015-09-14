@@ -11,7 +11,7 @@
 #include <msp430.h>
 #include <stdint.h>
 
-void	itoa(uint8_t number, char* string);
+void	itoa(uint16_t number, char* string);
 void	delay_ms(int ms);
 
 

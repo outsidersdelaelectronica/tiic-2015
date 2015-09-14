@@ -8,11 +8,11 @@
 #include "serial.h"
 
 //Global ecg signal storage buffer (located at main.c)
-extern volatile circularBuffer ecgSignalBuffer;
+extern volatile circularBuffer_t ecgSignalBuffer;
 //Global touchscreen position variables (located at main.c)
-extern volatile uint8_t touch_xPos, touch_yPos;
+extern volatile touch_coordinate_t touch_last_position;
 
-volatile ecgData AFE_ecgData;
+volatile ecgData_t AFE_ecgData;
 
 /*
  * Port 1 (AFE and Touch) interrupt service routine
@@ -48,19 +48,33 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 	{
 		P3OUT &= ~BIT7;							//Enable CS
 
+		uint8_t touch_xPos_low, touch_xPos_high;
+		uint8_t touch_yPos_low, touch_yPos_high;
+
+		uint16_t touch_xPos, touch_yPos;
+
 		//Request touchscreen x position
 			touch_serial_send(TOUCH_X_POS);
-			touch_xPos = touch_serial_send(0x00);
-
+			touch_xPos_high = touch_serial_send(0x00);
+			touch_xPos_low = touch_serial_send(0x00);
 
 		//Request touchscreen y position
 			touch_serial_send(TOUCH_Y_POS);
-			touch_yPos = touch_serial_send(0x00);
+			touch_yPos_high = touch_serial_send(0x00);
+			touch_yPos_low = touch_serial_send(0x00);
 
-			P3OUT |= BIT7;							//Disable CS
+		P3OUT |= BIT7;							//Disable CS
+
+		//Rebuild 12-bit positions
+			touch_xPos = ((uint16_t) touch_xPos_high) << 4 | ((uint16_t) touch_xPos_low >> 4);
+			touch_yPos = ((uint16_t) touch_yPos_high) << 4 | ((uint16_t) touch_yPos_low >> 4);
+
+			touch_coordinate_set(&touch_last_position, touch_xPos, touch_yPos);
+
+			display_write_pixel(0xFF, 0xFF, 0xFF, touch_last_position.xPos, touch_last_position.yPos);
 
 		//Beep
-			buzzer_start(A5);
+			//buzzer_start(A5);
 			delay_ms(50);
 			buzzer_stop();
 

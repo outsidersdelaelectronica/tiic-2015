@@ -7,7 +7,7 @@
 
 #include "ecgData.h"
 
-void ecgData_setup(ecgData* data)
+void ecgData_setup(ecgData_t* data)
 {
 	int i;
 	for (i = 0; i < 3; i++) {
@@ -15,7 +15,7 @@ void ecgData_setup(ecgData* data)
 	}
 }
 
-void ecgData_write(ecgData* data, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte)
+void ecgData_write(ecgData_t* data, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte)
 {
 	data->signal[0] = msbyte;
 	data->signal[1] = midbyte;

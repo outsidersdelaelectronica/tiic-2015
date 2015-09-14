@@ -10,9 +10,10 @@
 #include "Display/display.h"
 #include "Touch/touch.h"
 
-volatile circularBuffer ecgSignalBuffer;
-volatile uint8_t touch_xPos, touch_yPos;
+volatile circularBuffer_t ecgSignalBuffer;
+volatile touch_coordinate_t touch_last_position;
 
+extern display_interface_t display_interface;
 extern uint8_t signal_background_color[3];
 extern uint8_t menubar_background_color[3];
 
@@ -52,44 +53,37 @@ int main(void) {
 	P9OUT &= ~BIT6;				//Turn screen on
 
 	uint8_t i,j,k;
-	uint8_t posX, posY;
-	char posX_string[4];
-	char posY_string[4];
-
 	i = 0xFF;
 	j = 0xFF;
 	k = 0xFF;
 
+	char xPos[4];
+	char yPos[4];
+
+
 	while(1)
 	{
-		posX = touch_xPos;
-		posY = touch_yPos;
+		itoa(touch_last_position.xPos, xPos);
+		itoa(touch_last_position.yPos, yPos);
+		display_write_string(xPos, i, j, k, 0x40, 0xC0);
+		display_write_string(yPos, i, j, k, 0xA0, 0xC0);
 
-		itoa(posX, posX_string);
-		itoa(posY, posY_string);
-
-//		//Screen writing
-//			display_write_string("Ya no te ", i, j, k, 0x20, 0x20);
-//			display_write_string("pasas por", k, i, j, 0x20, 0x20 + 0x10);
-//			display_write_string("el parque", j, k, i, 0x20, 0x20 + 0x20);
-//			display_write_string(posX_string, j, k, i, 0x20, 0x20 + 0x40);
-//			display_write_string(posY_string, j, k, i, 0x20 + 0x40, 0x20 + 0x40);
-			display_write_string("Ya no te pasas por e", i, j, k, 0x00, 0xB0);
-			display_write_string("l parque ya no te pa", i, j, k, 0x00, 0xC0);
-			display_write_string("sas por el parque ya", i, j, k, 0x00, 0xD0);
-			display_write_string("no te pasas por el p", i, j, k, 0x00, 0xE0);
-
-		uint16_t hor_var;
-		ecgData signalDataPoint;
-
-		//Scroll horizontally
-		for (hor_var = 0; hor_var < 320; hor_var++)
-		{
-			if (circularBuffer_read(&ecgSignalBuffer, &signalDataPoint))	//If there is data available
-			{
-				display_write_signal(&signalDataPoint);						//Write it
-			}
-		}
-
+//		uint16_t hor_var;
+//		ecgData signalDataPoint;
+//
+//		//Scroll horizontally
+//		for (hor_var = 0; hor_var < 320; hor_var++)
+//		{
+////			if (circularBuffer_read(&ecgSignalBuffer, &signalDataPoint))		//If there is data available
+////			{
+//				display_write_signal(&display_interface, &signalDataPoint);		//Write it
+////			}
+//		}
+//
+//
+//		display_write_string("                    ", i, j, k, 0x00, 0xB0);
+//		display_write_string(" DANGER: Apichusque ", i, 0, 0, 0x00, 0xD0);
+//		display_write_string("                    ", i, j, k, 0x00, 0xE0);
+//
 	}
 }

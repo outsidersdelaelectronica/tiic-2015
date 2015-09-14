@@ -14,6 +14,7 @@
 #include <stdint.h>
 
 #include "touch_serial.h"
+#include "touch_coordinate.h"
 
 void	touch_setup();
 void	touch_initialize();
