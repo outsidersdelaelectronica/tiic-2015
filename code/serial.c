@@ -71,6 +71,11 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 
 			touch_coordinate_set(&touch_last_position, touch_xPos, touch_yPos);
 
+		//Beep
+			buzzer_start(E5);
+			delay_ms(50);
+			buzzer_stop();
+
 		//Debug
 			char xPos[5];
 			char yPos[5];
@@ -78,17 +83,19 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			itoa(touch_last_position.xPos, xPos);
 			itoa(touch_last_position.yPos, yPos);
 
-			display_write_string("X = ", 0xFF, 0xFF, 0xFF, 0x60, 0xC0);
-			display_write_string("Y = ", 0xFF, 0xFF, 0xFF, 0x60, 0xD0);
-			display_write_string(xPos, 0xFF, 0xFF, 0xFF, 0xA0, 0xC0);
-			display_write_string(yPos, 0xFF, 0xFF, 0xFF, 0xA0, 0xD0);
+//			display_write_string("X = ", 0xFF, 0xFF, 0xFF, 0x60, 0xC0);
+//			display_write_string("Y = ", 0xFF, 0xFF, 0xFF, 0x60, 0xD0);
+//			display_write_string(xPos, 0xFF, 0xFF, 0xFF, 0xA0, 0xC0);
+//			display_write_string(yPos, 0xFF, 0xFF, 0xFF, 0xA0, 0xD0);
 
 			display_write_pixel(0xFF, 0xFF, 0xFF, touch_last_position.xPos, touch_last_position.yPos);
 
-		//Beep
-			buzzer_start(E5);
-			delay_ms(50);
-			buzzer_stop();
+			display_write_string("Ya no te pasas", 0xFF, 0xFF, 0xFF, 0x30, 0xC0);
+			display_write_string("por el parque", 0xFF, 0xFF, 0xFF, 0x30, 0xD0);
+			delay_ms(500);
+			display_write_string("              ", 0xFF, 0xFF, 0xFF, 0x30, 0xC0);
+			display_write_string("              ", 0xFF, 0xFF, 0xFF, 0x30, 0xD0);
+
 
 		P1IFG &= ~BIT3;                         // Clear IRQ (P1.3) flag
 	}
