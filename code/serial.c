@@ -8,9 +8,9 @@
 #include "serial.h"
 
 //Global ecg signal storage buffer (located at main.c)
-volatile circularBuffer ecgSignalBuffer;
+extern volatile circularBuffer ecgSignalBuffer;
 //Global touchscreen position variables (located at main.c)
-volatile uint8_t touch_xPos, touch_yPos;
+extern volatile uint8_t touch_xPos, touch_yPos;
 
 volatile ecgData AFE_ecgData;
 
@@ -40,7 +40,7 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 		}
 
 		//Store signal data into ecg signal buffer
-		circularBuffer_write(&ecgSignalBuffer, AFE_ecgData);
+		circularBuffer_write(&ecgSignalBuffer, &AFE_ecgData);
 
 		P1IFG &= ~BIT2;                       	// Clear DRDY (P1.2) flag
 	}
@@ -61,9 +61,8 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 
 		//Beep
 			buzzer_start(A5);
-			__delay_cycles(500000);
+			delay_ms(50);
 			buzzer_stop();
-			__delay_cycles(500000);
 
 		P1IFG &= ~BIT3;                         // Clear IRQ (P1.3) flag
 	}

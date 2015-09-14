@@ -33,7 +33,7 @@ void	circularBuffer_setup(circularBuffer* buf);
 int		circularBuffer_isEmpty(circularBuffer* buf);
 int		circularBuffer_isFull(circularBuffer* buf);
 
-int		circularBuffer_write(circularBuffer* buf, ecgData value);
-ecgData	circularBuffer_read(circularBuffer* buf);
+int		circularBuffer_write(circularBuffer* buf, ecgData* value);
+int		circularBuffer_read(circularBuffer* buf, ecgData* value);
 
 #endif /* CIRCULARBUFFER_H_ */

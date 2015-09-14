@@ -11,15 +11,13 @@
 #include <msp430.h>
 #include <stdint.h>
 
+#include "display_IO.h"
+#include "display_functions.h"
+#include "display_interface.h"
+
 #include "../utils.h"
-#include "display_utils.h"
 
 void	display_setup();
 void	display_initialize();
-
-void	display_sleep();
-void	display_wake_up();
-
-void	display_write_string(char* string, uint8_t red, uint8_t green, uint8_t blue, uint16_t posH, uint16_t posV);
 
 #endif

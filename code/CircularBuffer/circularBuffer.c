@@ -40,7 +40,7 @@ int circularBuffer_isFull(circularBuffer* buf)
 }
 
 
-int circularBuffer_write(circularBuffer* buf, ecgData value)
+int circularBuffer_write(circularBuffer* buf, ecgData* value)
 {
 	if (circularBuffer_isFull(buf))							//If the buffer is full, return a null value
 	{
@@ -50,9 +50,9 @@ int circularBuffer_write(circularBuffer* buf, ecgData value)
 	{
 		//buf->ecgBuffer[buf->bufferWriteIndex] = value;
 		ecgData_write(&(buf->ecgBuffer[buf->bufferWriteIndex]),		//If not, write the value in the buffer and
-					  value.signal[0],
-					  value.signal[1],
-					  value.signal[2]);
+					  value->signal[0],
+					  value->signal[1],
+					  value->signal[2]);
 
 		if (buf->bufferWriteIndex == buf->bufferSize - 1)			//update write index
 		{
@@ -67,18 +67,17 @@ int circularBuffer_write(circularBuffer* buf, ecgData value)
 }
 
 
-ecgData circularBuffer_read(circularBuffer* buf)
+int circularBuffer_read(circularBuffer* buf, ecgData* value)
 {
-	ecgData value;					//Create return ecgData value
-	ecgData_setup(&value);			//Fill with zeros
+	ecgData_setup(value);			//Fill with zeros
 
 	if (circularBuffer_isEmpty(buf))						//If the buffer is empty, do nothing
 	{
-		return value;
+		return 0;
 	}
 	else
 	{
-		value = buf->ecgBuffer[buf->bufferReadIndex];				//If not, read the value in the buffer and
+		*value = buf->ecgBuffer[buf->bufferReadIndex];				//If not, read the value in the buffer and
 		if (buf->bufferReadIndex == buf->bufferSize - 1)			//update read index
 		{
 			buf->bufferReadIndex = 0;
@@ -87,6 +86,6 @@ ecgData circularBuffer_read(circularBuffer* buf)
 		{
 			buf->bufferReadIndex++;
 		}
-		return value;										//Return read value
+		return 1;											//Return true
 	}
 }

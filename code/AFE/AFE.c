@@ -66,7 +66,7 @@ void AFE_initialize()
 {
 	//AFE reset and stop continuous data conversion mode
 		P7OUT |= BIT3;								//Power-On-Reset: hold reset line high for 1 second
-		__delay_cycles(16000000);						//1 second
+		delay_ms(1000);									//1 second
 
 		P7OUT &= ~BIT3;								//Reset pulse: (>= 18 t_clk) => (>= 10 us)
 		__delay_cycles(2000);							//At least 10 useconds
@@ -84,7 +84,7 @@ void AFE_initialize()
 		AFE_write_register(REG_RESP2, 0x87);		//Enable calibration
 		AFE_write_register(REG_CH1SET, 0x01);		// |
 		AFE_send(OFFSETCAL);						// | Calibrate
-		AFE_write_register(REG_CH1SET, 0x00);		// |
+		AFE_write_register(REG_CH1SET, 0x05);		// |
 		AFE_write_register(REG_RESP2, 0x07);		//Disable calibration
 
 

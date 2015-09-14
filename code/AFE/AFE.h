@@ -15,6 +15,7 @@
 
 #include "AFE_serial.h"
 #include "../CircularBuffer/circularBuffer.h"
+#include "../utils.h"
 
 void	AFE_setup();
 void	AFE_initialize();

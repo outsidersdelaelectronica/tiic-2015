@@ -5,9 +5,7 @@
  *      Author: slopez
  */
 
-#include "display_utils.h"
-
-extern const font displayFont;
+#include "display_IO.h"
 
 void display_IO_input()
 {
@@ -117,7 +115,7 @@ uint16_t display_IO_read_reg(uint8_t reg)
 	return data;
 }
 
-void display_IO_write_GRAM(uint8_t first_byte, uint8_t second_byte, uint8_t third_byte)
+void display_IO_write_GRAM(uint8_t red, uint8_t green, uint8_t blue)
 {
 	//Start operation
 		P9OUT &= ~BIT7;			//Set display_CS to '0'
@@ -137,15 +135,15 @@ void display_IO_write_GRAM(uint8_t first_byte, uint8_t second_byte, uint8_t thir
 	//Write data
 		P2OUT |= BIT3;			//Set display_RS to '1'
 
-		display_IO_write(first_byte);
+		display_IO_write(red);
 		P9OUT &= ~BIT4;			//Set display_WR to '0'
 		P9OUT |= BIT4;			//Set display_WR to '1'
 
-		display_IO_write(second_byte);
+		display_IO_write(green);
 		P9OUT &= ~BIT4;			//Set display_WR to '0'
 		P9OUT |= BIT4;			//Set display_WR to '1'
 
-		display_IO_write(third_byte);
+		display_IO_write(blue);
 		P9OUT &= ~BIT4;			//Set display_WR to '0'
 		P9OUT |= BIT4;			//Set display_WR to '1'
 
@@ -153,7 +151,7 @@ void display_IO_write_GRAM(uint8_t first_byte, uint8_t second_byte, uint8_t thir
 		P9OUT |= BIT7;			//Set display_CS to '1'
 }
 
-void display_IO_write_pixel(uint8_t red, uint8_t green, uint8_t blue, uint16_t x, uint16_t y)
+void display_IO_set_GRAM_address(uint16_t x, uint16_t y)
 {
 	uint8_t x_low, x_high, y_low, y_high;
 
@@ -164,44 +162,5 @@ void display_IO_write_pixel(uint8_t red, uint8_t green, uint8_t blue, uint16_t x
 
 	display_IO_write_reg(0x21, x_high, x_low);		//X position register
 	display_IO_write_reg(0x20, y_high, y_low);		//Y position register
-
-	display_IO_write_GRAM(red, green, blue);
 }
 
-void display_IO_write_char(char character, uint8_t red, uint8_t green, uint8_t blue, uint16_t posH, uint16_t posV)
-{
-	uint8_t* charStartingPosition;
-	charStartingPosition = font_get_char(&displayFont, character);		//Pointer to starting byte
-
-	uint16_t line;
-	uint16_t local_posH = posH;
-	uint16_t local_posV = posV;
-
-	int16_t i,j;
-	uint16_t mask;
-
-	for(i = 0; i < displayFont.fontHeight ; i++){
-		line = *charStartingPosition++;
-		line = (line<<8)| (*charStartingPosition++);
-
-		mask = 0x8000;
-		//Draw line
-		for(j = 0; j < displayFont.fontWidth; j++)
-		{
-			if (line & mask)
-			{
-				display_IO_write_pixel(red, green, blue, local_posH, local_posV);
-			}
-			else
-			{
-				display_IO_write_pixel(0x00, 0x00, 0x00, local_posH, local_posV);
-			}
-			local_posH++;
-			mask = mask >> 1;
-		}
-
-		//Move to the beginning of the next line
-		local_posV++;
-		local_posH = posH;
-	}
-}

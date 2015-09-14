@@ -7,10 +7,10 @@
  *      Author: slopez
  */
 
-#ifndef TOUCH_TOUCH_CONSTANTS_H_
-#define TOUCH_TOUCH_CONSTANTS_H_
+#ifndef TOUCH_XPT2406_CONSTANTS_H_
+#define TOUCH_XPT2406_CONSTANTS_H_
 
 #define TOUCH_X_POS 0xD0
 #define TOUCH_Y_POS 0x90
 
-#endif /* TOUCH_TOUCH_CONSTANTS_H_ */
+#endif /* TOUCH_XPT2406_CONSTANTS_H_ */

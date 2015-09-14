@@ -2,16 +2,19 @@
 
 #include "clocks.h"
 #include "utils.h"
+#include "serial.h"
 
 #include "AFE/AFE.h"
 #include "Buzzer/buzzer.h"
 #include "CircularBuffer/circularBuffer.h"
 #include "Display/display.h"
 #include "Touch/touch.h"
-#include "serial.h"
 
-extern volatile circularBuffer ecgSignalBuffer;
-extern volatile uint8_t touch_xPos, touch_yPos;
+volatile circularBuffer ecgSignalBuffer;
+volatile uint8_t touch_xPos, touch_yPos;
+
+extern uint8_t signal_background_color[3];
+extern uint8_t menubar_background_color[3];
 
 /*
  * main.c
@@ -65,11 +68,28 @@ int main(void) {
 		itoa(posX, posX_string);
 		itoa(posY, posY_string);
 
-		//Screen writing
-			display_write_string("Ya no te ", i, j, k, 0x20, 0x20);
-			display_write_string("pasas por", k, i, j, 0x20, 0x20 + 0x10);
-			display_write_string("el parque", j, k, i, 0x20, 0x20 + 0x20);
-			display_write_string(posX_string, j, k, i, 0x20, 0x20 + 0x40);
-			display_write_string(posY_string, j, k, i, 0x20 + 0x40, 0x20 + 0x40);
+//		//Screen writing
+//			display_write_string("Ya no te ", i, j, k, 0x20, 0x20);
+//			display_write_string("pasas por", k, i, j, 0x20, 0x20 + 0x10);
+//			display_write_string("el parque", j, k, i, 0x20, 0x20 + 0x20);
+//			display_write_string(posX_string, j, k, i, 0x20, 0x20 + 0x40);
+//			display_write_string(posY_string, j, k, i, 0x20 + 0x40, 0x20 + 0x40);
+			display_write_string("Ya no te pasas por e", i, j, k, 0x00, 0xB0);
+			display_write_string("l parque ya no te pa", i, j, k, 0x00, 0xC0);
+			display_write_string("sas por el parque ya", i, j, k, 0x00, 0xD0);
+			display_write_string("no te pasas por el p", i, j, k, 0x00, 0xE0);
+
+		uint16_t hor_var;
+		ecgData signalDataPoint;
+
+		//Scroll horizontally
+		for (hor_var = 0; hor_var < 320; hor_var++)
+		{
+			if (circularBuffer_read(&ecgSignalBuffer, &signalDataPoint))	//If there is data available
+			{
+				display_write_signal(&signalDataPoint);						//Write it
+			}
+		}
+
 	}
 }

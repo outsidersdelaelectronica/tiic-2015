@@ -32,12 +32,12 @@ void display_initialize()
 	delay_ms(5);
 
 	//************* Start Initial Sequence **********//
-	display_IO_write_reg(0xE3, 0x30, 0x08); // Set internal timing
-	display_IO_write_reg(0xE7, 0x00, 0x12); // Set internal timing
-	display_IO_write_reg(0xEF, 0x12, 0x31); // Set internal timing
+	//display_IO_write_reg(0xE3, 0x30, 0x08); // Set internal timing
+	//display_IO_write_reg(0xE7, 0x00, 0x12); // Set internal timing
+	//display_IO_write_reg(0xEF, 0x12, 0x31); // Set internal timing
 	display_IO_write_reg(0x01, 0x00, 0x00); // set SS and SM bit
 	display_IO_write_reg(0x02, 0x06, 0x00); // set 1 line inversion
-	display_IO_write_reg(0x03, 0xD0, 0x08); // set GRAM write direction and BGR=1.
+	display_IO_write_reg(0x03, 0xD0, 0x38); // set GRAM write direction and BGR=1.
 	display_IO_write_reg(0x04, 0x00, 0x00); // Resize register
 	display_IO_write_reg(0x08, 0x02, 0x02); // set the back porch and front porch
 	display_IO_write_reg(0x09, 0x00, 0x00); // set non-display area refresh cycle ISC[3:0]
@@ -61,7 +61,7 @@ void display_initialize()
 	display_IO_write_reg(0x2B, 0x00, 0x0D); // Set Frame Rate
 	delay_ms(50); // Delay 50ms
 	display_IO_write_reg(0x20, 0x00, 0x00); // GRAM horizontal Address
-	display_IO_write_reg(0x21, 0x00, 0x00); // GRAM Vertical Address
+	display_IO_write_reg(0x21, 0x00, 0x00); // GRAM vertical Address
 	// ----------- Adjust the Gamma Curve ----------//
 	display_IO_write_reg(0x30, 0x00, 0x00);
 	display_IO_write_reg(0x31, 0x04, 0x06);
@@ -77,7 +77,7 @@ void display_initialize()
 	display_IO_write_reg(0x50, 0x00, 0x00); // Horizontal GRAM Start Address
 	display_IO_write_reg(0x51, 0x00, 0xEF); // Horizontal GRAM End Address
 	display_IO_write_reg(0x52, 0x00, 0x00); // Vertical GRAM Start Address
-	display_IO_write_reg(0x53, 0x01, 0x3F); // Vertical GRAM Start Address
+	display_IO_write_reg(0x53, 0x01, 0x3F); // Vertical GRAM End Address
 	display_IO_write_reg(0x60, 0xA7, 0x00); // Gate Scan Line
 	display_IO_write_reg(0x61, 0x00, 0x01); // NDL);VLE); REV
 	display_IO_write_reg(0x6A, 0x00, 0x00); // set scrolling line
@@ -95,64 +95,9 @@ void display_initialize()
 
 
 	/*
-	 * Paint it black
+	 * Paint interface
 	 */
-	long i;
-	for(i = 0 ; i < 240L * 320L ; i++)
-	{
-		display_IO_write_GRAM(0x00, 0x00, 0x00);
-	}
+	display_interface_setup();
+	display_IO_write_reg(0x03, 0xD0, 0x30); // set GRAM horizontal write direction
 
 }
-
-void display_sleep()
-{
-	display_IO_write_reg(0x07, 0x01, 0x31); // Set D1=0,  D0=1
-	delay_ms(10);
-	display_IO_write_reg(0x07, 0x01, 0x30); // Set D1=0,  D0=0
-	delay_ms(10);
-	display_IO_write_reg(0x07, 0x00, 0x00); // display OFF
-	//************* Power OFF sequence **************//
-	display_IO_write_reg(0x10, 0x00, 0x80); // SAP,  BT[3:0],  APE,  AP,  DSTB,  SLP
-	display_IO_write_reg(0x11, 0x00, 0x00); // DC1[2:0],  DC0[2:0],  VC[2:0]
-	display_IO_write_reg(0x12, 0x00, 0x00); // VREG1OUT voltage
-	display_IO_write_reg(0x13, 0x00, 0x00); // VDV[4:0] for VCOM amplitude
-	delay_ms(200); // Dis-charge capacitor power voltage
-	display_IO_write_reg(0x10, 0x00, 0x82); // SAP,  BT[3:0],  APE,  AP,  DSTB,  SLP.
-}
-
-void display_wake_up()
-{
-	//*************Power On sequence ******************//
-	display_IO_write_reg(0x10, 0x00, 0x80); // SAP,  BT[3:0],  AP,  DSTB,  SLP
-	display_IO_write_reg(0x11, 0x00, 0x00); // DC1[2:0],  DC0[2:0],  VC[2:0]
-	display_IO_write_reg(0x12, 0x00, 0x00); // VREG1OUT voltage
-	display_IO_write_reg(0x13, 0x00, 0x00); // VDV[4:0] for VCOM amplitude
-	delay_ms(200); // Dis-charge capacitor power voltage
-	display_IO_write_reg(0x10, 0x12, 0x90); // SAP,  BT[3:0],  AP,  DSTB,  SLP,  STB
-	display_IO_write_reg(0x11, 0x02, 0x27); // Set DC1[2:0],  DC0[2:0],  VC[2:0]
-	delay_ms(50); // Delay 50ms
-	display_IO_write_reg(0x12, 0x00, 0x1B); // External reference voltage =Vci;
-	delay_ms(50); // Delay 50ms
-	display_IO_write_reg(0x13, 0x19, 0x00); // Set VDV[4:0] for VCOM amplitude
-	display_IO_write_reg(0x29, 0x00, 0x0F); // Set VCM[5:0] for VCOMH
-	delay_ms(50); // Delay 50ms
-	display_IO_write_reg(0x07, 0x01, 0x33); // 262K color and display ON
-}
-
-void display_write_string(char* string, uint8_t red, uint8_t green, uint8_t blue, uint16_t posH, uint16_t posV)
-{
-	int i = 0;
-	char character;
-
-	while ((character = string[i]) != 0)
-	{
-		i++;
-		display_IO_write_char(character, red, green, blue, posH, posV);
-		posH = posH + 16;
-	}
-}
-
-
-
-

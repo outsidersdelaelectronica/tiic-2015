@@ -12,6 +12,7 @@ AFE/AFE.obj: ../AFE/AFE_serial.h
 AFE/AFE.obj: ../AFE/ADS1291_constants.h
 AFE/AFE.obj: ../AFE/../CircularBuffer/circularBuffer.h
 AFE/AFE.obj: ../AFE/../CircularBuffer/ecgData.h
+AFE/AFE.obj: ../AFE/../utils.h
 
 ../AFE/AFE.c: 
 ../AFE/AFE.h: 
@@ -25,3 +26,4 @@ C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h:
 ../AFE/ADS1291_constants.h: 
 ../AFE/../CircularBuffer/circularBuffer.h: 
 ../AFE/../CircularBuffer/ecgData.h: 
+../AFE/../utils.h: 

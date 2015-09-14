@@ -14,7 +14,9 @@ ORDERED_OBJS += \
 "./Touch/touch.obj" \
 "./Touch/touch_serial.obj" \
 "./Display/display.obj" \
-"./Display/display_utils.obj" \
+"./Display/display_IO.obj" \
+"./Display/display_functions.obj" \
+"./Display/display_interface.obj" \
 "./Display/font.obj" \
 "./CircularBuffer/circularBuffer.obj" \
 "./CircularBuffer/ecgData.obj" \
@@ -171,8 +173,8 @@ tiic_2015_code.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "clocks.pp" "main.pp" "serial.pp" "utils.pp" "Touch\touch.pp" "Touch\touch_serial.pp" "Display\display.pp" "Display\display_utils.pp" "Display\font.pp" "CircularBuffer\circularBuffer.pp" "CircularBuffer\ecgData.pp" "Buzzer\buzzer.pp" "AFE\AFE.pp" "AFE\AFE_serial.pp" 
-	-$(RM) "clocks.obj" "main.obj" "serial.obj" "utils.obj" "Touch\touch.obj" "Touch\touch_serial.obj" "Display\display.obj" "Display\display_utils.obj" "Display\font.obj" "CircularBuffer\circularBuffer.obj" "CircularBuffer\ecgData.obj" "Buzzer\buzzer.obj" "AFE\AFE.obj" "AFE\AFE_serial.obj" 
+	-$(RM) "clocks.pp" "main.pp" "serial.pp" "utils.pp" "Touch\touch.pp" "Touch\touch_serial.pp" "Display\display.pp" "Display\display_IO.pp" "Display\display_functions.pp" "Display\display_interface.pp" "Display\font.pp" "CircularBuffer\circularBuffer.pp" "CircularBuffer\ecgData.pp" "Buzzer\buzzer.pp" "AFE\AFE.pp" "AFE\AFE_serial.pp" 
+	-$(RM) "clocks.obj" "main.obj" "serial.obj" "utils.obj" "Touch\touch.obj" "Touch\touch_serial.obj" "Display\display.obj" "Display\display_IO.obj" "Display\display_functions.obj" "Display\display_interface.obj" "Display\font.obj" "CircularBuffer\circularBuffer.obj" "CircularBuffer\ecgData.obj" "Buzzer\buzzer.obj" "AFE\AFE.obj" "AFE\AFE_serial.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
