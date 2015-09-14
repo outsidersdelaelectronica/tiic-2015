@@ -52,38 +52,19 @@ int main(void) {
      */
 	P9OUT &= ~BIT6;				//Turn screen on
 
-	uint8_t i,j,k;
-	i = 0xFF;
-	j = 0xFF;
-	k = 0xFF;
-
-	char xPos[4];
-	char yPos[4];
-
+	uint16_t hor_var;
+	ecgData_t signalDataPoint;
 
 	while(1)
 	{
-		itoa(touch_last_position.xPos, xPos);
-		itoa(touch_last_position.yPos, yPos);
-		display_write_string(xPos, i, j, k, 0x40, 0xC0);
-		display_write_string(yPos, i, j, k, 0xA0, 0xC0);
+		//Scroll horizontally
+		for (hor_var = 0; hor_var < 320; hor_var++)
+		{
+//			if (circularBuffer_read(&ecgSignalBuffer, &signalDataPoint))		//If there is data available
+//			{
+				display_write_signal(&display_interface, &signalDataPoint);		//Write it
+//			}
+		}
 
-//		uint16_t hor_var;
-//		ecgData signalDataPoint;
-//
-//		//Scroll horizontally
-//		for (hor_var = 0; hor_var < 320; hor_var++)
-//		{
-////			if (circularBuffer_read(&ecgSignalBuffer, &signalDataPoint))		//If there is data available
-////			{
-//				display_write_signal(&display_interface, &signalDataPoint);		//Write it
-////			}
-//		}
-//
-//
-//		display_write_string("                    ", i, j, k, 0x00, 0xB0);
-//		display_write_string(" DANGER: Apichusque ", i, 0, 0, 0x00, 0xD0);
-//		display_write_string("                    ", i, j, k, 0x00, 0xE0);
-//
 	}
 }

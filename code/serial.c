@@ -48,10 +48,10 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 	{
 		P3OUT &= ~BIT7;							//Enable CS
 
-		uint8_t touch_xPos_low, touch_xPos_high;
-		uint8_t touch_yPos_low, touch_yPos_high;
+			uint8_t touch_xPos_low, touch_xPos_high;
+			uint8_t touch_yPos_low, touch_yPos_high;
 
-		uint16_t touch_xPos, touch_yPos;
+			uint16_t touch_xPos, touch_yPos;
 
 		//Request touchscreen x position
 			touch_serial_send(TOUCH_X_POS);
@@ -66,15 +66,27 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 		P3OUT |= BIT7;							//Disable CS
 
 		//Rebuild 12-bit positions
-			touch_xPos = ((uint16_t) touch_xPos_high) << 4 | ((uint16_t) touch_xPos_low >> 4);
-			touch_yPos = ((uint16_t) touch_yPos_high) << 4 | ((uint16_t) touch_yPos_low >> 4);
+			touch_xPos = (((uint16_t) touch_xPos_high) << 5) | (((uint16_t) touch_xPos_low) >> 3);
+			touch_yPos = (((uint16_t) touch_yPos_high) << 5) | (((uint16_t) touch_yPos_low) >> 3);
 
 			touch_coordinate_set(&touch_last_position, touch_xPos, touch_yPos);
+
+		//Debug
+			char xPos[5];
+			char yPos[5];
+
+			itoa(touch_last_position.xPos, xPos);
+			itoa(touch_last_position.yPos, yPos);
+
+			display_write_string("X = ", 0xFF, 0xFF, 0xFF, 0x60, 0xC0);
+			display_write_string("Y = ", 0xFF, 0xFF, 0xFF, 0x60, 0xD0);
+			display_write_string(xPos, 0xFF, 0xFF, 0xFF, 0xA0, 0xC0);
+			display_write_string(yPos, 0xFF, 0xFF, 0xFF, 0xA0, 0xD0);
 
 			display_write_pixel(0xFF, 0xFF, 0xFF, touch_last_position.xPos, touch_last_position.yPos);
 
 		//Beep
-			//buzzer_start(A5);
+			buzzer_start(E5);
 			delay_ms(50);
 			buzzer_stop();
 

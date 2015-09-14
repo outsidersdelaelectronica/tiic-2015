@@ -52,20 +52,13 @@ void display_interface_setup(display_interface_t* interface)
 		interface->signal_background_color[1] = 0x00;
 		interface->signal_background_color[2] = 0x10;
 
-		interface->menubar_background_color[0] = 0x20;
+		interface->menubar_background_color[0] = 0x10;
 		interface->menubar_background_color[1] = 0x20;
 		interface->menubar_background_color[2] = 0x40;
 
 	//Write them to GRAM
 		display_interface_set_window(interface->signal_background_color, 0, SIGNAL_LINES);					//Set signal window
 		display_interface_set_window(interface->menubar_background_color, SIGNAL_LINES, DISPLAY_LINES);		//Set menubar window
-
-	//Write a separation line
-		int i;
-		for (i = 0; i < DISPLAY_COLUMNS; i++)
-		{
-			display_write_pixel(0x80, 0x80, 0xA0, i, SIGNAL_LINES - 1);
-		}
 
 }
 
