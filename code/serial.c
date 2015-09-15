@@ -86,7 +86,6 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 		//Paint
 			display_write_pixel(0xFF, 0xFF, 0xFF, touch_last_position.xPos, touch_last_position.yPos);
 
-
 		P1IFG &= ~BIT3;                         // Clear IRQ (P1.3) flag
 	}
 }

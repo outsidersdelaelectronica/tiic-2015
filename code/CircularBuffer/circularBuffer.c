@@ -82,5 +82,5 @@ int circularBuffer_read(circularBuffer_t* buf, ecgData_t* value)
 			buf->bufferReadIndex++;
 		}
 		return 1;											//Return true
-//	}
+	}
 }

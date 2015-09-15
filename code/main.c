@@ -53,6 +53,9 @@ int main(void) {
 	ecgData_t signalDataPoint;
 	ecgData_setup(&signalDataPoint);
 
+	display_write_string(" BPM: 820           ", 0xFF, 0xFF, 0xFF, 0x00, 0xC0);
+	display_write_string(" DANGER: Apichusque ", 0xFF, 0x33, 0x33, 0x00, 0xD0);
+
 	while(1)
 	{
 		//Scroll horizontally

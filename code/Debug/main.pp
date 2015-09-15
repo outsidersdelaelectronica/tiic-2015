@@ -16,13 +16,13 @@ main.obj: ../Touch/touch_serial.h
 main.obj: ../Touch/XPT2046_constants.h
 main.obj: ../CircularBuffer/circularBuffer.h
 main.obj: ../CircularBuffer/ecgData.h
-main.obj: ../Display/display_functions.h
-main.obj: ../Display/display_IO.h
-main.obj: ../Display/display_interface.h
-main.obj: ../Display/display_functions.h
-main.obj: ../Display/font.h
 main.obj: ../Buzzer/buzzer.h
 main.obj: ../Buzzer/buzzer_notes.h
+main.obj: ../Display/display_functions.h
+main.obj: ../Display/display_interface.h
+main.obj: ../Display/display_functions.h
+main.obj: ../Display/display_IO.h
+main.obj: ../Display/font.h
 main.obj: ../Touch/touch_coordinate.h
 main.obj: ../AFE/AFE.h
 main.obj: ../Display/display.h
@@ -44,13 +44,13 @@ C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h:
 ../Touch/XPT2046_constants.h: 
 ../CircularBuffer/circularBuffer.h: 
 ../CircularBuffer/ecgData.h: 
-../Display/display_functions.h: 
-../Display/display_IO.h: 
-../Display/display_interface.h: 
-../Display/display_functions.h: 
-../Display/font.h: 
 ../Buzzer/buzzer.h: 
 ../Buzzer/buzzer_notes.h: 
+../Display/display_functions.h: 
+../Display/display_interface.h: 
+../Display/display_functions.h: 
+../Display/display_IO.h: 
+../Display/font.h: 
 ../Touch/touch_coordinate.h: 
 ../AFE/AFE.h: 
 ../Display/display.h: 
