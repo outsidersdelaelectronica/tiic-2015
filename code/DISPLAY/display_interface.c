@@ -69,7 +69,7 @@ void display_write_signal(display_interface_t* interface, ecgData_t* signalDataP
 		int i;
 
 		currentIndex = display_interface_get_index(interface, 0);
-		clearIndex = display_interface_get_index(interface, 25);
+		clearIndex = display_interface_get_index(interface, CLEAR_DISTANCE);
 
 		for (i = 0; i < SIGNAL_LINES; i++)
 		{
@@ -77,7 +77,7 @@ void display_write_signal(display_interface_t* interface, ecgData_t* signalDataP
 				display_write_pixel(interface->signal_background_color[0],
 									interface->signal_background_color[1],
 									interface->signal_background_color[2], currentIndex, i);
-			//Clear column 25 pixels ahead signal
+			//Clear column CLEAR_DISTANCE pixels ahead signal
 				display_write_pixel(interface->signal_background_color[0],
 									interface->signal_background_color[1],
 									interface->signal_background_color[2], clearIndex, i);

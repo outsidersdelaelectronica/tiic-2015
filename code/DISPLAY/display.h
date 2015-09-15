@@ -11,11 +11,10 @@
 #include <msp430.h>
 #include <stdint.h>
 
-#include "display_IO.h"
+#include "../utils.h"
 #include "display_functions.h"
 #include "display_interface.h"
-
-#include "../utils.h"
+#include "display_IO.h"
 
 void	display_setup();
 void	display_initialize();

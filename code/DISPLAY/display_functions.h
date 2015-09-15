@@ -11,11 +11,10 @@
 #include <msp430.h>
 #include <stdint.h>
 
-#include "display_IO.h"
-#include "display_interface.h"
-
-#include "font.h"
 #include "../utils.h"
+#include "display_interface.h"
+#include "display_IO.h"
+#include "font.h"
 
 void	display_sleep();
 void	display_wake_up();

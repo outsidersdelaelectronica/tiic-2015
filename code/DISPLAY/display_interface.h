@@ -11,10 +11,9 @@
 #include <msp430.h>
 #include <stdint.h>
 
-#include "display_IO.h"
-#include "display_functions.h"
-
 #include "../CircularBuffer/ecgData.h"
+#include "display_functions.h"
+#include "display_IO.h"
 
 #define SIGNAL_OFFSET	0x57
 
@@ -23,6 +22,8 @@
 
 #define SIGNAL_LINES	176
 #define SIGNAL_COLUMNS	320
+
+#define CLEAR_DISTANCE  25
 
 typedef struct display_interface_t
 {
