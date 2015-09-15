@@ -72,12 +72,14 @@ void AFE_initialize()
 		__delay_cycles(2000);							//At least 10 useconds
 		P7OUT |= BIT3;
 
-		AFE_send(SDATAC);						//Stop continuous data conversion mode (activated by default)
-
+		AFE_send(SDATAC);							//Stop continuous data conversion mode (activated by default)
 
 	//Write config commands to AFE
-		AFE_write_register(REG_CONFIG2, 0xE0);		//Enable voltage reference
+		AFE_write_register(REG_CONFIG1, 0x00);		//Set data rate to 125 SPS
+		AFE_write_register(REG_CONFIG2, 0xE3);		//Enable voltage reference
 													//Enable lead-off comparators
+													//Enable test signal
+													//Test signal @ 1 Hz, +-1 mV
 		AFE_write_register(REG_CH2SET, 0x81);		//Channel 2 power down
 													//Channel 2 input shorted
 		AFE_write_register(REG_LOFF_STAT, 0x40);	//Clock divider selection: Clock input set to 2.048 MHz

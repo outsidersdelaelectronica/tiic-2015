@@ -64,8 +64,6 @@ void display_interface_setup(display_interface_t* interface)
 
 void display_write_signal(display_interface_t* interface, ecgData_t* signalDataPoint)
 {
-	//Cook ecg data
-
 	//Clear screen
 		uint16_t currentIndex, clearIndex;
 		int i;
@@ -79,14 +77,19 @@ void display_write_signal(display_interface_t* interface, ecgData_t* signalDataP
 				display_write_pixel(interface->signal_background_color[0],
 									interface->signal_background_color[1],
 									interface->signal_background_color[2], currentIndex, i);
-			//Clear column 10 pixels ahead signal
+			//Clear column 25 pixels ahead signal
 				display_write_pixel(interface->signal_background_color[0],
 									interface->signal_background_color[1],
 									interface->signal_background_color[2], clearIndex, i);
 		}
 
+	//Cook ecg data
+		uint16_t signal_y_point = 0;
+		signal_y_point = SIGNAL_OFFSET + (signalDataPoint->data >> 8);
+
 	//Print data
-		display_write_pixel(0xFF, 0xFF, 0xFF, currentIndex, SIGNAL_OFFSET);
+		display_write_pixel(0xFF, 0xFF, 0xFF, currentIndex, signal_y_point);
+
 
 	//Increment index
 		display_interface_inc_index(interface);

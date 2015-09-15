@@ -16,11 +16,12 @@
  */
 typedef struct ecgData_t
 {
-	uint8_t signal[3];
+	int32_t data;
 }
 volatile ecgData_t;
 
 void	ecgData_setup(ecgData_t* data);
 void	ecgData_write(ecgData_t* data, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte);
+void	ecgData_copy(ecgData_t* origin, ecgData_t* destination);
 
 #endif /* ECGDATA_H_ */

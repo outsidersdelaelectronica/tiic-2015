@@ -11,27 +11,24 @@
 #include "Touch/touch.h"
 
 volatile circularBuffer_t ecgSignalBuffer;
-volatile touch_coordinate_t touch_last_position;
-
+extern touch_coordinate_t touch_last_position;
 extern display_interface_t display_interface;
-extern uint8_t signal_background_color[3];
-extern uint8_t menubar_background_color[3];
 
 /*
  * main.c
  */
 int main(void) {
-    WDTCTL = WDTPW | WDTHOLD;	//Stop watchdog timer
+    WDTCTL = WDTPW | WDTHOLD;		//Stop watchdog timer
 	
     /*
      * Setups
      */
     clocks_setup();								//System clocks configuration
     AFE_setup();								//AFE (ADS1291) port setup
-    buzzer_setup();								//Buzzer PWM configuration
     display_setup();							//Display port setup
-    circularBuffer_setup(&ecgSignalBuffer);		//Ecg signal storage buffer setup
     touch_setup();								//Touch screen setup
+    buzzer_setup();								//Buzzer PWM configuration
+    circularBuffer_setup(&ecgSignalBuffer);		//Ecg signal storage buffer setup
 
     /*
      * MCU setup
@@ -50,20 +47,23 @@ int main(void) {
     /*
      * Sheits
      */
-	P9OUT &= ~BIT6;				//Turn screen on
+	P9OUT &= ~BIT6;					//Turn screen on
 
 	uint16_t hor_var;
 	ecgData_t signalDataPoint;
+	ecgData_setup(&signalDataPoint);
 
 	while(1)
 	{
 		//Scroll horizontally
 		for (hor_var = 0; hor_var < 320; hor_var++)
 		{
-//			if (circularBuffer_read(&ecgSignalBuffer, &signalDataPoint))		//If there is data available
-//			{
+		    __bic_SR_register(GIE);			//Disable global interrupts
+			if (circularBuffer_read(&ecgSignalBuffer, &signalDataPoint))		//If there is data available
+			{
 				display_write_signal(&display_interface, &signalDataPoint);		//Write it
-//			}
+			}
+		    __bis_SR_register(GIE);			//Enable global interrupts
 		}
 
 	}

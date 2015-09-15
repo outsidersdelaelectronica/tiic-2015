@@ -42,18 +42,13 @@ int circularBuffer_isFull(circularBuffer_t* buf)
 
 int circularBuffer_write(circularBuffer_t* buf, ecgData_t* value)
 {
-	if (circularBuffer_isFull(buf))							//If the buffer is full, return a null value
-	{
-		return 0;
-	}
-	else
-	{
-		//buf->ecgBuffer[buf->bufferWriteIndex] = value;
-		ecgData_write(&(buf->ecgBuffer[buf->bufferWriteIndex]),		//If not, write the value in the buffer and
-					  value->signal[0],
-					  value->signal[1],
-					  value->signal[2]);
-
+//	if (circularBuffer_isFull(buf))							//If the buffer is full, return a null value
+//	{
+//		return 0;
+//	}
+//	else
+//	{
+		buf->ecgBuffer[buf->bufferWriteIndex] = *value;				//If not, write the value in the buffer and
 		if (buf->bufferWriteIndex == buf->bufferSize - 1)			//update write index
 		{
 			buf->bufferWriteIndex = 0;
@@ -63,7 +58,7 @@ int circularBuffer_write(circularBuffer_t* buf, ecgData_t* value)
 			buf->bufferWriteIndex++;
 		}
 		return 1;											//Return true
-	}
+//	}
 }
 
 
@@ -87,5 +82,5 @@ int circularBuffer_read(circularBuffer_t* buf, ecgData_t* value)
 			buf->bufferReadIndex++;
 		}
 		return 1;											//Return true
-	}
+//	}
 }

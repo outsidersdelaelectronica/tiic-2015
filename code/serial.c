@@ -9,8 +9,8 @@
 
 //Global ecg signal storage buffer (located at main.c)
 extern volatile circularBuffer_t ecgSignalBuffer;
-//Global touchscreen position variables (located at main.c)
-extern volatile touch_coordinate_t touch_last_position;
+//Global touchscreen position variables (used at main.c)
+volatile touch_coordinate_t touch_last_position;
 
 volatile ecgData_t AFE_ecgData;
 
@@ -29,20 +29,27 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 	if (P1IFG & BIT2)
 	{
 		//Read 3 ADS1291 status bytes
-		int i;
-		for (i = 0; i < 3; i++) {
-			AFE_send(0x00);
-		}
+			int i;
+			for (i = 0; i < 3; i++) {
+				AFE_send(0x00);
+			}
 
 		//Read ECG signal - another 3 bytes
-		for (i = 0; i < 3; ++i) {
-			AFE_ecgData.signal[i] = AFE_send(0x00);
-		}
+			uint8_t afe_bytes[3];
+			for (i = 0; i < 3; ++i) {
+				afe_bytes[i] = AFE_send(0x00);
+			}
+
+		//Cast to ecgData type
+			ecgData_t afe_data_point;
+			ecgData_setup(&afe_data_point);
+			ecgData_write(&afe_data_point, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
 
 		//Store signal data into ecg signal buffer
-		circularBuffer_write(&ecgSignalBuffer, &AFE_ecgData);
+			circularBuffer_write(&ecgSignalBuffer, &afe_data_point);
 
 		P1IFG &= ~BIT2;                       	// Clear DRDY (P1.2) flag
+
 	}
 	if (P1IFG & BIT3)
 	{
@@ -76,25 +83,8 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			delay_ms(50);
 			buzzer_stop();
 
-		//Debug
-			char xPos[5];
-			char yPos[5];
-
-			itoa(touch_last_position.xPos, xPos);
-			itoa(touch_last_position.yPos, yPos);
-
-//			display_write_string("X = ", 0xFF, 0xFF, 0xFF, 0x60, 0xC0);
-//			display_write_string("Y = ", 0xFF, 0xFF, 0xFF, 0x60, 0xD0);
-//			display_write_string(xPos, 0xFF, 0xFF, 0xFF, 0xA0, 0xC0);
-//			display_write_string(yPos, 0xFF, 0xFF, 0xFF, 0xA0, 0xD0);
-
+		//Paint
 			display_write_pixel(0xFF, 0xFF, 0xFF, touch_last_position.xPos, touch_last_position.yPos);
-
-			display_write_string("Ya no te pasas", 0xFF, 0xFF, 0xFF, 0x30, 0xC0);
-			display_write_string("por el parque", 0xFF, 0xFF, 0xFF, 0x30, 0xD0);
-			delay_ms(500);
-			display_write_string("              ", 0xFF, 0xFF, 0xFF, 0x30, 0xC0);
-			display_write_string("              ", 0xFF, 0xFF, 0xFF, 0x30, 0xD0);
 
 
 		P1IFG &= ~BIT3;                         // Clear IRQ (P1.3) flag
