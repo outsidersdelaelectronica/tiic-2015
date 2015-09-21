@@ -11,8 +11,8 @@
 
 void circularBuffer_setup(circularBuffer_t* buf)
 {
-	buf->bufferReadIndex = 0;
-	buf->bufferWriteIndex = 0;
+	buf->index = 0;
+	buf->fullReadIndex = 0;
 	buf->bufferSize = BUFFER_SIZE;
 
 	int i;
@@ -22,65 +22,37 @@ void circularBuffer_setup(circularBuffer_t* buf)
 	}
 }
 
-int circularBuffer_isEmpty(circularBuffer_t* buf)
+int circularBuffer_write(circularBuffer_t* buf, ecgData_t* value)
 {
-	return buf->bufferReadIndex == buf->bufferWriteIndex;				//If both pointers are pointing to the same slot, the buffer is empty
-}
-
-int circularBuffer_isFull(circularBuffer_t* buf)
-{
-	if (buf->bufferReadIndex - 1 >= 0)
+	buf->ecgBuffer[buf->index] = *value;				//If not, write the value in the buffer and
+	if (buf->index == buf->bufferSize - 1)			//update write index
 	{
-		return buf->bufferReadIndex - 1 == buf->bufferWriteIndex;		//If the write pointer refers to the slot preceding the one referred to by the read pointer, the buffer is full
+		buf->index = 0;
 	}
 	else
 	{
-		return buf->bufferSize - 1 == buf->bufferWriteIndex;			//Special case: when the read pointer is 0, the preceding one is 256
+		buf->index++;
 	}
+	return 1;											//Return true
 }
 
-
-int circularBuffer_write(circularBuffer_t* buf, ecgData_t* value)
+int circularBuffer_read_last(circularBuffer_t* buf, ecgData_t* value)
 {
-//	if (circularBuffer_isFull(buf))							//If the buffer is full, return a null value
-//	{
-//		return 0;
-//	}
-//	else
-//	{
-		buf->ecgBuffer[buf->bufferWriteIndex] = *value;				//If not, write the value in the buffer and
-		if (buf->bufferWriteIndex == buf->bufferSize - 1)			//update write index
-		{
-			buf->bufferWriteIndex = 0;
-		}
-		else
-		{
-			buf->bufferWriteIndex++;
-		}
-		return 1;											//Return true
-//	}
+	ecgData_clear(value);							//Fill with zeros
+
+	*value = buf->ecgBuffer[buf->index];			//Returns the last writen data
+	return 1;										//Return true
 }
 
-
-int circularBuffer_read(circularBuffer_t* buf, ecgData_t* value)
+int circularBuffer_read_full(circularBuffer_t* buf, ecgData_t* value)
 {
-	ecgData_setup(value);			//Fill with zeros
+	ecgData_clear(value);								//Fill with zeros
 
-	if (circularBuffer_isEmpty(buf))						//If the buffer is empty, do nothing
+	*value = buf->ecgBuffer[buf->fullReadIndex];		//Returns the last writen data
+	if (buf->fullReadIndex == buf->bufferSize - 1)			//If reading out of the memory , return 0
 	{
 		return 0;
 	}
-	else
-	{
-		*value = buf->ecgBuffer[buf->bufferReadIndex];				//If not, read the value in the buffer and
-		if (buf->bufferReadIndex == buf->bufferSize - 1)			//update read index
-		{
-			buf->bufferReadIndex = 0;
-		}
-		else
-		{
-			buf->bufferReadIndex++;
-		}
-		return 1;											//Return true
-	}
+	buf->fullReadIndex++;
+	return 1;											//Return true
 }

@@ -39,10 +39,15 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			for (i = 0; i < 3; ++i) {
 				afe_bytes[i] = AFE_send(0x00);
 			}
+			char num[5];
+			for (i = 0; i < 3; ++i) {
+				itoa((uint16_t)afe_bytes[i], num);
+				display_write_string(num,0xff,0xff,0xff,0x50*i,0x20);
+			}
 
 		//Cast to ecgData type
 			ecgData_t afe_data_point;
-			ecgData_setup(&afe_data_point);
+			ecgData_clear(&afe_data_point);
 			ecgData_write(&afe_data_point, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
 
 		//Store signal data into ecg signal buffer
@@ -79,9 +84,9 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			touch_coordinate_set(&touch_last_position, touch_xPos, touch_yPos);
 
 		//Beep
-			buzzer_start(E5);
-			delay_ms(50);
-			buzzer_stop();
+//			buzzer_start(E5);
+//			delay_ms(50);
+//			buzzer_stop();
 
 		//Paint
 			display_write_pixel(0xFF, 0xFF, 0xFF, touch_last_position.xPos, touch_last_position.yPos);

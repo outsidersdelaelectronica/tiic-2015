@@ -6,9 +6,9 @@ serial.obj: ../AFE/AFE_serial.h
 serial.obj: C:/ti/ccsv6/ccs_base/msp430/include/msp430.h
 serial.obj: C:/ti/ccsv6/ccs_base/msp430/include/msp430fr5972.h
 serial.obj: C:/ti/ccsv6/ccs_base/msp430/include/in430.h
-serial.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics.h
-serial.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics_legacy_undefs.h
-serial.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h
+serial.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include/intrinsics.h
+serial.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include/intrinsics_legacy_undefs.h
+serial.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include/stdint.h
 serial.obj: ../AFE/ADS1291_constants.h
 serial.obj: ../Touch/touch_serial.h
 serial.obj: ../Touch/XPT2046_constants.h
@@ -30,9 +30,9 @@ serial.obj: ../Touch/touch_coordinate.h
 C:/ti/ccsv6/ccs_base/msp430/include/msp430.h: 
 C:/ti/ccsv6/ccs_base/msp430/include/msp430fr5972.h: 
 C:/ti/ccsv6/ccs_base/msp430/include/in430.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics_legacy_undefs.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include/intrinsics.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include/intrinsics_legacy_undefs.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include/stdint.h: 
 ../AFE/ADS1291_constants.h: 
 ../Touch/touch_serial.h: 
 ../Touch/XPT2046_constants.h: 

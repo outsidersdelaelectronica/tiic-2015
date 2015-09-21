@@ -49,9 +49,9 @@ int main(void) {
      */
 	P9OUT &= ~BIT6;					//Turn screen on
 
-	uint16_t hor_var;
+//	uint16_t hor_var;
 	ecgData_t signalDataPoint;
-	ecgData_setup(&signalDataPoint);
+	ecgData_clear(&signalDataPoint);
 
 	display_write_string(" BPM: 820           ", 0xFF, 0xFF, 0xFF, 0x00, 0xC0);
 	display_write_string(" DANGER: Apichusque ", 0xFF, 0x33, 0x33, 0x00, 0xD0);
@@ -59,15 +59,17 @@ int main(void) {
 	while(1)
 	{
 		//Scroll horizontally
-		for (hor_var = 0; hor_var < 320; hor_var++)
-		{
+//		for (hor_var = 0; hor_var < 320; hor_var++)
+//		{
 		    __bic_SR_register(GIE);			//Disable global interrupts
-			if (circularBuffer_read(&ecgSignalBuffer, &signalDataPoint))		//If there is data available
+			if (circularBuffer_read_last(&ecgSignalBuffer, &signalDataPoint))		//If there is data available
 			{
+//				if (signalDataPoint >
 				display_write_signal(&display_interface, &signalDataPoint);		//Write it
+
 			}
 		    __bis_SR_register(GIE);			//Enable global interrupts
-		}
+//		}
 
 	}
 }

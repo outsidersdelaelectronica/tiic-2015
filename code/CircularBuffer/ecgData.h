@@ -20,7 +20,7 @@ typedef struct ecgData_t
 }
 volatile ecgData_t;
 
-void	ecgData_setup(ecgData_t* data);
+void	ecgData_clear(ecgData_t* data);
 void	ecgData_write(ecgData_t* data, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte);
 void	ecgData_copy(ecgData_t* origin, ecgData_t* destination);
 
