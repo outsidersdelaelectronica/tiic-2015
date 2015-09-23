@@ -17,5 +17,5 @@ uint8_t	AFE_serial_send(uint8_t data);
 
 uint8_t	AFE_send(uint8_t data);
 void	AFE_write_register(uint8_t address, uint8_t value);
-
+uint8_t AFE_read_register(uint8_t address);
 #endif /* AFE_AFE_SERIAL_H_ */

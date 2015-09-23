@@ -58,7 +58,7 @@ int main(void) {
 
 	while(1)
 	{
-		//Scroll horizontally
+//		Scroll horizontally
 //		for (hor_var = 0; hor_var < 320; hor_var++)
 //		{
 		    __bic_SR_register(GIE);			//Disable global interrupts

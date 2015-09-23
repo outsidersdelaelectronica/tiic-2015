@@ -24,15 +24,14 @@ void circularBuffer_setup(circularBuffer_t* buf)
 
 int circularBuffer_write(circularBuffer_t* buf, ecgData_t* value)
 {
-	buf->ecgBuffer[buf->index] = *value;				//If not, write the value in the buffer and
-	if (buf->index == buf->bufferSize - 1)			//update write index
+
+	if (buf->index == buf->bufferSize - 1)			//if reached the end, start again
 	{
 		buf->index = 0;
 	}
-	else
-	{
-		buf->index++;
-	}
+	buf->ecgBuffer[buf->index] = *value;				//If not, write the value in the buffer and
+	buf->index++;
+
 	return 1;											//Return true
 }
 
@@ -51,6 +50,7 @@ int circularBuffer_read_full(circularBuffer_t* buf, ecgData_t* value)
 	*value = buf->ecgBuffer[buf->fullReadIndex];		//Returns the last writen data
 	if (buf->fullReadIndex == buf->bufferSize - 1)			//If reading out of the memory , return 0
 	{
+		buf->fullReadIndex = 0;
 		return 0;
 	}
 	buf->fullReadIndex++;

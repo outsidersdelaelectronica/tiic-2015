@@ -19,8 +19,7 @@
 
 typedef struct circularBuffer_t
 {
-//	int bufferReadIndex;
-//	int bufferWriteIndex;
+
 	uint16_t index;
 	uint16_t bufferSize;
 	uint16_t fullReadIndex;

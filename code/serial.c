@@ -33,16 +33,11 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			for (i = 0; i < 3; i++) {
 				AFE_send(0x00);
 			}
-
+//			delay_ms(1);
 		//Read ECG signal - another 3 bytes
 			uint8_t afe_bytes[3];
 			for (i = 0; i < 3; ++i) {
 				afe_bytes[i] = AFE_send(0x00);
-			}
-			char num[5];
-			for (i = 0; i < 3; ++i) {
-				itoa((uint16_t)afe_bytes[i], num);
-				display_write_string(num,0xff,0xff,0xff,0x50*i,0x20);
 			}
 
 		//Cast to ecgData type
@@ -54,6 +49,7 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			circularBuffer_write(&ecgSignalBuffer, &afe_data_point);
 
 		P1IFG &= ~BIT2;                       	// Clear DRDY (P1.2) flag
+
 
 	}
 	if (P1IFG & BIT3)
