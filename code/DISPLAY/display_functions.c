@@ -104,3 +104,60 @@ void display_write_string(char* string, uint8_t red, uint8_t green, uint8_t blue
 	}
 }
 
+void display_write_line(uint8_t red, uint8_t green, uint8_t blue, uint16_t origin_x,
+							uint16_t origin_y,uint16_t end_x, uint16_t end_y)
+{
+	int dist_x,dist_y,step,current_x,current_y,i,j;
+	current_x = origin_x;
+	current_y = origin_y;
+	dist_x = end_x - origin_x;
+	dist_y = end_y - origin_y + 1;
+	step = dist_y/dist_x;
+
+	if (dist_x > 0)
+	{
+		for(i = 0; i < dist_x; i++)
+		{
+			if (dist_y > 0)
+			{
+				for(j = 0; j < step; j++)
+				{
+					display_write_pixel(red,green,blue, current_x, current_y++);
+				}
+				current_x++;
+			}
+			else
+			{
+				for(j = 0; j > step; j--)
+				{
+					display_write_pixel(red,green,blue, current_x, current_y--);
+				}
+				current_x++;
+			}
+		}
+	}
+	else
+	{
+		for(i = 0; i > dist_x; i--)
+		{
+			if (dist_y > 0)
+			{
+				for(j = 0; j > step; j--)
+				{
+					display_write_pixel(red,green,blue, current_x, current_y++);
+				}
+				current_x--;
+			}
+			else
+			{
+				for(j = 0; j < step; j++)
+				{
+					display_write_pixel(red,green,blue, current_x, current_y--);
+				}
+				current_x--;
+			}
+		}
+	}
+}
+
+
