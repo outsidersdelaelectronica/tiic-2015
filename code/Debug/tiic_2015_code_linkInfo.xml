@@ -2,7 +2,7 @@
 <link_info>
    <banner>MSP430 Linker PC v4.4.5</banner>
    <copyright>Copyright (c) 2003-2015 Texas Instruments Incorporated</copyright>
-   <link_time>0x5604139c</link_time>
+   <link_time>0x56041a41</link_time>
    <link_errors>0x0</link_errors>
    <output_file>tiic_2015_code.out</output_file>
    <entry_point>
@@ -247,8 +247,8 @@
       <input_file id="fl-7e">
          <path>C:\Users\carpanta\AppData\Local\Temp\</path>
          <kind>object</kind>
-         <file>021482</file>
-         <name>021482</name>
+         <file>040682</file>
+         <name>040682</name>
       </input_file>
       <input_file id="fl-7f">
          <path>C:\ti\ccsv6\tools\compiler\ti-cgt-msp430_4.4.5\lib\</path>
@@ -462,18 +462,18 @@
          <name>.common:ecgSignalBuffer</name>
          <uninitialized>true</uninitialized>
          <run_address>0x1c00</run_address>
-         <size>0x406</size>
+         <size>0x3ee</size>
       </object_component>
       <object_component id="oc-1b3">
          <name>.common:display_interface</name>
          <uninitialized>true</uninitialized>
-         <run_address>0x2006</run_address>
+         <run_address>0x1fee</run_address>
          <size>0x10</size>
       </object_component>
       <object_component id="oc-17e">
          <name>.common:touch_last_position</name>
          <uninitialized>true</uninitialized>
-         <run_address>0x2016</run_address>
+         <run_address>0x1ffe</run_address>
          <size>0x4</size>
       </object_component>
       <object_component id="oc-db">
@@ -2358,7 +2358,7 @@
       <logical_group id="lg-17" display="no" color="cyan">
          <name>.bss</name>
          <run_address>0x1c00</run_address>
-         <size>0x41a</size>
+         <size>0x402</size>
          <contents>
             <object_component_ref idref="oc-173"/>
             <object_component_ref idref="oc-1b3"/>
@@ -3171,7 +3171,7 @@
       <load_segment id="lg-27e" display="no" color="cyan">
          <name>SEGMENT_0</name>
          <run_address>0x1c00</run_address>
-         <size>0x41a</size>
+         <size>0x402</size>
          <flags>0x6</flags>
          <contents>
             <logical_group_ref idref="lg-17"/>
@@ -3349,18 +3349,18 @@
          <page_id>0x0</page_id>
          <origin>0x1c00</origin>
          <length>0x800</length>
-         <used_space>0x4ba</used_space>
-         <unused_space>0x346</unused_space>
+         <used_space>0x4a2</used_space>
+         <unused_space>0x35e</unused_space>
          <attributes>RWIX</attributes>
          <usage_details>
             <allocated_space>
                <start_address>0x1c00</start_address>
-               <size>0x41a</size>
+               <size>0x402</size>
                <logical_group_ref idref="lg-17"/>
             </allocated_space>
             <available_space>
-               <start_address>0x201a</start_address>
-               <size>0x346</size>
+               <start_address>0x2002</start_address>
+               <size>0x35e</size>
             </available_space>
             <allocated_space>
                <start_address>0x2360</start_address>
@@ -4246,7 +4246,7 @@
             <load_address>0x51e0</load_address>
             <load_size>0x6</load_size>
             <run_address>0x1c00</run_address>
-            <run_size>0x41a</run_size>
+            <run_size>0x402</run_size>
             <compression>zero_init</compression>
          </cprec>
       </cptbl>
@@ -8599,11 +8599,11 @@
       </symbol>
       <symbol id="sm-651">
          <name>display_interface</name>
-         <value>0x2006</value>
+         <value>0x1fee</value>
       </symbol>
       <symbol id="sm-652">
          <name>touch_last_position</name>
-         <value>0x2016</value>
+         <value>0x1ffe</value>
       </symbol>
       <symbol id="sm-653">
          <name>display_write_pixel</name>

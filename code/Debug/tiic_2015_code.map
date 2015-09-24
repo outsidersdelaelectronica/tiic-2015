@@ -1,7 +1,7 @@
 ******************************************************************************
                   MSP430 Linker PC v4.4.5                      
 ******************************************************************************
->> Linked Thu Sep 24 17:15:40 2015
+>> Linked Thu Sep 24 17:44:01 2015
 
 OUTPUT FILE NAME:   <tiic_2015_code.out>
 ENTRY POINT SYMBOL: "_c_int00_noargs_noexit_mpu"  address: 000045aa
@@ -18,7 +18,7 @@ MEMORY CONFIGURATION
   INFOC                 00001880   00000080  00000000  00000080  RWIX
   INFOB                 00001900   00000080  00000000  00000080  RWIX
   INFOA                 00001980   00000080  00000000  00000080  RWIX
-  RAM                   00001c00   00000800  000004ba  00000346  RWIX
+  RAM                   00001c00   00000800  000004a2  0000035e  RWIX
   FRAM                  00004400   0000bb80  00000df2  0000ad8e  RWIX
   JTAGSIGNATURE         0000ff80   00000004  00000004  00000000  RWIX  ffff 
   BSLSIGNATURE          0000ff84   00000004  00000004  00000000  RWIX  ffff 
@@ -87,10 +87,10 @@ SECTION ALLOCATION MAP
  output                                  attributes/
 section   page    origin      length       input sections
 --------  ----  ----------  ----------   ----------------
-.bss       0    00001c00    0000041a     UNINITIALIZED
-                  00001c00    00000406     (.common:ecgSignalBuffer)
-                  00002006    00000010     (.common:display_interface)
-                  00002016    00000004     (.common:touch_last_position)
+.bss       0    00001c00    00000402     UNINITIALIZED
+                  00001c00    000003ee     (.common:ecgSignalBuffer)
+                  00001fee    00000010     (.common:display_interface)
+                  00001ffe    00000004     (.common:touch_last_position)
 
 .stack     0    00002360    000000a0     UNINITIALIZED
                   00002360    00000004     rts430x_lc_rd_eabi.lib : boot.obj (.stack)
@@ -257,7 +257,7 @@ SYSNMI     0    0000fffc    00000002
 LINKER GENERATED COPY TABLES
 
 __TI_cinit_table @ 000051ea records: 1, size/record: 8, table size: 8
-	.bss: load addr=000051e0, load size=00000006 bytes, run addr=00001c00, run size=0000041a bytes, compression=zero_init
+	.bss: load addr=000051e0, load size=00000006 bytes, run addr=00001c00, run size=00000402 bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
@@ -1341,7 +1341,7 @@ ffffffff  binit
 000109b8  display_IO_write_GRAM     
 00010b08  display_IO_write_reg      
 00010000  display_initialize        
-00002006  display_interface         
+00001fee  display_interface         
 000108ea  display_write_char        
 00010ba8  display_write_pixel       
 00010cde  display_write_string      
@@ -1355,7 +1355,7 @@ ffffffff  binit
 00001513  mpu_sam_value             
 00000440  mpu_segment_border1       
 00000440  mpu_segment_border2       
-00002016  touch_last_position       
+00001ffe  touch_last_position       
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -2337,8 +2337,8 @@ address   name
 000009cf  AESAXIN_H                 
 00001513  mpu_sam_value             
 00001c00  ecgSignalBuffer           
-00002006  display_interface         
-00002016  touch_last_position       
+00001fee  display_interface         
+00001ffe  touch_last_position       
 00002360  _stack                    
 00002400  __STACK_END               
 00004400  Port_1                    
