@@ -9,6 +9,18 @@
 
 display_interface_t display_interface;
 
+//static void display_timing_setup()
+//{
+//	//Timer A2 register configuration
+//		TA2CCR0 = A4;					//PWM period => A4 = 2272
+//										//Toggle period = PWM period/2 = 440 Hz = A4
+//		TA2CCR4 = A4;					//Signal toggled on timer reset
+//
+//		TA2CTL = TBSSEL__SMCLK | MC__STOP | TBCLR;		//Clock source = SMCLK
+//														//Mode = Stop mode
+//														//Reset timer B0
+//}
+
 void display_setup()
 {
 	P7DIR |= BIT1;					//Set display_RESET (P7.1) as output
@@ -20,6 +32,8 @@ void display_setup()
 	P2OUT |= BIT3;					//Set display_RS
 
 	P9OUT |= BIT6;					//Turn screen off
+
+	//display_timing_setup();			//Setup refresh rate timer
 }
 
 void display_initialize()
