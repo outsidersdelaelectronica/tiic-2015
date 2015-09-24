@@ -45,7 +45,7 @@ void AFE_setup()
 		UCB1CTLW0 = UCSWRST;						//Hold USCI_B1 in reset state - necessary while configuring registers
 
 		UCB1CTLW0 |=  UCCKPH | UCCKPL | UCMSB | UCMST | UCMODE_1 | UCSYNC | UCSSEL_2 | UCSTEM;
-													//Clock phase = 0
+													//Clock phase = 1
 													//Clock polarity = 0
 													//MSB first
 													//8-bit data
