@@ -7,6 +7,7 @@
 
 #include "display.h"
 
+<<<<<<< HEAD
 //Display interface (located at main.c)
 extern display_interface_t display_interface;
 //Global ecg signal storage buffer (located at main.c)
@@ -88,6 +89,21 @@ static void display_start_sweep()
 	TA2CCTL0 |= CCIE;									//Enable compare interrupt
 	TA2CTL = TASSEL__SMCLK | MC__UP | TACLR;			//Start timer
 }
+=======
+display_interface_t display_interface;
+
+//static void display_timing_setup()
+//{
+//	//Timer A2 register configuration
+//		TA2CCR0 = A4;					//PWM period => A4 = 2272
+//										//Toggle period = PWM period/2 = 440 Hz = A4
+//		TA2CCR4 = A4;					//Signal toggled on timer reset
+//
+//		TA2CTL = TBSSEL__SMCLK | MC__STOP | TBCLR;		//Clock source = SMCLK
+//														//Mode = Stop mode
+//														//Reset timer B0
+//}
+>>>>>>> parent of 13d9eb2... Buzzer with timer
 
 void display_setup()
 {
@@ -183,9 +199,12 @@ void display_initialize()
 	display_interface_setup(&display_interface);
 	display_IO_write_reg(0x03, 0xD0, 0x30); // set GRAM horizontal write direction
 
+<<<<<<< HEAD
 	/*
 	 * Start signal sweeping
 	 */
 	display_start_sweep();
 
+=======
+>>>>>>> parent of 13d9eb2... Buzzer with timer
 }
