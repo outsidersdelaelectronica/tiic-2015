@@ -85,12 +85,11 @@ void display_write_signal(display_interface_t* interface, ecgData_t* signalDataP
 		}
 
 	//Cook ecg data
-
 		signal_y_point = SIGNAL_OFFSET + (signalDataPoint->data >> 9);
-//		signal_y_point = signalDataPoint->data >> 9;
+
 	//Print data
-//		display_write_pixel(0xFF, 0xFF, 0xFF, currentIndex, last_signal_y_point);
-		display_write_line(0xFF, 0xFF, 0xFF, currentIndex - 1, last_signal_y_point, currentIndex, signal_y_point);
+		display_write_line(0xFF, 0xFF, 0xFF, currentIndex - 1, last_signal_y_point,
+											 currentIndex, signal_y_point);
 
 	//Increment index
 		display_interface_inc_index(interface);

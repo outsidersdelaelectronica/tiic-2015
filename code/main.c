@@ -10,9 +10,9 @@
 #include "Display/display.h"
 #include "Touch/touch.h"
 
+volatile display_interface_t display_interface;
+volatile touch_coordinate_t touch_last_position;
 volatile circularBuffer_t ecgSignalBuffer;
-extern touch_coordinate_t touch_last_position;
-extern display_interface_t display_interface;
 
 /*
  * main.c
@@ -49,20 +49,10 @@ int main(void) {
      */
 	P9OUT &= ~BIT6;					//Turn screen on
 
-//	uint16_t hor_var;
-	ecgData_t signalDataPoint;
-	ecgData_clear(&signalDataPoint);
-
 	display_write_string(" BPM: 820           ", 0xFF, 0xFF, 0xFF, 0x00, 0xC0);
 	display_write_string(" DANGER: Apichusque ", 0xFF, 0x33, 0x33, 0x00, 0xD0);
 
 	while(1)
 	{
-			if (circularBuffer_read_full(&ecgSignalBuffer, &signalDataPoint))		//If there is data available
-			{
-				display_write_signal(&display_interface, &signalDataPoint);		//Write it
-
-			}
-
 	}
 }

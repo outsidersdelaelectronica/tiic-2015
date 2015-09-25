@@ -7,10 +7,10 @@
 
 #include "display.h"
 
-/*
- * Display interface instance
- */
-display_interface_t display_interface;
+//Display interface (located at main.c)
+extern display_interface_t display_interface;
+//Global ecg signal storage buffer (located at main.c)
+extern circularBuffer_t ecgSignalBuffer;
 
 // Timer A2 interrupt service routine
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
@@ -22,27 +22,71 @@ void __attribute__ ((interrupt(TIMER2_A0_VECTOR))) Timer2_A0_ISR (void)
 #error Compiler not supported!
 #endif
 {
-		buzzer_stop();											//Stop buzzer timer
-		TA3CTL = TASSEL__SMCLK | ID__8 | MC__STOP | TACLR;		//Stop duration timer
+	//Paint ECG value every display tick
+		__bic_SR_register(GIE);
 
-		TA3CCTL0 &= ~CCIE;								//Disable compare interrupt
+		static ecgData_t signalDataPoint;										//Temporary storage variable
+		if (circularBuffer_read_full(&ecgSignalBuffer, &signalDataPoint))		//If there is data available
+		{
+			display_write_signal(&display_interface, &signalDataPoint);			//Write it
+		}
 
-		//No need to clear CCIFG
+		__bis_SR_register_on_exit(GIE);
 }
 
-static void display_timing_setup()
+/*
+ * Sweep time is limited between 500 ms and 10 sg
+ */
+static void display_set_sweep_time(int disp_sweep_time_ms)
+{
+	//Interrupt period -> Calculated from display sweep time and horizontal display resolution
+	uint16_t timer_compare_value;
+
+	switch (disp_sweep_time_ms)
+	{
+		case SWEEP_TIME_10000:
+			timer_compare_value = 62500;
+			break;
+		case SWEEP_TIME_5000:
+			timer_compare_value = 31250;
+			break;
+		case SWEEP_TIME_2000:
+			timer_compare_value = 12500;
+			break;
+		case SWEEP_TIME_1000:
+			timer_compare_value = 6250;
+			break;
+		case SWEEP_TIME_500:
+			timer_compare_value = 3125;
+			break;
+		case SWEEP_TIME_200:
+			timer_compare_value = 1250;
+			break;
+		default:
+			break;
+	}
+
+	//TODO
+	//Make enum type
+
+	TA2CCR0 = timer_compare_value;						//2000 equals to 1 ms @ 2 MHz
+}
+
+static void display_timer_setup()
 {
 	//Timer A2 register configuration
-		TA2CTL = TASSEL__SMCLK | ID__8 | MC__STOP | TACLR;	//Clock source = SMCLK
-															//Input divider = /8
-																//Clock = 250 KHz
+		TA2CTL = TASSEL__SMCLK | MC__STOP | TACLR;			//Clock source = SMCLK
 															//Mode = Stop mode
 															//Reset timer A3
 		TA2CCTL0 &= ~CCIFG;									//Clear interrupt flag
 
+		display_set_sweep_time(SWEEP_TIME_DEFAULT);			//2 sg sweep time
+}
 
-		TA2CCTL0 |= CCIE;									//Enable compare interrupt
-		TA2CTL = TASSEL__SMCLK | ID__8 | MC__UP | TACLR;	//Start timer
+static void display_start_sweep()
+{
+	TA2CCTL0 |= CCIE;									//Enable compare interrupt
+	TA2CTL = TASSEL__SMCLK | MC__UP | TACLR;			//Start timer
 }
 
 void display_setup()
@@ -57,7 +101,7 @@ void display_setup()
 
 	P9OUT |= BIT6;					//Turn screen off
 
-	//display_timing_setup();			//Setup refresh rate timer
+	display_timer_setup();			//Setup refresh rate timer
 }
 
 void display_initialize()
@@ -133,37 +177,15 @@ void display_initialize()
 	display_IO_write_reg(0x92, 0x06, 0x00);
 	display_IO_write_reg(0x07, 0x01, 0x33); // 262K color and display ON
 
-
 	/*
 	 * Paint interface
 	 */
 	display_interface_setup(&display_interface);
 	display_IO_write_reg(0x03, 0xD0, 0x30); // set GRAM horizontal write direction
 
+	/*
+	 * Start signal sweeping
+	 */
+	display_start_sweep();
+
 }
-
-/*
- * Sweep time is limited between 500 ms and 10 sg
- */
-void display_set_sweep_time(int disp_sweep_time_ms)
-{
-	//Interrupt period -> Calculated from display sweep time and horizontal display resolution
-	int interrupt_period_ms;
-
-	//Limit sweep times
-	if (disp_sweep_time_ms < 500)
-	{
-		disp_sweep_time_ms = 500;
-	}
-	else if (disp_sweep_time_ms > 10000)
-	{
-		disp_sweep_time_ms = 10000;
-	}
-
-	//Calculate interrupt period
-	interrupt_period_ms = disp_sweep_time_ms / 320; //TODO
-
-	TA2CCR0 = 250 * ms;							//250 equals to 1 ms @ 250 KHz
-												//Default sweep time
-}
-

@@ -7,12 +7,10 @@
 
 #include "serial.h"
 
+//Global touchscreen position variables (located at main.c)
+extern touch_coordinate_t touch_last_position;
 //Global ecg signal storage buffer (located at main.c)
-extern volatile circularBuffer_t ecgSignalBuffer;
-//Global touchscreen position variables (used at main.c)
-volatile touch_coordinate_t touch_last_position;
-
-volatile ecgData_t AFE_ecgData;
+extern circularBuffer_t ecgSignalBuffer;
 
 /*
  * Port 1 (AFE and Touch) interrupt service routine
