@@ -7,19 +7,43 @@
 
 #include "display.h"
 
+/*
+ * Display interface instance
+ */
 display_interface_t display_interface;
 
-//static void display_timing_setup()
-//{
-//	//Timer A2 register configuration
-//		TA2CCR0 = A4;					//PWM period => A4 = 2272
-//										//Toggle period = PWM period/2 = 440 Hz = A4
-//		TA2CCR4 = A4;					//Signal toggled on timer reset
-//
-//		TA2CTL = TBSSEL__SMCLK | MC__STOP | TBCLR;		//Clock source = SMCLK
-//														//Mode = Stop mode
-//														//Reset timer B0
-//}
+// Timer A2 interrupt service routine
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector = TIMER2_A0_VECTOR
+__interrupt void Timer2_A0_ISR(void)
+#elif defined(__GNUC__)
+void __attribute__ ((interrupt(TIMER2_A0_VECTOR))) Timer2_A0_ISR (void)
+#else
+#error Compiler not supported!
+#endif
+{
+		buzzer_stop();											//Stop buzzer timer
+		TA3CTL = TASSEL__SMCLK | ID__8 | MC__STOP | TACLR;		//Stop duration timer
+
+		TA3CCTL0 &= ~CCIE;								//Disable compare interrupt
+
+		//No need to clear CCIFG
+}
+
+static void display_timing_setup()
+{
+	//Timer A2 register configuration
+		TA2CTL = TASSEL__SMCLK | ID__8 | MC__STOP | TACLR;	//Clock source = SMCLK
+															//Input divider = /8
+																//Clock = 250 KHz
+															//Mode = Stop mode
+															//Reset timer A3
+		TA2CCTL0 &= ~CCIFG;									//Clear interrupt flag
+
+
+		TA2CCTL0 |= CCIE;									//Enable compare interrupt
+		TA2CTL = TASSEL__SMCLK | ID__8 | MC__UP | TACLR;	//Start timer
+}
 
 void display_setup()
 {
@@ -117,3 +141,29 @@ void display_initialize()
 	display_IO_write_reg(0x03, 0xD0, 0x30); // set GRAM horizontal write direction
 
 }
+
+/*
+ * Sweep time is limited between 500 ms and 10 sg
+ */
+void display_set_sweep_time(int disp_sweep_time_ms)
+{
+	//Interrupt period -> Calculated from display sweep time and horizontal display resolution
+	int interrupt_period_ms;
+
+	//Limit sweep times
+	if (disp_sweep_time_ms < 500)
+	{
+		disp_sweep_time_ms = 500;
+	}
+	else if (disp_sweep_time_ms > 10000)
+	{
+		disp_sweep_time_ms = 10000;
+	}
+
+	//Calculate interrupt period
+	interrupt_period_ms = disp_sweep_time_ms / 320; //TODO
+
+	TA2CCR0 = 250 * ms;							//250 equals to 1 ms @ 250 KHz
+												//Default sweep time
+}
+

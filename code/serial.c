@@ -83,7 +83,7 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			touch_coordinate_set(&touch_last_position, touch_xPos, touch_yPos);
 
 		//Beep
-			buzzer_play(E5, 50);
+			buzzer_play(C5, 50);
 
 		//Paint
 			display_write_pixel(0xFF, 0xFF, 0xFF, touch_last_position.xPos, touch_last_position.yPos);
