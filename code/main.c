@@ -58,18 +58,10 @@ int main(void) {
 
 	while(1)
 	{
-//		Scroll horizontally
-//		for (hor_var = 0; hor_var < 320; hor_var++)
-//		{
-		    __bic_SR_register(GIE);			//Disable global interrupts
+
 			if (circularBuffer_read_last(&ecgSignalBuffer, &signalDataPoint))		//If there is data available
 			{
-//				if (signalDataPoint >
 				display_write_signal(&display_interface, &signalDataPoint);		//Write it
-
 			}
-		    __bis_SR_register(GIE);			//Enable global interrupts
-//		}
-
 	}
 }

@@ -1,10 +1,10 @@
 ******************************************************************************
                   MSP430 Linker PC v4.4.5                      
 ******************************************************************************
->> Linked Wed Sep 23 19:40:03 2015
+>> Linked Tue Sep 29 19:10:52 2015
 
 OUTPUT FILE NAME:   <tiic_2015_code.out>
-ENTRY POINT SYMBOL: "_c_int00_noargs_noexit_mpu"  address: 0000459a
+ENTRY POINT SYMBOL: "_c_int00_noargs_noexit_mpu"  address: 000045aa
 
 
 MEMORY CONFIGURATION
@@ -18,8 +18,8 @@ MEMORY CONFIGURATION
   INFOC                 00001880   00000080  00000000  00000080  RWIX
   INFOB                 00001900   00000080  00000000  00000080  RWIX
   INFOA                 00001980   00000080  00000000  00000080  RWIX
-  RAM                   00001c00   00000800  000004ba  00000346  RWIX
-  FRAM                  00004400   0000bb80  00000de2  0000ad9e  RWIX
+  RAM                   00001c00   00000800  000004bc  00000344  RWIX
+  FRAM                  00004400   0000bb80  00000e0a  0000ad76  RWIX
   JTAGSIGNATURE         0000ff80   00000004  00000004  00000000  RWIX  ffff 
   BSLSIGNATURE          0000ff84   00000004  00000004  00000000  RWIX  ffff 
   IPESIGNATURE          0000ff88   00000008  00000008  00000000  RWIX  ffff 
@@ -79,7 +79,7 @@ MEMORY CONFIGURATION
   INT53                 0000fffa   00000002  00000002  00000000  RWIX
   INT54                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FRAM2                 00010000   00004000  00000d8a  00003276  RWIX
+  FRAM2                 00010000   00004000  00000f4c  000030b4  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -91,6 +91,9 @@ section   page    origin      length       input sections
                   00001c00    00000406     (.common:ecgSignalBuffer)
                   00002006    00000010     (.common:display_interface)
                   00002016    00000004     (.common:touch_last_position)
+
+.data      0    0000201a    00000002     UNINITIALIZED
+                  0000201a    00000002     display_interface.obj (.data)
 
 .stack     0    00002360    000000a0     UNINITIALIZED
                   00002360    00000004     rts430x_lc_rd_eabi.lib : boot.obj (.stack)
@@ -104,10 +107,10 @@ section   page    origin      length       input sections
 .sysmem    0    00004400    00000000     UNINITIALIZED
 
 .text:_isr 
-*          0    00004400    000001be     
-                  00004400    0000019a     serial.obj (.text:_isr:Port_1)
-                  0000459a    0000001e     rts430x_lc_rd_eabi.lib : boot_special.obj (.text:_isr:_c_int00_noargs_noexit_mpu)
-                  000045b8    00000006                            : isr_trap.obj (.text:_isr:__TI_ISR_TRAP)
+*          0    00004400    000001ce     
+                  00004400    000001aa     serial.obj (.text:_isr:Port_1)
+                  000045aa    0000001e     rts430x_lc_rd_eabi.lib : boot_special.obj (.text:_isr:_c_int00_noargs_noexit_mpu)
+                  000045c8    00000006                            : isr_trap.obj (.text:_isr:__TI_ISR_TRAP)
 
 .ipestruct 
 *          0    00004400    00000000     UNINITIALIZED
@@ -117,18 +120,25 @@ section   page    origin      length       input sections
 .ipe:_isr 
 *          0    00004400    00000000     UNINITIALIZED
 
-.cinit     0    000051d0    00000012     
-                  000051d0    00000006     (.cinit..bss.load) [load image, compression = zero_init]
-                  000051d6    00000004     (__TI_handler_table)
-                  000051da    00000008     (__TI_cinit_table)
+.cinit     0    000051e0    0000002a     
+                  000051e0    0000000c     (__TI_handler_table)
+                  000051ec    00000008     (.cinit..data.load) [load image, compression = rle]
+                  000051f4    00000006     (.cinit..bss.load) [load image, compression = zero_init]
+                  000051fa    00000010     (__TI_cinit_table)
 
 .init_array 
 *          0    00004400    00000000     UNINITIALIZED
 
-.const     0    000045be    00000c12     
-                  000045be    00000be5     font.obj (.const)
-                  000051a3    00000001     --HOLE-- [fill = 0]
-                  000051a4    0000002c     <whole-program> (.const:.string)
+AES256     0    0000ffc6    00000002     
+                  0000ffc6    00000002     rts430x_lc_rd_eabi.lib : int27.obj (.int27)
+
+RTC        0    0000ffc8    00000002     
+                  0000ffc8    00000002     rts430x_lc_rd_eabi.lib : int28.obj (.int28)
+
+.const     0    000045ce    00000c12     
+                  000045ce    00000be5     font.obj (.const)
+                  000051b3    00000001     --HOLE-- [fill = 0]
+                  000051b4    0000002c     <whole-program> (.const:.string)
 
 $fill000   0    0000ff80    00000004     
                   0000ff80    00000004     --HOLE-- [fill = ffff]
@@ -138,12 +148,6 @@ $fill001   0    0000ff84    00000004
 
 $fill002   0    0000ff88    00000008     
                   0000ff88    00000008     --HOLE-- [fill = ffff]
-
-AES256     0    0000ffc6    00000002     
-                  0000ffc6    00000002     rts430x_lc_rd_eabi.lib : int27.obj (.int27)
-
-RTC        0    0000ffc8    00000002     
-                  0000ffc8    00000002     rts430x_lc_rd_eabi.lib : int28.obj (.int28)
 
 PORT4      0    0000ffcc    00000002     
                   0000ffcc    00000002     rts430x_lc_rd_eabi.lib : int30.obj (.int30)
@@ -230,39 +234,49 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.obj (.reset)
 
-.text      0    00010000    00000d8a     
+.text      0    00010000    00000f4c     
                   00010000    00000556     display.obj (.text:display_initialize)
-                  00010556    000003a2     main.obj (.text:main)
-                  000108f8    000000ce     display_functions.obj (.text:display_write_char)
-                  000109c6    00000074     display_IO.obj (.text:display_IO_write_GRAM)
-                  00010a3a    00000070     display_interface.obj (.text:display_interface_set_window$10)
-                  00010aaa    0000006c     rts430x_lc_rd_eabi.lib : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
-                  00010b16    00000060     display_IO.obj (.text:display_IO_write_reg)
-                  00010b76    00000040     AFE_serial.obj (.text:AFE_write_register)
-                  00010bb6    00000040     display_functions.obj (.text:display_write_pixel)
-                  00010bf6    0000003e     rts430x_lc_rd_eabi.lib : lsl32.obj (.text:l_lsl_const)
-                  00010c34    0000003e                            : lsr32.obj (.text:l_lsr_const)
-                  00010c72    0000003c     ecgData.obj (.text:ecgData_write)
-                  00010cae    00000038     display_functions.obj (.text:display_write_string)
-                  00010ce6    00000028     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
-                  00010d0e    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
-                  00010d32    00000020     AFE_serial.obj (.text:AFE_send)
-                  00010d52    0000001a     display_IO.obj (.text:display_IO_write$8)
-                  00010d6c    00000016     rts430x_lc_rd_eabi.lib : div16u.obj (.text)
-                  00010d82    00000004                            : pre_init.obj (.text:_system_pre_init)
-                  00010d86    00000004                            : exit.obj (.text:abort)
+                  00010556    0000039a     main.obj (.text:main)
+                  000108f0    000000d0     display_functions.obj (.text:display_write_line)
+                  000109c0    000000ce     display_functions.obj (.text:display_write_char)
+                  00010a8e    00000074     display_IO.obj (.text:display_IO_write_GRAM)
+                  00010b02    00000070     display_interface.obj (.text:display_interface_set_window$10)
+                  00010b72    0000006c     rts430x_lc_rd_eabi.lib : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
+                  00010bde    00000068                            : copy_decompress_rle.obj (.text:__TI_decompress_rle_core$18)
+                  00010c46    00000060     display_IO.obj (.text:display_IO_write_reg)
+                  00010ca6    00000040     AFE_serial.obj (.text:AFE_write_register)
+                  00010ce6    00000040     display_functions.obj (.text:display_write_pixel)
+                  00010d26    0000003e     rts430x_lc_rd_eabi.lib : asr32.obj (.text:l_asr_const)
+                  00010d64    0000003e                            : lsl32.obj (.text:l_lsl_const)
+                  00010da2    0000003e                            : lsr32.obj (.text:l_lsr_const)
+                  00010de0    0000003c     ecgData.obj (.text:ecgData_write)
+                  00010e1c    00000038     display_functions.obj (.text:display_write_string)
+                  00010e54    0000002c     rts430x_lc_rd_eabi.lib : div16s.obj (.text)
+                  00010e80    00000028     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
+                  00010ea8    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
+                  00010ecc    0000001e     AFE_serial.obj (.text:AFE_send)
+                  00010eea    0000001a     display_IO.obj (.text:display_IO_write$8)
+                  00010f04    00000016     rts430x_lc_rd_eabi.lib : div16u.obj (.text)
+                  00010f1a    00000012                            : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
+                  00010f2c    00000012                            : memcpy.obj (.text:memcpy)
+                  00010f3e    00000006                            : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
+                  00010f44    00000004                            : pre_init.obj (.text:_system_pre_init)
+                  00010f48    00000004                            : exit.obj (.text:abort)
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 000051da records: 1, size/record: 8, table size: 8
-	.bss: load addr=000051d0, load size=00000006 bytes, run addr=00001c00, run size=0000041a bytes, compression=zero_init
+__TI_cinit_table @ 000051fa records: 2, size/record: 8, table size: 16
+	.data: load addr=000051ec, load size=00000008 bytes, run addr=0000201a, run size=00000002 bytes, compression=rle
+	.bss: load addr=000051f4, load size=00000006 bytes, run addr=00001c00, run size=0000041a bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 000051d6 records: 1, size/record: 4, table size: 4
+__TI_handler_table @ 000051e0 records: 3, size/record: 4, table size: 12
 	index: 0, handler: __TI_zero_init
+	index: 1, handler: __TI_decompress_rle24
+	index: 2, handler: __TI_decompress_none
 
 
 GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
@@ -524,11 +538,11 @@ address   name
 000009ce  AESAXIN                   
 000009cf  AESAXIN_H                 
 000009ce  AESAXIN_L                 
-00010d32  AFE_send                  
-00010b76  AFE_write_register        
+00010ecc  AFE_send                  
+00010ca6  AFE_write_register        
 000004be  BCD2BIN                   
 000004bc  BIN2BCD                   
-00010d86  C$$EXIT                   
+00010f48  C$$EXIT                   
 0000043e  CAPTIO0CTL                
 0000043f  CAPTIO0CTL_H              
 0000043e  CAPTIO0CTL_L              
@@ -1244,13 +1258,15 @@ address   name
 0000015c  WDTCTL_L                  
 00002400  __STACK_END               
 000000a0  __STACK_SIZE              
-000051da  __TI_CINIT_Base           
-000051e2  __TI_CINIT_Limit          
-000051d6  __TI_Handler_Table_Base   
-000051da  __TI_Handler_Table_Limit  
+000051fa  __TI_CINIT_Base           
+0000520a  __TI_CINIT_Limit          
+000051e0  __TI_Handler_Table_Base   
+000051ec  __TI_Handler_Table_Limit  
 UNDEFED   __TI_INITARRAY_Base       
 UNDEFED   __TI_INITARRAY_Limit      
-000045b8  __TI_ISR_TRAP             
+000045c8  __TI_ISR_TRAP             
+00010f1a  __TI_decompress_none      
+00010f3e  __TI_decompress_rle24     
 0000ffc6  __TI_int27                
 0000ffc8  __TI_int28                
 0000ffcc  __TI_int30                
@@ -1277,64 +1293,83 @@ UNDEFED   __TI_INITARRAY_Limit
 0000fff8  __TI_int52                
 0000fffa  __TI_int53                
 0000fffc  __TI_int54                
-00010d0e  __TI_zero_init            
+00010ea8  __TI_zero_init            
 ffffffff  __binit__                 
 ffffffff  __c_args__                
 00000001  __mpu_enable              
-00010ce6  __mpu_init                
-00010d6c  __mspabi_divu             
-00010d6c  __mspabi_remu             
-00010c2e  __mspabi_slll_1           
-00010c0a  __mspabi_slll_10          
-00010c06  __mspabi_slll_11          
-00010c02  __mspabi_slll_12          
-00010bfe  __mspabi_slll_13          
-00010bfa  __mspabi_slll_14          
-00010bf6  __mspabi_slll_15          
-00010c2a  __mspabi_slll_2           
-00010c26  __mspabi_slll_3           
-00010c22  __mspabi_slll_4           
-00010c1e  __mspabi_slll_5           
-00010c1a  __mspabi_slll_6           
-00010c16  __mspabi_slll_7           
-00010c12  __mspabi_slll_8           
-00010c0e  __mspabi_slll_9           
-00010c6c  __mspabi_srll_1           
-00010c48  __mspabi_srll_10          
-00010c44  __mspabi_srll_11          
-00010c40  __mspabi_srll_12          
-00010c3c  __mspabi_srll_13          
-00010c38  __mspabi_srll_14          
-00010c34  __mspabi_srll_15          
-00010c68  __mspabi_srll_2           
-00010c64  __mspabi_srll_3           
-00010c60  __mspabi_srll_4           
-00010c5c  __mspabi_srll_5           
-00010c58  __mspabi_srll_6           
-00010c54  __mspabi_srll_7           
-00010c50  __mspabi_srll_8           
-00010c4c  __mspabi_srll_9           
-00010aaa  _auto_init_hold_wdt       
-0000459a  _c_int00_noargs_noexit_mpu
+00010e80  __mpu_init                
+00010e54  __mspabi_divi             
+00010f04  __mspabi_divu             
+00010e54  __mspabi_remi             
+00010f04  __mspabi_remu             
+00010d9c  __mspabi_slll_1           
+00010d78  __mspabi_slll_10          
+00010d74  __mspabi_slll_11          
+00010d70  __mspabi_slll_12          
+00010d6c  __mspabi_slll_13          
+00010d68  __mspabi_slll_14          
+00010d64  __mspabi_slll_15          
+00010d98  __mspabi_slll_2           
+00010d94  __mspabi_slll_3           
+00010d90  __mspabi_slll_4           
+00010d8c  __mspabi_slll_5           
+00010d88  __mspabi_slll_6           
+00010d84  __mspabi_slll_7           
+00010d80  __mspabi_slll_8           
+00010d7c  __mspabi_slll_9           
+00010d5e  __mspabi_sral_1           
+00010d3a  __mspabi_sral_10          
+00010d36  __mspabi_sral_11          
+00010d32  __mspabi_sral_12          
+00010d2e  __mspabi_sral_13          
+00010d2a  __mspabi_sral_14          
+00010d26  __mspabi_sral_15          
+00010d5a  __mspabi_sral_2           
+00010d56  __mspabi_sral_3           
+00010d52  __mspabi_sral_4           
+00010d4e  __mspabi_sral_5           
+00010d4a  __mspabi_sral_6           
+00010d46  __mspabi_sral_7           
+00010d42  __mspabi_sral_8           
+00010d3e  __mspabi_sral_9           
+00010dda  __mspabi_srll_1           
+00010db6  __mspabi_srll_10          
+00010db2  __mspabi_srll_11          
+00010dae  __mspabi_srll_12          
+00010daa  __mspabi_srll_13          
+00010da6  __mspabi_srll_14          
+00010da2  __mspabi_srll_15          
+00010dd6  __mspabi_srll_2           
+00010dd2  __mspabi_srll_3           
+00010dce  __mspabi_srll_4           
+00010dca  __mspabi_srll_5           
+00010dc6  __mspabi_srll_6           
+00010dc2  __mspabi_srll_7           
+00010dbe  __mspabi_srll_8           
+00010dba  __mspabi_srll_9           
+00010b72  _auto_init_hold_wdt       
+000045aa  _c_int00_noargs_noexit_mpu
 0000fffe  _reset_vector             
 00002360  _stack                    
-00010d82  _system_pre_init          
-00010d86  abort                     
+00010f44  _system_pre_init          
+00010f48  abort                     
 ffffffff  binit                     
-000045be  displayFont               
-000109c6  display_IO_write_GRAM     
-00010b16  display_IO_write_reg      
+000045ce  displayFont               
+00010a8e  display_IO_write_GRAM     
+00010c46  display_IO_write_reg      
 00010000  display_initialize        
 00002006  display_interface         
-000108f8  display_write_char        
-00010bb6  display_write_pixel       
-00010cae  display_write_string      
-00010c72  ecgData_write             
+000109c0  display_write_char        
+000108f0  display_write_line        
+00010ce6  display_write_pixel       
+00010e1c  display_write_string      
+00010de0  ecgData_write             
 00001c00  ecgSignalBuffer           
 00004400  fram_ipe_end              
 00004400  fram_ipe_start            
 00004400  fram_rx_start             
 00010556  main                      
+00010f2c  memcpy                    
 0000a501  mpu_ctl0_value            
 00001513  mpu_sam_value             
 00000440  mpu_segment_border1       
@@ -2329,13 +2364,13 @@ address   name
 00004400  fram_ipe_end              
 00004400  fram_ipe_start            
 00004400  fram_rx_start             
-0000459a  _c_int00_noargs_noexit_mpu
-000045b8  __TI_ISR_TRAP             
-000045be  displayFont               
-000051d6  __TI_Handler_Table_Base   
-000051da  __TI_CINIT_Base           
-000051da  __TI_Handler_Table_Limit  
-000051e2  __TI_CINIT_Limit          
+000045aa  _c_int00_noargs_noexit_mpu
+000045c8  __TI_ISR_TRAP             
+000045ce  displayFont               
+000051e0  __TI_Handler_Table_Base   
+000051ec  __TI_Handler_Table_Limit  
+000051fa  __TI_CINIT_Base           
+0000520a  __TI_CINIT_Limit          
 0000a501  mpu_ctl0_value            
 0000ffc6  __TI_int27                
 0000ffc8  __TI_int28                
@@ -2366,56 +2401,77 @@ address   name
 0000fffe  _reset_vector             
 00010000  display_initialize        
 00010556  main                      
-000108f8  display_write_char        
-000109c6  display_IO_write_GRAM     
-00010aaa  _auto_init_hold_wdt       
-00010b16  display_IO_write_reg      
-00010b76  AFE_write_register        
-00010bb6  display_write_pixel       
-00010bf6  __mspabi_slll_15          
-00010bfa  __mspabi_slll_14          
-00010bfe  __mspabi_slll_13          
-00010c02  __mspabi_slll_12          
-00010c06  __mspabi_slll_11          
-00010c0a  __mspabi_slll_10          
-00010c0e  __mspabi_slll_9           
-00010c12  __mspabi_slll_8           
-00010c16  __mspabi_slll_7           
-00010c1a  __mspabi_slll_6           
-00010c1e  __mspabi_slll_5           
-00010c22  __mspabi_slll_4           
-00010c26  __mspabi_slll_3           
-00010c2a  __mspabi_slll_2           
-00010c2e  __mspabi_slll_1           
-00010c34  __mspabi_srll_15          
-00010c38  __mspabi_srll_14          
-00010c3c  __mspabi_srll_13          
-00010c40  __mspabi_srll_12          
-00010c44  __mspabi_srll_11          
-00010c48  __mspabi_srll_10          
-00010c4c  __mspabi_srll_9           
-00010c50  __mspabi_srll_8           
-00010c54  __mspabi_srll_7           
-00010c58  __mspabi_srll_6           
-00010c5c  __mspabi_srll_5           
-00010c60  __mspabi_srll_4           
-00010c64  __mspabi_srll_3           
-00010c68  __mspabi_srll_2           
-00010c6c  __mspabi_srll_1           
-00010c72  ecgData_write             
-00010cae  display_write_string      
-00010ce6  __mpu_init                
-00010d0e  __TI_zero_init            
-00010d32  AFE_send                  
-00010d6c  __mspabi_divu             
-00010d6c  __mspabi_remu             
-00010d82  _system_pre_init          
-00010d86  C$$EXIT                   
-00010d86  abort                     
+000108f0  display_write_line        
+000109c0  display_write_char        
+00010a8e  display_IO_write_GRAM     
+00010b72  _auto_init_hold_wdt       
+00010c46  display_IO_write_reg      
+00010ca6  AFE_write_register        
+00010ce6  display_write_pixel       
+00010d26  __mspabi_sral_15          
+00010d2a  __mspabi_sral_14          
+00010d2e  __mspabi_sral_13          
+00010d32  __mspabi_sral_12          
+00010d36  __mspabi_sral_11          
+00010d3a  __mspabi_sral_10          
+00010d3e  __mspabi_sral_9           
+00010d42  __mspabi_sral_8           
+00010d46  __mspabi_sral_7           
+00010d4a  __mspabi_sral_6           
+00010d4e  __mspabi_sral_5           
+00010d52  __mspabi_sral_4           
+00010d56  __mspabi_sral_3           
+00010d5a  __mspabi_sral_2           
+00010d5e  __mspabi_sral_1           
+00010d64  __mspabi_slll_15          
+00010d68  __mspabi_slll_14          
+00010d6c  __mspabi_slll_13          
+00010d70  __mspabi_slll_12          
+00010d74  __mspabi_slll_11          
+00010d78  __mspabi_slll_10          
+00010d7c  __mspabi_slll_9           
+00010d80  __mspabi_slll_8           
+00010d84  __mspabi_slll_7           
+00010d88  __mspabi_slll_6           
+00010d8c  __mspabi_slll_5           
+00010d90  __mspabi_slll_4           
+00010d94  __mspabi_slll_3           
+00010d98  __mspabi_slll_2           
+00010d9c  __mspabi_slll_1           
+00010da2  __mspabi_srll_15          
+00010da6  __mspabi_srll_14          
+00010daa  __mspabi_srll_13          
+00010dae  __mspabi_srll_12          
+00010db2  __mspabi_srll_11          
+00010db6  __mspabi_srll_10          
+00010dba  __mspabi_srll_9           
+00010dbe  __mspabi_srll_8           
+00010dc2  __mspabi_srll_7           
+00010dc6  __mspabi_srll_6           
+00010dca  __mspabi_srll_5           
+00010dce  __mspabi_srll_4           
+00010dd2  __mspabi_srll_3           
+00010dd6  __mspabi_srll_2           
+00010dda  __mspabi_srll_1           
+00010de0  ecgData_write             
+00010e1c  display_write_string      
+00010e54  __mspabi_divi             
+00010e54  __mspabi_remi             
+00010e80  __mpu_init                
+00010ea8  __TI_zero_init            
+00010ecc  AFE_send                  
+00010f04  __mspabi_divu             
+00010f04  __mspabi_remu             
+00010f1a  __TI_decompress_none      
+00010f2c  memcpy                    
+00010f3e  __TI_decompress_rle24     
+00010f44  _system_pre_init          
+00010f48  C$$EXIT                   
+00010f48  abort                     
 ffffffff  __binit__                 
 ffffffff  __c_args__                
 ffffffff  binit                     
 UNDEFED   __TI_INITARRAY_Base       
 UNDEFED   __TI_INITARRAY_Limit      
 
-[1071 symbols]
+[1092 symbols]
