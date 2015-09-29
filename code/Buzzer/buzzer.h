@@ -14,6 +14,8 @@
 #include "buzzer_notes.h"
 
 void	buzzer_setup();
-void	buzzer_play(int note, int ms);
+
+void	buzzer_stop();
+void	buzzer_start(int note);
 
 #endif /* BUZZER_BUZZER_H_ */
