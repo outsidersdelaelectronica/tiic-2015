@@ -109,9 +109,12 @@ S64_DEPS__QUOTED :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 . \
-Touch \
-Display \
-CircularBuffer \
-Buzzer \
-AFE \
+touch/touch_src \
+touch \
+display \
+display/display_src \
+data \
+buzzer \
+afe/afe_src \
+afe \
 

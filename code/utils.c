@@ -11,11 +11,6 @@ void itoa(uint16_t number, char* string)
 {
 	uint16_t units, tens, hundreds, thousands;
 
-//	units = number % 10;
-//	tens = (number - units);
-//	hundreds = (number - (tens + units));
-//	thousands = (number - (hundreds + tens + units));
-
 	units = number % 10;
 	tens = number % 100 - units;
 	hundreds = number % 1000 - units - tens;
@@ -34,5 +29,4 @@ void delay_ms(int ms)
 	for (i = 0; i < ms; ++i) {
 		__delay_cycles(16000);
 	}
-
 }

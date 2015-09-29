@@ -1,34 +1,40 @@
-#include <msp430.h> 
-
-#include "clocks.h"
-#include "utils.h"
-#include "serial.h"
-
-#include "AFE/AFE.h"
-#include "Buzzer/buzzer.h"
-#include "CircularBuffer/circularBuffer.h"
-#include "Display/display.h"
-#include "Touch/touch.h"
-
-volatile circularBuffer_t ecgSignalBuffer;
-extern touch_coordinate_t touch_last_position;
-extern display_interface_t display_interface;
-
 /*
  * main.c
+ *
+ *  Created on: 29/9/2015
+ *      Author: Smau
  */
-int main(void) {
+
+#include <msp430.h>
+
+#include "data/ecg_data_circular_buffer.h"
+
+#include "clocks.h"
+#include "afe/afe.h"
+#include "touch/touch.h"
+#include "display/display.h"
+#include "display/display_src/color.h"
+#include "buzzer/buzzer.h"
+
+ecg_data_circular_buffer_t ecg_buffer;
+touch_coordinate_t touch_last_position;
+display_t display;
+buzzer_t buzzer;
+
+int main()
+{
     WDTCTL = WDTPW | WDTHOLD;		//Stop watchdog timer
-	
+
     /*
      * Setups
      */
-    clocks_setup();								//System clocks configuration
-    AFE_setup();								//AFE (ADS1291) port setup
-    display_setup();							//Display port setup
-    touch_setup();								//Touch screen setup
-    buzzer_setup();								//Buzzer PWM configuration
-    circularBuffer_setup(&ecgSignalBuffer);		//Ecg signal storage buffer setup
+    clocks_setup();
+
+    afe_setup();
+    ecg_data_circular_buffer_setup(&ecg_buffer);
+    display_setup(&display);
+    touch_setup();
+    buzzer_setup(&buzzer);
 
     /*
      * MCU setup
@@ -38,30 +44,23 @@ int main(void) {
     /*
      * Initializations
      */
-    AFE_initialize();				//AFE communication start up and configuration commands
-    display_initialize();			//Display communication start up and configuration commands
-    touch_initialize();				//Touch screen communication start up and configuration commands
-
-    __bis_SR_register(GIE);			//Enable global interrupts
+    afe_initialize();
+    display_init(&display);
+    touch_initialize();
 
     /*
      * Sheits
      */
-	P9OUT &= ~BIT6;					//Turn screen on
+	display_functions_write_string(" BPM: 820           ", COLOR_RED,
+								  	  	  	  	  	  	   display.display_interface.menubar_window_bg_color,
+														   0x00, 0xC0);
+	display_functions_write_string(" DANGER: Apichusque ", COLOR_WHITE,
+														   display.display_interface.menubar_window_bg_color,
+														   0x00, 0xD0);
 
-//	uint16_t hor_var;
-	ecgData_t signalDataPoint;
-	ecgData_clear(&signalDataPoint);
-
-	display_write_string(" BPM: 820           ", 0xFF, 0xFF, 0xFF, 0x00, 0xC0);
-	display_write_string(" DANGER: Apichusque ", 0xFF, 0x33, 0x33, 0x00, 0xD0);
+	__bis_SR_register(GIE);			//Enable global interrupts
 
 	while(1)
 	{
-
-			if (circularBuffer_read_last(&ecgSignalBuffer, &signalDataPoint))		//If there is data available
-			{
-				display_write_signal(&display_interface, &signalDataPoint);		//Write it
-			}
 	}
 }

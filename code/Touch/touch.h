@@ -13,8 +13,8 @@
 #include <msp430.h>
 #include <stdint.h>
 
-#include "touch_serial.h"
-#include "touch_coordinate.h"
+#include "touch_src/touch_coordinate.h"
+#include "touch_src/touch_serial.h"
 
 void	touch_setup();
 void	touch_initialize();

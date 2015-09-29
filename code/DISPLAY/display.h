@@ -1,22 +1,31 @@
 /*
  * display.h
  *
- *  Created on: 1/8/2015
- *      Author: tomasvalno
+ *  Created on: 29/9/2015
+ *      Author: slopez
  */
 
-#ifndef DISPLAY_H
-#define DISPLAY_H
+#ifndef DISPLAY_DISPLAY_H_
+#define DISPLAY_DISPLAY_H_
 
 #include <msp430.h>
 #include <stdint.h>
 
-#include "../utils.h"
-#include "display_functions.h"
-#include "display_interface.h"
-#include "display_IO.h"
+#include "display_timer.h"
+#include "display_src/display_hal.h"
+#include "display_src/display_interface.h"
+#include "display_src/color.h"
 
-void	display_setup();
-void	display_initialize();
+typedef struct display_t
+{
+	//Display interface
+		display_interface_t display_interface;
+}
+display_t;
 
-#endif
+void	display_setup(display_t* display);
+void	display_init(display_t* display);
+
+void	display_write_signal(display_t* display, ecg_data_t* signal_data, color_t color);
+
+#endif /* DISPLAY_DISPLAY_H_ */

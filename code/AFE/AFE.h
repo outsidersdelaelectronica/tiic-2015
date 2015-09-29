@@ -1,10 +1,8 @@
 /*
- * AFE_module.h
+ * afe.h
  *
- * AFE function definitions
- *
- *  Created on: 28/7/2015
- *      Author: slopez
+ *  Created on: 29/9/2015
+ *      Author: Smau
  */
 
 #ifndef AFE_AFE_H_
@@ -13,11 +11,11 @@
 #include <msp430.h>
 #include <stdint.h>
 
-#include "AFE_serial.h"
-#include "../CircularBuffer/circularBuffer.h"
+#include "afe_src/afe_serial.h"
+
 #include "../utils.h"
 
-void	AFE_setup();
-void	AFE_initialize();
+void	afe_setup();
+void	afe_initialize();
 
 #endif /* AFE_AFE_H_ */

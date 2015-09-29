@@ -4,29 +4,30 @@
 
 SHELL = cmd.exe
 
-CG_TOOL_ROOT := C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5
+CG_TOOL_ROOT := C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3
 
 ORDERED_OBJS += \
 "./clocks.obj" \
 "./main.obj" \
 "./serial.obj" \
 "./utils.obj" \
-"./Touch/touch.obj" \
-"./Touch/touch_coordinate.obj" \
-"./Touch/touch_serial.obj" \
-"./Display/display.obj" \
-"./Display/display_IO.obj" \
-"./Display/display_functions.obj" \
-"./Display/display_interface.obj" \
-"./Display/font.obj" \
-"./CircularBuffer/circularBuffer.obj" \
-"./CircularBuffer/ecgData.obj" \
-"./Buzzer/buzzer.obj" \
-"./AFE/AFE.obj" \
-"./AFE/AFE_serial.obj" \
+"./touch/touch_src/touch_coordinate.obj" \
+"./touch/touch_src/touch_serial.obj" \
+"./touch/touch.obj" \
+"./display/display.obj" \
+"./display/display_timer.obj" \
+"./display/display_src/color.obj" \
+"./display/display_src/display_functions.obj" \
+"./display/display_src/display_hal.obj" \
+"./display/display_src/display_interface.obj" \
+"./display/display_src/font.obj" \
+"./data/ecg_data.obj" \
+"./data/ecg_data_circular_buffer.obj" \
+"./buzzer/buzzer.obj" \
+"./afe/afe_src/afe_serial.obj" \
+"./afe/afe.obj" \
 "../lnk_msp430fr5972.cmd" \
 $(GEN_CMDS__FLAG) \
--llibmpu_init.a \
 -l"libmath.a" \
 -l"libc.a" \
 
@@ -38,17 +39,23 @@ RMDIR := RMDIR /S/Q
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
--include Touch/subdir_vars.mk
--include Display/subdir_vars.mk
--include CircularBuffer/subdir_vars.mk
--include Buzzer/subdir_vars.mk
--include AFE/subdir_vars.mk
+-include touch/touch_src/subdir_vars.mk
+-include touch/subdir_vars.mk
+-include display/subdir_vars.mk
+-include display/display_src/subdir_vars.mk
+-include data/subdir_vars.mk
+-include buzzer/subdir_vars.mk
+-include afe/afe_src/subdir_vars.mk
+-include afe/subdir_vars.mk
 -include subdir_rules.mk
--include Touch/subdir_rules.mk
--include Display/subdir_rules.mk
--include CircularBuffer/subdir_rules.mk
--include Buzzer/subdir_rules.mk
--include AFE/subdir_rules.mk
+-include touch/touch_src/subdir_rules.mk
+-include touch/subdir_rules.mk
+-include display/subdir_rules.mk
+-include display/display_src/subdir_rules.mk
+-include data/subdir_rules.mk
+-include buzzer/subdir_rules.mk
+-include afe/afe_src/subdir_rules.mk
+-include afe/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -142,40 +149,40 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-tiic_2015_code.out \
+tiic_2015_tmp.out \
 
 EXE_OUTPUTS__QUOTED += \
-"tiic_2015_code.out" \
+"tiic_2015_tmp.out" \
 
 BIN_OUTPUTS += \
-tiic_2015_code.hex \
+tiic_2015_tmp.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"tiic_2015_code.hex" \
+"tiic_2015_tmp.hex" \
 
 
 # All Target
-all: tiic_2015_code.out
+all: tiic_2015_tmp.out
 
 # Tool invocations
-tiic_2015_code.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+tiic_2015_tmp.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MSP430 Linker'
-	"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -O4 --opt_for_speed=5 --use_hw_mpy=F5 --advice:power="all" --advice:hw_config="all" -g --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"tiic_2015_code.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="tiic_2015_code_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "tiic_2015_code.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/bin/cl430" -vmspx --abi=eabi --data_model=restricted --use_hw_mpy=F5 --advice:power=all --advice:hw_config=all -g --define=__MSP430FR5972__ --diag_warning=225 --display_error_number --diag_wrap=off --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"tiic_2015_tmp.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" --reread_libs --priority --warn_sections --display_error_number --diag_wrap=off --xml_link_info="tiic_2015_tmp_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "tiic_2015_tmp.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-tiic_2015_code.hex: $(EXE_OUTPUTS)
+tiic_2015_tmp.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: MSP430 Hex Utility'
-	"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/hex430" --memwidth=8 --romwidth=8 -o "tiic_2015_code.hex" $(EXE_OUTPUTS__QUOTED)
+	"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/bin/hex430" --memwidth=8 --romwidth=8 -o "tiic_2015_tmp.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "clocks.pp" "main.pp" "serial.pp" "utils.pp" "Touch\touch.pp" "Touch\touch_coordinate.pp" "Touch\touch_serial.pp" "Display\display.pp" "Display\display_IO.pp" "Display\display_functions.pp" "Display\display_interface.pp" "Display\font.pp" "CircularBuffer\circularBuffer.pp" "CircularBuffer\ecgData.pp" "Buzzer\buzzer.pp" "AFE\AFE.pp" "AFE\AFE_serial.pp" 
-	-$(RM) "clocks.obj" "main.obj" "serial.obj" "utils.obj" "Touch\touch.obj" "Touch\touch_coordinate.obj" "Touch\touch_serial.obj" "Display\display.obj" "Display\display_IO.obj" "Display\display_functions.obj" "Display\display_interface.obj" "Display\font.obj" "CircularBuffer\circularBuffer.obj" "CircularBuffer\ecgData.obj" "Buzzer\buzzer.obj" "AFE\AFE.obj" "AFE\AFE_serial.obj" 
+	-$(RM) "clocks.pp" "main.pp" "serial.pp" "utils.pp" "touch\touch_src\touch_coordinate.pp" "touch\touch_src\touch_serial.pp" "touch\touch.pp" "display\display.pp" "display\display_timer.pp" "display\display_src\color.pp" "display\display_src\display_functions.pp" "display\display_src\display_hal.pp" "display\display_src\display_interface.pp" "display\display_src\font.pp" "data\ecg_data.pp" "data\ecg_data_circular_buffer.pp" "buzzer\buzzer.pp" "afe\afe_src\afe_serial.pp" "afe\afe.pp" 
+	-$(RM) "clocks.obj" "main.obj" "serial.obj" "utils.obj" "touch\touch_src\touch_coordinate.obj" "touch\touch_src\touch_serial.obj" "touch\touch.obj" "display\display.obj" "display\display_timer.obj" "display\display_src\color.obj" "display\display_src\display_functions.obj" "display\display_src\display_hal.obj" "display\display_src\display_interface.obj" "display\display_src\font.obj" "data\ecg_data.obj" "data\ecg_data_circular_buffer.obj" "buzzer\buzzer.obj" "afe\afe_src\afe_serial.obj" "afe\afe.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

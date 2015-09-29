@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -llibmpu_init.a -l"libmath.a" -l"libc.a"
+LIBS := -l"libmath.a" -l"libc.a"
 

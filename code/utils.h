@@ -5,8 +5,8 @@
  *      Author: slopez
  */
 
-#ifndef DISPLAY_UTILS_H_
-#define DISPLAY_UTILS_H_
+#ifndef UTILS_H_
+#define UTILS_H_
 
 #include <msp430.h>
 #include <stdint.h>
@@ -14,5 +14,4 @@
 void	itoa(uint16_t number, char* string);
 void	delay_ms(int ms);
 
-
-#endif /* DISPLAY_UTILS_H_ */
+#endif /* UTILS_H_ */

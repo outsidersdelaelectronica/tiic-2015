@@ -11,11 +11,14 @@
 #include <msp430.h>
 #include <stdint.h>
 
-#include "buzzer_notes.h"
+#include "buzzer_src/buzzer_notes.h"
 
-void	buzzer_setup();
+typedef struct buzzer_t
+{
+}
+buzzer_t;
 
-void	buzzer_stop();
-void	buzzer_start(int note);
+void	buzzer_setup(buzzer_t* buzzer);
+void	buzzer_play(buzzer_t* buzzer, int note, int ms);
 
 #endif /* BUZZER_BUZZER_H_ */

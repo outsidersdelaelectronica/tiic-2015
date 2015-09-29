@@ -1,15 +1,13 @@
 /*
- * AFE_module.c
+ * afe.c
  *
- * AFE Medical AFE functions
- *
- *  Created on: 28/7/2015
- *      Author: slopez
+ *  Created on: 29/9/2015
+ *      Author: Smau
  */
 
 #include "AFE.h"
 
-void AFE_setup()
+void afe_setup()
 {
 	//Configure AFE control lines
 		//AFE data ready
@@ -44,8 +42,8 @@ void AFE_setup()
 
 		UCB1CTLW0 = UCSWRST;						//Hold USCI_B1 in reset state - necessary while configuring registers
 
-		UCB1CTLW0 |=  UCMSB | UCMST | UCMODE_1 | UCSYNC | UCSSEL_2 | UCSTEM;
-													//Clock phase = 0
+		UCB1CTLW0 |=  UCCKPH | UCCKPL | UCMSB | UCMST | UCMODE_1 | UCSYNC | UCSSEL_2 | UCSTEM;
+													//Clock phase = 1
 													//Clock polarity = 0
 													//MSB first
 													//8-bit data
@@ -62,7 +60,7 @@ void AFE_setup()
 }
 
 
-void AFE_initialize()
+void afe_initialize()
 {
 	//AFE reset and stop continuous data conversion mode
 		P7OUT |= BIT3;								//Power-On-Reset: hold reset line high for 1 second
@@ -72,27 +70,27 @@ void AFE_initialize()
 		__delay_cycles(2000);							//At least 10 useconds
 		P7OUT |= BIT3;
 
-		AFE_send(SDATAC);							//Stop continuous data conversion mode (activated by default)
+		afe_send(SDATAC);							//Stop continuous data conversion mode (activated by default)
 
 	//Write config commands to AFE
-		AFE_write_register(REG_CONFIG1, 0x00);		//Set data rate to 125 SPS
-		AFE_write_register(REG_CONFIG2, 0xE3);		//Enable voltage reference
+		afe_write_register(REG_CONFIG1, 0x00);		//Set data rate to 125 SPS
+		afe_write_register(REG_CONFIG2, 0xE3);		//Enable voltage reference
 													//Enable lead-off comparators
 													//Enable test signal
 													//Test signal @ 1 Hz, +-1 mV
-		AFE_write_register(REG_CH2SET, 0x81);		//Channel 2 power down
+		afe_write_register(REG_CH2SET, 0x81);		//Channel 2 power down
 													//Channel 2 input shorted
-		AFE_write_register(REG_LOFF_STAT, 0x40);	//Clock divider selection: Clock input set to 2.048 MHz
-		AFE_write_register(REG_RESP2, 0x87);		//Enable calibration
-		AFE_write_register(REG_CH1SET, 0x01);		// |
-		AFE_send(OFFSETCAL);						// | Calibrate
-		AFE_write_register(REG_CH1SET, 0x05);		// |
-		AFE_write_register(REG_RESP2, 0x07);		//Disable calibration
+		afe_write_register(REG_LOFF_STAT, 0x40);	//Clock divider selection: Clock input set to 2.048 MHz
+		afe_write_register(REG_RESP2, 0x87);		//Enable calibration
+		afe_write_register(REG_CH1SET, 0x01);		// |
+		afe_send(OFFSETCAL);						// | Calibrate
+		afe_write_register(REG_CH1SET, 0x05);		// |
+		afe_write_register(REG_RESP2, 0x07);		//Disable calibration
 
 
 	//Start capturing data
 		P5OUT |= BIT7;								//Start conversions
-		AFE_send(RDATAC);						//Enable continuous output of conversion data
+		afe_send(RDATAC);						//Enable continuous output of conversion data
 														//In this mode, a SDATAC command must be issued
 														//before other commands can be sent to the device
 

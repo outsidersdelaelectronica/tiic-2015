@@ -1,18 +1,15 @@
 /*
  * serial.c
  *
- *  Created on: 13/9/2015
+ *  Created on: 29/9/2015
  *      Author: Smau
  */
 
 #include "serial.h"
 
-//Global ecg signal storage buffer (located at main.c)
-extern volatile circularBuffer_t ecgSignalBuffer;
-//Global touchscreen position variables (used at main.c)
-volatile touch_coordinate_t touch_last_position;
-
-volatile ecgData_t AFE_ecgData;
+extern ecg_data_circular_buffer_t ecg_buffer;
+extern touch_coordinate_t touch_last_position;
+extern buzzer_t buzzer;
 
 /*
  * Port 1 (AFE and Touch) interrupt service routine
@@ -28,32 +25,34 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 {
 	if (P1IFG & BIT2)
 	{
+		static uint8_t afe_bytes[3];
+		static ecg_data_t afe_data_point;
+
 		//Read 3 ADS1291 status bytes
-			int i;
 			P4OUT &= ~BIT4;							//Enable CS
-			for (i = 0; i < 3; i++) {
-				AFE_serial_send(0x00);
-			}
-//			delay_ms(1);
-		//Read ECG signal - another 3 bytes
-			uint8_t afe_bytes[3];
-			for (i = 0; i < 3; ++i) {
-				afe_bytes[i] = AFE_serial_send(0x00);
+
+			int i;
+			for (i = 0; i < 3; i++)
+			{
+				afe_serial_send(0x00);
 			}
 
-			AFE_serial_send(0x00);
+		//Read ECG signal - another 3 bytes
+			for (i = 0; i < 3; i++)
+			{
+				afe_bytes[i] = afe_serial_send(0x00);
+			}
+			afe_serial_send(0x00);
 
 			P4OUT |= BIT4;							//Disable CS
-		//Cast to ecgData type
-			ecgData_t afe_data_point;
-			ecgData_clear(&afe_data_point);
-			ecgData_write(&afe_data_point, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
+
+		//Cast to ecg_data type
+			ecg_data_write(&afe_data_point, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
 
 		//Store signal data into ecg signal buffer
-			circularBuffer_write(&ecgSignalBuffer, &afe_data_point);
+			ecg_data_circular_buffer_write(&ecg_buffer, &afe_data_point);
 
 		P1IFG &= ~BIT2;                       	// Clear DRDY (P1.2) flag
-
 
 	}
 	if (P1IFG & BIT3)
@@ -84,13 +83,11 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			touch_coordinate_set(&touch_last_position, touch_xPos, touch_yPos);
 
 		//Beep
-//			buzzer_start(E5);
-//			delay_ms(50);
-//			buzzer_stop();
+			buzzer_play(&buzzer, E5, 50);
 
 		//Paint
-			display_write_pixel(0xFF, 0xFF, 0xFF, touch_last_position.xPos, touch_last_position.yPos);
+			display_functions_write_pixel(COLOR_WHITE, touch_last_position.xPos, touch_last_position.yPos);
 
-		P1IFG &= ~BIT3;                         // Clear IRQ (P1.3) flag
+		P1IFG &= ~BIT3;                         //Clear IRQ (P1.3) flag
 	}
 }
