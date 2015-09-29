@@ -16,11 +16,7 @@
 #include "display_interface.h"
 #include "display_IO.h"
 
-#define DEFAULT_SWEEP_TIME 2000 // Miliseconds
-
 void	display_setup();
 void	display_initialize();
-
-void	display_set_sweep_time(int ms);
 
 #endif

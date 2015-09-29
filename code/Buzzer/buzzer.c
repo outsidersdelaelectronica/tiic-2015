@@ -7,6 +7,9 @@
 
 #include "buzzer.h"
 
+volatile uint16_t note_duration = 0;
+volatile uint16_t ms_count = 0;
+
 static void buzzer_stop();
 
 // Timer A3 interrupt service routine
@@ -19,12 +22,15 @@ void __attribute__ ((interrupt(TIMER3_A0_VECTOR))) Timer3_A0_ISR (void)
 #error Compiler not supported!
 #endif
 {
-		buzzer_stop();											//Stop buzzer timer
-		TA3CTL = TASSEL__SMCLK | ID__8 | MC__STOP | TACLR;		//Stop duration timer
+	//Go through ISR as many times as note_duration says
+		if (ms_count > note_duration)
+		{
+			buzzer_stop();									//Stop buzzer timer
+			TA3CTL = TASSEL__SMCLK | MC__STOP | TACLR;		//Stop duration timer
+		}
+		ms_count++;
 
-		TA3CCTL0 &= ~CCIE;								//Disable compare interrupt
-
-		//No need to clear CCIFG
+	//No need to clear CCIFG
 }
 
 void buzzer_setup()
@@ -34,21 +40,22 @@ void buzzer_setup()
 										//Toggle period = PWM period/2 = 440 Hz = A4
 		TB0CCR4 = A4;					//Signal toggled on timer reset
 
-		TB0CTL = TBSSEL__SMCLK | MC__STOP | TBCLR;			//Clock source = SMCLK
-															//Mode = Stop mode
-															//Reset timer B0
+		TB0CTL = TBSSEL__SMCLK | MC__STOP | TBCLR;		//Clock source = SMCLK
+														//Mode = Stop mode
+														//Reset timer B0
 
 		P2DIR |= BIT2;					//Set P2.2 as output
 		P2SEL0 &= ~BIT2;				//Set P2.2 as TB0.4
 		P2SEL1 |= BIT2;					// |
 
 	//Timer A3 register configuration (Note duration)
-		TA3CTL = TASSEL__SMCLK | ID__8 | MC__STOP | TACLR;	//Clock source = SMCLK
-															//Input divider = /8
-																//Clock = 250 KHz
-															//Mode = Stop mode
-															//Reset timer A3
-		TA3CCTL0 &= ~CCIFG;									//Clear interrupt flag
+		TA3CCR0 = 2000;					//SMCLK = 2 MHz --> TA3CCR0 = 2000 --> 1 interruption every ms
+										//Used to control note duration by ms
+
+		TA3CTL = TASSEL__SMCLK | MC__STOP | TACLR;		//Clock source = SMCLK
+														//Mode = Stop mode
+														//Reset timer A3
+		TA3CCTL0 |= CCIE;								//Enable compare interrupt
 
 }
 
@@ -68,7 +75,6 @@ static void buzzer_stop()
 void buzzer_play(int note, int ms)
 {
 	TA3CCTL0 &= ~CCIE;								//Disable compare interrupt
-	TA3CCTL0 &= ~CCIFG;								//Clear interrupt flag
 
 	//Set note
 		buzzer_set_freq(note);
@@ -76,9 +82,11 @@ void buzzer_play(int note, int ms)
 		TB0CTL = TBSSEL__SMCLK | MC__UP | TBCLR;		//Start timer
 
 	//Set duration
-		TA3CCR0 = 250 * ms;							//250 equals to 1 ms @ 250 KHz
-		TA3CCTL0 |= CCIE;									//Enable compare interrupt
-		TA3CTL = TASSEL__SMCLK | ID__8 | MC__UP | TACLR;	//Start timer
+		ms_count = 0;
+		note_duration = ms;
+		TA3CTL = TASSEL__SMCLK | MC__UP | TACLR;		//Start timer
+
+	TA3CCTL0 |= CCIE;								//Enable compare interrupt
 
 	//Wait for timer A3 to turn off buzzer
 }
