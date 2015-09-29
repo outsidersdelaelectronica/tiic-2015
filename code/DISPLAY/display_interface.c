@@ -85,7 +85,7 @@ void display_write_signal(display_interface_t* interface, ecgData_t* signalDataP
 
 	//Cook ecg data
 		uint16_t signal_y_point = 0;
-		signal_y_point = SIGNAL_OFFSET + (signalDataPoint->data >> 9);
+		signal_y_point = SIGNAL_OFFSET + (signalDataPoint->data >> 8);
 //		signal_y_point = signalDataPoint->data >> 9;
 	//Print data
 		display_write_pixel(0xFF, 0xFF, 0xFF, currentIndex, signal_y_point);

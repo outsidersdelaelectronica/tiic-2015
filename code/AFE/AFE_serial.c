@@ -38,9 +38,8 @@ void AFE_write_register(uint8_t address, uint8_t value)
 
 	P4OUT |= BIT4;							//Disable CS
 }
-
-
-/* NOT USED
+// YOU AINT SAYING HOW TO LIVE MY LIFE
+//* NOT USED
 uint8_t AFE_read_register(uint8_t address)
 {
 	uint8_t value = 0x00;
@@ -55,4 +54,4 @@ uint8_t AFE_read_register(uint8_t address)
 
 	return value;
 }
-*/
+//*/

@@ -30,19 +30,16 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 	{
 		//Read 3 ADS1291 status bytes
 			int i;
-			P4OUT &= ~BIT4;							//Enable CS
 			for (i = 0; i < 3; i++) {
-				AFE_serial_send(0x00);
+				AFE_send(0x00);
 			}
-
+//			delay_ms(1);
 		//Read ECG signal - another 3 bytes
 			uint8_t afe_bytes[3];
 			for (i = 0; i < 3; ++i) {
-				afe_bytes[i] = AFE_serial_send(0x00);
+				afe_bytes[i] = AFE_send(0x00);
 			}
-			AFE_serial_send(0x00);
 
-			P4OUT |= BIT4;							//Disable CS
 		//Cast to ecgData type
 			ecgData_t afe_data_point;
 			ecgData_clear(&afe_data_point);
