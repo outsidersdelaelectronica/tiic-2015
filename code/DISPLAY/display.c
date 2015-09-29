@@ -111,13 +111,9 @@ void display_init(display_t* display)
 		display_interface_init(&display->display_interface, signal_bg, menubar_bg);
 		display_hal_write_reg(0x03, 0xD0, 0x30);	//Set GRAM horizontal write direction
 
-	//Turn on display light and start rolling
+	//Turn on display light
 		display_hal_screen_on();
+
+	//Start rolling
 		display_timer_start();
 }
-
-void display_write_signal(display_t* display, ecg_data_t* signal_data, color_t color)
-{
-	display_interface_write_signal(&display->display_interface, signal_data, color);
-}
-

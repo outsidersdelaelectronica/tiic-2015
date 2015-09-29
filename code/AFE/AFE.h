@@ -16,6 +16,6 @@
 #include "../utils.h"
 
 void	afe_setup();
-void	afe_initialize();
+void	afe_init();
 
 #endif /* AFE_AFE_H_ */

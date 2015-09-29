@@ -5,7 +5,7 @@
  *      Author: Smau
  */
 
-#include "AFE.h"
+#include "afe.h"
 
 void afe_setup()
 {
@@ -60,7 +60,7 @@ void afe_setup()
 }
 
 
-void afe_initialize()
+void afe_init()
 {
 	//AFE reset and stop continuous data conversion mode
 		P7OUT |= BIT3;								//Power-On-Reset: hold reset line high for 1 second

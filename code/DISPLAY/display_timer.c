@@ -20,15 +20,15 @@ void __attribute__ ((interrupt(TIMER2_A0_VECTOR))) Timer2_A0_ISR (void)
 #error Compiler not supported!
 #endif
 {
-	static ecg_data_t signal_data_point;										//Temporary storage variable
+	static ecg_data_t signal_data_point;					//Temporary storage variable
 	static const color_t signal_color = COLOR_GREEN;
 	/*
 	 * Paint ECG value every display tick
 	 */
 		__bic_SR_register(GIE);
-		if (ecg_data_circular_buffer_read_full(&ecg_buffer, &signal_data_point))		//If there is data available
+		if (ecg_data_circular_buffer_read_full(&ecg_buffer, &signal_data_point))								//If there is data available
 		{
-			display_write_signal(&display, &signal_data_point, signal_color);				//Write it
+			display_interface_write_signal(&display.display_interface, &signal_data_point, signal_color);		//Write it
 		}
 		__bis_SR_register_on_exit(GIE);
 }

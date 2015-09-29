@@ -10,7 +10,6 @@
 #ifndef AFE_AFE_SRC_ADS1291_CONSTANTS_H_
 #define AFE_AFE_SRC_ADS1291_CONSTANTS_H_
 
-
 ///// SPI commands
 /*
  * System commands

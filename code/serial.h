@@ -9,12 +9,10 @@
 #define SERIAL_H_
 
 #include "afe/afe.h"
-#include "touch/touch.h"
-#include "display/display.h"
-
 #include "buzzer/buzzer.h"
-
 #include "data/ecg_data.h"
 #include "data/ecg_data_circular_buffer.h"
+#include "display/display.h"
+#include "touch/touch.h"
 
 #endif /* SERIAL_H_ */

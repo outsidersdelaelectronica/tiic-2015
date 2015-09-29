@@ -7,9 +7,8 @@
  *      Author: slopez
  */
 
-#ifndef BUZZER_BUZZER_NOTES_H_
-#define BUZZER_BUZZER_NOTES_H_
-
+#ifndef BUZZER_BUZZER_SRC_BUZZER_NOTES_H_
+#define BUZZER_BUZZER_SRC_BUZZER_NOTES_H_
 
 #define A2	9088				//<= 'A' 110 Hz
 #define Bb2	8578
@@ -65,4 +64,4 @@
 #define Ab6	602
 #define A6	568				//<= 'A' 1760 Hz
 
-#endif /* BUZZER_BUZZER_NOTES_H_ */
+#endif /* BUZZER_BUZZER_SRC_BUZZER_NOTES_H_ */

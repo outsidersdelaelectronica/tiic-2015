@@ -17,15 +17,15 @@ serial.obj: ../touch/touch_src/touch_coordinate.h
 serial.obj: ../touch/touch_src/touch_serial.h
 serial.obj: ../touch/touch_src/XPT2046_constants.h
 serial.obj: ../display/display.h
-serial.obj: ../display/display_timer.h
-serial.obj: ../display/display.h
-serial.obj: ../display/../data/ecg_data.h
-serial.obj: ../display/../data/ecg_data_circular_buffer.h
 serial.obj: ../display/display_src/display_hal.h
 serial.obj: ../display/display_src/color.h
 serial.obj: ../display/display_src/display_interface.h
 serial.obj: ../display/display_src/display_functions.h
 serial.obj: ../display/display_src/font.h
+serial.obj: ../display/display_src/../../data/ecg_data.h
+serial.obj: ../display/display_timer.h
+serial.obj: ../display/display.h
+serial.obj: ../display/../data/ecg_data_circular_buffer.h
 serial.obj: ../buzzer/buzzer.h
 serial.obj: ../buzzer/buzzer_src/buzzer_notes.h
 
@@ -46,14 +46,14 @@ C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h:
 ../touch/touch_src/touch_serial.h: 
 ../touch/touch_src/XPT2046_constants.h: 
 ../display/display.h: 
-../display/display_timer.h: 
-../display/display.h: 
-../display/../data/ecg_data.h: 
-../display/../data/ecg_data_circular_buffer.h: 
 ../display/display_src/display_hal.h: 
 ../display/display_src/color.h: 
 ../display/display_src/display_interface.h: 
 ../display/display_src/display_functions.h: 
 ../display/display_src/font.h: 
+../display/display_src/../../data/ecg_data.h: 
+../display/display_timer.h: 
+../display/display.h: 
+../display/../data/ecg_data_circular_buffer.h: 
 ../buzzer/buzzer.h: 
 ../buzzer/buzzer_src/buzzer_notes.h: 

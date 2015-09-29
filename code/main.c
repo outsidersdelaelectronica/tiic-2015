@@ -7,19 +7,18 @@
 
 #include <msp430.h>
 
-#include "data/ecg_data_circular_buffer.h"
-
 #include "clocks.h"
-#include "afe/afe.h"
-#include "touch/touch.h"
-#include "display/display.h"
-#include "display/display_src/color.h"
-#include "buzzer/buzzer.h"
 
-ecg_data_circular_buffer_t ecg_buffer;
-touch_coordinate_t touch_last_position;
-display_t display;
+#include "afe/afe.h"
+#include "buzzer/buzzer.h"
+#include "data/ecg_data_circular_buffer.h"
+#include "display/display.h"
+#include "touch/touch.h"
+
 buzzer_t buzzer;
+ecg_data_circular_buffer_t ecg_buffer;
+display_t display;
+touch_coordinate_t touch_last_position;
 
 int main()
 {
@@ -31,10 +30,10 @@ int main()
     clocks_setup();
 
     afe_setup();
+    buzzer_setup(&buzzer);
     ecg_data_circular_buffer_setup(&ecg_buffer);
     display_setup(&display);
     touch_setup();
-    buzzer_setup(&buzzer);
 
     /*
      * MCU setup
@@ -44,7 +43,7 @@ int main()
     /*
      * Initializations
      */
-    afe_initialize();
+    afe_init();
     display_init(&display);
     touch_initialize();
 

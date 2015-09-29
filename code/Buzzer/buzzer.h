@@ -15,6 +15,7 @@
 
 typedef struct buzzer_t
 {
+
 }
 buzzer_t;
 
