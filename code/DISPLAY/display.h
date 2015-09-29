@@ -15,7 +15,6 @@
 #include "display_interface.h"
 #include "display_IO.h"
 
-<<<<<<< HEAD
 #include "../utils.h"
 #include "../CircularBuffer/circularBuffer.h"
 #include "../CircularBuffer/ecgData.h"
@@ -30,9 +29,9 @@
 #define	SWEEP_TIME_200		200
 
 
-=======
->>>>>>> parent of 13d9eb2... Buzzer with timer
 void	display_setup();
 void	display_initialize();
+
+void	display_set_sweep_time(int ms);
 
 #endif
