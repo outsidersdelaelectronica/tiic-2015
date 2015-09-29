@@ -23,7 +23,5 @@ void 	display_write_pixel(uint8_t red, uint8_t green, uint8_t blue, uint16_t x, 
 
 void	display_write_char(char character, uint8_t red, uint8_t green, uint8_t blue, uint16_t posH, uint16_t posV);
 void	display_write_string(char* string, uint8_t red, uint8_t green, uint8_t blue, uint16_t posH, uint16_t posV);
-void	display_write_line(uint8_t red, uint8_t green, uint8_t blue, uint16_t origin_x,
-							uint16_t origin_y,uint16_t end_x, uint16_t end_y);
 
 #endif /* DISPLAY_DISPLAY_FUNCTIONS_H_ */

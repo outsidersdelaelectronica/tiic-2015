@@ -10,7 +10,7 @@
 #ifndef CIRCULARBUFFER_H_
 #define CIRCULARBUFFER_H_
 
-#define BUFFER_SIZE 250
+#define BUFFER_SIZE 256
 
 #include <msp430.h>
 #include <stdint.h>
