@@ -12,7 +12,7 @@
 #include "afe/afe.h"
 #include "buzzer/buzzer.h"
 #include "data/ecg_data_circular_buffer.h"
-#include "display/display.h"
+#include "Display/display.h"
 #include "touch/touch.h"
 
 buzzer_t buzzer;
