@@ -26,7 +26,7 @@ void __attribute__ ((interrupt(TIMER2_A0_VECTOR))) Timer2_A0_ISR (void)
 	 * Paint ECG value every display tick
 	 */
 		__bic_SR_register(GIE);
-		if (ecg_data_circular_buffer_read_full(&ecg_buffer, &signal_data_point))								//If there is data available
+		if (ecg_data_circular_buffer_read_last(&ecg_buffer, &signal_data_point))								//If there is data available
 		{
 			display_interface_write_signal(&display.display_interface, &signal_data_point, signal_color);		//Write it
 		}
