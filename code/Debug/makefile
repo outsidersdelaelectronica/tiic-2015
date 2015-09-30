@@ -11,8 +11,21 @@ ORDERED_OBJS += \
 "./main.obj" \
 "./serial.obj" \
 "./utils.obj" \
+"./touch/touch_src/touch_coordinate.obj" \
+"./touch/touch_src/touch_serial.obj" \
+"./touch/touch.obj" \
+"./display/display.obj" \
+"./display/display_timer.obj" \
+"./display/display_src/color.obj" \
+"./display/display_src/display_functions.obj" \
+"./display/display_src/display_hal.obj" \
+"./display/display_src/display_interface.obj" \
+"./display/display_src/font.obj" \
 "./data/ecg_data.obj" \
 "./data/ecg_data_circular_buffer.obj" \
+"./buzzer/buzzer.obj" \
+"./afe/afe_src/afe_serial.obj" \
+"./afe/afe.obj" \
 "../lnk_msp430fr5972.cmd" \
 $(GEN_CMDS__FLAG) \
 -l"libmath.a" \
@@ -168,8 +181,8 @@ tiic_2015.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "clocks.pp" "main.pp" "serial.pp" "utils.pp" "data\ecg_data.pp" "data\ecg_data_circular_buffer.pp" 
-	-$(RM) "clocks.obj" "main.obj" "serial.obj" "utils.obj" "data\ecg_data.obj" "data\ecg_data_circular_buffer.obj" 
+	-$(RM) "clocks.pp" "main.pp" "serial.pp" "utils.pp" "touch\touch_src\touch_coordinate.pp" "touch\touch_src\touch_serial.pp" "touch\touch.pp" "display\display.pp" "display\display_timer.pp" "display\display_src\color.pp" "display\display_src\display_functions.pp" "display\display_src\display_hal.pp" "display\display_src\display_interface.pp" "display\display_src\font.pp" "data\ecg_data.pp" "data\ecg_data_circular_buffer.pp" "buzzer\buzzer.pp" "afe\afe_src\afe_serial.pp" "afe\afe.pp" 
+	-$(RM) "clocks.obj" "main.obj" "serial.obj" "utils.obj" "touch\touch_src\touch_coordinate.obj" "touch\touch_src\touch_serial.obj" "touch\touch.obj" "display\display.obj" "display\display_timer.obj" "display\display_src\color.obj" "display\display_src\display_functions.obj" "display\display_src\display_hal.obj" "display\display_src\display_interface.obj" "display\display_src\font.obj" "data\ecg_data.obj" "data\ecg_data_circular_buffer.obj" "buzzer\buzzer.obj" "afe\afe_src\afe_serial.obj" "afe\afe.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

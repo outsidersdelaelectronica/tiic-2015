@@ -29,4 +29,8 @@ void delay_ms(int ms)
 	for (i = 0; i < ms; ++i) {
 		__delay_cycles(16000);
 	}
+
+	//TODO
+	//Future work: make delay with timerino
+
 }

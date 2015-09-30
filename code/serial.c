@@ -59,10 +59,10 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 	{
 		P3OUT &= ~BIT7;							//Enable CS
 
-			uint8_t touch_xPos_low, touch_xPos_high;
-			uint8_t touch_yPos_low, touch_yPos_high;
+			static uint8_t touch_xPos_low, touch_xPos_high;
+			static uint8_t touch_yPos_low, touch_yPos_high;
 
-			uint16_t touch_xPos, touch_yPos;
+			static uint16_t touch_xPos, touch_yPos;
 
 		//Request touchscreen x position
 			touch_serial_send(TOUCH_X_POS);
