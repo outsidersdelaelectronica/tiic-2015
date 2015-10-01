@@ -90,6 +90,7 @@ uint16_t display_hal_read_reg(uint8_t reg)
 		P9OUT |= BIT7;			//Set display_CS to '1'
 
 	data = ((uint16_t) data_hi_af << 8) | data_lo;
+
 	return data;
 }
 

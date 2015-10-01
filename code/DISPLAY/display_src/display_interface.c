@@ -86,11 +86,12 @@ void display_interface_init(display_interface_t* display_interface, color_t sign
 
 void display_interface_write_signal(display_interface_t* display_interface, ecg_data_t* signal_data, color_t color)
 {
-	//Clear screen
 		static uint16_t last_signal_y_point = SIGNAL_OFFSET;
 		uint16_t current_index, clear_index, signal_y_point;
+		int16_t signal_value;
 		int i;
 
+	//Clear screen
 		current_index = display_interface_get_index(display_interface, 0);
 		clear_index = display_interface_get_index(display_interface, CLEAR_DISTANCE);
 
@@ -103,11 +104,26 @@ void display_interface_write_signal(display_interface_t* display_interface, ecg_
 		}
 
 	//Cook ecg data
-		signal_y_point = SIGNAL_OFFSET + (signal_data->data >> 9);
+		signal_value = (int16_t) (signal_data->data >> 16);
+
+	//Limit ecg data values
+		if (signal_value > SIGNAL_LINES/2)			//If value goes below screen bottom limit
+		{
+			signal_y_point = SIGNAL_LINES - 1;
+		}
+		else if (signal_value < - SIGNAL_LINES/2)	//If value goes above screen top limit
+		{
+			signal_y_point = 0;
+
+		}
+		else
+		{
+			signal_y_point = SIGNAL_OFFSET + signal_value;
+		}
 
 	//Print data
 		display_functions_write_line(color, current_index - 1, last_signal_y_point,
-											current_index, signal_y_point);
+						  					  current_index, signal_y_point);
 
 	//Increment index
 		display_interface_inc_index(display_interface);

@@ -17,7 +17,7 @@
 
 #include "../../data/ecg_data.h"
 
-#define SIGNAL_OFFSET	0x57
+#define SIGNAL_OFFSET	0x0057
 
 #define DISPLAY_LINES	240
 #define DISPLAY_COLUMNS	320
