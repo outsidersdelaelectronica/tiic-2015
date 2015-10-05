@@ -59,6 +59,7 @@ int main()
 
 	__bis_SR_register(GIE);			//Enable global interrupts
 
+
 	while(1)
 	{
 	}
