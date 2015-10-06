@@ -7,9 +7,10 @@
 
 #include "serial.h"
 
+extern buzzer_t buzzer;
+extern display_t display;
 extern ecg_data_circular_buffer_t ecg_buffer;
 extern touch_coordinate_t touch_last_position;
-extern buzzer_t buzzer;
 
 /*
  * Port 1 (AFE and Touch) interrupt service routine
@@ -42,7 +43,7 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			{
 				afe_bytes[i] = afe_serial_send(0x00);
 			}
-			afe_serial_send(0x00);
+
 
 			P4OUT |= BIT4;							//Disable CS
 
@@ -86,7 +87,9 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			//buzzer_play(&buzzer, E5, 50);
 
 		//Paint
-			display_functions_write_pixel(COLOR_WHITE, touch_last_position.xPos, touch_last_position.yPos);
+			__bic_SR_register(GIE);
+			display_write_pixel(&display, COLOR_WHITE, touch_last_position.xPos, touch_last_position.yPos);
+			__bis_SR_register_on_exit(GIE);
 
 		P1IFG &= ~BIT3;                         //Clear IRQ (P1.3) flag
 	}

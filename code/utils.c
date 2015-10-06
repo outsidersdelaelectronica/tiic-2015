@@ -32,5 +32,4 @@ void delay_ms(int ms)
 
 	//TODO
 	//Future work: make delay with timerino
-
 }
