@@ -9,9 +9,11 @@
 
 uint8_t afe_serial_send(uint8_t data)
 {
+
+	while  (!(UCB1IFG & UCTXIFG));
 	UCB1TXBUF = data;				//Transmit byte (automatically clears UCTXIFG)
     while(UCB1STATW & UCBUSY);					//Wait for transmission
-
+	while  (!(UCB1IFG & UCRXIFG));
     return UCB1RXBUF;				//Return received data if any
 }
 

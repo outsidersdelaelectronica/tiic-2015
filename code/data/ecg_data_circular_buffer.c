@@ -16,18 +16,21 @@ void ecg_data_circular_buffer_setup(ecg_data_circular_buffer_t* buf)
 	int i;
 	for(i = 0; i < buf->buffer_size; i++)
 	{
-		ecg_data_write(&(buf->ecg_buffer[i]), 0x00, 0x00, 0x00);			//Fill with zeros every ecgData value in ecgBuffer
+		ecg_data_clear(&(buf->ecg_buffer[i]));			//Fill with zeros every ecgData value in ecgBuffer
 	}
 }
 
 int ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, ecg_data_t* value)
 {
 
+
 	if (buf->index == buf->buffer_size - 1)			//if reached the end, start again
 	{
 		buf->index = 0;
 	}
-	buf->ecg_buffer[buf->index] = *value;				//If not, write the value in the buffer and
+
+//	ecg_data_write(&(buf->ecg_buffer[buf->index]), 0x00, buf->index , 0x00);
+	ecg_data_copy(value, &(buf->ecg_buffer[buf->index]));
 	buf->index++;
 
 	return 1;											//Return true

@@ -53,8 +53,9 @@ void afe_setup()
 													//Clock source = SMCLK
 													//STE = Chip select for a 4-wire slave
 
-		UCB1BRW = 0x0002;							//Clock prescaler = /2
+		UCB1BRW = 0x02;							//Clock prescaler = /2
 													//SMCLK = 2 MHz => BRCLK = 1 MHz
+		UCB1IE |= UCTXIFG | UCRXIFG;
 
 		UCB1CTLW0 &= ~UCSWRST;						//Get USCI_B1 out of reset state
 }

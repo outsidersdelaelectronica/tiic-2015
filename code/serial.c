@@ -42,7 +42,7 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			{
 				afe_bytes[i] = afe_serial_send(0x00);
 			}
-//			afe_serial_send(0x00);
+			afe_serial_send(0x00);
 
 			P4OUT |= BIT4;							//Disable CS
 
