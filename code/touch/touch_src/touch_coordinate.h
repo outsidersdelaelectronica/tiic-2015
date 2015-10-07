@@ -19,7 +19,7 @@ typedef struct touch_coordinate_t
 	uint16_t xPos;
 	uint16_t yPos;
 }
-volatile touch_coordinate_t;
+touch_coordinate_t;
 
 void	touch_coordinate_set(touch_coordinate_t* tCoord, uint16_t touch_xValue, uint16_t touch_yValue);
 
