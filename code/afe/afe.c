@@ -71,24 +71,24 @@ void afe_init()
 		__delay_cycles(2000);							//At least 10 useconds
 		P7OUT |= BIT3;
 
-		P4OUT &= ~BIT4;							//Enable CS
+		P4OUT &= ~BIT4;								//Enable CS
 
 		afe_serial_send(SDATAC);							//Stop continuous data conversion mode (activated by default)
 
 	//Write config commands to AFE
 		afe_serial_write_register(REG_CONFIG1, 0x00);		//Set data rate to 125 SPS
 		afe_serial_write_register(REG_CONFIG2, 0xE3);		//Enable voltage reference
-													//Enable lead-off comparators
-													//Enable test signal
-													//Test signal @ 1 Hz, +-1 mV
+															//Enable lead-off comparators
+															//Enable test signal
+															//Test signal @ 1 Hz, +-1 mV
 		afe_serial_write_register(REG_CH2SET, 0x81);		//Channel 2 power down
-													//Channel 2 input shorted
-		afe_serial_write_register(REG_LOFF_STAT, 0x40);	//Clock divider selection: Clock input set to 2.048 MHz
-		afe_serial_write_register(REG_RESP2, 0x87);		//Enable calibration
-		afe_serial_write_register(REG_CH1SET, 0x01);		// |
-		afe_serial_send(OFFSETCAL);						// | Calibrate
-		afe_serial_write_register(REG_CH1SET, 0x05);		// |
-		afe_serial_write_register(REG_RESP2, 0x07);		//Disable calibration
+															//Channel 2 input shorted
+		afe_serial_write_register(REG_LOFF_STAT, 0x40);		//Clock divider selection: Clock input set to 2.048 MHz
+		afe_serial_write_register(REG_RESP2, 0x87);			//Enable calibration
+		afe_serial_write_register(REG_CH1SET, 0x01);			// |
+		afe_serial_send(OFFSETCAL);							// | Calibrate
+		afe_serial_write_register(REG_CH1SET, 0x05);			// |
+		afe_serial_write_register(REG_RESP2, 0x07);			//Disable calibration
 
 
 	//Start capturing data
@@ -97,7 +97,7 @@ void afe_init()
 														//In this mode, a SDATAC command must be issued
 														//before other commands can be sent to the device
 
-		P4OUT |= BIT4;							//Disable CS
+		P4OUT |= BIT4;								//Disable CS
 
 		P1IE |= BIT2;								//Enable DRDY interrupt
 }

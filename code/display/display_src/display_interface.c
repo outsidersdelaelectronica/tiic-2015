@@ -123,7 +123,7 @@ void display_interface_write_signal(display_interface_t* display_interface, ecg_
 
 	//Print data
 		display_functions_write_line(color, current_index - 1, last_signal_y_point,
-						  					  current_index, signal_y_point);
+						  					current_index, signal_y_point);
 
 	//Increment index
 		display_interface_inc_index(display_interface);
