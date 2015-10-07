@@ -9,7 +9,7 @@
 
 #include "touch.h"
 
-void touch_setup()
+void touch_setup(touch_t* touch)
 {
 	//Configure touchpad control lines
 		//IRQ touch event
@@ -53,7 +53,12 @@ void touch_setup()
 		UCA1CTLW0 &= ~UCSWRST;						//Get USCI_A1 out of reset state
 }
 
-void touch_initialize()
+void touch_initialize(touch_t* touch)
 {
 		P1IE |= BIT3;								//Enable DRDY interrupt
+}
+
+void touch_set_last_position(touch_t* touch, uint16_t touch_xPos, uint16_t touch_yPos)
+{
+	touch_coordinate_set(&touch->touch_last_position, touch_xPos, touch_yPos);
 }

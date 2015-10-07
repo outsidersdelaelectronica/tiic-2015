@@ -16,7 +16,15 @@
 #include "touch_src/touch_coordinate.h"
 #include "touch_src/touch_serial.h"
 
-void	touch_setup();
-void	touch_initialize();
+typedef struct touch_t
+{
+	touch_coordinate_t touch_last_position;
+}
+touch_t;
+
+void	touch_setup(touch_t* touch);
+void	touch_initialize(touch_t* touch);
+
+void	touch_set_last_position(touch_t* touch, uint16_t touch_xPos, uint16_t touch_yPos);
 
 #endif /* TOUCH_TOUCH_H_ */

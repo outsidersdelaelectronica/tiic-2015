@@ -18,7 +18,7 @@
 buzzer_t buzzer;
 display_t display;
 ecg_data_circular_buffer_t ecg_buffer;
-touch_coordinate_t touch_last_position;
+touch_t touch;
 
 int main()
 {
@@ -33,7 +33,7 @@ int main()
     buzzer_setup(&buzzer);
     ecg_data_circular_buffer_setup(&ecg_buffer);
     display_setup(&display);
-    touch_setup();
+    touch_setup(&touch);
 
     /*
      * MCU setup
@@ -45,7 +45,7 @@ int main()
      */
     afe_init();
     display_init(&display);
-    touch_initialize();
+    touch_initialize(&touch);
 
     /*
      * Sheits
