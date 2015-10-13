@@ -61,7 +61,7 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			touch_request_position(&touch);
 
 		//Beep
-//			buzzer_play(&buzzer, E5, 50);
+			buzzer_play(&buzzer, E5, 50);
 
 		//Paint
 			__bic_SR_register(GIE);
