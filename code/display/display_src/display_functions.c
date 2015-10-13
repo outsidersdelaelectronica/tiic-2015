@@ -18,101 +18,61 @@ void display_functions_write_pixel(color_t color, uint16_t x, uint16_t y)
 	display_hal_write_GRAM(color);
 }
 
-// void display_functions_write_line(color_t color, uint16_t origin_x, uint16_t origin_y,
-								  	  	  	  	 // uint16_t end_x, uint16_t end_y)
-// {
-	// int16_t dist_x, dist_y, step, current_x, current_y, i, j;
-
-	// current_x = origin_x;
-	// current_y = origin_y;
-	// dist_x = end_x - origin_x;
-	// dist_y = end_y - origin_y + 1;
-	// step = dist_y/dist_x;
-
-	// if (dist_x > 0)
-	// {
-		// for(i = 0; i < dist_x; i++)
-		// {
-			// if (dist_y > 0)
-			// {
-				// for(j = 0; j < step; j++)
-				// {
-					// display_functions_write_pixel(color, current_x, current_y++);
-				// }
-				// current_x++;
-			// }
-			// else
-			// {
-				// for(j = 0; j > step; j--)
-				// {
-					// display_functions_write_pixel(color, current_x, current_y--);
-				// }
-				// current_x++;
-			// }
-		// }
-	// }
-	// else
-	// {
-		// for(i = 0; i > dist_x; i--)
-		// {
-			// if (dist_y > 0)
-			// {
-				// for(j = 0; j > step; j--)
-				// {
-					// display_functions_write_pixel(color, current_x, current_y++);
-				// }
-				// current_x--;
-			// }
-			// else
-			// {
-				// for(j = 0; j < step; j++)
-				// {
-					// display_functions_write_pixel(color, current_x, current_y--);
-				// }
-				// current_x--;
-			// }
-		// }
-	// }
-// }
-
 void display_functions_write_line(color_t color, uint16_t origin_x, uint16_t origin_y,
 								  	  	  	  	 uint16_t end_x, uint16_t end_y)
 {
-	int16_t dist_x, dist_y, column_step, y_step, current_x, current_y, i, j;
-	
-	// This ensures writing from right to left ( like good christian, not filthy muslim)
-	if(origin_x < end_x ) 
+	int16_t dist_x, dist_y, step, current_x, current_y, i, j;
+
+	current_x = origin_x;
+	current_y = origin_y;
+	dist_x = end_x - origin_x;
+	dist_y = end_y - origin_y + 1;
+	step = dist_y/dist_x;
+
+	if (dist_x > 0)
 	{
-		current_x = origin_x;
-		dist_x = end_x - origin_x;
-	}
-	else
-	{
-		current_x = end_x;
-		dist_x = origin_x - end_x;
-	}
-	// This ensures checks if writing up to down or the other way arround
-	if(origin_y < end_y ) 
-	{
-		y_step = 1;
-		dist_y = end_y - origin_y + 1;
-	}
-	else
-	{
-		y_step = -1;
-		dist_y = origin_y - end_y + 1;
-	}
-	column_step = dist_y/dist_x;
-	
-	for( i = dist_x; i > 0 ; i--)
-	{
-		for(j = 0; j < column_step; j++)
+		for(i = 0; i < dist_x; i++)
 		{
-			display_functions_write_pixel(color, current_x, current_y);
-			current_y = current_y + y_step;
+			if (dist_y > 0)
+			{
+				for(j = 0; j < step; j++)
+				{
+					display_functions_write_pixel(color, current_x, current_y++);
+				}
+				current_x++;
+			}
+			else
+			{
+				for(j = 0; j > step; j--)
+				{
+					display_functions_write_pixel(color, current_x, current_y--);
+				}
+				current_x++;
+			}
 		}
-		current_x++;
-	}		
+	}
+	else
+	{
+		for(i = 0; i > dist_x; i--)
+		{
+			if (dist_y > 0)
+			{
+				for(j = 0; j > step; j--)
+				{
+					display_functions_write_pixel(color, current_x, current_y++);
+				}
+				current_x--;
+			}
+			else
+			{
+				for(j = 0; j < step; j++)
+				{
+					display_functions_write_pixel(color, current_x, current_y--);
+				}
+				current_x--;
+			}
+		}
+	}
 }
 
 void display_functions_write_char(char character, color_t color, color_t bg_color,

@@ -7,7 +7,7 @@
 
 #include "display_timer.h"
 
-extern const display_t display;
+extern display_t display;
 extern ecg_data_circular_buffer_t ecg_buffer;
 
 // Timer A2 interrupt service routine

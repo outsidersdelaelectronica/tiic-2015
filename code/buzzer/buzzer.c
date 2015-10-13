@@ -27,7 +27,7 @@ void __attribute__ ((interrupt(TIMER3_A0_VECTOR))) Timer3_A0_ISR (void)
 	//No need to clear CCIFG
 }
 
-void buzzer_setup(const buzzer_t* buzzer)
+void buzzer_setup(buzzer_t* buzzer)
 {
 	//Timer B0 register configuration (PWM generation)
 		TB0CCR0 = A4;					//PWM period => A4 = 2272
@@ -65,7 +65,7 @@ static void buzzer_stop()
 	TB0CTL = TBSSEL__SMCLK | MC__STOP | TBCLR;			//Stop timer
 }
 
-void buzzer_play(const buzzer_t* buzzer, int note, int ms)
+void buzzer_play(buzzer_t* buzzer, int note, int ms)
 {
 	TA3CCTL0 &= ~CCIE;								//Disable compare interrupt
 	TA3CCTL0 &= ~CCIFG;								//Clear interrupt flag

@@ -27,8 +27,7 @@ ecg_data_circular_buffer_t;
 
 void	ecg_data_circular_buffer_setup(ecg_data_circular_buffer_t* buf);
 
-// int		ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, ecg_data_t* value);
-int		ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte);
+int		ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, ecg_data_t* value);
 int		ecg_data_circular_buffer_read_last(ecg_data_circular_buffer_t* buf, ecg_data_t* value);
 int 	ecg_data_circular_buffer_read_full(ecg_data_circular_buffer_t* buf, ecg_data_t* value);
 

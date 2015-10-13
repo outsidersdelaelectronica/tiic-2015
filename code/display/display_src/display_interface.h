@@ -27,28 +27,28 @@
 
 #define CLEAR_DISTANCE  25
 
-typedef const struct display_interface_t
+typedef struct display_interface_t
 {
 	uint16_t signal_index;	//ECG signal sweep index
 
 	//Windows
 		//Signal window
-		const uint16_t signal_window_line_origin;
-		const uint16_t signal_window_line_end;
+		uint16_t signal_window_line_origin;
+		uint16_t signal_window_line_end;
 
 		//Menubar window
-		const uint16_t menubar_window_line_origin;
-		const uint16_t menubar_window_line_end;
+		uint16_t menubar_window_line_origin;
+		uint16_t menubar_window_line_end;
 
 		//Background colors
-		const color_t signal_window_bg_color;
-		const color_t menubar_window_bg_color;
+		color_t signal_window_bg_color;
+		color_t menubar_window_bg_color;
 }
 display_interface_t;
 
-void	display_interface_init(const display_interface_t* display_interface, color_t signal_window_bg_color,
+void	display_interface_init(display_interface_t* display_interface, color_t signal_window_bg_color,
 																	   color_t menubar_window_bg_color);
-void	display_interface_write_signal(const display_interface_t* display_interface, ecg_data_t* signal_data,
+void	display_interface_write_signal(display_interface_t* display_interface, ecg_data_t* signal_data,
 																			   color_t color);
 
 #endif /* DISPLAY_DISPLAY_SRC_DISPLAY_INTERFACE_H_ */
