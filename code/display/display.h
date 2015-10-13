@@ -16,29 +16,29 @@
 
 #include "display_timer.h"
 
-typedef struct display_t
+typedef const struct display_t
 {
 	//Display interface
-		display_interface_t display_interface;
+		const display_interface_t display_interface;
 }
 display_t;
 
-void	display_setup(display_t* display);
-void	display_init(display_t* display);
+void	display_setup(const display_t* display);
+void	display_init(const display_t* display);
 
 
-void	display_write_pixel(display_t* display, color_t color, uint16_t x, uint16_t y);
-void	display_write_char(display_t* display, char character, color_t color, color_t bg_color,
+void	display_write_pixel(const display_t* display, color_t color, uint16_t x, uint16_t y);
+void	display_write_char(const display_t* display, char character, color_t color, color_t bg_color,
 															   uint16_t x, uint16_t y);
-void	display_write_string(display_t* display, char* string, color_t color, color_t bg_color,
+void	display_write_string(const display_t* display, char* string, color_t color, color_t bg_color,
 													 	 	   uint16_t x, uint16_t y);
-void	display_write_signal(display_t* display, ecg_data_t* signal_data, color_t color);
+void	display_write_signal(const display_t* display, ecg_data_t* signal_data, color_t color);
 
 
-void	display_sleep(display_t* display);
-void	display_wake_up(display_t* display);
+void	display_sleep(const display_t* display);
+void	display_wake_up(const display_t* display);
 
-void	display_screen_on(display_t* display);
-void	display_screen_off(display_t* display);
+void	display_screen_on(const display_t* display);
+void	display_screen_off(const display_t* display);
 
 #endif /* DISPLAY_DISPLAY_H_ */

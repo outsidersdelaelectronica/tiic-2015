@@ -19,8 +19,8 @@
 #define COLOR_CYAN		(color_t){.red=0x00,.green=0xFF,.blue=0xFF}
 #define COLOR_MAGENTA	(color_t){.red=0xFF,.green=0x00,.blue=0xFF}
 
-#define COLOR_WHITE		(color_t){.red=0xFF,.green=0xFF,.blue=0xFF}
-#define COLOR_BLACK		(color_t){.red=0x00,.green=0x00,.blue=0x00}
+#define COLOR_WHITY		(color_t){.red=0xFF,.green=0xFF,.blue=0xFF}
+#define COLOR_NIGGER	(color_t){.red=0x00,.green=0x00,.blue=0x00}
 
 typedef struct color_t
 {

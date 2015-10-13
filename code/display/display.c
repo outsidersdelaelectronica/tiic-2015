@@ -7,7 +7,7 @@
 
 #include "display.h"
 
-void display_setup(display_t* display)
+void display_setup(const display_t* display)
 {
 	//Port setup
 		P7DIR |= BIT1;					//Set display_RESET (P7.1) as output
@@ -24,7 +24,7 @@ void display_setup(display_t* display)
 		display_timer_setup();			//Set signal sweep timer
 }
 
-void display_init(display_t* display)
+void display_init(const display_t* display)
 {
 	/*
 	 * Hardware start up
@@ -118,40 +118,40 @@ void display_init(display_t* display)
 		display_timer_start();
 }
 
-void display_write_pixel(display_t* display, color_t color, uint16_t x, uint16_t y)
+void display_write_pixel(const display_t* display, color_t color, uint16_t x, uint16_t y)
 {
 	display_functions_write_pixel(color, x, y);
 }
-void display_write_char(display_t* display, char character, color_t color, color_t bg_color,
+void display_write_char(const display_t* display, char character, color_t color, color_t bg_color,
 															uint16_t x, uint16_t y)
 {
 	display_functions_write_char(character, color, bg_color, x, y);
 }
-void display_write_string(display_t* display, char* string, color_t color, color_t bg_color,
+void display_write_string(const display_t* display, char* string, color_t color, color_t bg_color,
 													 	 	uint16_t x, uint16_t y)
 {
 	display_functions_write_string(string, color, bg_color, x, y);
 }
 
-void display_write_signal(display_t* display, ecg_data_t* signal_data, color_t color)
+void display_write_signal(const display_t* display, ecg_data_t* signal_data, color_t color)
 {
 	display_interface_write_signal(&display->display_interface, signal_data, color);
 }
 
-void display_sleep(display_t* display)
+void display_sleep(const display_t* display)
 {
 	display_functions_sleep();
 }
-void display_wake_up(display_t* display)
+void display_wake_up(const display_t* display)
 {
 	display_functions_wake_up();
 }
 
-void display_screen_on(display_t* display)
+void display_screen_on(const display_t* display)
 {
 	display_hal_screen_on();
 }
-void display_screen_off(display_t* display)
+void display_screen_off(const display_t* display)
 {
 	display_hal_screen_off();
 }

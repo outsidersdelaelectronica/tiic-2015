@@ -24,7 +24,7 @@ static void display_interface_draw_window(color_t color, uint16_t line_origin, u
 	}
 }
 
-static void display_interface_windows_setup(display_interface_t* display_interface, color_t signal_window_bg_color,
+static void display_interface_windows_setup(const display_interface_t* display_interface, color_t signal_window_bg_color,
 																					color_t menubar_window_bg_color)
 {
 	//Store window colors
@@ -84,7 +84,7 @@ void display_interface_init(display_interface_t* display_interface, color_t sign
 		display_interface_windows_setup(display_interface, signal_window_bg_color, menubar_window_bg_color);
 }
 
-void display_interface_write_signal(display_interface_t* display_interface, ecg_data_t* signal_data, color_t color)
+void display_interface_write_signal(const display_interface_t* display_interface, ecg_data_t* signal_data, color_t color)
 {
 		static uint16_t last_signal_y_point = SIGNAL_OFFSET;
 		uint16_t current_index, clear_index, signal_y_point;

@@ -13,13 +13,13 @@
 
 #include "buzzer_src/buzzer_notes.h"
 
-typedef struct buzzer_t
+typedef const struct buzzer_t
 {
 
 }
 buzzer_t;
 
-void	buzzer_setup(buzzer_t* buzzer);
-void	buzzer_play(buzzer_t* buzzer, int note, int ms);
+void	buzzer_setup(const buzzer_t* buzzer);
+void	buzzer_play(const buzzer_t* buzzer, int note, int ms);
 
 #endif /* BUZZER_BUZZER_H_ */

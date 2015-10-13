@@ -16,15 +16,15 @@
 #include "touch_src/touch_coordinate.h"
 #include "touch_src/touch_serial.h"
 
-typedef struct touch_t
+typedef const struct touch_t
 {
 	touch_coordinate_t touch_last_position;
 }
 touch_t;
 
-void	touch_setup(touch_t* touch);
-void	touch_initialize(touch_t* touch);
+void	touch_setup(const touch_t* touch);
+void	touch_initialize(const touch_t* touch);
 
-void	touch_request_position(touch_t* touch);
+void	touch_request_position(const touch_t* touch);
 
 #endif /* TOUCH_TOUCH_H_ */
