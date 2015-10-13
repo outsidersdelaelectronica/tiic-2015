@@ -24,6 +24,10 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 #error Compiler not supported!
 #endif
 {
+	uint16_t gie = __get_SR_register() & GIE; //Store current GIE state
+
+	__disable_interrupt();                    //Make this operation atomic
+
 	if (P1IFG & BIT2)
 	{
 		static uint8_t afe_bytes[3];
@@ -47,15 +51,16 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			P4OUT |= BIT4;							//Disable CS
 
 		//Cast to ecg_data type
-			ecg_data_write(&afe_data_point, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
+//			ecg_data_write(&afe_data_point, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
 
 		//Store signal data into ecg signal buffer
-			ecg_data_circular_buffer_write(&ecg_buffer, &afe_data_point);
+//			ecg_data_circular_buffer_write(&ecg_buffer, &afe_data_point);
+			ecg_data_circular_buffer_write(&ecg_buffer, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
 
 		P1IFG &= ~BIT2;                       	// Clear DRDY (P1.2) flag
 
 	}
-	if (P1IFG & BIT3)
+	else if (P1IFG & BIT3)
 	{
 		//Request last position
 			touch_request_position(&touch);
@@ -64,10 +69,13 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			buzzer_play(&buzzer, E5, 50);
 
 		//Paint
-			__bic_SR_register(GIE);
+//			__bic_SR_register(GIE);
 			display_write_pixel(&display, COLOR_WHITE, touch.touch_last_position.xPos, touch.touch_last_position.yPos);
-			__bis_SR_register_on_exit(GIE);
+//			__bis_SR_register_on_exit(GIE);
 
 		P1IFG &= ~BIT3;                         //Clear IRQ (P1.3) flag
 	}
+
+	__bis_SR_register_on_exit(gie);                   //Restore original GIE state
+
 }

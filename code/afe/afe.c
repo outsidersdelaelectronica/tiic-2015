@@ -53,7 +53,7 @@ void afe_setup()
 													//Clock source = SMCLK
 													//STE = Chip select for a 4-wire slave
 
-		UCB1BRW = 0x02;							//Clock prescaler = /2
+		UCB1BRW = 0x01;							//Clock prescaler = /2
 													//SMCLK = 2 MHz => BRCLK = 1 MHz
 		UCB1IE |= UCTXIFG | UCRXIFG;
 
@@ -85,9 +85,9 @@ void afe_init()
 															//Channel 2 input shorted
 		afe_serial_write_register(REG_LOFF_STAT, 0x40);		//Clock divider selection: Clock input set to 2.048 MHz
 		afe_serial_write_register(REG_RESP2, 0x87);			//Enable calibration
-		afe_serial_write_register(REG_CH1SET, 0x01);			// |
+		afe_serial_write_register(REG_CH1SET, 0x01);		// |
 		afe_serial_send(OFFSETCAL);							// | Calibrate
-		afe_serial_write_register(REG_CH1SET, 0x05);			// |
+		afe_serial_write_register(REG_CH1SET, 0x05);		// |
 		afe_serial_write_register(REG_RESP2, 0x07);			//Disable calibration
 
 

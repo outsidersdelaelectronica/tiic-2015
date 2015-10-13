@@ -75,6 +75,13 @@ void display_functions_write_line(color_t color, uint16_t origin_x, uint16_t ori
 	}
 }
 
+//void display_functions_write_line(color_t color, uint16_t origin_x, uint16_t origin_y,
+//								  	  	  	  	 uint16_t end_x, uint16_t end_y)
+//{
+//
+//
+//}
+
 void display_functions_write_char(char character, color_t color, color_t bg_color,
 												  uint16_t x, uint16_t y)
 {

@@ -20,7 +20,8 @@ void ecg_data_circular_buffer_setup(ecg_data_circular_buffer_t* buf)
 	}
 }
 
-int ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, ecg_data_t* value)
+//int ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, ecg_data_t* value)
+int		ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte)
 {
 
 
@@ -29,8 +30,8 @@ int ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, ecg_data_t* 
 		buf->index = 0;
 	}
 
-//	ecg_data_write(&(buf->ecg_buffer[buf->index]), 0x00, buf->index , 0x00);
-	ecg_data_copy(value, &(buf->ecg_buffer[buf->index]));
+	ecg_data_write(&(buf->ecg_buffer[buf->index]), msbyte, midbyte , lsbyte);
+//	ecg_data_copy(value, &(buf->ecg_buffer[buf->index]));
 	buf->index++;
 
 	return 1;											//Return true
