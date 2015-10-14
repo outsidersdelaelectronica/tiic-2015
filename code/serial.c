@@ -24,15 +24,15 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 #error Compiler not supported!
 #endif
 {
+	static uint8_t afe_bytes[3] = {0x00 , 0x00, 0x00};
+//	static ecg_data_t afe_data_point;
+
 	uint16_t gie = __get_SR_register() & GIE; //Store current GIE state
 
 	__disable_interrupt();                    //Make this operation atomic
 
 	if (P1IFG & BIT2)
 	{
-		static uint8_t afe_bytes[3];
-		static ecg_data_t afe_data_point;
-
 		//Read 3 ADS1291 status bytes
 			P4OUT &= ~BIT4;							//Enable CS
 

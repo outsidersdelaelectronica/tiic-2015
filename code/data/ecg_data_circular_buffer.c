@@ -21,18 +21,18 @@ void ecg_data_circular_buffer_setup(ecg_data_circular_buffer_t* buf)
 }
 
 //int ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, ecg_data_t* value)
-int		ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte)
+int	ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte)
 {
 
-
-	if (buf->index == buf->buffer_size - 1)			//if reached the end, start again
+	buf->index++;
+	if (buf->index == buf->buffer_size)			//if reached the end, start again
 	{
 		buf->index = 0;
 	}
 
 	ecg_data_write(&(buf->ecg_buffer[buf->index]), msbyte, midbyte , lsbyte);
 //	ecg_data_copy(value, &(buf->ecg_buffer[buf->index]));
-	buf->index++;
+
 
 	return 1;											//Return true
 }
@@ -48,13 +48,14 @@ int ecg_data_circular_buffer_read_last(ecg_data_circular_buffer_t* buf, ecg_data
 int ecg_data_circular_buffer_read_full(ecg_data_circular_buffer_t* buf, ecg_data_t* value)
 {
 	ecg_data_clear(value);								//Fill with zeros
+	buf->full_read_index++;
 
-	*value = buf->ecg_buffer[buf->full_read_index];		//Returns the last writen data
-	if (buf->full_read_index == buf->buffer_size - 1)		//If reading out of the memory, return 0
+	if (buf->full_read_index == buf->buffer_size)		//If reading out of the memory, return 0
 	{
 		buf->full_read_index = 0;
 		return 0;
 	}
-	buf->full_read_index++;
+
+	*value = buf->ecg_buffer[buf->full_read_index];		//Returns the last writen data
 	return 1;											//Return true
 }
