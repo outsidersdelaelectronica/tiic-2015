@@ -43,9 +43,10 @@ void buzzer_setup(buzzer_t* buzzer)
 		P2SEL1 |= BIT2;					// |
 
 	//Timer A3 register configuration (Note duration)
+		TA3EX0 = TAIDEX_5;									//Clock divider = /5
 		TA3CTL = TASSEL__SMCLK | ID__8 | MC__STOP | TACLR;	//Clock source = SMCLK
 															//Input divider = /8
-																//Clock = 250 KHz
+																//Clock = 50 KHz
 															//Mode = Stop mode
 															//Reset timer A3
 
@@ -65,6 +66,9 @@ static void buzzer_stop()
 	TB0CTL = TBSSEL__SMCLK | MC__STOP | TBCLR;			//Stop timer
 }
 
+/*
+ * Máx. 1.25 sg (1250 ms)
+ */
 void buzzer_play(buzzer_t* buzzer, int note, int ms)
 {
 	TA3CCTL0 &= ~CCIE;								//Disable compare interrupt
@@ -76,7 +80,7 @@ void buzzer_play(buzzer_t* buzzer, int note, int ms)
 		TB0CTL = TBSSEL__SMCLK | MC__UP | TBCLR;		//Start timer
 
 	//Set duration
-		TA3CCR0 = 250 * ms;							//250 equals to 1 ms @ 250 KHz
+		TA3CCR0 = 50 * ms;							//250 equals to 1 ms @ 250 KHz
 		TA3CCTL0 |= CCIE;									//Enable compare interrupt
 		TA3CTL = TASSEL__SMCLK | ID__8 | MC__UP | TACLR;	//Start timer
 

@@ -66,7 +66,43 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			touch_request_position(&touch);
 
 		//Beep
-			buzzer_play(&buzzer, E5, 50);
+			//buzzer_play(&buzzer, E5, 50);
+
+		//Lambada
+			buzzer_play(&buzzer, E5, 250);
+			__delay_cycles(2500000);
+			__delay_cycles(2500000);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, D5, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, C5, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, B4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, A4, 250);
+			__delay_cycles(2500000);
+			__delay_cycles(2500000);
+
+			buzzer_play(&buzzer, A4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, C5, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, B4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, A4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, G4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, A4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, E4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, D4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, E4, 250);
+			__delay_cycles(2500000);
+			__delay_cycles(2500000);
+			__delay_cycles(2500000);
 
 		//Paint
 //			__bic_SR_register(GIE);
