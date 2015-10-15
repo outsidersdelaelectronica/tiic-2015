@@ -20,7 +20,6 @@ void ecg_data_circular_buffer_setup(ecg_data_circular_buffer_t* buf)
 	}
 }
 
-//int ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, ecg_data_t* value)
 int	ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte)
 {
 

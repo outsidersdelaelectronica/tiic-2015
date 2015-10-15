@@ -12,6 +12,7 @@
 #include <stdint.h>
 
 #include "display.h"
+#include "display_src/display_interface.h"
 
 #include "../data/ecg_data.h"
 #include "../data/ecg_data_circular_buffer.h"

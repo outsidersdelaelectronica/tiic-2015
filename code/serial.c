@@ -24,9 +24,9 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 #error Compiler not supported!
 #endif
 {
-	static uint8_t afe_bytes[3] = {0x00 , 0x00, 0x00};
+	uint8_t afe_bytes[3] = {0x00 , 0x00, 0x00};
 //	static ecg_data_t afe_data_point;
-
+	unsigned int i = 0;
 	uint16_t gie = __get_SR_register() & GIE; //Store current GIE state
 
 	__disable_interrupt();                    //Make this operation atomic
@@ -36,16 +36,16 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 		//Read 3 ADS1291 status bytes
 			P4OUT &= ~BIT4;							//Enable CS
 
-			int i;
-			for (i = 0; i < 3; i++)
+
+			for (i = 3; i > 0; i--)
 			{
 				afe_serial_send(0x00);
 			}
 
 		//Read ECG signal - another 3 bytes
-			for (i = 0; i < 3; i++)
+			for (i = 3; i > 0; i--)
 			{
-				afe_bytes[i] = afe_serial_send(0x00);
+				afe_bytes[3 - i] = afe_serial_send(0x00);
 			}
 
 			P4OUT |= BIT4;							//Disable CS
@@ -69,44 +69,45 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			//buzzer_play(&buzzer, E5, 50);
 
 		//Lambada
-			buzzer_play(&buzzer, E5, 250);
-			__delay_cycles(2500000);
-			__delay_cycles(2500000);
-			__delay_cycles(2500000);
-			buzzer_play(&buzzer, D5, 250);
-			__delay_cycles(2500000);
-			buzzer_play(&buzzer, C5, 250);
-			__delay_cycles(2500000);
-			buzzer_play(&buzzer, B4, 250);
-			__delay_cycles(2500000);
-			buzzer_play(&buzzer, A4, 250);
-			__delay_cycles(2500000);
-			__delay_cycles(2500000);
-
-			buzzer_play(&buzzer, A4, 250);
-			__delay_cycles(2500000);
-			buzzer_play(&buzzer, C5, 250);
-			__delay_cycles(2500000);
-			buzzer_play(&buzzer, B4, 250);
-			__delay_cycles(2500000);
-			buzzer_play(&buzzer, A4, 250);
-			__delay_cycles(2500000);
-			buzzer_play(&buzzer, G4, 250);
-			__delay_cycles(2500000);
-			buzzer_play(&buzzer, A4, 250);
-			__delay_cycles(2500000);
-			buzzer_play(&buzzer, E4, 250);
-			__delay_cycles(2500000);
-			buzzer_play(&buzzer, D4, 250);
-			__delay_cycles(2500000);
-			buzzer_play(&buzzer, E4, 250);
-			__delay_cycles(2500000);
-			__delay_cycles(2500000);
-			__delay_cycles(2500000);
+//			buzzer_play(&buzzer, E5, 250);
+//			__delay_cycles(2500000);
+//			__delay_cycles(2500000);
+//			__delay_cycles(2500000);
+//			buzzer_play(&buzzer, D5, 250);
+//			__delay_cycles(2500000);
+//			buzzer_play(&buzzer, C5, 250);
+//			__delay_cycles(2500000);
+//			buzzer_play(&buzzer, B4, 250);
+//			__delay_cycles(2500000);
+//			buzzer_play(&buzzer, A4, 250);
+//			__delay_cycles(2500000);
+//			__delay_cycles(2500000);
+//
+//			buzzer_play(&buzzer, A4, 250);
+//			__delay_cycles(2500000);
+//			buzzer_play(&buzzer, C5, 250);
+//			__delay_cycles(2500000);
+//			buzzer_play(&buzzer, B4, 250);
+//			__delay_cycles(2500000);
+//			buzzer_play(&buzzer, A4, 250);
+//			__delay_cycles(2500000);
+//			buzzer_play(&buzzer, G4, 250);
+//			__delay_cycles(2500000);
+//			buzzer_play(&buzzer, A4, 250);
+//			__delay_cycles(2500000);
+//			buzzer_play(&buzzer, E4, 250);
+//			__delay_cycles(2500000);
+//			buzzer_play(&buzzer, D4, 250);
+//			__delay_cycles(2500000);
+//			buzzer_play(&buzzer, E4, 250);
+//			__delay_cycles(2500000);
+//			__delay_cycles(2500000);
+//			__delay_cycles(2500000);
 
 		//Paint
 //			__bic_SR_register(GIE);
-			display_write_pixel(&display, COLOR_WHITE, touch.touch_last_position.xPos, touch.touch_last_position.yPos);
+//			display_write_pixel(&display, COLOR_WHITE, touch.touch_last_position.xPos, touch.touch_last_position.yPos);
+			display_functions_write_pixel(COLOR_WHITE, touch.touch_last_position.xPos, touch.touch_last_position.yPos);
 //			__bis_SR_register_on_exit(GIE);
 
 		P1IFG &= ~BIT3;                         //Clear IRQ (P1.3) flag

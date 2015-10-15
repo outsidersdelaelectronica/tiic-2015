@@ -18,7 +18,7 @@ static void display_interface_draw_window(color_t color, uint16_t line_origin, u
 	uint32_t i;
 	uint32_t last_pixel = DISPLAY_COLUMNS * (uint32_t)(line_end - line_origin);
 
-	for (i = 0; i < last_pixel; i++)
+	for (i = last_pixel; i > 0; i--)
 	{
 		display_hal_write_GRAM(color);
 	}
@@ -95,16 +95,16 @@ void display_interface_write_signal(display_interface_t* display_interface, ecg_
 		current_index = display_interface_get_index(display_interface, 0);
 		clear_index = display_interface_get_index(display_interface, CLEAR_DISTANCE);
 
-		for (i = 0; i < SIGNAL_LINES; i++)
+		for (i = SIGNAL_LINES; i > 0; i--)
 		{
 			//Clear current column
-				display_functions_write_pixel(display_interface->signal_window_bg_color, current_index, i);
+				display_functions_write_pixel(display_interface->signal_window_bg_color, current_index, SIGNAL_LINES - i);
 			//Clear column CLEAR_DISTANCE pixels ahead signal
-				display_functions_write_pixel(display_interface->signal_window_bg_color, clear_index, i);
+				display_functions_write_pixel(display_interface->signal_window_bg_color, clear_index, SIGNAL_LINES - i);
 		}
 
 	//Cook ecg data
-		signal_value = (int16_t) (signal_data->data >> 10);
+		signal_value = (int16_t) (signal_data->data >> 8);
 
 	//Limit ecg data values
 		if (signal_value > SIGNAL_LINES/2)			//If value goes below screen bottom limit

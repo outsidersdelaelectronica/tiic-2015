@@ -59,7 +59,7 @@ static void buzzer_set_freq(int note)
 	TB0CCR4 = note;
 }
 
-static void buzzer_stop()
+inline static void buzzer_stop()
 {
 	TB0CCTL4 = OUTMOD_0;								//Output mode = OUT bit value
 	TB0CCTL4 &= ~OUT;									//OUT bit value = 0

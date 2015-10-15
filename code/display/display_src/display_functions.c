@@ -49,9 +49,9 @@ void display_functions_write_line(color_t color, uint16_t origin_x, uint16_t ori
 
 	step = dist_y/dist_x;
 
-	for(i = 0; i < dist_x; i++)
+	for(i = dist_x; i > 0; i--)
 	{
-		for(j = 0; j < step;j++)
+		for(j = step; j > 0;j--)
 		{
 			display_functions_write_pixel(color, current_x, current_y);
 			current_y = current_y + step_y;
@@ -74,14 +74,14 @@ void display_functions_write_char(char character, color_t color, color_t bg_colo
 	uint16_t i,j;
 	uint16_t mask;
 
-	for(i = 0; i < font.font_height; i++){
+	for(i = font.font_height; i > 0; i--){
 		line = *char_starting_position++;
 		line = (line << 8) | (*char_starting_position++);
 
 		mask = 0x8000;
 
 		//Draw line
-		for(j = 0; j < font.font_width; j++)
+		for(j =  font.font_width; j > 0; j--)
 		{
 			if (line & mask)
 			{
@@ -104,7 +104,7 @@ void display_functions_write_char(char character, color_t color, color_t bg_colo
 void display_functions_write_string(char* string, color_t color, color_t bg_color,
 												  uint16_t x, uint16_t y)
 {
-	int i = 0;
+	unsigned int i = 0;
 	char character;
 
 	while ((character = string[i]) != 0)
