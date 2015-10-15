@@ -12,7 +12,7 @@
  */
 extern const font_t font;
 
-void display_functions_write_pixel(color_t color, uint16_t x, uint8_t y)
+void display_functions_write_pixel(color_t color, uint16_t x, uint16_t y)
 {
 	display_hal_set_GRAM_position(x, y);
 	display_hal_write_GRAM(color);
@@ -21,8 +21,7 @@ void display_functions_write_pixel(color_t color, uint16_t x, uint8_t y)
 void display_functions_write_line(color_t color, uint16_t origin_x, uint16_t origin_y,
 								  	  	  	  	 uint16_t end_x, uint16_t end_y)
 {
-	int16_t dist_x, step, step_y, current_x, current_y, i, j;
-	int8_t dist_y;
+	int16_t dist_x, dist_y, step, step_y, current_x, current_y, i, j;
 
 	if(origin_x < end_x)
 	{
@@ -72,7 +71,7 @@ void display_functions_write_char(char character, color_t color, color_t bg_colo
 	uint16_t local_x = x;
 	uint16_t local_y = y;
 
-	uint8_t i,j;
+	uint16_t i,j;
 	uint16_t mask;
 
 	for(i = 0; i < font.font_height; i++){
@@ -105,7 +104,7 @@ void display_functions_write_char(char character, color_t color, color_t bg_colo
 void display_functions_write_string(char* string, color_t color, color_t bg_color,
 												  uint16_t x, uint16_t y)
 {
-	uint8_t i = 0;
+	int i = 0;
 	char character;
 
 	while ((character = string[i]) != 0)

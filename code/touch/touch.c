@@ -62,30 +62,26 @@ void touch_request_position(touch_t* touch)
 {
 	P3OUT &= ~BIT7;							//Enable CS
 
-//		static uint8_t touch_xPos_low, touch_xPos_high;
-//		static uint8_t touch_yPos_low, touch_yPos_high;
+		static uint8_t touch_xPos_low, touch_xPos_high;
+		static uint8_t touch_yPos_low, touch_yPos_high;
 
 		static uint16_t touch_xPos, touch_yPos;
 
 	//Request touchscreen x position
 		touch_serial_send(TOUCH_X_POS);
-//		touch_xPos_high = touch_serial_send(0x00);
-//		touch_xPos_low = touch_serial_send(0x00);
-		touch_xPos = (((uint16_t) touch_serial_send(0x00)) << 5);
-		touch_xPos |= (((uint16_t) touch_serial_send(0x00)) >> 3);
+		touch_xPos_high = touch_serial_send(0x00);
+		touch_xPos_low = touch_serial_send(0x00);
 
 	//Request touchscreen y position
 		touch_serial_send(TOUCH_Y_POS);
-//		touch_yPos_high = touch_serial_send(0x00);
-//		touch_yPos_low = touch_serial_send(0x00);
-		touch_yPos = (((uint16_t) touch_serial_send(0x00)) << 5);
-		touch_yPos |= (((uint16_t) touch_serial_send(0x00)) >> 3);
+		touch_yPos_high = touch_serial_send(0x00);
+		touch_yPos_low = touch_serial_send(0x00);
 
 	P3OUT |= BIT7;							//Disable CS
 
 	//Rebuild 12-bit positions
-//		touch_xPos = (((uint16_t) touch_xPos_high) << 5) | (((uint16_t) touch_xPos_low) >> 3);
-//		touch_yPos = (((uint16_t) touch_yPos_high) << 5) | (((uint16_t) touch_yPos_low) >> 3);
+		touch_xPos = (((uint16_t) touch_xPos_high) << 5) | (((uint16_t) touch_xPos_low) >> 3);
+		touch_yPos = (((uint16_t) touch_yPos_high) << 5) | (((uint16_t) touch_yPos_low) >> 3);
 
 		touch_coordinate_set(&touch->touch_last_position, touch_xPos, touch_yPos);
 }

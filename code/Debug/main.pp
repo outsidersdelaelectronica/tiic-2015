@@ -4,11 +4,11 @@ main.obj: ../main.c
 main.obj: C:/ti/ccsv6/ccs_base/msp430/include/msp430.h
 main.obj: C:/ti/ccsv6/ccs_base/msp430/include/msp430fr5972.h
 main.obj: C:/ti/ccsv6/ccs_base/msp430/include/in430.h
-main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include/intrinsics.h
-main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include/intrinsics_legacy_undefs.h
+main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics.h
+main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics_legacy_undefs.h
 main.obj: ../clocks.h
 main.obj: ../afe/afe.h
-main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include/stdint.h
+main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h
 main.obj: ../afe/afe_src/afe_serial.h
 main.obj: ../afe/afe_src/ADS1291_constants.h
 main.obj: ../afe/../utils.h
@@ -33,11 +33,11 @@ main.obj: ../touch/touch_src/XPT2046_constants.h
 C:/ti/ccsv6/ccs_base/msp430/include/msp430.h: 
 C:/ti/ccsv6/ccs_base/msp430/include/msp430fr5972.h: 
 C:/ti/ccsv6/ccs_base/msp430/include/in430.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include/intrinsics.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include/intrinsics_legacy_undefs.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/intrinsics_legacy_undefs.h: 
 ../clocks.h: 
 ../afe/afe.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include/stdint.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h: 
 ../afe/afe_src/afe_serial.h: 
 ../afe/afe_src/ADS1291_constants.h: 
 ../afe/../utils.h: 

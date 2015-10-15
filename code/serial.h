@@ -13,7 +13,6 @@
 #include "data/ecg_data.h"
 #include "data/ecg_data_circular_buffer.h"
 #include "display/display.h"
-#include "display/display_src/display_functions.h"
 #include "touch/touch.h"
 
 #endif /* SERIAL_H_ */

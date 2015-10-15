@@ -17,7 +17,7 @@
 typedef struct touch_coordinate_t
 {
 	uint16_t xPos;
-	uint8_t yPos;
+	uint16_t yPos;
 }
 touch_coordinate_t;
 

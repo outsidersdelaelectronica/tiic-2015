@@ -36,15 +36,14 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 		//Read 3 ADS1291 status bytes
 			P4OUT &= ~BIT4;							//Enable CS
 
-			uint8_t i;
-			for (i = 3; i > 0; i--)
+			int i;
+			for (i = 0; i < 3; i++)
 			{
 				afe_serial_send(0x00);
-
 			}
 
 		//Read ECG signal - another 3 bytes
-			for (i = 3; i > 0; i--)
+			for (i = 0; i < 3; i++)
 			{
 				afe_bytes[i] = afe_serial_send(0x00);
 			}
@@ -70,44 +69,44 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			//buzzer_play(&buzzer, E5, 50);
 
 		//Lambada
-//			buzzer_play(&buzzer, E5, 250);
-//			__delay_cycles(2500000);
-//			__delay_cycles(2500000);
-//			__delay_cycles(2500000);
-//			buzzer_play(&buzzer, D5, 250);
-//			__delay_cycles(2500000);
-//			buzzer_play(&buzzer, C5, 250);
-//			__delay_cycles(2500000);
-//			buzzer_play(&buzzer, B4, 250);
-//			__delay_cycles(2500000);
-//			buzzer_play(&buzzer, A4, 250);
-//			__delay_cycles(2500000);
-//			__delay_cycles(2500000);
-//
-//			buzzer_play(&buzzer, A4, 250);
-//			__delay_cycles(2500000);
-//			buzzer_play(&buzzer, C5, 250);
-//			__delay_cycles(2500000);
-//			buzzer_play(&buzzer, B4, 250);
-//			__delay_cycles(2500000);
-//			buzzer_play(&buzzer, A4, 250);
-//			__delay_cycles(2500000);
-//			buzzer_play(&buzzer, G4, 250);
-//			__delay_cycles(2500000);
-//			buzzer_play(&buzzer, A4, 250);
-//			__delay_cycles(2500000);
-//			buzzer_play(&buzzer, E4, 250);
-//			__delay_cycles(2500000);
-//			buzzer_play(&buzzer, D4, 250);
-//			__delay_cycles(2500000);
-//			buzzer_play(&buzzer, E4, 250);
-//			__delay_cycles(2500000);
-//			__delay_cycles(2500000);
-//			__delay_cycles(2500000);
+			buzzer_play(&buzzer, E5, 250);
+			__delay_cycles(2500000);
+			__delay_cycles(2500000);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, D5, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, C5, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, B4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, A4, 250);
+			__delay_cycles(2500000);
+			__delay_cycles(2500000);
+
+			buzzer_play(&buzzer, A4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, C5, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, B4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, A4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, G4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, A4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, E4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, D4, 250);
+			__delay_cycles(2500000);
+			buzzer_play(&buzzer, E4, 250);
+			__delay_cycles(2500000);
+			__delay_cycles(2500000);
+			__delay_cycles(2500000);
 
 		//Paint
 //			__bic_SR_register(GIE);
-			display_functions_write_pixel(COLOR_WHITE, touch.touch_last_position.xPos, touch.touch_last_position.yPos);
+			display_write_pixel(&display, COLOR_WHITE, touch.touch_last_position.xPos, touch.touch_last_position.yPos);
 //			__bis_SR_register_on_exit(GIE);
 
 		P1IFG &= ~BIT3;                         //Clear IRQ (P1.3) flag
