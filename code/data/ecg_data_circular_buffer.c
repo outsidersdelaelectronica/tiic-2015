@@ -29,10 +29,7 @@ int	ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, uint8_t msby
 	{
 		buf->index = 0;
 	}
-
 	ecg_data_write(&(buf->ecg_buffer[buf->index]), msbyte, midbyte , lsbyte);
-//	ecg_data_copy(value, &(buf->ecg_buffer[buf->index]));
-
 
 	return 1;											//Return true
 }

@@ -13,7 +13,7 @@
 
 #include "ecg_data.h"
 
-#define BUFFER_SIZE 200
+#define BUFFER_SIZE 50
 
 typedef struct ecg_data_circular_buffer_t
 {

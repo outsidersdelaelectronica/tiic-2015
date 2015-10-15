@@ -89,7 +89,7 @@ void display_interface_write_signal(display_interface_t* display_interface, ecg_
 		static uint16_t last_signal_y_point = SIGNAL_OFFSET;
 		uint16_t current_index, clear_index, signal_y_point;
 		int16_t signal_value;
-		int i;
+		uint8_t i;
 
 	//Clear screen
 		current_index = display_interface_get_index(display_interface, 0);
