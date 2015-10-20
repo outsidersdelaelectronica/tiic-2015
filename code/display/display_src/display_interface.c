@@ -104,7 +104,7 @@ void display_interface_write_signal(display_interface_t* display_interface, ecg_
 		}
 
 	//Cook ecg data
-		signal_value = (int16_t) (signal_data->data >> 8);
+		signal_value = (int16_t) (signal_data->data >> 10);
 
 	//Limit ecg data values
 		if (signal_value > SIGNAL_LINES/2)			//If value goes below screen bottom limit
@@ -114,12 +114,10 @@ void display_interface_write_signal(display_interface_t* display_interface, ecg_
 		else if (signal_value < - SIGNAL_LINES/2)	//If value goes above screen top limit
 		{
 			signal_y_point = 0;
-
 		}
 		else
 		{
 			signal_y_point = SIGNAL_OFFSET + signal_value;
-
 		}
 
 	//Print data

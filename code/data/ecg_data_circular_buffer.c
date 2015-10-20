@@ -7,6 +7,20 @@
 
 #include "ecg_data_circular_buffer.h"
 
+//int	ecg_data_circular_buffer_write_trospido(ecg_data_circular_buffer_t* buf, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte)
+//{
+//
+//	buf->index++;
+//	if (buf->index == buf->buffer_size)			//if reached the end, start again
+//	{
+//		buf->index = 0;
+//	}
+//
+//	ecg_data_write(&(buf->ecg_buffer[buf->index]), msbyte, midbyte , lsbyte);
+//
+//	return 1;											//Return true
+//}
+
 void ecg_data_circular_buffer_setup(ecg_data_circular_buffer_t* buf)
 {
 	buf->index = 0;
@@ -18,6 +32,30 @@ void ecg_data_circular_buffer_setup(ecg_data_circular_buffer_t* buf)
 	{
 		ecg_data_clear(&(buf->ecg_buffer[i]));			//Fill with zeros every ecgData value in ecgBuffer
 	}
+//	for(i = 0; i < 30; i++)
+//	{
+//		ecg_data_circular_buffer_write_trospido(buf, 0x00, 85-i, 0x00);			//Fill with zeros every ecgData value in ecgBuffer
+//	}
+//	for(i = 30; i > 0; i--)
+//	{
+//		ecg_data_circular_buffer_write_trospido(buf, 0x00, 85-i , 0x00);			//Fill with zeros every ecgData value in ecgBuffer
+//	}
+//	for(i = 0; i < 10; i++)
+//	{
+//		ecg_data_circular_buffer_write_trospido(buf, 0x00, 85-i, 0x00);		//Fill with zeros every ecgData value in ecgBuffer
+//	}
+//	for(i = 10; i > 0; i--)
+//	{
+//		ecg_data_circular_buffer_write_trospido(buf, 0x00, 85-i, 0x00);	//Fill with zeros every ecgData value in ecgBuffer
+//	}
+//	for(i = 0; i < 85; i++)
+//	{
+//		ecg_data_circular_buffer_write_trospido(buf, 0x00, 85-i, 0x00);			//Fill with zeros every ecgData value in ecgBuffer
+//	}
+//	for(i = 85; i > 0; i--)
+//	{
+//		ecg_data_circular_buffer_write_trospido(buf, 0x00, 85-i , 0x00);	//Fill with zeros every ecgData value in ecgBuffer
+//	}
 }
 
 int	ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte)
@@ -30,8 +68,6 @@ int	ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, uint8_t msby
 	}
 
 	ecg_data_write(&(buf->ecg_buffer[buf->index]), msbyte, midbyte , lsbyte);
-//	ecg_data_copy(value, &(buf->ecg_buffer[buf->index]));
-
 
 	return 1;											//Return true
 }
