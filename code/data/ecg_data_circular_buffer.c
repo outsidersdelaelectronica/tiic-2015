@@ -7,55 +7,22 @@
 
 #include "ecg_data_circular_buffer.h"
 
-//int	ecg_data_circular_buffer_write_trospido(ecg_data_circular_buffer_t* buf, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte)
-//{
-//
-//	buf->index++;
-//	if (buf->index == buf->buffer_size)			//if reached the end, start again
-//	{
-//		buf->index = 0;
-//	}
-//
-//	ecg_data_write(&(buf->ecg_buffer[buf->index]), msbyte, midbyte , lsbyte);
-//
-//	return 1;											//Return true
-//}
 
 void ecg_data_circular_buffer_setup(ecg_data_circular_buffer_t* buf)
 {
+	int i;
+
 	buf->index = 0;
 	buf->full_read_index = 0;
 	buf->buffer_size = BUFFER_SIZE;
 
-	int i;
+	// Clear all buffer on initialization is time consuming
+	// and probably unnecesary, a test without clearing
+	// should be done
 	for(i = 0; i < buf->buffer_size; i++)
 	{
 		ecg_data_clear(&(buf->ecg_buffer[i]));			//Fill with zeros every ecgData value in ecgBuffer
 	}
-//	for(i = 0; i < 30; i++)
-//	{
-//		ecg_data_circular_buffer_write_trospido(buf, 0x00, 85-i, 0x00);			//Fill with zeros every ecgData value in ecgBuffer
-//	}
-//	for(i = 30; i > 0; i--)
-//	{
-//		ecg_data_circular_buffer_write_trospido(buf, 0x00, 85-i , 0x00);			//Fill with zeros every ecgData value in ecgBuffer
-//	}
-//	for(i = 0; i < 10; i++)
-//	{
-//		ecg_data_circular_buffer_write_trospido(buf, 0x00, 85-i, 0x00);		//Fill with zeros every ecgData value in ecgBuffer
-//	}
-//	for(i = 10; i > 0; i--)
-//	{
-//		ecg_data_circular_buffer_write_trospido(buf, 0x00, 85-i, 0x00);	//Fill with zeros every ecgData value in ecgBuffer
-//	}
-//	for(i = 0; i < 85; i++)
-//	{
-//		ecg_data_circular_buffer_write_trospido(buf, 0x00, 85-i, 0x00);			//Fill with zeros every ecgData value in ecgBuffer
-//	}
-//	for(i = 85; i > 0; i--)
-//	{
-//		ecg_data_circular_buffer_write_trospido(buf, 0x00, 85-i , 0x00);	//Fill with zeros every ecgData value in ecgBuffer
-//	}
 }
 
 int	ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte)
@@ -83,6 +50,7 @@ int ecg_data_circular_buffer_read_last(ecg_data_circular_buffer_t* buf, ecg_data
 int ecg_data_circular_buffer_read_full(ecg_data_circular_buffer_t* buf, ecg_data_t* value)
 {
 	ecg_data_clear(value);								//Fill with zeros
+
 	buf->full_read_index++;
 
 	if (buf->full_read_index == buf->buffer_size)		//If reading out of the memory, return 0
