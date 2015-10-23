@@ -112,14 +112,14 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 //			__bis_SR_register_on_exit(GIE);
 		if (g_flag == 0)
 		{
-		    display_functions_write_string(" DANGER: Apechusque ", COLOR_WHITE,
+		    display_functions_write_string("           e", COLOR_WHITE,
 																   display.display_interface.menubar_window_bg_color,
 																   0x00, 0xD0);
 		    g_flag = 1;
 		}
 		else
 		{
-		    display_functions_write_string(" DANGER: Apichusque ", COLOR_WHITE,
+		    display_functions_write_string("           i", COLOR_WHITE,
 																   display.display_interface.menubar_window_bg_color,
 																   0x00, 0xD0);
 		    g_flag = 0;

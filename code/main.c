@@ -61,9 +61,12 @@ int main()
 
 	__bis_SR_register(GIE);			//Enable global interrupts
 
-	ecg_data_t datarino[3], max_array[50], max_max_array[7];
+	ecg_data_t datarino[3], max_array[10];
 //	ecg_data_t *aux_dat, *aux_max;
-	uint8_t max_pos[50],max_max_pos[7],n_sample,i,j,k,average,dif;
+	uint8_t max_pos[10],max_max_pos[7];
+	uint8_t n_sample,average,dif,last_pos = 0;
+	uint8_t i,j,k;
+
 //	uint8_t *aux_pos;
 	int32_t max_max,th;
 	char bpm[5];
@@ -79,22 +82,36 @@ int main()
 //			aux_dat = datarino;
 //			aux_max = max_array;
 //			aux_pos = max_pos;
+			*max_max_pos = last_pos;
+
 		    j=0;								// Variable reset ( this could be avoided in a function)
-		    k=0;								// |
+		    k=1;								// |
 		    average=0;							// |
-		    muestra = 1;						// |
+		    n_sample = 1;						// |
 		    max_max = 0x80000000;				// |
 		    									// |
-			for(i = 0; i <3; i++ )				// |
+			for(i = 0; i <2; i++ )				// |
 			{									// |
 				ecg_data_clear(&datarino[i]);	// |
+			}									// |
+			for(i = 0; i <10; i++ )				// |
+			{									// |
+				ecg_data_clear(&max_array[i]);	// |
 			}									// |
 
 			while(ecg_data_circular_buffer_read_full(&ecg_buffer,&datarino[2])) // Read all the buffer
 			{
-				th = max_max>>2;	// Establish a dinamic threshold for local maximum to be stored
+				// Establish a dinamic threshold for local maximum to be stored
 				// The local max condition is that the previous and next sample both are lower
 				// than the current sample ( review that )
+
+				if(max_max < datarino[2].data)
+				{
+					max_max = datarino[2].data;		// Refresh max maximun
+				}
+
+				th = max_max>>2;
+
 				if((datarino[1].data > datarino[0].data)&&(datarino[1].data > datarino[2].data)&&
 							(datarino[1].data > th ))
 				{
@@ -103,10 +120,7 @@ int main()
 					ecg_data_copy(&datarino[1],&max_array[j]);
 					max_pos[j] = n_sample;
 					j++;
-					if(max_max < datarino[1].data)
-					{
-						max_max = datarino[1].data;		// Refresh max maximun
-					}
+
 				}
 				n_sample++;
 //				*aux_dat = *(++aux_dat);
@@ -115,13 +129,6 @@ int main()
 				datarino[1] = datarino[2];
 //				aux_dat = datarino;
 			}
-//			for(i = 0;i < j; i++)
-//			{
-//				if(max_max < max_array[i].data)
-//				{
-//					max_max = max_array[i].data;
-//				}
-//			}
 
 			th = (max_max*8)/10;	// Threshold for consider a maximun as a R peak
 
@@ -134,20 +141,28 @@ int main()
 				}
 			}
 
-			for(i = 0;i < k-1; i++) // Average the R peaks distance
+			if (k < 2)
 			{
 				dif = max_max_pos[i+1] - max_max_pos[i];
-				average = average + dif/k;
+				average = 60 * (125 / dif);
 			}
-			average = average>>7;		//beat per sec
-			average = average * 60;		//bpm
+			else
+			{
+				for(i = 0;i < k-1; i++) // Average the R peaks distance
+				{
+					dif = max_max_pos[i+1] - max_max_pos[i];
+					average = average + dif;
+				}
 
+				average = average / k;		//beat per sec
+				average = 60 * (125 / average);		//bpm
+			}
 			itoa(average,bpm);
 
 		    display_functions_write_string(bpm, COLOR_RED,
 										   display.display_interface.menubar_window_bg_color,
 										   0x50, 0xC0);
-
+		    last_pos = max_max_pos[k-1];
 		}
 	}
 }
