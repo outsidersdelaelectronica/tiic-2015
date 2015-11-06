@@ -18,6 +18,7 @@ uint8_t afe_serial_send(uint8_t data)
 	UCB1TXBUF = data;						//Transmit byte (automatically clears UCTXIFG)
 
 	while(UCB1STATW & UCBUSY);
+	while (!(UCB1IFG & UCRXIFG));
 
     return UCB1RXBUF;				//Return received data if any
 }
@@ -28,7 +29,7 @@ void afe_serial_write_register(uint8_t address, uint8_t value)
 	__delay_cycles(96);                     //Wait 6us (assuming 24MHz MCLK), required to allow t_sdecode to be 4 T_clk
 											//needed to ensure previous byte was not sent within this time period
 
-	while (!(UCB1IFG & UCTXIFG)) ;          //Wait while not ready for TX
+	while (!(UCB1IFG & UCTXIFG));          //Wait while not ready for TX
 	UCB1TXBUF = address | WREG;
 	__delay_cycles(120);                    //Wait 7.5us (assuming 24MHz MCLK), required to allow t_sdecode to be 4 T_clk
 
@@ -48,13 +49,8 @@ void afe_serial_write_register(uint8_t address, uint8_t value)
 // NOT USED
 uint8_t afe_serial_read_register(uint8_t address)
 {
-	__delay_cycles(96);                 //Wait 6us (assuming 24MHz MCLK), required to allow t_sdecode to be 4 T_clk
-										//needed to ensure previous byte was not sent within this time period
-										//this value was determined experimentally
-	//Clock the actual data transfer and send the bytes. Note that we
-	//intentionally do not read out the receive buffer during frame transmission
-	//in order to optimize transfer speed, however we need to take care of the
-	//resulting overrun condition.
+	__delay_cycles(96);
+
 	while (!(UCB1IFG & UCTXIFG)) ;      //Wait while not ready for TX
 	UCB1TXBUF = address | RREG;
 	__delay_cycles(120);               	//Wait 7.5us (assuming 24MHz MCLK), required to allow t_sdecode to be 4 T_clk

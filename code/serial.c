@@ -11,6 +11,7 @@ extern buzzer_t buzzer;
 extern display_t display;
 extern ecg_data_circular_buffer_t ecg_buffer;
 extern touch_t touch;
+extern ecg_data_t last_sample;
 
 /*
  * Port 1 (AFE and Touch) interrupt service routine
@@ -26,8 +27,8 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 {
 	uint8_t afe_bytes[3] = {0x00 , 0x00, 0x00};
 //	static ecg_data_t afe_data_point;
-	unsigned int i = 0;
-	static uint8_t g_flag = 0;
+	uint8_t i = 0;
+	int32_t value_check;
 	uint16_t gie = __get_SR_register() & GIE; //Store current GIE state
 
 	__disable_interrupt();                    //Make this operation atomic
@@ -51,12 +52,17 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 
 			P4OUT |= BIT4;							//Disable CS
 
-		//Cast to ecg_data type
-//			ecg_data_write(&afe_data_point, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
-
 		//Store signal data into ecg signal buffer
-//			ecg_data_circular_buffer_write(&ecg_buffer, &afe_data_point);
-			ecg_data_circular_buffer_write(&ecg_buffer, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
+			value_check = ((int32_t) afe_bytes[0] << 16) | ((int32_t) afe_bytes[1] << 8) | ((int32_t) afe_bytes[2]);
+
+			if ((value_check < THRESHOLD) || (value_check > (-THRESHOLD)))
+			{
+				ecg_data_write(&last_sample, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
+			}
+
+
+//			ecg_data_circular_buffer_write(&ecg_buffer, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
+			ecg_data_circular_buffer_write(&ecg_buffer, &last_sample);
 
 		P1IFG &= ~BIT2;                       	// Clear DRDY (P1.2) flag
 
@@ -108,22 +114,8 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 		//Paint
 //			__bic_SR_register(GIE);
 //			display_write_pixel(&display, COLOR_WHITE, touch.touch_last_position.xPos, touch.touch_last_position.yPos);
-//			display_functions_write_pixel(COLOR_WHITE, touch.touch_last_position.xPos, touch.touch_last_position.yPos);
+			display_functions_write_pixel(COLOR_WHITE, touch.touch_last_position.xPos, touch.touch_last_position.yPos);
 //			__bis_SR_register_on_exit(GIE);
-		if (g_flag == 0)
-		{
-		    display_functions_write_string("           e", COLOR_WHITE,
-																   display.display_interface.menubar_window_bg_color,
-																   0x00, 0xD0);
-		    g_flag = 1;
-		}
-		else
-		{
-		    display_functions_write_string("           i", COLOR_WHITE,
-																   display.display_interface.menubar_window_bg_color,
-																   0x00, 0xD0);
-		    g_flag = 0;
-		}
 
 		P1IFG &= ~BIT3;                         //Clear IRQ (P1.3) flag
 	}

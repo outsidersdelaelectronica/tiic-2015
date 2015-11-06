@@ -9,6 +9,7 @@
 
 extern display_t display;
 extern ecg_data_circular_buffer_t ecg_buffer;
+extern ecg_data_t last_sample;
 
 // Timer A2 interrupt service routine
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
@@ -26,11 +27,11 @@ void __attribute__ ((interrupt(TIMER2_A0_VECTOR))) Timer2_A0_ISR (void)
 	 * Paint ECG value every display tick
 	 */
 		__bic_SR_register(GIE);
-		if (ecg_data_circular_buffer_read_last(&ecg_buffer, &signal_data_point))								//If there is data available
-		{
-//			display_write_signal(&display, &signal_data_point, signal_color);									//Write it
-			display_interface_write_signal(&display.display_interface, &signal_data_point, signal_color);
-		}
+//		if (ecg_data_circular_buffer_read_last(&ecg_buffer, &signal_data_point))	//If there is data available
+//		{
+//			display_interface_write_signal(&display.display_interface, &last_sample, signal_color);	//Write it
+			display_interface_write_signal(&display.display_interface, &last_sample, signal_color);	//Write it
+//		}
 		__bis_SR_register_on_exit(GIE);
 }
 

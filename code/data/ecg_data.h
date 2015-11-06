@@ -16,7 +16,8 @@
  */
 typedef struct ecg_data_t
 {
-	int32_t data;
+//	int32_t data;
+	int data;
 }
 volatile ecg_data_t;
 

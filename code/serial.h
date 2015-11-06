@@ -16,4 +16,6 @@
 #include "display/display_src/display_functions.h"
 #include "touch/touch.h"
 
+#define THRESHOLD 0x00006000
+
 #endif /* SERIAL_H_ */
