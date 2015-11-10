@@ -1,3 +1,4 @@
+
 /*
  * serial.c
  *
@@ -28,7 +29,6 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 	uint8_t afe_bytes[3] = {0x00 , 0x00, 0x00};
 //	static ecg_data_t afe_data_point;
 	uint8_t i = 0;
-	int32_t value_check;
 	uint16_t gie = __get_SR_register() & GIE; //Store current GIE state
 
 	__disable_interrupt();                    //Make this operation atomic
@@ -53,13 +53,8 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 			P4OUT |= BIT4;							//Disable CS
 
 		//Store signal data into ecg signal buffer
-			value_check = ((int32_t) afe_bytes[0] << 16) | ((int32_t) afe_bytes[1] << 8) | ((int32_t) afe_bytes[2]);
 
-			if ((value_check < THRESHOLD) || (value_check > (-THRESHOLD)))
-			{
-				ecg_data_write(&last_sample, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
-			}
-
+			ecg_data_write(&last_sample, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
 
 //			ecg_data_circular_buffer_write(&ecg_buffer, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
 			ecg_data_circular_buffer_write(&ecg_buffer, &last_sample);

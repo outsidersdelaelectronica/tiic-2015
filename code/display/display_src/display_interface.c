@@ -117,7 +117,7 @@ void display_interface_write_signal(display_interface_t* display_interface, ecg_
 		}
 		else
 		{
-			signal_y_point = SIGNAL_LINES + signal_value;
+			signal_y_point = 0x80 + signal_value;
 		}
 
 	//Print data

@@ -132,7 +132,7 @@ ecg_data_t integrator_3000(ecg_data_t* value)
     y_n += buffer_x[0];
     buffer_x[0] = (value->data);
     ecg_data_clear(&aux);
-    aux.data = (int)(y_n/INTEGRATION_LENGTH);
+    aux.data = (int)(y_n>>5);
 	return aux;
 }
 //int	ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, uint8_t msbyte, uint8_t midbyte, uint8_t lsbyte)
@@ -140,6 +140,7 @@ int		ecg_data_circular_buffer_write(ecg_data_circular_buffer_t* buf, ecg_data_t*
 {
 	ecg_data_t filtered_value;
 	int32_t aux;
+
 	buf->index++;
 	if (buf->index == buf->buffer_size)			//if reached the end, start again
 	{
