@@ -102,10 +102,10 @@ ecg_data_t diferentiator_3000(ecg_data_t* value)
 	static int32_t buffer_x[4] = {0,0,0,0};
 	int32_t x_n = value->data, y_n;
 	ecg_data_t aux;
-	const int32_t coef[5] = { 	2, 1, 0, -1, -2};
+	const int32_t coef[5] = { 2, 1, 0, -1, -2};
 	int8_t i;
     y_n = (coef[0] * x_n + coef[1] * buffer_x[0] + coef[2] * buffer_x[1]
-				- coef[3] * buffer_x[2] - coef[4] * buffer_x[3])>>3;
+				+ coef[3] * buffer_x[2] + coef[4] * buffer_x[3])>>3;
 
     for ( i = 3; i > 0; i--)
     {
@@ -120,7 +120,8 @@ ecg_data_t diferentiator_3000(ecg_data_t* value)
 }
 ecg_data_t integrator_3000(ecg_data_t* value)
 {
-	static int32_t buffer_x[INTEGRATION_LENGTH] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	static int32_t buffer_x[INTEGRATION_LENGTH] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+													0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	int32_t y_n = value->data;
 	ecg_data_t aux;
 	int8_t i;
