@@ -16,6 +16,8 @@
 #include "display/display_src/display_functions.h"
 #include "touch/touch.h"
 
+#define FS 500
+
 buzzer_t buzzer;
 display_t display;
 ecg_data_circular_buffer_t ecg_buffer;
@@ -63,119 +65,103 @@ int main()
 
 	__bis_SR_register(GIE);			//Enable global interrupts
 
-//	ecg_data_t datarino[3], max_array[10],max_max_array[7],last_max;
-////	ecg_data_t *aux_dat, *aux_max;
-//	uint16_t max_pos[10],max_max_pos[7];
-//	uint16_t n_sample,last_pos = 0,average;
-//
-//	uint8_t i,j,k;
-//
-////	uint8_t *aux_pos;
-//	volatile int max_max,th;
-//	volatile int filtered_signal[3];
-//	volatile int32_t bpm_interino=0;
-//
-//	char bpm[5];
-//	itoa(0,bpm);
-//
-//	ecg_data_clear(&last_max);
+	int32_t max_array[8] = {0,0,0,0,0,0,0,0};
+	int max_pos[8] = {0,0,0,0,0,0,0,0};
+	int32_t threshold = 0;
+
+	uint8_t index_1 = 0,index_2 = 0,j;
+
+	int32_t maxerino = 0,dif;
+	int maxerino_pos = 0,sample;
+	ecg_data_t aux,prev;
+
+	ecg_data_clear(&prev);
 
 	while(1)
 	{
-//		while(ecg_buffer.index < ecg_buffer.buffer_size - 1);
-//
-////			aux_dat = datarino;
-////			aux_max = max_array;
-////			aux_pos = max_pos;
-//
-//		j=1;								// Variable reset ( this could be avoided in a function)
-//		k=0;								// |
-//		n_sample = 250;						// |
-//		max_max = 0x8000;					// |
-//											// |
-//		for(i = 0; i <2; i++ )				// |
-//		{									// |
-////			ecg_data_clear(&datarino[i]);	// |
-//			ecg_data_circular_buffer_read_full(&ecg_buffer,&datarino[i]);
-//		}									// |
-//											// |
-//		for(i = 0; i <10; i++ )				// |
-//		{									// |
-//			ecg_data_clear(&max_array[i]);				// |
-//			max_pos[i] = 0;
-//		}									// |
-//		*max_pos = last_pos;
-//		ecg_data_copy(&last_max,max_array);
-//		for(i = 0; i <7; i++ )				// |
-//		{									// |
-//			ecg_data_clear(&max_max_array[i]);				// |
-//			max_max_pos[i] = 0;
-//		}
-//
-//		while(ecg_data_circular_buffer_read_full(&ecg_buffer,&datarino[2])) // Read all the buffer
-//		{
-//
-//			// Establish a dinamic threshold for local maximum to be stored
-//			// The local max condition is that the previous and next sample both are lower
-//			// than the current sample ( review that )
-//
-//			if(max_max < datarino[2].data)
-//			{
-//				max_max = datarino[2].data;		// Refresh max maximun
-//			}
-//
-//			th = max_max >> 1;
-//
-//			if((datarino[1].data > datarino[0].data)&&(datarino[1].data > datarino[2].data)&&
-//						(datarino[1].data > th ))
-//			{
-////					ecg_data_copy(&datarino[1],aux_max++);
-////					*(aux_pos++) = muestra;
-//				ecg_data_copy(&datarino[1],&max_array[j]);
-//				max_pos[j] = n_sample;
-//				j++;
-//
-//			}
-//			n_sample++;
-////				*aux_dat = *(++aux_dat);
-////				*aux_dat = *(++aux_dat);
-//			datarino[0] = datarino[1];		// Shift samples
-//			datarino[1] = datarino[2];
-//
-////				aux_dat = datarino;
-//		}
-//
-//		th = (max_max * 9)/10;	// Threshold for consider a maximun as a R peak
-//		average = 0;							// |
-//
-//		for(i = 0;i < j ; i++)
-//		{
-//			if(max_array[i].data > th)
-//			{
-//				ecg_data_copy(&max_array[i],&max_max_array[k]);
-//				max_max_pos[k] = max_pos[i];
-//				k++;
-//			}
-//		}
-//
-//		if (k > 1)
-//		{
-//			for(i = 0;i < k - 1; i++) // Average the R peaks distance
-//			{
-//				average = average + (max_max_pos[i+1] - max_max_pos[i]) / (k - 1);
-//			}
-//
-//			bpm_interino = (60 * 250) / average;		//bpm
-//			itoa((uint16_t)bpm_interino,bpm);
-//		}
-//
-//		display_functions_write_string(bpm, COLOR_RED,
-//									   display.display_interface.menubar_window_bg_color,
-//									   0x50, 0xC0);
-//
-//		last_pos = max_max_pos[k-1] - 250;
-//		ecg_data_copy(&max_max_array[k-1],&last_max);
+		while(ecg_buffer.index < BUFFER_SIZE){
+			delay_ms(2);
+		}
+		sample = 0;
+	    while (ecg_data_circular_buffer_read_full(&ecg_buffer, &aux))
+	    {
+	        // Iterates over the windows
+	        if (aux.data > 0.9 * threshold)
+	        {
+	            // When a sample is higher than threshold
+	            // stores the index
+	            while(aux.data > 0.9 * threshold)&&(sample < (BUFFER_SIZE - 1))
+				{
+	                // Iterates over the windows
+	                // while is higher than the TH
+	                if (maxerino < aux.data )&&(  aux.data > prev.data)
+					{
+	                    // Stores max
+	                    maxerino = aux.data;
+	                    maxerino_pos = sample;
+					}
+	                sample++;
+				}
+				// Stores the end of the sub windows and the
+				// value and position of the local max.
 
+	            max_array(index_1) = maxerino;
 
+	            if (index_1 < 5)
+	            {
+	                index_1++;
+	            }else{
+	                index_1 = 1;
+	            }
+
+	            if (maxerino_pos < (BUFFER_SIZE - 1))&&(maxerino_pos > 0)
+				{
+				// to ensure the max is not recorded
+				// because the windows ends instead
+				// of a real max
+	                max_pos(index_2) = maxerino_pos;
+	                index_2 = index_2 + 1;
+				}
+
+	            maxerino = 0;
+	            maxerino_pos = 0;
+
+	        }else{
+	            j = j + 1;
+	        }
+
+	    }
+	    // After went over the window, we calculate
+	    // the bpm
+	    for (j = 0; j < 8; j++)
+	    {
+	    	threshold += max_array[j];
+	    }
+	    threshold = threshold>>3;
+
+	    if (index_2 == 1)
+	    {
+	        // no max detected from the previous iter
+	        threshold = 0.9 * threshold;
+
+	    }else if (index_2 == 2){
+
+	        threshold = 0.9 * threshold;
+	        max_pos[1] = max_pos[index_2 - 1] - FS;
+
+	    }else{
+
+	        for (j = 0; j < (index_2 - 2);j++)
+	        {
+	            dif = max_pos[j + 1] - max_pos[j];
+
+	            if (dif < 600)&&(dif > 70)
+				{
+	               bpm = 60*fs/dif
+				}
+	        }
+	        max_pos[1] = max_pos[index_2 - 1] - FS;
+	        index_2 = 2;
+	   }
 	}
 }
