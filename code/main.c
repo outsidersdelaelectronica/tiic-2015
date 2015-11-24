@@ -67,67 +67,71 @@ int main()
 
 	int32_t max_array[8] = {0,0,0,0,0,0,0,0};
 	int max_pos[8] = {0,0,0,0,0,0,0,0};
-	int32_t threshold = 0;
+	int32_t threshold = 1;
 
-	uint8_t index_1 = 0,index_2 = 0,j;
+	uint8_t index_1 = 0,index_2 = 0,j = 0;
 
 	int32_t maxerino = 0,dif;
 	int maxerino_pos = 0,sample;
+	uint16_t calc = 0;
 	ecg_data_t aux,prev;
-
+	float bpm;
+	char numberino[5];
 	ecg_data_clear(&prev);
 
 	while(1)
 	{
-		while(ecg_buffer.index < BUFFER_SIZE){
-			delay_ms(2);
+		while(ecg_buffer.index < (BUFFER_SIZE - 1)){
+			delay_ms(4);
 		}
 		sample = 0;
+		index_2 = 0;
+		ecg_data_clear(&prev);
+
 	    while (ecg_data_circular_buffer_read_full(&ecg_buffer, &aux))
 	    {
 	        // Iterates over the windows
-	        if (aux.data > 0.9 * threshold)
+	        if (aux.data > (threshold * 9) / 10)
 	        {
 	            // When a sample is higher than threshold
 	            // stores the index
-	            while(aux.data > 0.9 * threshold)&&(sample < (BUFFER_SIZE - 1))
+	            while((aux.data > (threshold * 9) / 10 )&&(sample < (BUFFER_SIZE - 1)))
 				{
 	                // Iterates over the windows
 	                // while is higher than the TH
-	                if (maxerino < aux.data )&&(  aux.data > prev.data)
+	            	ecg_data_circular_buffer_read_full(&ecg_buffer, &aux);
+	                if((maxerino < aux.data )&&( aux.data > prev.data))
 					{
 	                    // Stores max
 	                    maxerino = aux.data;
 	                    maxerino_pos = sample;
 					}
 	                sample++;
+	                ecg_data_copy(&aux,&prev);
 				}
 				// Stores the end of the sub windows and the
 				// value and position of the local max.
 
-	            max_array(index_1) = maxerino;
+	            max_array[index_1++] = maxerino;
 
-	            if (index_1 < 5)
+	            if (index_1 == 8)
 	            {
-	                index_1++;
-	            }else{
 	                index_1 = 1;
 	            }
 
-	            if (maxerino_pos < (BUFFER_SIZE - 1))&&(maxerino_pos > 0)
+	            if((maxerino_pos < (BUFFER_SIZE - 1))&&(maxerino_pos > 0))
 				{
 				// to ensure the max is not recorded
 				// because the windows ends instead
 				// of a real max
-	                max_pos(index_2) = maxerino_pos;
-	                index_2 = index_2 + 1;
+	                max_pos[index_2++] = maxerino_pos;
 				}
 
 	            maxerino = 0;
 	            maxerino_pos = 0;
 
 	        }else{
-	            j = j + 1;
+	        	sample++;
 	        }
 
 	    }
@@ -139,14 +143,15 @@ int main()
 	    }
 	    threshold = threshold>>3;
 
-	    if (index_2 == 1)
+	    if (index_2 == 0)
 	    {
 	        // no max detected from the previous iter
-	        threshold = 0.9 * threshold;
+	        threshold = (threshold * 9)/10 ;
 
-	    }else if (index_2 == 2){
+	    }else if (index_2 == 1)
+	    {
 
-	        threshold = 0.9 * threshold;
+	        threshold = (threshold * 9)/10;
 	        max_pos[1] = max_pos[index_2 - 1] - FS;
 
 	    }else{
@@ -155,13 +160,23 @@ int main()
 	        {
 	            dif = max_pos[j + 1] - max_pos[j];
 
-	            if (dif < 600)&&(dif > 70)
-				{
-	               bpm = 60*fs/dif
-				}
+//	            if((dif < 600)&&(dif > 70))
+//				{
+			   bpm = 60 * FS/dif;
+			   calc = (uint16_t)bpm;
+			   itoa(calc, numberino);
+			   display_functions_write_string("70", COLOR_RED,
+								   display.display_interface.menubar_window_bg_color, 0x60, 0xC0);
+//	               calc = (int)(bpm*1024 - calc*1024);
+//	               display_functions_write_char('.', COLOR_RED,
+//	   	   	   	   	   	   	   	   	   display.display_interface.menubar_window_bg_color, 0xA0, 0xC0);
+//	               itoa(calc, numberino);
+//	               display_functions_write_string(numberino, COLOR_RED,
+//	   	   	   	   	   	   	   	   	   display.display_interface.menubar_window_bg_color, 0xB0, 0xC0);
+//				}
 	        }
 	        max_pos[1] = max_pos[index_2 - 1] - FS;
-	        index_2 = 2;
+	        index_2 = 1;
 	   }
 	}
 }
