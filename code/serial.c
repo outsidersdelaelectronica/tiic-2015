@@ -47,7 +47,7 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 		//Read ECG signal - another 3 bytes
 			for (i = 3; i > 0; i--)
 			{
-				afe_bytes[3 - i] = afe_serial_send(0x00);
+				afe_bytes[3 - i] = afe_serial_read(0x00);
 			}
 
 			P4OUT |= BIT4;							//Disable CS
@@ -55,7 +55,7 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 		//Store signal data into ecg signal buffer
 
 			ecg_data_write(&last_sample, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
-
+			last_sample.data = (last_sample.data)<<8;
 //			ecg_data_circular_buffer_write(&ecg_buffer, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
 			ecg_data_circular_buffer_write(&ecg_buffer, &last_sample);
 

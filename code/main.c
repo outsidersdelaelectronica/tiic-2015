@@ -26,6 +26,19 @@ ecg_data_t last_sample;
 
 int main()
 {
+	volatile int32_t max_array[8] = {0,0,0,0,0,0,0,0};
+	volatile int max_pos[8] = {0,0,0,0,0,0,0,0};
+	volatile int32_t threshold = 1;
+
+	volatile uint8_t index_1 = 0,index_2 = 0,j = 0;
+
+	volatile int32_t maxerino = 0,dif = 0;
+	volatile int maxerino_pos = 0,sample = 0;
+	volatile uint16_t calc = 0;
+	volatile ecg_data_t aux,prev;
+	volatile float bpm = 0;
+	char numberino[5];
+
     WDTCTL = WDTPW | WDTHOLD;		//Stop watchdog timer
 
     /*
@@ -65,28 +78,18 @@ int main()
 
 	__bis_SR_register(GIE);			//Enable global interrupts
 
-	int32_t max_array[8] = {0,0,0,0,0,0,0,0};
-	int max_pos[8] = {0,0,0,0,0,0,0,0};
-	int32_t threshold = 1;
-
-	uint8_t index_1 = 0,index_2 = 0,j = 0;
-
-	int32_t maxerino = 0,dif;
-	int maxerino_pos = 0,sample;
-	uint16_t calc = 0;
-	ecg_data_t aux,prev;
-	float bpm;
-	char numberino[5];
-	ecg_data_clear(&prev);
-
 	while(1)
 	{
 		while(ecg_buffer.index < (BUFFER_SIZE - 1)){
 			delay_ms(4);
 		}
+		__bic_SR_register(GIE);			//Enable global interrupts
 		sample = 0;
 		index_2 = 0;
+		ecg_data_clear(&aux);
 		ecg_data_clear(&prev);
+		maxerino = 0;
+		maxerino_pos = 0;
 
 	    while (ecg_data_circular_buffer_read_full(&ecg_buffer, &aux))
 	    {
@@ -112,18 +115,17 @@ int main()
 				// Stores the end of the sub windows and the
 				// value and position of the local max.
 
-	            max_array[index_1++] = maxerino;
-
-	            if (index_1 == 8)
-	            {
-	                index_1 = 1;
-	            }
-
 	            if((maxerino_pos < (BUFFER_SIZE - 1))&&(maxerino_pos > 0))
 				{
 				// to ensure the max is not recorded
 				// because the windows ends instead
 				// of a real max
+	            	max_array[index_1++] = maxerino;
+
+		            if (index_1 == 8)
+		            {
+		                index_1 = 1;
+		            }
 	                max_pos[index_2++] = maxerino_pos;
 				}
 
@@ -150,8 +152,6 @@ int main()
 
 	    }else if (index_2 == 1)
 	    {
-
-	        threshold = (threshold * 9)/10;
 	        max_pos[1] = max_pos[index_2 - 1] - FS;
 
 	    }else{
@@ -160,23 +160,24 @@ int main()
 	        {
 	            dif = max_pos[j + 1] - max_pos[j];
 
-//	            if((dif < 600)&&(dif > 70))
-//				{
-			   bpm = 60 * FS/dif;
-			   calc = (uint16_t)bpm;
-			   itoa(calc, numberino);
-			   display_functions_write_string("70", COLOR_RED,
-								   display.display_interface.menubar_window_bg_color, 0x60, 0xC0);
+	            if((dif < 600)&&(dif > 70))
+				{
+				   bpm = 60 * FS/dif;
+				   calc = (uint16_t)bpm;
+				   itoa(calc, numberino);
+	               display_functions_write_string(numberino, COLOR_RED,
+	   	   	   	   	   	   	   	   	   display.display_interface.menubar_window_bg_color, 0x50, 0xC0);
 //	               calc = (int)(bpm*1024 - calc*1024);
 //	               display_functions_write_char('.', COLOR_RED,
 //	   	   	   	   	   	   	   	   	   display.display_interface.menubar_window_bg_color, 0xA0, 0xC0);
 //	               itoa(calc, numberino);
 //	               display_functions_write_string(numberino, COLOR_RED,
 //	   	   	   	   	   	   	   	   	   display.display_interface.menubar_window_bg_color, 0xB0, 0xC0);
-//				}
+				}
 	        }
 	        max_pos[1] = max_pos[index_2 - 1] - FS;
 	        index_2 = 1;
 	   }
+	    __bis_SR_register(GIE);			//Enable global interrupts
 	}
 }

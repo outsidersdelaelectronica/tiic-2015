@@ -14,6 +14,8 @@
 #include "ADS1291_constants.h"
 
 uint8_t	afe_serial_send(uint8_t data);
+uint8_t	afe_serial_read(uint8_t data);
+
 
 uint8_t afe_serial_read_register(uint8_t address);
 void 	afe_serial_write_register(uint8_t address, uint8_t value);
