@@ -30,9 +30,10 @@ void __attribute__ ((interrupt(TIMER2_A0_VECTOR))) Timer2_A0_ISR (void)
 //		if (ecg_data_circular_buffer_read_full(&ecg_buffer, &signal_data_point))	//If there is data available
 //		{
 			display_interface_write_signal(&display.display_interface, &last_sample, signal_color);			//Write it
+//			signal_data_point.data = signal_data_point.data <<3;
 //			display_interface_write_signal(&display.display_interface, &signal_data_point, signal_color);	//Write it
 //		}
-		__bis_SR_register_on_exit(GIE);
+//		__bis_SR_register_on_exit(GIE);
 }
 
 /*
