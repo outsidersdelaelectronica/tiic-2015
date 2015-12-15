@@ -7,61 +7,29 @@
 
 #include "utils.h"
 
-void itoa(uint16_t number, char* string)
+void itoa(long unsigned int value, char* result, int base)
 {
-	uint16_t units, tens, hundreds, thousands;
+	// check that the base if valid
+	if (base < 2 || base > 36) { *result = '\0';}
 
-	units = number % 10;
-	tens = number % 100 - units;
-	hundreds = number % 1000 - units - tens;
-	thousands = number % 10000 - units - tens - hundreds;
+	char* ptr = result, *ptr1 = result, tmp_char;
+	int tmp_value;
 
-	string[0] = thousands/1000 + '0';
-	string[1] = hundreds/100 + '0';
-	string[2] = tens/10 + '0';
-	string[3] = units + '0';
-	string[4] = 0x00;
+	do {
+	tmp_value = value;
+	value /= base;
+	*ptr++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz" [35 + (tmp_value - value * base)];
+	} while ( value );
 
-//	uint16_t aux = number;
-//	uint8_t i = 0;
-//
-//	if(number > 9999)
-//		{
-//			string[0] = '9' + '0';
-//			string[1] = '9' + '0';
-//			string[2] = '9' + '0';
-//			string[3] = '9' + '0';
-//			string[4] = 0x00;
-//		}
-//		else
-//		{
-//
-//			for(;aux > 1000; aux = aux - 1000)
-//			{
-//				i++;
-//			}
-//			string[0] = i + '0';
-//			i= 0;
-//			for(;aux > 100; aux = aux - 100)
-//			{
-//				i++;
-//			}
-//			string[1] = i + '0';
-//			i= 0;
-//			for(;aux > 10; aux = aux - 10)
-//			{
-//				i++;
-//			}
-//			string[2] = i + '0';
-//			i= 0;
-//			for(;aux > 0; aux = aux - 1)
-//			{
-//				i++;
-//			}
-//			string[3] = i + '0';
-//			string[4] = 0x00;
-//		}
-	// not tested
+	// Apply negative sign
+	if (tmp_value < 0) *ptr++ = '-';
+	*ptr-- = '\0';
+	while(ptr1 < ptr) {
+	tmp_char = *ptr;
+	*ptr--= *ptr1;
+	*ptr1++ = tmp_char;
+	}
+
 }
 
 void delay_ms(int ms)

@@ -11,7 +11,7 @@
 #include <msp430.h>
 #include <stdint.h>
 
-void	itoa(uint16_t number, char* string);
+void itoa(long unsigned int value, char* result, int base);
 void	delay_ms(int ms);
 
 #endif /* UTILS_H_ */

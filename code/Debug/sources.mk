@@ -111,6 +111,7 @@ SUBDIRS := \
 . \
 touch/touch_src \
 touch \
+filters \
 display \
 display/display_src \
 data \

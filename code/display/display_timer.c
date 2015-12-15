@@ -10,6 +10,7 @@
 extern display_t display;
 extern ecg_data_circular_buffer_t ecg_buffer;
 extern ecg_data_t last_sample;
+extern int bpm;
 
 // Timer A2 interrupt service routine
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
@@ -23,17 +24,30 @@ void __attribute__ ((interrupt(TIMER2_A0_VECTOR))) Timer2_A0_ISR (void)
 {
 	static ecg_data_t signal_data_point;					//Temporary storage variable
 	static const color_t signal_color = COLOR_GREEN;
+	static uint8_t count = 0;
+	static char numberino[5];
+	uint16_t gie = __get_SR_register() & GIE; //Store current GIE state
 	/*
 	 * Paint ECG value every display tick
 	 */
-		__bic_SR_register(GIE);
-//		if (ecg_data_circular_buffer_read_full(&ecg_buffer, &signal_data_point))	//If there is data available
-//		{
-			display_interface_write_signal(&display.display_interface, &last_sample, signal_color);			//Write it
-//			signal_data_point.data = signal_data_point.data <<3;
-//			display_interface_write_signal(&display.display_interface, &signal_data_point, signal_color);	//Write it
-//		}
-//		__bis_SR_register_on_exit(GIE);
+//	__disable_interrupt();                    //Make this operation atomic
+
+
+	display_interface_write_signal(&display.display_interface, &last_sample, signal_color);			//Write it
+	if (++count > 20)
+	{
+		count = 0;
+		itoa(bpm,numberino,10);
+		if ( bpm < 100){
+		    display_functions_write_string("    ", COLOR_RED,
+										   display.display_interface.menubar_window_bg_color, 0x60, 0xC0);
+		}
+
+	    display_functions_write_string(numberino, COLOR_RED,
+									   display.display_interface.menubar_window_bg_color, 0x60, 0xC0);
+	}
+
+//	__bis_SR_register_on_exit(gie);                   //Restore original GIE state
 }
 
 /*

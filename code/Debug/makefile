@@ -14,6 +14,7 @@ ORDERED_OBJS += \
 "./touch/touch_src/touch_coordinate.obj" \
 "./touch/touch_src/touch_serial.obj" \
 "./touch/touch.obj" \
+"./filters/filters.obj" \
 "./display/display.obj" \
 "./display/display_timer.obj" \
 "./display/display_src/color.obj" \
@@ -42,6 +43,7 @@ RMDIR := RMDIR /S/Q
 -include subdir_vars.mk
 -include touch/touch_src/subdir_vars.mk
 -include touch/subdir_vars.mk
+-include filters/subdir_vars.mk
 -include display/subdir_vars.mk
 -include display/display_src/subdir_vars.mk
 -include data/subdir_vars.mk
@@ -51,6 +53,7 @@ RMDIR := RMDIR /S/Q
 -include subdir_rules.mk
 -include touch/touch_src/subdir_rules.mk
 -include touch/subdir_rules.mk
+-include filters/subdir_rules.mk
 -include display/subdir_rules.mk
 -include display/display_src/subdir_rules.mk
 -include data/subdir_rules.mk
@@ -182,8 +185,8 @@ tiic_2015.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "clocks.pp" "main.pp" "serial.pp" "utils.pp" "touch\touch_src\touch_coordinate.pp" "touch\touch_src\touch_serial.pp" "touch\touch.pp" "display\display.pp" "display\display_timer.pp" "display\display_src\color.pp" "display\display_src\display_functions.pp" "display\display_src\display_hal.pp" "display\display_src\display_interface.pp" "display\display_src\font.pp" "data\ecg_data.pp" "data\ecg_data_circular_buffer.pp" "buzzer\buzzer.pp" "afe\afe_src\afe_serial.pp" "afe\afe.pp" 
-	-$(RM) "clocks.obj" "main.obj" "serial.obj" "utils.obj" "touch\touch_src\touch_coordinate.obj" "touch\touch_src\touch_serial.obj" "touch\touch.obj" "display\display.obj" "display\display_timer.obj" "display\display_src\color.obj" "display\display_src\display_functions.obj" "display\display_src\display_hal.obj" "display\display_src\display_interface.obj" "display\display_src\font.obj" "data\ecg_data.obj" "data\ecg_data_circular_buffer.obj" "buzzer\buzzer.obj" "afe\afe_src\afe_serial.obj" "afe\afe.obj" 
+	-$(RM) "clocks.pp" "main.pp" "serial.pp" "utils.pp" "touch\touch_src\touch_coordinate.pp" "touch\touch_src\touch_serial.pp" "touch\touch.pp" "filters\filters.pp" "display\display.pp" "display\display_timer.pp" "display\display_src\color.pp" "display\display_src\display_functions.pp" "display\display_src\display_hal.pp" "display\display_src\display_interface.pp" "display\display_src\font.pp" "data\ecg_data.pp" "data\ecg_data_circular_buffer.pp" "buzzer\buzzer.pp" "afe\afe_src\afe_serial.pp" "afe\afe.pp" 
+	-$(RM) "clocks.obj" "main.obj" "serial.obj" "utils.obj" "touch\touch_src\touch_coordinate.obj" "touch\touch_src\touch_serial.obj" "touch\touch.obj" "filters\filters.obj" "display\display.obj" "display\display_timer.obj" "display\display_src\color.obj" "display\display_src\display_functions.obj" "display\display_src\display_hal.obj" "display\display_src\display_interface.obj" "display\display_src\font.obj" "data\ecg_data.obj" "data\ecg_data_circular_buffer.obj" "buzzer\buzzer.obj" "afe\afe_src\afe_serial.obj" "afe\afe.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

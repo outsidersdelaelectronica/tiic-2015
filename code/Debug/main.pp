@@ -28,6 +28,7 @@ main.obj: ../touch/touch.h
 main.obj: ../touch/touch_src/touch_coordinate.h
 main.obj: ../touch/touch_src/touch_serial.h
 main.obj: ../touch/touch_src/XPT2046_constants.h
+main.obj: ../filters/filters.h
 
 ../main.c: 
 C:/ti/ccsv6/ccs_base/msp430/include/msp430.h: 
@@ -57,3 +58,4 @@ C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h:
 ../touch/touch_src/touch_coordinate.h: 
 ../touch/touch_src/touch_serial.h: 
 ../touch/touch_src/XPT2046_constants.h: 
+../filters/filters.h: 
