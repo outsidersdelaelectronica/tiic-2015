@@ -8,7 +8,6 @@
 #include "display_timer.h"
 
 extern display_t display;
-extern ecg_data_circular_buffer_t ecg_buffer;
 extern ecg_data_t last_sample;
 extern int bpm;
 
@@ -30,7 +29,7 @@ void __attribute__ ((interrupt(TIMER2_A0_VECTOR))) Timer2_A0_ISR (void)
 	/*
 	 * Paint ECG value every display tick
 	 */
-//	__disable_interrupt();                    //Make this operation atomic
+	__disable_interrupt();                    //Make this operation atomic
 
 
 	display_interface_write_signal(&display.display_interface, &last_sample, signal_color);			//Write it
@@ -47,7 +46,7 @@ void __attribute__ ((interrupt(TIMER2_A0_VECTOR))) Timer2_A0_ISR (void)
 									   display.display_interface.menubar_window_bg_color, 0x60, 0xC0);
 	}
 
-//	__bis_SR_register_on_exit(gie);                   //Restore original GIE state
+	__bis_SR_register_on_exit(gie);                   //Restore original GIE state
 }
 
 /*

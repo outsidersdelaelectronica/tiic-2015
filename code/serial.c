@@ -10,10 +10,15 @@
 
 extern buzzer_t buzzer;
 extern display_t display;
-extern ecg_data_circular_buffer_t ecg_buffer;
 extern touch_t touch;
 extern ecg_data_t last_sample;
 extern int bpm;
+
+extern uint8_t afe_bytes[3];
+extern uint8_t i,flag ;
+extern int maxerino_pos = 0,sample_counter = 0;
+extern int32_t threshold, maxerino,current_value, prev_value;
+
 
 #define FS 250
 
@@ -29,88 +34,67 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 #error Compiler not supported!
 #endif
 {
-	uint8_t afe_bytes[3] = {0x00 , 0x00, 0x00};
-	uint8_t i = 0;
 	uint16_t gie = __get_SR_register() & GIE; //Store current GIE state
 
-	static int prev_max_pos = -1, maxerino_pos = 0,sample_counter = 0;
-	static int32_t threshold = 350, maxerino = 0,dif = 0;
-
-	static ecg_data_t current_sample, prev_sample;
+//	uint8_t afe_bytes[3] = {0x00 , 0x00, 0x00};
+//	uint8_t i = 0;
+//	static uint8_t flag = 0;
+//	static int maxerino_pos = 0,sample_counter = 0;
+//	static int32_t threshold = 0x00FFFFFF, maxerino = 0,current_value = 0, prev_value = 0;
 
 	__disable_interrupt();                    //Make this operation atomic
 
-//	if (P1IFG & BIT2)
-//	{
-//		//Read 3 ADS1291 status bytes
-//		P4OUT &= ~BIT4;							//Enable CS
-//
-//
-//		for (i = 3; i > 0; i--)
-//		{
-//			afe_serial_send(0x00);
-//		}
-//
-//		//Read ECG signal - another 3 bytes
-//		for (i = 3; i > 0; i--)
-//		{
-//			afe_bytes[3 - i] = afe_serial_send(0x00);
-//		}
-//
-//		P4OUT |= BIT4;							//Disable CS
-//
-//		//Store signal data into ecg signal buffer
-//
-//		ecg_data_write(&last_sample, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
-//		ecg_data_circular_buffer_write(&ecg_buffer, &last_sample);
-//
-//		ecg_data_circular_buffer_read_last(&ecg_buffer, &current_sample);
-//
-//		if(current_sample.data < 0 ){
-//			current_sample.data = current_sample.data *(-1);
-//		}
-////		ecg_data_copy(&last_sample,&current_sample);
-//
-//		if(current_sample.data >= threshold )
-//		{
-//			if (current_sample.data >= maxerino )
-//			{
-//				maxerino = current_sample.data;
-//				maxerino_pos = sample_counter;
-////				bpm = maxerino_pos;
-//			}
-//		}else if (prev_sample.data >= threshold )
-//		{
-//			bpm = maxerino_pos - prev_max_pos;
-//			dif = 1;
-//			if ((dif <= FS<<1) &&(dif >= FS>>2))
-//			{
-//				bpm = (60 * FS) / dif;
-//				threshold = (( threshold * 49 + maxerino * 7) >> 6);
-//				prev_max_pos = maxerino_pos;
-//				maxerino = 0;
-//			}
-//		}else{
-//			threshold = threshold - 1;
-//			maxerino = 0;
-//		}
-//
-//		sample_counter++;
-//
-//		if ( sample_counter == BUFFER_SIZE)
-//		{
-//			sample_counter = 0;
-//			prev_max_pos = prev_max_pos - BUFFER_SIZE;
-//		}
-//
-//		ecg_data_copy(&current_sample,&prev_sample);
-//
-//		P1IFG &= ~BIT2;                       	// Clear DRDY (P1.2) flag
-//
-//	}
-//	else if (P1IFG & BIT3)
-	if (P1IFG & BIT3)
+	if (P1IFG & BIT2)
 	{
+		//Read 3 ADS1291 status bytes
+		P4OUT &= ~BIT4;							//Enable CS
+
+		for (i = 3; i > 0; i--)
+		{
+			afe_serial_send(0x00);
+		}
+
+		//Read ECG signal - another 3 bytes
+		for (i = 3; i > 0; i--)
+		{
+			afe_bytes[3 - i] = afe_serial_send(0x00);
+		}
+
+		P4OUT |= BIT4;							//Disable CS
+
+		//Store signal data into ecg signal buffer
+
+		ecg_data_write(&last_sample, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
+
+		current_value = filter_sample(last_sample.data);
+
+		if(current_value >= (threshold * 7) >>3 )
+		{
+			if (current_value >= maxerino )
+			{
+				maxerino = current_value;
+				maxerino_pos = sample_counter;
+			}else if (flag == 0){
+				threshold = (maxerino * 7) >>3;
+				flag = 1;
+			}
+		}else if ((prev_value >= (threshold * 7) >>3 ) && (maxerino > 0))
+		{
+			bpm = (60 * FS) / maxerino_pos;
+			threshold = (( threshold * 7 + maxerino) >> 3);
+			sample_counter = sample_counter - maxerino_pos -1;
+			maxerino = 0;
+		}else{
+			threshold = (threshold * 127) >> 7;
+			maxerino = 0;
+		}
+
+		sample_counter++;
+		prev_value = current_value;
+
+		P1IFG &= ~BIT2;                       	// Clear DRDY (P1.2) flag
+
+	}else if (P1IFG & BIT3){
 		//Request last position
 			touch_request_position(&touch);
 
@@ -126,33 +110,3 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 	__bis_SR_register_on_exit(gie);                   //Restore original GIE state
 
 }
-
-//if(current_sample.data >= (threshold *  9)/10))
-//{
-//	if (current_sample.data >= maxerino )
-//	{
-//		maxerino = current_sample.data;
-//		maxerino_pos = sample_counter;
-//		bpm = maxerino_pos;
-//	}
-//}else if (prev_sample.data >= ((threshold *  9)/10))
-//{
-//	dif = maxerino_pos - prev_max_pos;
-//	if ((dif <= FS<<1) &&(dif >= FS>>2))
-//	{
-////				bpm = (60 * FS) / dif;
-//		threshold = ( threshold * 7 + maxerino) >> 3;
-//		prev_max_pos = maxerino_pos;
-//		maxerino = 0;
-//	}
-//}else{
-//	threshold = threshold >>1;
-//}
-//
-//sample_counter++;
-//
-//if ( sample_counter == BUFFER_SIZE)
-//{
-//	sample_counter = 0;
-//	prev_max_pos = prev_max_pos - BUFFER_SIZE;
-//}

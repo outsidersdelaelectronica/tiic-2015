@@ -28,6 +28,7 @@ serial.obj: ../touch/touch.h
 serial.obj: ../touch/touch_src/touch_coordinate.h
 serial.obj: ../touch/touch_src/touch_serial.h
 serial.obj: ../touch/touch_src/XPT2046_constants.h
+serial.obj: ../filters/filters.h
 
 ../serial.c: 
 ../serial.h: 
@@ -57,3 +58,4 @@ C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include/stdint.h:
 ../touch/touch_src/touch_coordinate.h: 
 ../touch/touch_src/touch_serial.h: 
 ../touch/touch_src/XPT2046_constants.h: 
+../filters/filters.h: 

@@ -15,6 +15,7 @@
 #include "display/display.h"
 #include "display/display_src/display_functions.h"
 #include "touch/touch.h"
+#include "filters/filters.h"
 
 #define THRESHOLD 0x00006000
 
