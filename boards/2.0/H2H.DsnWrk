@@ -1,8 +1,6 @@
 [ProjectGroup]
 Version=1.0
-[Project0]
-ProjectPath=H2H Main Board\H2H Main Board.PrjPCB
 [Project1]
-ProjectPath=H2H Pacemaker\H2H Pacemaker.PrjPCB
+ProjectPath=H2H Main Board\H2H Main Board.PrjPCB
 [Project2]
 ProjectPath=H2H Docking Station\H2H Power Supply.PrjPCB
