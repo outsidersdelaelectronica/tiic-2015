@@ -156,6 +156,23 @@ GenerateClassCluster=0
 DocumentUniqueId=AAURHPNL
 
 [Document8]
+DocumentPath=Schematics\Main Board.SchDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=YRDABMUH
+
+[Document9]
 DocumentPath=Schematics\AFE.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -172,7 +189,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=XILTOBEK
 
-[Document9]
+[Document10]
 DocumentPath=Schematics\AFE.Harness
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -189,7 +206,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document10]
+[Document11]
 DocumentPath=Schematics\Battery.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -206,7 +223,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=OXAQUEVT
 
-[Document11]
+[Document12]
 DocumentPath=Schematics\Battery.Harness
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -223,7 +240,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document12]
+[Document13]
 DocumentPath=Schematics\Voltage Regulation.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -240,7 +257,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=ORBKVXEW
 
-[Document13]
+[Document14]
 DocumentPath=Schematics\Voltage Regulation.Harness
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -257,7 +274,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document14]
+[Document15]
 DocumentPath=Schematics\RF.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -274,7 +291,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=BJURBALD
 
-[Document15]
+[Document16]
 DocumentPath=Schematics\RF.Harness
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -291,7 +308,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document16]
+[Document17]
 DocumentPath=Schematics\User Interface.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -308,7 +325,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=JMETTTIS
 
-[Document17]
+[Document18]
 DocumentPath=Schematics\User Interface.Harness
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -325,7 +342,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document18]
+[Document19]
 DocumentPath=Schematics\MCU.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -342,7 +359,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=GJNDRJVM
 
-[Document19]
+[Document20]
 DocumentPath=Schematics\MCU.Harness
 AnnotationEnabled=1
 AnnotateStartValue=1
