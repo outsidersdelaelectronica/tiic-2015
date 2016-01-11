@@ -380,9 +380,11 @@ DocumentUniqueId=
 Description=H2H Main Board (Main Flash Boot)
 AllowFabrication=0
 ParameterCount=0
-VariationCount=2
+VariationCount=4
 Variation1=Designator=R21|UniqueId=\RXJVYCVI\EMLLVVKS|Kind=1|AlternatePart= 
 Variation2=Designator=R22|UniqueId=\RXJVYCVI\KMOHPMBL|Kind=1|AlternatePart= 
+Variation3=Designator=R41|UniqueId=\LCQNNMMH\FKKMAJHL|Kind=1|AlternatePart= 
+Variation4=Designator=R43|UniqueId=\LCQNNMMH\ECXSBDOD|Kind=1|AlternatePart= 
 ParamVariationCount=0
 
 [Configuration1]
