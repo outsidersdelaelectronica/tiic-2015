@@ -376,15 +376,33 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
+[Document21]
+DocumentPath=PCB\Main Board.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=PMBAETKM
+
 [ProjectVariant1]
 Description=H2H Main Board (Main Flash Boot)
 AllowFabrication=0
 ParameterCount=0
-VariationCount=4
+VariationCount=5
 Variation1=Designator=R21|UniqueId=\RXJVYCVI\EMLLVVKS|Kind=1|AlternatePart= 
 Variation2=Designator=R22|UniqueId=\RXJVYCVI\KMOHPMBL|Kind=1|AlternatePart= 
-Variation3=Designator=R41|UniqueId=\LCQNNMMH\FKKMAJHL|Kind=1|AlternatePart= 
-Variation4=Designator=R43|UniqueId=\LCQNNMMH\ECXSBDOD|Kind=1|AlternatePart= 
+Variation3=Designator=R42|UniqueId=\LCQNNMMH\WVHEIOOV|Kind=1|AlternatePart= 
+Variation4=Designator=R43|UniqueId=\LCQNNMMH\FKKMAJHL|Kind=1|AlternatePart= 
+Variation5=Designator=R45|UniqueId=\LCQNNMMH\ECXSBDOD|Kind=1|AlternatePart= 
 ParamVariationCount=0
 
 [Configuration1]

@@ -1,0 +1,7 @@
+Added Component: Designator=ANT1(Antenna Inverted F 2.4 GHz)
+Added Pin To Net: NetName=GND Pin=ANT1-2
+Added Pin To Net: NetName=GND Pin=ANT1-2
+Added Pin To Net: NetName=NetANT1_1 Pin=ANT1-1
+Added Pin To Net: NetName=NetANT1_1 Pin=F1-2
+Added Net: Name=NetANT1_1
+Added Member To Class: ClassName=U_RF Member=Component ANT1 2.4 GHz F-antenna
