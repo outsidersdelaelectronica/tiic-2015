@@ -1,0 +1,4 @@
+Added Component: Designator=SW1(WS-TASU 436331045822)
+Added Pin To Net: NetName=VDD_MCU Pin=SW1-2
+Added Pin To Net: NetName=NetR39_2 Pin=SW1-3
+Added Member To Class: ClassName=U_MCU Member=Component SW1 WS-TASU 436331045822
