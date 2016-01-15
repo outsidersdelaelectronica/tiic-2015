@@ -1,0 +1,21 @@
+Change Physical Footprint: Designator=ANT1 Old Footprint=Antenna Inverted F 2.4 GHz New Footprint=Antenna Inverted F 2.4 GHz
+Change Physical Footprint: Designator=C19 Old Footprint=C0603 New Footprint=C0603
+Change Physical Footprint: Designator=C64 Old Footprint=C0603 New Footprint=C0603
+Change Physical Footprint: Designator=J2 Old Footprint=S2B-PH-K-S New Footprint=S2B-PH-K-S
+Change Physical Footprint: Designator=J3 Old Footprint=PJ-018H-SMT New Footprint=PJ-018H-SMT
+Change Physical Footprint: Designator=J4 Old Footprint=ER-CON40HB-2 New Footprint=ER-CON40HB-2
+Change Physical Footprint: Designator=Q1 Old Footprint=DMP3056L New Footprint=DMP3056L
+Change Physical Footprint: Designator=R17 Old Footprint=R0603 New Footprint=R0603
+Change Physical Footprint: Designator=R20 Old Footprint=R0603 New Footprint=R0603
+Change Physical Footprint: Designator=R21 Old Footprint=R0603 New Footprint=R0603
+Change Physical Footprint: Designator=R27 Old Footprint=R0603 New Footprint=R0603
+Change Physical Footprint: Designator=R33 Old Footprint=R0603 New Footprint=R0603
+Change Physical Footprint: Designator=R34 Old Footprint=R0603 New Footprint=R0603
+Change Physical Footprint: Designator=R36 Old Footprint=R0603 New Footprint=R0603
+Change Physical Footprint: Designator=R42 Old Footprint=R0603 New Footprint=R0603
+Change Physical Footprint: Designator=R43 Old Footprint=R0603 New Footprint=R0603
+Change Physical Footprint: Designator=SW1 Old Footprint=FSMRA4JH New Footprint=FSMRA4JH
+Change Physical Footprint: Designator=U2 Old Footprint=BQ27441DRZx-G1A New Footprint=BQ27441DRZx-G1A
+Change Physical Footprint: Designator=U3 Old Footprint=BQ24090 New Footprint=BQ24090
+Change Physical Footprint: Designator=U11 Old Footprint=SN74LV4T125 New Footprint=SN74LV4T125
+Change Physical Footprint: Designator=U13 Old Footprint=STM-LQFP100_N New Footprint=STM-LQFP100_N

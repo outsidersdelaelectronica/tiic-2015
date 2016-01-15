@@ -1,0 +1,4 @@
+Change Net Name : Old Net Name=FG_SRN New Net Name=FG_SR_N
+Change Net Name : Old Net Name=FG_SRP New Net Name=FG_SR_P
+Added Differential Pair: Name=FG_SR
+Added Member To Class: ClassName=U_RF Member=Component U12 CC2560A
