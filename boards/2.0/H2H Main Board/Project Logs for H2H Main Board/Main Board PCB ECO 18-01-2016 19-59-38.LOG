@@ -1,0 +1,16 @@
+Added Component: Designator=J5(3220-10-0100-00)
+Added Pin To Net: NetName=JTMS Pin=J5-2
+Added Pin To Net: NetName=GND Pin=J5-3
+Added Pin To Net: NetName=JTCK Pin=J5-4
+Added Pin To Net: NetName=GND Pin=J5-5
+Added Pin To Net: NetName=JTDO Pin=J5-6
+Added Pin To Net: NetName=JTDI Pin=J5-8
+Added Pin To Net: NetName=GND Pin=J5-9
+Added Pin To Net: NetName=NRST Pin=J5-10
+Added Pin To Net: NetName=NetJ5_1 Pin=J5-1
+Added Pin To Net: NetName=NetJ5_1 Pin=R41-2
+Added Net: Name=NetJ5_1
+Added Pin To Net: NetName=NetJ5_7 Pin=J5-7
+Added Pin To Net: NetName=NetJ5_7 Pin=R42-2
+Added Net: Name=NetJ5_7
+Added Member To Class: ClassName=U_MCU Member=Component J5 JTAG 10 Pin
