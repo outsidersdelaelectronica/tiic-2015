@@ -1,0 +1,6 @@
+Added Component: Designator=J3(PJ-018H-SMT)
+Added Pin To Net: NetName=CHRG_JACK Pin=J3-1
+Added Pin To Net: NetName=CHRG_JACK Pin=J3-1
+Added Pin To Net: NetName=GND Pin=J3-2
+Added Pin To Net: NetName=CHRG_JACK_DET_PIN Pin=J3-3
+Added Member To Class: ClassName=U_Battery Member=Component J3 PJ-018H-SMT
