@@ -37,11 +37,6 @@ void __attribute__ ((interrupt(TIMER2_A0_VECTOR))) Timer2_A0_ISR (void)
 	{
 		count = 0;
 		itoa(bpm,numberino);
-		if ( bpm < 100){
-		    display_functions_write_string("    ", COLOR_RED,
-										   display.display_interface.menubar_window_bg_color, 0x60, 0xC0);
-		}
-
 	    display_functions_write_string(numberino, COLOR_RED,
 									   display.display_interface.menubar_window_bg_color, 0x60, 0xC0);
 	}
