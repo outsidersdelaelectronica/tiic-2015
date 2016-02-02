@@ -10,8 +10,6 @@
 #include <msp430.h>
 #include <stdint.h>
 
-#include "../utils.h"
-
 int32_t filter_sample(int32_t value);
 
 #endif /* FILTERS_H_ */

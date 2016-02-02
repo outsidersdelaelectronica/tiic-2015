@@ -11,8 +11,6 @@
 #include <msp430.h>
 #include <stdint.h>
 
-#include "../../utils.h"
-
 #define DISPLAY_LINES	240
 #define DISPLAY_COLUMNS	320
 

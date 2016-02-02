@@ -1,10 +1,10 @@
 ******************************************************************************
                   MSP430 Linker PC v4.4.5                      
 ******************************************************************************
->> Linked Tue Feb 02 12:44:57 2016
+>> Linked Mon Feb 01 19:34:51 2016
 
 OUTPUT FILE NAME:   <coderino.out>
-ENTRY POINT SYMBOL: "_c_int00_noargs_noexit_mpu"  address: 000046cc
+ENTRY POINT SYMBOL: "_c_int00_noargs_noexit"  address: 000046d4
 
 
 MEMORY CONFIGURATION
@@ -19,7 +19,7 @@ MEMORY CONFIGURATION
   INFOB                 00001900   00000080  00000000  00000080  RWIX
   INFOA                 00001980   00000080  00000000  00000080  RWIX
   RAM                   00001c00   00000800  000001ca  00000636  RWIX
-  FRAM                  00004400   0000bb80  00000fea  0000ab96  RWIX
+  FRAM                  00004400   0000bb80  00000fd2  0000abae  RWIX
   JTAGSIGNATURE         0000ff80   00000004  00000004  00000000  RWIX  ffff 
   BSLSIGNATURE          0000ff84   00000004  00000004  00000000  RWIX  ffff 
   IPESIGNATURE          0000ff88   00000008  00000008  00000000  RWIX  ffff 
@@ -79,7 +79,7 @@ MEMORY CONFIGURATION
   INT53                 0000fffa   00000002  00000002  00000000  RWIX
   INT54                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FRAM2                 00010000   00004000  000015de  00002a22  RWIX
+  FRAM2                 00010000   00004000  0000158c  00002a74  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -128,12 +128,12 @@ section   page    origin      length       input sections
 .sysmem    0    00004400    00000000     UNINITIALIZED
 
 .text:_isr 
-*          0    00004400    0000030c     
-                  00004400    00000202     serial.obj (.text:_isr:Port_1)
-                  00004602    000000ca     display_timer.obj (.text:_isr:Timer2_A0_ISR)
-                  000046cc    0000001e     rts430x_lc_rd_eabi.lib : boot_special.obj (.text:_isr:_c_int00_noargs_noexit_mpu)
-                  000046ea    0000001c     buzzer.obj (.text:_isr:Timer3_A0_ISR)
-                  00004706    00000006     rts430x_lc_rd_eabi.lib : isr_trap.obj (.text:_isr:__TI_ISR_TRAP)
+*          0    00004400    000002f4     
+                  00004400    000001ee     serial.obj (.text:_isr:Port_1)
+                  000045ee    000000ca     display_timer.obj (.text:_isr:Timer2_A0_ISR)
+                  000046b8    0000001c     buzzer.obj (.text:_isr:Timer3_A0_ISR)
+                  000046d4    0000001a     rts430x_lc_rd_eabi.lib : boot_special.obj (.text:_isr:_c_int00_noargs_noexit)
+                  000046ee    00000006                            : isr_trap.obj (.text:_isr:__TI_ISR_TRAP)
 
 .ipestruct 
 *          0    00004400    00000000     UNINITIALIZED
@@ -146,11 +146,11 @@ section   page    origin      length       input sections
 .ipe_vars 
 *          0    00004400    00000000     UNINITIALIZED
 
-.cinit     0    000053b6    00000034     
-                  000053b6    00000012     (.cinit..data.load) [load image, compression = rle]
-                  000053c8    0000000c     (__TI_handler_table)
-                  000053d4    00000006     (.cinit..bss.load) [load image, compression = zero_init]
-                  000053da    00000010     (__TI_cinit_table)
+.cinit     0    0000539e    00000034     
+                  0000539e    00000012     (.cinit..data.load) [load image, compression = rle]
+                  000053b0    0000000c     (__TI_handler_table)
+                  000053bc    00000006     (.cinit..bss.load) [load image, compression = zero_init]
+                  000053c2    00000010     (__TI_cinit_table)
 
 .init_array 
 *          0    00004400    00000000     UNINITIALIZED
@@ -161,15 +161,15 @@ AES256     0    0000ffc6    00000002
 RTC        0    0000ffc8    00000002     
                   0000ffc8    00000002     rts430x_lc_rd_eabi.lib : int28.obj (.int28)
 
-.const     0    0000470c    00000caa     
-                  0000470c    00000be5     font.obj (.const)
-                  000052f1    00000001     --HOLE-- [fill = 0]
-                  000052f2    00000078     filters.obj (.const:band_pass_coef)
-                  0000536a    00000028     main.obj (.const:.string)
-                  00005392    00000014     filters.obj (.const:diferentiator_coef)
-                  000053a6    00000009     display_timer.obj (.const)
-                  000053af    00000001     --HOLE-- [fill = 0]
-                  000053b0    00000006     display_timer.obj (.const:.string)
+.const     0    000046f4    00000caa     
+                  000046f4    00000be5     font.obj (.const)
+                  000052d9    00000001     --HOLE-- [fill = 0]
+                  000052da    00000078     filters.obj (.const:band_pass_coef)
+                  00005352    00000028     main.obj (.const:.string)
+                  0000537a    00000014     filters.obj (.const:diferentiator_coef)
+                  0000538e    00000009     display_timer.obj (.const)
+                  00005397    00000001     --HOLE-- [fill = 0]
+                  00005398    00000006     display_timer.obj (.const:.string)
 
 $fill000   0    0000ff80    00000004     
                   0000ff80    00000004     --HOLE-- [fill = ffff]
@@ -265,79 +265,78 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.obj (.reset)
 
-.text      0    00010000    000015de     
-                  00010000    00000490     filters.obj (.text:band_pass_filterino)
-                  00010490    0000030e     display.obj (.text:display_init)
-                  0001079e    000000ce     filters.obj (.text:diferentiator_3000)
-                  0001086c    000000a8     display_interface.obj (.text:display_interface_write_signal)
-                  00010914    000000a2     afe.obj (.text:afe_init)
-                  000109b6    00000098     main.obj (.text:main)
-                  00010a4e    00000096     display_functions.obj (.text:display_functions_write_char)
-                  00010ae4    0000008a     display_hal.obj (.text:display_hal_write_GRAM)
-                  00010b6e    00000084     display_interface.obj (.text:display_interface_windows_setup)
-                  00010bf2    00000084     utils.obj (.text:itoa)
-                  00010c76    0000007a     afe.obj (.text:afe_setup)
-                  00010cf0    00000076     display_functions.obj (.text:display_functions_write_line)
-                  00010d66    0000006c     rts430x_lc_rd_eabi.lib : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
-                  00010dd2    0000006c     touch.obj (.text:touch_request_position)
-                  00010e3e    00000068     rts430x_lc_rd_eabi.lib : copy_decompress_rle.obj (.text:__TI_decompress_rle_core)
-                  00010ea6    00000064     display_functions.obj (.text:display_functions_write_string)
-                  00010f0a    00000060     display_hal.obj (.text:display_hal_write_reg)
-                  00010f6a    00000060     touch.obj (.text:touch_setup)
-                  00010fca    0000005c     afe_serial.obj (.text:afe_serial_write_register)
-                  00011026    00000052     display_interface.obj (.text:display_interface_draw_window)
-                  00011078    00000050     clocks.obj (.text:clocks_setup)
-                  000110c8    0000004c     display_timer.obj (.text:display_set_sweep_time)
-                  00011114    0000004c     filters.obj (.text:integrator_3000)
-                  00011160    00000042     display_interface.obj (.text:display_interface_init)
-                  000111a2    00000042     utils.obj (.text:multiplication)
-                  000111e4    0000003e     rts430x_lc_rd_eabi.lib : asr32.obj (.text:l_asr_const)
-                  00011222    0000003c     font.obj (.text:font_get_char)
-                  0001125e    0000003a     touch_coordinate.obj (.text:touch_coordinate_set)
-                  00011298    00000032     afe_serial.obj (.text:afe_serial_send)
-                  000112ca    00000032     touch_serial.obj (.text:touch_serial_send)
-                  000112fc    00000030     buzzer.obj (.text:buzzer_setup)
-                  0001132c    0000002c     display_functions.obj (.text:display_functions_write_pixel)
-                  00011358    0000002c     display_hal.obj (.text:display_hal_set_GRAM_position)
-                  00011384    0000002c     rts430x_lc_rd_eabi.lib : div16s.obj (.text)
-                  000113b0    0000002a     display.obj (.text:display_setup)
-                  000113da    0000002a     utils.obj (.text:division)
-                  00011404    00000028     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
-                  0001142c    00000026     rts430x_lc_rd_eabi.lib : mult32.obj (.text)
-                  00011452    00000024                            : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
-                  00011476    0000001a     display_hal.obj (.text:display_hal_write)
-                  00011490    0000001a     display_interface.obj (.text:display_interface_inc_index)
-                  000114aa    0000001a     display_interface.obj (.text:display_interface_set_index)
-                  000114c4    00000018     utils.obj (.text:delay_ms)
-                  000114dc    00000018     ecg_data.obj (.text:ecg_data_write)
-                  000114f4    00000016     filters.obj (.text:filter_sample)
-                  0001150a    00000016     rts430x_lc_rd_eabi.lib : memset.obj (.text:memset)
-                  00011520    00000016                            : div16u.obj (.text)
-                  00011536    00000014     display_timer.obj (.text:display_timer_setup)
-                  0001154a    00000014     rts430x_lc_rd_eabi.lib : memcpy.obj (.text:memcpy)
-                  0001155e    00000014                            : mult16.obj (.text)
-                  00011572    00000012                            : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
-                  00011584    00000012     display_hal.obj (.text:display_hal_output)
-                  00011596    00000010     display_interface.obj (.text:display_interface_get_index)
-                  000115a6    0000000e     color.obj (.text:color_set_value)
-                  000115b4    0000000e     display_timer.obj (.text:display_timer_start)
-                  000115c2    00000008     display_hal.obj (.text:display_hal_screen_on)
-                  000115ca    00000006     rts430x_lc_rd_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
-                  000115d0    00000006     touch.obj (.text:touch_initialize)
-                  000115d6    00000004     rts430x_lc_rd_eabi.lib : pre_init.obj (.text:_system_pre_init)
-                  000115da    00000004                            : exit.obj (.text:abort)
+.text      0    00010000    0000158c     
+                  00010000    0000046e     filters.obj (.text:band_pass_filterino)
+                  0001046e    0000030e     display.obj (.text:display_init)
+                  0001077c    000000c4     filters.obj (.text:diferentiator_3000)
+                  00010840    000000a8     display_interface.obj (.text:display_interface_write_signal)
+                  000108e8    000000a2     afe.obj (.text:afe_init)
+                  0001098a    00000098     main.obj (.text:main)
+                  00010a22    00000096     display_functions.obj (.text:display_functions_write_char)
+                  00010ab8    0000008a     display_hal.obj (.text:display_hal_write_GRAM)
+                  00010b42    00000084     display_interface.obj (.text:display_interface_windows_setup)
+                  00010bc6    00000084     utils.obj (.text:itoa)
+                  00010c4a    0000007a     afe.obj (.text:afe_setup)
+                  00010cc4    00000076     display_functions.obj (.text:display_functions_write_line)
+                  00010d3a    0000006c     rts430x_lc_rd_eabi.lib : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
+                  00010da6    0000006c     touch.obj (.text:touch_request_position)
+                  00010e12    00000068     rts430x_lc_rd_eabi.lib : copy_decompress_rle.obj (.text:__TI_decompress_rle_core)
+                  00010e7a    00000064     display_functions.obj (.text:display_functions_write_string)
+                  00010ede    00000060     display_hal.obj (.text:display_hal_write_reg)
+                  00010f3e    00000060     touch.obj (.text:touch_setup)
+                  00010f9e    0000005c     afe_serial.obj (.text:afe_serial_write_register)
+                  00010ffa    00000052     display_interface.obj (.text:display_interface_draw_window)
+                  0001104c    00000050     clocks.obj (.text:clocks_setup)
+                  0001109c    00000050     filters.obj (.text:integrator_3000)
+                  000110ec    0000004c     display_timer.obj (.text:display_set_sweep_time)
+                  00011138    00000042     display_interface.obj (.text:display_interface_init)
+                  0001117a    00000042     utils.obj (.text:multiplication)
+                  000111bc    0000003e     rts430x_lc_rd_eabi.lib : asr32.obj (.text:l_asr_const)
+                  000111fa    0000003e                            : lsr32.obj (.text:l_lsr_const)
+                  00011238    0000003c     font.obj (.text:font_get_char)
+                  00011274    0000003a     touch_coordinate.obj (.text:touch_coordinate_set)
+                  000112ae    00000032     afe_serial.obj (.text:afe_serial_send)
+                  000112e0    00000030     buzzer.obj (.text:buzzer_setup)
+                  00011310    0000002c     display_functions.obj (.text:display_functions_write_pixel)
+                  0001133c    0000002c     display_hal.obj (.text:display_hal_set_GRAM_position)
+                  00011368    0000002c     rts430x_lc_rd_eabi.lib : div16s.obj (.text)
+                  00011394    0000002a     display.obj (.text:display_setup)
+                  000113be    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
+                  000113e2    00000022                            : mult32_f5hw.obj (.text)
+                  00011404    0000001e     touch_serial.obj (.text:touch_serial_send)
+                  00011422    0000001a     display_hal.obj (.text:display_hal_write)
+                  0001143c    0000001a     display_interface.obj (.text:display_interface_inc_index)
+                  00011456    0000001a     display_interface.obj (.text:display_interface_set_index)
+                  00011470    00000018     utils.obj (.text:delay_ms)
+                  00011488    00000018     ecg_data.obj (.text:ecg_data_write)
+                  000114a0    00000016     filters.obj (.text:filter_sample)
+                  000114b6    00000016     rts430x_lc_rd_eabi.lib : memset.obj (.text:memset)
+                  000114cc    00000016                            : div16u.obj (.text)
+                  000114e2    00000016                            : mult16_f5hw.obj (.text)
+                  000114f8    00000014     display_timer.obj (.text:display_timer_setup)
+                  0001150c    00000014     rts430x_lc_rd_eabi.lib : memcpy.obj (.text:memcpy)
+                  00011520    00000012                            : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
+                  00011532    00000012     display_hal.obj (.text:display_hal_output)
+                  00011544    00000010     display_interface.obj (.text:display_interface_get_index)
+                  00011554    0000000e     color.obj (.text:color_set_value)
+                  00011562    0000000e     display_timer.obj (.text:display_timer_start)
+                  00011570    00000008     display_hal.obj (.text:display_hal_screen_on)
+                  00011578    00000006     rts430x_lc_rd_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
+                  0001157e    00000006     touch.obj (.text:touch_initialize)
+                  00011584    00000004     rts430x_lc_rd_eabi.lib : pre_init.obj (.text:_system_pre_init)
+                  00011588    00000004                            : exit.obj (.text:abort)
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 000053da records: 2, size/record: 8, table size: 16
-	.data: load addr=000053b6, load size=00000012 bytes, run addr=00001c00, run size=00000109 bytes, compression=rle
-	.bss: load addr=000053d4, load size=00000006 bytes, run addr=00001d0a, run size=00000021 bytes, compression=zero_init
+__TI_cinit_table @ 000053c2 records: 2, size/record: 8, table size: 16
+	.data: load addr=0000539e, load size=00000012 bytes, run addr=00001c00, run size=00000109 bytes, compression=rle
+	.bss: load addr=000053bc, load size=00000006 bytes, run addr=00001d0a, run size=00000021 bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 000053c8 records: 3, size/record: 4, table size: 12
+__TI_handler_table @ 000053b0 records: 3, size/record: 4, table size: 12
 	index: 0, handler: __TI_zero_init
 	index: 1, handler: __TI_decompress_rle24
 	index: 2, handler: __TI_decompress_none
@@ -604,7 +603,7 @@ address   name
 000009ce  AESAXIN_L                     
 000004be  BCD2BIN                       
 000004bc  BIN2BCD                       
-000115da  C$$EXIT                       
+00011588  C$$EXIT                       
 0000043e  CAPTIO0CTL                    
 0000043f  CAPTIO0CTL_H                  
 0000043e  CAPTIO0CTL_L                  
@@ -1157,8 +1156,8 @@ address   name
 000003e0  TB0EX0                        
 000003ee  TB0IV                         
 000003d0  TB0R                          
-00004602  Timer2_A0_ISR                 
-000046ea  Timer3_A0_ISR                 
+000045ee  Timer2_A0_ISR                 
+000046b8  Timer3_A0_ISR                 
 000005d0  UCA0ABCTL                     
 000005c6  UCA0BRW                       
 000005c7  UCA0BRW_H                     
@@ -1322,15 +1321,15 @@ address   name
 0000015c  WDTCTL_L                      
 00002400  __STACK_END                   
 000000a0  __STACK_SIZE                  
-000053da  __TI_CINIT_Base               
-000053ea  __TI_CINIT_Limit              
-000053c8  __TI_Handler_Table_Base       
-000053d4  __TI_Handler_Table_Limit      
+000053c2  __TI_CINIT_Base               
+000053d2  __TI_CINIT_Limit              
+000053b0  __TI_Handler_Table_Base       
+000053bc  __TI_Handler_Table_Limit      
 UNDEFED   __TI_INITARRAY_Base           
 UNDEFED   __TI_INITARRAY_Limit          
-00004706  __TI_ISR_TRAP                 
-00011572  __TI_decompress_none          
-000115ca  __TI_decompress_rle24         
+000046ee  __TI_ISR_TRAP                 
+00011520  __TI_decompress_none          
+00011578  __TI_decompress_rle24         
 0000ffc6  __TI_int27                    
 0000ffc8  __TI_int28                    
 0000ffcc  __TI_int30                    
@@ -1357,103 +1356,108 @@ UNDEFED   __TI_INITARRAY_Limit
 0000fff8  __TI_int52                    
 0000fffa  __TI_int53                    
 0000fffc  __TI_int54                    
-00011452  __TI_zero_init                
+000113be  __TI_zero_init                
 ffffffff  __binit__                     
 ffffffff  __c_args__                    
-00000001  __mpu_enable                  
-00011404  __mpu_init                    
-00011384  __mspabi_divi                 
-00011520  __mspabi_divu                 
-0001155e  __mspabi_mpyi                 
-0001155e  __mspabi_mpyi_sw              
-0001142c  __mspabi_mpyl                 
-0001142c  __mspabi_mpyl_sw              
-00011384  __mspabi_remi                 
-00011520  __mspabi_remu                 
-0001121c  __mspabi_sral_1               
-000111f8  __mspabi_sral_10              
-000111f4  __mspabi_sral_11              
-000111f0  __mspabi_sral_12              
-000111ec  __mspabi_sral_13              
-000111e8  __mspabi_sral_14              
-000111e4  __mspabi_sral_15              
-00011218  __mspabi_sral_2               
-00011214  __mspabi_sral_3               
-00011210  __mspabi_sral_4               
-0001120c  __mspabi_sral_5               
-00011208  __mspabi_sral_6               
-00011204  __mspabi_sral_7               
-00011200  __mspabi_sral_8               
-000111fc  __mspabi_sral_9               
-00010d66  _auto_init_hold_wdt           
-000046cc  _c_int00_noargs_noexit_mpu    
+00011368  __mspabi_divi                 
+000114cc  __mspabi_divu                 
+000114e2  __mspabi_mpyi_f5hw            
+000113e2  __mspabi_mpyl_f5hw            
+00011368  __mspabi_remi                 
+000114cc  __mspabi_remu                 
+000111f4  __mspabi_sral_1               
+000111d0  __mspabi_sral_10              
+000111cc  __mspabi_sral_11              
+000111c8  __mspabi_sral_12              
+000111c4  __mspabi_sral_13              
+000111c0  __mspabi_sral_14              
+000111bc  __mspabi_sral_15              
+000111f0  __mspabi_sral_2               
+000111ec  __mspabi_sral_3               
+000111e8  __mspabi_sral_4               
+000111e4  __mspabi_sral_5               
+000111e0  __mspabi_sral_6               
+000111dc  __mspabi_sral_7               
+000111d8  __mspabi_sral_8               
+000111d4  __mspabi_sral_9               
+00011232  __mspabi_srll_1               
+0001120e  __mspabi_srll_10              
+0001120a  __mspabi_srll_11              
+00011206  __mspabi_srll_12              
+00011202  __mspabi_srll_13              
+000111fe  __mspabi_srll_14              
+000111fa  __mspabi_srll_15              
+0001122e  __mspabi_srll_2               
+0001122a  __mspabi_srll_3               
+00011226  __mspabi_srll_4               
+00011222  __mspabi_srll_5               
+0001121e  __mspabi_srll_6               
+0001121a  __mspabi_srll_7               
+00011216  __mspabi_srll_8               
+00011212  __mspabi_srll_9               
+00010d3a  _auto_init_hold_wdt           
+000046d4  _c_int00_noargs_noexit        
 0000fffe  _reset_vector                 
 00002360  _stack                        
-000115d6  _system_pre_init              
-000115da  abort                         
-00010914  afe_init                      
-00011298  afe_serial_send               
-00010fca  afe_serial_write_register     
-00010c76  afe_setup                     
-000052f2  band_pass_coef                
+00011584  _system_pre_init              
+00011588  abort                         
+000108e8  afe_init                      
+000112ae  afe_serial_send               
+00010f9e  afe_serial_write_register     
+00010c4a  afe_setup                     
+000052da  band_pass_coef                
 00010000  band_pass_filterino           
 ffffffff  binit                         
 00001d24  bpm                           
 00001d0a  buzzer                        
-000112fc  buzzer_setup                  
-00011078  clocks_setup                  
-000115a6  color_set_value               
-000114c4  delay_ms                      
-0001079e  diferentiator_3000            
-00005392  diferentiator_coef            
+000112e0  buzzer_setup                  
+0001104c  clocks_setup                  
+00011554  color_set_value               
+00011470  delay_ms                      
+0001077c  diferentiator_3000            
+0000537a  diferentiator_coef            
 00001d0a  display                       
-00010a4e  display_functions_write_char  
-00010cf0  display_functions_write_line  
-0001132c  display_functions_write_pixel 
-00010ea6  display_functions_write_string
-00011584  display_hal_output            
-000115c2  display_hal_screen_on         
-00011358  display_hal_set_GRAM_position 
-00010ae4  display_hal_write_GRAM        
-00010f0a  display_hal_write_reg         
-00010490  display_init                  
-00011160  display_interface_init        
-0001086c  display_interface_write_signal
-000113b0  display_setup                 
-00011536  display_timer_setup           
-000115b4  display_timer_start           
-000113da  division                      
-000114dc  ecg_data_write                
-000114f4  filter_sample                 
-0000470c  font                          
-00011222  font_get_char                 
+00010a22  display_functions_write_char  
+00010cc4  display_functions_write_line  
+00011310  display_functions_write_pixel 
+00010e7a  display_functions_write_string
+00011532  display_hal_output            
+00011570  display_hal_screen_on         
+0001133c  display_hal_set_GRAM_position 
+00010ab8  display_hal_write_GRAM        
+00010ede  display_hal_write_reg         
+0001046e  display_init                  
+00011138  display_interface_init        
+00010840  display_interface_write_signal
+00011394  display_setup                 
+000114f8  display_timer_setup           
+00011562  display_timer_start           
+00011488  ecg_data_write                
+000114a0  filter_sample                 
+000046f4  font                          
+00011238  font_get_char                 
 00004400  fram_ipe_end                  
 00004400  fram_ipe_start                
 00004400  fram_rx_start                 
-00011114  integrator_3000               
-00010bf2  itoa                          
+0001109c  integrator_3000               
+00010bc6  itoa                          
 00001d26  last_sample                   
-000109b6  main                          
-0001154a  memcpy                        
-0001150a  memset                        
-0000a501  mpu_ctl0_value                
-00001513  mpu_sam_value                 
-00000440  mpu_segment_border1           
-00000440  mpu_segment_border2           
-000111a2  multiplication                
+0001098a  main                          
+0001150c  memcpy                        
+000114b6  memset                        
+0001117a  multiplication                
 00001d20  touch                         
-0001125e  touch_coordinate_set          
-000115d0  touch_initialize              
-00010dd2  touch_request_position        
-000112ca  touch_serial_send             
-00010f6a  touch_setup                   
+00011274  touch_coordinate_set          
+0001157e  touch_initialize              
+00010da6  touch_request_position        
+00011404  touch_serial_send             
+00010f3e  touch_setup                   
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
 
 address   name                          
 -------   ----                          
-00000001  __mpu_enable                  
 000000a0  __STACK_SIZE                  
 00000100  SFRIE1                        
 00000100  SFRIE1_L                      
@@ -1749,8 +1753,6 @@ address   name
 0000043e  CAPTIO0CTL_L                  
 0000043f  CAPTIO0CTL_H                  
 00000440  TA3CTL                        
-00000440  mpu_segment_border1           
-00000440  mpu_segment_border2           
 00000442  TA3CCTL0                      
 00000444  TA3CCTL1                      
 00000446  TA3CCTL2                      
@@ -2426,7 +2428,6 @@ address   name
 000009ce  AESAXIN                       
 000009ce  AESAXIN_L                     
 000009cf  AESAXIN_H                     
-00001513  mpu_sam_value                 
 00001d0a  buzzer                        
 00001d0a  display                       
 00001d20  touch                         
@@ -2438,18 +2439,17 @@ address   name
 00004400  fram_ipe_end                  
 00004400  fram_ipe_start                
 00004400  fram_rx_start                 
-00004602  Timer2_A0_ISR                 
-000046cc  _c_int00_noargs_noexit_mpu    
-000046ea  Timer3_A0_ISR                 
-00004706  __TI_ISR_TRAP                 
-0000470c  font                          
-000052f2  band_pass_coef                
-00005392  diferentiator_coef            
-000053c8  __TI_Handler_Table_Base       
-000053d4  __TI_Handler_Table_Limit      
-000053da  __TI_CINIT_Base               
-000053ea  __TI_CINIT_Limit              
-0000a501  mpu_ctl0_value                
+000045ee  Timer2_A0_ISR                 
+000046b8  Timer3_A0_ISR                 
+000046d4  _c_int00_noargs_noexit        
+000046ee  __TI_ISR_TRAP                 
+000046f4  font                          
+000052da  band_pass_coef                
+0000537a  diferentiator_coef            
+000053b0  __TI_Handler_Table_Base       
+000053bc  __TI_Handler_Table_Limit      
+000053c2  __TI_CINIT_Base               
+000053d2  __TI_CINIT_Limit              
 0000ffc6  __TI_int27                    
 0000ffc8  __TI_int28                    
 0000ffcc  __TI_int30                    
@@ -2478,80 +2478,91 @@ address   name
 0000fffc  __TI_int54                    
 0000fffe  _reset_vector                 
 00010000  band_pass_filterino           
-00010490  display_init                  
-0001079e  diferentiator_3000            
-0001086c  display_interface_write_signal
-00010914  afe_init                      
-000109b6  main                          
-00010a4e  display_functions_write_char  
-00010ae4  display_hal_write_GRAM        
-00010bf2  itoa                          
-00010c76  afe_setup                     
-00010cf0  display_functions_write_line  
-00010d66  _auto_init_hold_wdt           
-00010dd2  touch_request_position        
-00010ea6  display_functions_write_string
-00010f0a  display_hal_write_reg         
-00010f6a  touch_setup                   
-00010fca  afe_serial_write_register     
-00011078  clocks_setup                  
-00011114  integrator_3000               
-00011160  display_interface_init        
-000111a2  multiplication                
-000111e4  __mspabi_sral_15              
-000111e8  __mspabi_sral_14              
-000111ec  __mspabi_sral_13              
-000111f0  __mspabi_sral_12              
-000111f4  __mspabi_sral_11              
-000111f8  __mspabi_sral_10              
-000111fc  __mspabi_sral_9               
-00011200  __mspabi_sral_8               
-00011204  __mspabi_sral_7               
-00011208  __mspabi_sral_6               
-0001120c  __mspabi_sral_5               
-00011210  __mspabi_sral_4               
-00011214  __mspabi_sral_3               
-00011218  __mspabi_sral_2               
-0001121c  __mspabi_sral_1               
-00011222  font_get_char                 
-0001125e  touch_coordinate_set          
-00011298  afe_serial_send               
-000112ca  touch_serial_send             
-000112fc  buzzer_setup                  
-0001132c  display_functions_write_pixel 
-00011358  display_hal_set_GRAM_position 
-00011384  __mspabi_divi                 
-00011384  __mspabi_remi                 
-000113b0  display_setup                 
-000113da  division                      
-00011404  __mpu_init                    
-0001142c  __mspabi_mpyl                 
-0001142c  __mspabi_mpyl_sw              
-00011452  __TI_zero_init                
-000114c4  delay_ms                      
-000114dc  ecg_data_write                
-000114f4  filter_sample                 
-0001150a  memset                        
-00011520  __mspabi_divu                 
-00011520  __mspabi_remu                 
-00011536  display_timer_setup           
-0001154a  memcpy                        
-0001155e  __mspabi_mpyi                 
-0001155e  __mspabi_mpyi_sw              
-00011572  __TI_decompress_none          
-00011584  display_hal_output            
-000115a6  color_set_value               
-000115b4  display_timer_start           
-000115c2  display_hal_screen_on         
-000115ca  __TI_decompress_rle24         
-000115d0  touch_initialize              
-000115d6  _system_pre_init              
-000115da  C$$EXIT                       
-000115da  abort                         
+0001046e  display_init                  
+0001077c  diferentiator_3000            
+00010840  display_interface_write_signal
+000108e8  afe_init                      
+0001098a  main                          
+00010a22  display_functions_write_char  
+00010ab8  display_hal_write_GRAM        
+00010bc6  itoa                          
+00010c4a  afe_setup                     
+00010cc4  display_functions_write_line  
+00010d3a  _auto_init_hold_wdt           
+00010da6  touch_request_position        
+00010e7a  display_functions_write_string
+00010ede  display_hal_write_reg         
+00010f3e  touch_setup                   
+00010f9e  afe_serial_write_register     
+0001104c  clocks_setup                  
+0001109c  integrator_3000               
+00011138  display_interface_init        
+0001117a  multiplication                
+000111bc  __mspabi_sral_15              
+000111c0  __mspabi_sral_14              
+000111c4  __mspabi_sral_13              
+000111c8  __mspabi_sral_12              
+000111cc  __mspabi_sral_11              
+000111d0  __mspabi_sral_10              
+000111d4  __mspabi_sral_9               
+000111d8  __mspabi_sral_8               
+000111dc  __mspabi_sral_7               
+000111e0  __mspabi_sral_6               
+000111e4  __mspabi_sral_5               
+000111e8  __mspabi_sral_4               
+000111ec  __mspabi_sral_3               
+000111f0  __mspabi_sral_2               
+000111f4  __mspabi_sral_1               
+000111fa  __mspabi_srll_15              
+000111fe  __mspabi_srll_14              
+00011202  __mspabi_srll_13              
+00011206  __mspabi_srll_12              
+0001120a  __mspabi_srll_11              
+0001120e  __mspabi_srll_10              
+00011212  __mspabi_srll_9               
+00011216  __mspabi_srll_8               
+0001121a  __mspabi_srll_7               
+0001121e  __mspabi_srll_6               
+00011222  __mspabi_srll_5               
+00011226  __mspabi_srll_4               
+0001122a  __mspabi_srll_3               
+0001122e  __mspabi_srll_2               
+00011232  __mspabi_srll_1               
+00011238  font_get_char                 
+00011274  touch_coordinate_set          
+000112ae  afe_serial_send               
+000112e0  buzzer_setup                  
+00011310  display_functions_write_pixel 
+0001133c  display_hal_set_GRAM_position 
+00011368  __mspabi_divi                 
+00011368  __mspabi_remi                 
+00011394  display_setup                 
+000113be  __TI_zero_init                
+000113e2  __mspabi_mpyl_f5hw            
+00011404  touch_serial_send             
+00011470  delay_ms                      
+00011488  ecg_data_write                
+000114a0  filter_sample                 
+000114b6  memset                        
+000114cc  __mspabi_divu                 
+000114cc  __mspabi_remu                 
+000114e2  __mspabi_mpyi_f5hw            
+000114f8  display_timer_setup           
+0001150c  memcpy                        
+00011520  __TI_decompress_none          
+00011532  display_hal_output            
+00011554  color_set_value               
+00011562  display_timer_start           
+00011570  display_hal_screen_on         
+00011578  __TI_decompress_rle24         
+0001157e  touch_initialize              
+00011584  _system_pre_init              
+00011588  C$$EXIT                       
+00011588  abort                         
 ffffffff  __binit__                     
 ffffffff  __c_args__                    
 ffffffff  binit                         
 UNDEFED   __TI_INITARRAY_Base           
 UNDEFED   __TI_INITARRAY_Limit          
 
-[1100 symbols]
+[1106 symbols]

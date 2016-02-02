@@ -8,7 +8,6 @@
 #ifndef SERIAL_H_
 #define SERIAL_H_
 
-#include "utils.h"
 #include "afe/afe.h"
 #include "buzzer/buzzer.h"
 #include "data/ecg_data.h"

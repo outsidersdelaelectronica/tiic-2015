@@ -21,7 +21,14 @@ touch_t touch;
 ecg_data_t last_sample;
 int bpm;
 
+uint8_t afe_bytes[3];
+uint8_t i,flag ;
+int maxerino_pos = 0,sample_counter = 0;
+int32_t threshold, maxerino,current_value, prev_value;
+
 int main()
+
+
 {
     WDTCTL = WDTPW | WDTHOLD;		//Stop watchdog timer
 

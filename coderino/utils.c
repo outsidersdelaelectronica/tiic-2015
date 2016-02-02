@@ -33,8 +33,8 @@ void delay_ms(int ms)
 	//TODO
 	//Future work: make delay with timerino
 }
-#pragma FUNC_ALWAYS_INLINE(multiplication)
-inline int32_t multiplication(int32_t op1, int32_t op2){
+
+int32_t multiplication(int32_t op1, int32_t op2){
 
 	int32_t big_op, small_op, result = 0;
 
@@ -53,8 +53,7 @@ inline int32_t multiplication(int32_t op1, int32_t op2){
 
 	return result;
 }
-#pragma FUNC_ALWAYS_INLINE(division)
-inline int32_t division(int32_t dividend, int32_t divisor){
+int32_t division(int32_t dividend, int32_t divisor){
 
 	int32_t result = 0;
 
