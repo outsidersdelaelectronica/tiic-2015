@@ -5,6 +5,13 @@
  *      Author: tvalno
  */
 
+
+/*
+ * Esto va a ser un mierdon muy gordo
+ * pero no hay cojones de hacerlo funcionar
+ * con la multiplicacion
+ */
+
 #include "filters.h"
 
 #define INTEGRATION_LENGTH 32
@@ -30,8 +37,9 @@ int32_t band_pass_filterino(int32_t value)
 
 	int32_t x_n = value, y_n = 0;
 
-    y_n = (band_pass_coef[0] * x_n + band_pass_coef[1] * buffer_x_0[0] + band_pass_coef[2] * buffer_x_0[1]
-				- band_pass_coef[3] * buffer_y_0[0] - band_pass_coef[4] * buffer_y_0[1])>>10;
+    y_n = (multiplication(band_pass_coef[0], x_n) + multiplication(band_pass_coef[1], buffer_x_0[0])
+			+ multiplication(band_pass_coef[2], buffer_x_0[1]) - multiplication(band_pass_coef[3], buffer_y_0[0])
+			- multiplication(band_pass_coef[4], buffer_y_0[1]))>>10;
 
     buffer_y_0[1] = buffer_y_0[0];
     buffer_y_0[0] = y_n;
@@ -39,8 +47,9 @@ int32_t band_pass_filterino(int32_t value)
     buffer_x_0[0] = x_n;
     x_n = y_n;
 
-    y_n = (band_pass_coef[5] * x_n + band_pass_coef[6] * buffer_x_1[0] + band_pass_coef[7] * buffer_x_1[1]
-				- band_pass_coef[8] * buffer_y_1[0] - band_pass_coef[9] * buffer_y_1[1])>>10;
+    y_n = (multiplication(band_pass_coef[5], x_n) + multiplication(band_pass_coef[6], buffer_x_1[0])
+    		+ multiplication(band_pass_coef[7], buffer_x_1[1]) - multiplication(band_pass_coef[8], buffer_y_1[0])
+			- multiplication(band_pass_coef[9], buffer_y_1[1]))>>10;
     buffer_y_1[1] = buffer_y_1[0];
     buffer_y_1[0] = y_n;
     buffer_x_1[1] = buffer_x_1[0];
@@ -48,8 +57,9 @@ int32_t band_pass_filterino(int32_t value)
 
     x_n = y_n;
 
-    y_n = (band_pass_coef[10] * x_n + band_pass_coef[11] * buffer_x_2[0] + band_pass_coef[12] * buffer_x_2[1]
-				- band_pass_coef[13] * buffer_y_2[0] - band_pass_coef[14] * buffer_y_2[1])>>10;
+    y_n = (multiplication(band_pass_coef[10], x_n) + multiplication(band_pass_coef[11], buffer_x_2[0])
+			+ multiplication(band_pass_coef[12], buffer_x_2[1]) - multiplication(band_pass_coef[13], buffer_y_2[0])
+			- multiplication(band_pass_coef[14], buffer_y_2[1]))>>10;
     buffer_y_2[1] = buffer_y_2[0];
     buffer_y_2[0] = y_n;
     buffer_x_2[1] = buffer_x_2[0];
@@ -57,24 +67,27 @@ int32_t band_pass_filterino(int32_t value)
 
     x_n = y_n;
 
-    y_n = (band_pass_coef[15] * x_n + band_pass_coef[16] * buffer_x_3[0] + band_pass_coef[17] * buffer_x_3[1]
-				- band_pass_coef[18] * buffer_y_3[0] - band_pass_coef[19] * buffer_y_3[1])>>10;
+    y_n = (multiplication(band_pass_coef[15], x_n) + multiplication(band_pass_coef[16], buffer_x_3[0])
+    		+ multiplication(band_pass_coef[17], buffer_x_3[1]) - multiplication(band_pass_coef[18], buffer_y_3[0])
+			- multiplication(band_pass_coef[19], buffer_y_3[1]))>>10;
     buffer_y_3[1] = buffer_y_3[0];
     buffer_y_3[0] = y_n;
     buffer_x_3[1] = buffer_x_3[0];
     buffer_x_3[0] = x_n;
     x_n = y_n;
 
-    y_n = (band_pass_coef[20] * x_n + band_pass_coef[21] * buffer_x_4[0] + band_pass_coef[22] * buffer_x_4[1]
-				- band_pass_coef[23] * buffer_y_4[0] - band_pass_coef[24] * buffer_y_4[1])>>10;
+    y_n = (multiplication(band_pass_coef[20], x_n) + multiplication(band_pass_coef[21], buffer_x_4[0])
+    		+ multiplication(band_pass_coef[22], buffer_x_4[1])	- multiplication(band_pass_coef[23], buffer_y_4[0])
+			- multiplication(band_pass_coef[24], buffer_y_4[1]))>>10;
     buffer_y_4[1] = buffer_y_4[0];
     buffer_y_4[0] = y_n;
     buffer_x_4[1] = buffer_x_4[0];
     buffer_x_4[0] = x_n;
     x_n = y_n;
 
-    y_n = (band_pass_coef[25] * x_n + band_pass_coef[26] * buffer_x_5[0] + band_pass_coef[27] * buffer_x_5[1]
-				- band_pass_coef[28] * buffer_y_5[0] - band_pass_coef[29] * buffer_y_5[1])>>10;
+    y_n = (multiplication(band_pass_coef[25], x_n) + multiplication(band_pass_coef[26], buffer_x_5[0])
+    		+ multiplication(band_pass_coef[27], buffer_x_5[1]) - multiplication(band_pass_coef[28], buffer_y_5[0])
+			- multiplication(band_pass_coef[29], buffer_y_5[1]))>>10;
     buffer_y_5[1] = buffer_y_5[0];
     buffer_y_5[0] = y_n;
     buffer_x_5[1] = buffer_x_5[0];
@@ -87,10 +100,11 @@ int32_t diferentiator_3000(int32_t value)
 {
 	static int32_t buffer_x[4] = {0,0,0,0};
 	int32_t x_n = value, y_n = 0;
-	int8_t i;
+	uint8_t i;
 
-    y_n = (diferentiator_coef[0] * x_n + diferentiator_coef[1] * buffer_x[0] + diferentiator_coef[2] * buffer_x[1]
-				+ diferentiator_coef[3] * buffer_x[2] + diferentiator_coef[4] * buffer_x[3])>>3;
+    y_n = (multiplication(diferentiator_coef[0], x_n) + multiplication(diferentiator_coef[1], buffer_x[0])
+			+ multiplication(diferentiator_coef[2], buffer_x[1]) + multiplication(diferentiator_coef[3], buffer_x[2])
+			+ multiplication(diferentiator_coef[4], buffer_x[3]))>>3;
 
     for ( i = 3; i > 0; i--)
     {
@@ -106,7 +120,7 @@ int32_t integrator_3000(int32_t value)
 	static int32_t buffer_x[INTEGRATION_LENGTH] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 													0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	int32_t x_n = value, y_n = 0;
-	int8_t i;
+	uint8_t i;
 
     for ( i = INTEGRATION_LENGTH - 1; i > 0; i--)
     {

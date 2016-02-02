@@ -61,24 +61,24 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 
 		current_value = filter_sample(last_sample.data);
 
-		if(current_value >= (threshold * 7) >>3 )
+		if(current_value >= ((multiplication(threshold, 7)) >>3) )
 		{
 			if (current_value >= maxerino )
 			{
 				maxerino = current_value;
 				maxerino_pos = sample_counter;
 			}else if (flag == 0){
-				threshold = (maxerino * 7) >>3;
+				threshold = (multiplication(threshold, 7)) >>3;
 				flag = 1;
 			}
-		}else if ((prev_value >= (threshold * 7) >>3 ) && (maxerino > 0))
+		}else if ((prev_value >= ((multiplication(threshold, 7)) >>3) ) && (maxerino > 0))
 		{
-			bpm = (60 * FS) / maxerino_pos;
-			threshold = (( threshold * 7 + maxerino) >> 3);
+			bpm = division(multiplication(60, FS), maxerino_pos);
+			threshold = (( multiplication(threshold, 7) + maxerino) >> 3);
 			sample_counter = sample_counter - maxerino_pos -1;
 			maxerino = 0;
 		}else{
-			threshold = (threshold * 127) >> 7;
+			threshold = multiplication(threshold, 127) >> 7;
 			maxerino = 0;
 		}
 
