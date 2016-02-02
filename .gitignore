@@ -1,2 +1,8 @@
-code/Debug/
+coderino\Debug\
 __Previews/
+*.opt
+*.obj
+*.map
+*.out
+*.xml
+*.pp
