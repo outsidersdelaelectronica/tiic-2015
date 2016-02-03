@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=LA Pin=JE1-1
+Removed Pin From Net: NetName=RA Pin=JE2-1
+Removed Pin From Net: NetName=LL Pin=JE3-1
+Removed Member From Class: ClassName=U_AFE Member=JE1
+Removed Member From Class: ClassName=U_AFE Member=JE2
+Removed Member From Class: ClassName=U_AFE Member=JE3
+Added Pin To Net: NetName=AGND Pin=J4-9
+Added Pin To Net: NetName=AGND Pin=J4-10
+Added Pin To Net: NetName=AGND Pin=J4-11
+Added Pin To Net: NetName=AGND Pin=J4-12
+Added Pin To Net: NetName=AGND Pin=J4-13
+Added Pin To Net: NetName=AGND Pin=J4-14
+Added Pin To Net: NetName=AGND Pin=J4-15
+Added Pin To Net: NetName=AGND Pin=J4-16

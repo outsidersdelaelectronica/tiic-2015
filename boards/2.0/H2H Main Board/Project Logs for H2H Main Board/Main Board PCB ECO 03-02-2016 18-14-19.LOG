@@ -1,0 +1,12 @@
+Added Component: Designator=JE1(S2B-PH-K-S)
+Added Component: Designator=JE2(S2B-PH-K-S)
+Added Component: Designator=JE3(S2B-PH-K-S)
+Added Pin To Net: NetName=LA Pin=JE1-1
+Added Pin To Net: NetName=LA Pin=JE1-2
+Added Pin To Net: NetName=RA Pin=JE2-1
+Added Pin To Net: NetName=RA Pin=JE2-2
+Added Pin To Net: NetName=LL Pin=JE3-1
+Added Pin To Net: NetName=LL Pin=JE3-2
+Added Member To Class: ClassName=U_AFE Member=Component JE1 JST PH 2 Pin
+Added Member To Class: ClassName=U_AFE Member=Component JE2 JST PH 2 Pin
+Added Member To Class: ClassName=U_AFE Member=Component JE3 JST PH 2 Pin
