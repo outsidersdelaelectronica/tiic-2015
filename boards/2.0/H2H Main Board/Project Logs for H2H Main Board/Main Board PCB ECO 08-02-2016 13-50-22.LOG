@@ -1,0 +1,3 @@
+Removed Member From Class: ClassName=50 Ohm Line Member=NetC45_1
+Change Net Name : Old Net Name=NetC45_1 New Net Name=BT_OUT
+Added Member To Class: ClassName=50 Ohm Line Member=Wire BT_OUT
