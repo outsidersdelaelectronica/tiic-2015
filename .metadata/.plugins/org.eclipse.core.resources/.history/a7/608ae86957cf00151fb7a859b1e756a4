@@ -1,0 +1,107 @@
+/*
+ * filters.c
+ *
+ *  Created on: 15/12/2015
+ *      Author: tvalno
+ */
+
+#include "filters.h"
+
+#define INTEGRATION_LENGTH 32
+#define BP_ORDER 282
+#define H_ORDER 311
+#define L_ORDER 40
+#define DIF_ORDER 32
+
+const int32_t band_pass_coef[BP_ORDER] = {4, 6, 7, 5, -1, -7, -13, -16, -15, -10, -4, -1, 0, -3, -6, -7,
+		-6, -3, 0, 0, -1, -3, -5, -5, -3, -1, 0, -1, -3, -5, -5, -3, -1, 0, -1, -3, -5, -5, -3, -1, 0, -1,
+		-3, -5, -5, -4, -1, 0, -1, -3, -6, -6, -4, -1, 0, -1, -4, -6, -6, -4, -2, 0, -1, -4, -6, -7, -5,
+		-2, 0, -1, -4, -7, -8, -5, -2, 1, 0, -4, -7, -8, -6, -2, 1, 0, -4, -8, -9, -7, -2, 2, 1, -3, -8,
+		-10, -8, -2, 2, 2, -3, -9, -12, -9, -2, 3, 3, -2, -10, -14, -10, -2, 5, 5, -2, -11, -16, -13, -2,
+		7, 9, 0, -13, -21, -17, -2, 12, 15, 3, -17, -30, -25, -2, 24, 32, 12, -28, -63, -60, -2, 99, 207,
+		276, 276, 207, 99, -2, -60, -63, -28, 12, 32, 24, -2, -25, -30, -17, 3, 15, 12, -2, -17, -21, -13,
+		0, 9, 7, -2, -13, -16, -11, -2, 5, 5, -2, -10, -14, -10, -2, 3, 3, -2, -9, -12, -9, -3, 2, 2, -2,
+		-8, -10, -8, -3, 1, 2, -2, -7, -9, -8, -4, 0, 1, -2, -6, -8, -7, -4, 0, 1, -2, -5, -8, -7, -4, -1,
+		0, -2, -5, -7, -6, -4, -1, 0, -2, -4, -6, -6, -4, -1, 0, -1, -4, -6, -6, -3, -1, 0, -1, -4, -5, -5,
+		-3, -1, 0, -1, -3, -5, -5, -3, -1, 0, -1, -3, -5, -5, -3, -1, 0, -1, -3, -5, -5, -3, -1, 0, 0, -3,
+		-6, -7, -6, -3, 0, -1, -4, -10, -15, -16, -13, -7, -1, 5, 7, 6, 4
+};
+
+
+const int32_t diferentiator_coef[DIF_ORDER] = { -4, 6, -3, 3, -3, 3, -4, 5, -6, 8, -11, 16, -27, 52, -145, 1304, -1304,
+												145, -52, 27, -16, 11, -8, 6, -5, 4, -3, 3, -3, 3, -6, 4};
+
+int32_t band_pass_filterino(int32_t value)
+{
+	static int32_t bp_buffer[(BP_ORDER - 1)];
+	int i;
+	int32_t y_n = 0;
+
+	for(i = (BP_ORDER - 2); i > 0; i-- ){
+        y_n += (band_pass_coef[i + 1]) * (bp_buffer[i]);
+        bp_buffer[i] = bp_buffer[i-1];
+	}
+
+    y_n += band_pass_coef[1] * bp_buffer[0];
+    bp_buffer[0] = value;
+
+    y_n = y_n + band_pass_coef[0] * value;
+
+    y_n = (y_n >> 10);
+
+    return y_n;
+}
+
+int32_t diferentiator_3000(int32_t value)
+{
+	static int32_t dif_buffer[(DIF_ORDER - 1)];
+	int i;
+	int32_t y_n = 0;
+
+	for(i = (DIF_ORDER - 2); i > 0; i-- ){
+        y_n += (diferentiator_coef[i + 1]) * (dif_buffer[i]);
+        dif_buffer[i] = dif_buffer[i-1];
+	}
+
+    y_n += diferentiator_coef[1] * dif_buffer[0];
+    dif_buffer[0] = value;
+
+    y_n = y_n + diferentiator_coef[0] * value;
+
+    y_n = (y_n >> 10);
+
+    return y_n;
+}
+int32_t integrator_3000(int32_t value)
+{
+	static int32_t buffer_x[INTEGRATION_LENGTH] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+													0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	int32_t x_n = value, y_n = 0;
+	uint8_t i;
+
+    for ( i = INTEGRATION_LENGTH - 1; i > 0; i--)
+    {
+    	y_n += buffer_x[i];
+		buffer_x[i] = buffer_x[i-1];
+    }
+
+    y_n += buffer_x[0];
+    buffer_x[0] = x_n;
+
+	return ( y_n >> 5);
+}
+
+int32_t filter_sample(int32_t value)
+{
+	int32_t filtered_value = value;
+
+
+	filtered_value = band_pass_filterino(filtered_value);
+	filtered_value = diferentiator_3000(filtered_value);
+
+	filtered_value = (filtered_value) * (filtered_value);
+
+	filtered_value = integrator_3000(filtered_value);
+
+	return filtered_value;											//Return true
+}

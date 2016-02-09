@@ -33,38 +33,3 @@ void delay_ms(int ms)
 	//TODO
 	//Future work: make delay with timerino
 }
-
-#pragma FUNC_ALWAYS_INLINE(multiplication)
-inline int32_t multiplication(int32_t op1, int32_t op2)
-{
-
-	int32_t big_op, small_op, result = 0;
-
-	if (op1 > op2){
-		big_op = op1;
-		small_op = op2;
-	}else{
-		big_op = op2;
-		small_op = op1;
-	}
-
-	for(;small_op > 0; small_op--)
-	{
-		result += big_op;
-	}
-
-	return result;
-}
-
-#pragma FUNC_ALWAYS_INLINE(division)
-inline int32_t division(int32_t dividend, int32_t divisor)
-{
-
-	int32_t result = 0;
-
-	for(;dividend >= divisor;result++)
-	{
-		dividend -= divisor;
-	}
-	return result;
-}

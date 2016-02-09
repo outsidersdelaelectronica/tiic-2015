@@ -15,18 +15,18 @@
 #include "display/display_src/display_functions.h"
 #include "touch/touch.h"
 
-buzzer_t buzzer;
+//buzzer_t buzzer;
+
 display_t display;
-touch_t touch;
+//touch_t touch;
 ecg_data_t last_sample;
 int bpm;
 
 int main()
-
-
 {
     WDTCTL = WDTPW | WDTHOLD;		//Stop watchdog timer
-
+    bpm = 0;
+    ecg_data_clear(&last_sample);
     /*
      * Setups
      */
@@ -34,8 +34,8 @@ int main()
 
     afe_setup();
     display_setup(&display);
-    touch_setup(&touch);
-    buzzer_setup(&buzzer);
+//    touch_setup(&touch);
+//    buzzer_setup(&buzzer);
 
     /*
      * MCU setup
@@ -48,7 +48,7 @@ int main()
      */
     afe_init();
     display_init(&display);
-    touch_initialize(&touch);
+//    touch_initialize(&touch);
 
     /*
      * Sheits

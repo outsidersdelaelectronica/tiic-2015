@@ -80,8 +80,8 @@ void buzzer_play(buzzer_t* buzzer, int note, int ms)
 		TB0CTL = TBSSEL__SMCLK | MC__UP | TBCLR;		//Start timer
 
 	//Set duration
-//		TA3CCR0 = 50 * ms;							//250 equals to 1 ms @ 250 KHz
-		TA3CCR0 = multiplication(50, ms);
+		TA3CCR0 = 50 * ms;							//250 equals to 1 ms @ 250 KHz
+
 		TA3CCTL0 |= CCIE;									//Enable compare interrupt
 		TA3CTL = TASSEL__SMCLK | ID__8 | MC__UP | TACLR;	//Start timer
 

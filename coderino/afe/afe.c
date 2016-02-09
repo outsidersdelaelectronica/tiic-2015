@@ -76,7 +76,7 @@ void afe_init()
 		afe_serial_send(SDATAC);							//Stop continuous data conversion mode (activated by default)
 
 	//Write config commands to AFE
-		afe_serial_write_register(REG_CONFIG1, 0x01);		//Set data rate to 250 SPS
+		afe_serial_write_register(REG_CONFIG1, 0x02);		//Set data rate to 500 SPS
 		afe_serial_write_register(REG_CONFIG2, 0xE3);		//Enable voltage reference
 															//Enable lead-off comparators
 															//Enable test signal

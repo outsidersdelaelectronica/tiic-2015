@@ -5,119 +5,107 @@
  *      Author: tvalno
  */
 
-/*
- * Esto va a ser un mierdon muy gordo
- * pero no hay cojones de hacerlo funcionar
- * con la multiplicacion
- */
-
 #include "filters.h"
 
-#define INTEGRATION_LENGTH 32
+#define INTEGRATION_LENGTH 16
+#define BP_ORDER 252
+//#define H_ORDER 311
+//#define L_ORDER 40
+#define DIF_ORDER 32
 
-const int32_t band_pass_coef[30] = { 1024, -1857, 1024, -1881, 981, // Coeficients for first stage
-									1024, -2036, 1024, -2013, 1007, // Coeficients for second stage
-									1024, -1463, 1024, -1878, 928, 	// Coeficients for third stage
-									1024, -2044, 1024, -1957, 963, 	// Coeficients for fourth stage
-									1024, -1888, 1024, -1896, 1015, // Coeficients for fifth stage
-									1024, -2034, 1024, -2029, 1021};// Coeficients for sixth stage
+// 1-35 hz BP ( 250 SPS)
+//const int32_t band_pass_coef[BP_ORDER] = {4, 6, 7, 5, -1, -7, -13, -16, -15, -10, -4, -1, 0, -3, -6, -7,
+//		-6, -3, 0, 0, -1, -3, -5, -5, -3, -1, 0, -1, -3, -5, -5, -3, -1, 0, -1, -3, -5, -5, -3, -1, 0, -1,
+//		-3, -5, -5, -4, -1, 0, -1, -3, -6, -6, -4, -1, 0, -1, -4, -6, -6, -4, -2, 0, -1, -4, -6, -7, -5,
+//		-2, 0, -1, -4, -7, -8, -5, -2, 1, 0, -4, -7, -8, -6, -2, 1, 0, -4, -8, -9, -7, -2, 2, 1, -3, -8,
+//		-10, -8, -2, 2, 2, -3, -9, -12, -9, -2, 3, 3, -2, -10, -14, -10, -2, 5, 5, -2, -11, -16, -13, -2,
+//		7, 9, 0, -13, -21, -17, -2, 12, 15, 3, -17, -30, -25, -2, 24, 32, 12, -28, -63, -60, -2, 99, 207,
+//		276, 276, 207, 99, -2, -60, -63, -28, 12, 32, 24, -2, -25, -30, -17, 3, 15, 12, -2, -17, -21, -13,
+//		0, 9, 7, -2, -13, -16, -11, -2, 5, 5, -2, -10, -14, -10, -2, 3, 3, -2, -9, -12, -9, -3, 2, 2, -2,
+//		-8, -10, -8, -3, 1, 2, -2, -7, -9, -8, -4, 0, 1, -2, -6, -8, -7, -4, 0, 1, -2, -5, -8, -7, -4, -1,
+//		0, -2, -5, -7, -6, -4, -1, 0, -2, -4, -6, -6, -4, -1, 0, -1, -4, -6, -6, -3, -1, 0, -1, -4, -5, -5,
+//		-3, -1, 0, -1, -3, -5, -5, -3, -1, 0, -1, -3, -5, -5, -3, -1, 0, -1, -3, -5, -5, -3, -1, 0, 0, -3,
+//		-6, -7, -6, -3, 0, -1, -4, -10, -15, -16, -13, -7, -1, 5, 7, 6, 4
+//};
+// 1-95hz bp (250 SPS)
+//const int32_t band_pass_coef[BP_ORDER] = {7, 5, -16, -16, 0, -5, -6, 1, -4, -2, 1, -4, 0, -1, -3, 0, -2, -2, 0, -3, -1,
+//		-1, -3, 0, -3, -2, -1, -3, -1, -2, -3, -1, -3, -2, -1, -3, -1, -3, -3, -1, -3, -2, -2, -3, -1, -3, -2, -1, -4,
+//		-1, -3, -3, -1, -4, -2, -2, -4, -1, -3, -3, -1, -4, -2, -3, -4, -1, -4, -3, -2, -4, -1, -3, -4, -1, -5, -2, -2,
+//		-5, -1, -4, -3, -1, -5, -1, -3, -4, -1, -5, -2, -2, -5, -1, -4, -4, -1, -5, -2, -2, -5, 0, -5, -3, -1, -6, -1,
+//		-3, -5, 0, -6, -2, -2, -6, 0, -5, -4, 0, -6, -1, -3, -6, 1, -6, -3, 0, -7, 1, -4, -5, 1, -7, -1, -1, -7, 2, -6,
+//		-4, 1, -8, 1, -3, -7, 3, -7, -2, 0, -9, 3, -5, -5, 3, -9, 1, -1, -9, 5, -8, -3, 3, -11, 4, -4, -8, 7, -11, 0, 2,
+//		-13, 8, -8, -6, 9, -16, 6, -1, -15, 14, -15, -1, 10, -24, 17, -8, -16, 26, -32, 12, 11, -44, 50, -38, -16, 83,
+//		-165, 218, 779, 218, -165, 83, -16, -38, 50, -44, 11, 12, -32, 26, -16, -8, 17, -24, 10, -1, -15, 14, -15, -1,
+//		6, -16, 9, -6, -8, 8, -13, 2, 0, -11, 7, -8, -4, 4, -11, 3, -3, -8, 5, -9, -1, 1, -9, 3, -5, -5, 3, -9, 0, -2,
+//		-7, 3, -7, -3, 1, -8, 1, -4, -6, 2, -7, -1, -1, -7, 1, -5, -4, 1, -7, 0, -3, -6, 1, -6, -3, -1, -6, 0, -4, -5,
+//		0, -6, -2, -2, -6, 0, -5, -3, -1, -6, -1, -3, -5, 0, -5, -2, -2, -5, -1, -4, -4, -1, -5, -2, -2, -5, -1, -4, -3,
+//		-1, -5, -1, -3, -4, -1, -5, -2, -2, -5, -1, -4, -3, -1, -4, -2, -3, -4, -1, -4, -3, -2, -4, -1, -3, -3, -1, -4,
+//		-2, -2, -4, -1, -3, -3, -1, -4, -1, -2, -3, -1, -3, -2, -2, -3, -1, -3, -3, -1, -3, -1, -2, -3, -1, -3, -2, -1,
+//		-3, -1, -2, -3, 0, -3, -1, -1, -3, 0, -2, -2, 0, -3, -1, 0, -4, 1, -2, -4, 1, -6, -5, 0, -16, -16, 5, 7
+//};
 
-const int32_t diferentiator_coef[5] = { 2, 1, 0, -1, -2};
+// 5-90hz bp (500 SPS)
+const int32_t band_pass_coef[BP_ORDER] = {-1, -2, 0, 5, 9, 9, 3, -4, -6, -4, 0, 1, -2, -4, -2, 1, 2, 0, -2, 0, 2, 3, 1, 0,
+		1, 3, 4, 2, 0, 2, 4, 4, 2, 0, 2, 4, 4, 1, 0, 2, 4, 4, 1, -1, 1, 4, 3, 0, -2, 1, 3, 2, -2, -3, 0, 3, 1, -3, -4, -1,
+		3, 0, -4, -5, -1, 2, -1, -6, -7, -2, 2, -2, -8, -8, -2, 1, -3, -10, -10, -3, 0, -5, -12, -11, -3, 0, -7, -15, -13,
+		-3, 0, -9, -18, -14, -3, 0, -11, -21, -16, -2, 0, -14, -25, -17, 0, 1, -17, -30, -18, 3, 3, -21, -37, -19, 11, 9,
+		-29, -51, -20, 32, 25, -52, -104, -20, 191, 374, 374, 191, -20, -104, -52, 25, 32, -20, -51, -29, 9, 11, -19, -37,
+		-21, 3, 3, -18, -30, -17, 1, 0, -17, -25, -14, 0, -2, -16, -21, -11, 0, -3, -14, -18, -9, 0, -3, -13, -15, -7, 0,
+		-3, -11, -12, -5, 0, -3, -10, -10, -3, 1, -2, -8, -8, -2, 2, -2, -7, -6, -1, 2, -1, -5, -4, 0, 3, -1, -4, -3, 1, 3,
+		0, -3, -2, 2, 3, 1, -2, 0, 3, 4, 1, -1, 1, 4, 4, 2, 0, 1, 4, 4, 2, 0, 2, 4, 4, 2, 0, 2, 4, 3, 1, 0, 1, 3, 2, 0, -2,
+		0, 2, 1, -2, -4, -2, 1, 0, -4, -6, -4, 3, 9, 9, 5, 0, -2, -1
+};
+// differentiator (250 SPS)
+//const int32_t diferentiator_coef[DIF_ORDER] = { -4, 6, -3, 3, -3, 3, -4, 5, -6, 8, -11, 16, -27, 52, -145, 1304, -1304,
+//												145, -52, 27, -16, 11, -8, 6, -5, 4, -3, 3, -3, 3, -6, 4};
+// differentiator (500 SPS)
+const int32_t diferentiator_coef[DIF_ORDER] = {-4, 6, -3, 3, -3, 3, -4, 5, -6, 8, -11, 16, -27, 52, -145, 1304, -1304, 145,
+												-52, 27, -16, 11, -8, 6, -5, 4, -3, 3, -3, 3, -6, 4};
 
 int32_t band_pass_filterino(int32_t value)
 {
-	static int32_t buffer_x_0[2] = {0,0},buffer_x_1[2] = {0,0},
-			buffer_x_2[2] = {0,0},buffer_x_3[2] = {0,0},
-			buffer_x_4[2] = {0,0},buffer_x_5[2] = {0,0};
+	static int32_t bp_buffer[(BP_ORDER - 1)];
+	int i;
+	int32_t y_n = 0;
 
-	static int32_t buffer_y_0[2] = {0,0},buffer_y_1[2] = {0,0},
-			buffer_y_2[2] = {0,0},buffer_y_3[2] = {0,0},
-			buffer_y_4[2] = {0,0},buffer_y_5[2] = {0,0};
+	for(i = (BP_ORDER - 2); i > 0; i-- ){
+        y_n += (band_pass_coef[i + 1]) * (bp_buffer[i]);
+        bp_buffer[i] = bp_buffer[i-1];
+	}
 
-	int32_t x_n = value, y_n = 0;
+    y_n += band_pass_coef[1] * bp_buffer[0];
+    bp_buffer[0] = value;
 
-    y_n = (multiplication(band_pass_coef[0], x_n) + multiplication(band_pass_coef[1], buffer_x_0[0])
-			+ multiplication(band_pass_coef[2], buffer_x_0[1]) - multiplication(band_pass_coef[3], buffer_y_0[0])
-			- multiplication(band_pass_coef[4], buffer_y_0[1]))>>10;
+    y_n = y_n + band_pass_coef[0] * value;
 
-    buffer_y_0[1] = buffer_y_0[0];
-    buffer_y_0[0] = y_n;
-    buffer_x_0[1] = buffer_x_0[0];
-    buffer_x_0[0] = x_n;
-    x_n = y_n;
+    y_n = (y_n >> 10);
 
-    y_n = (multiplication(band_pass_coef[5], x_n) + multiplication(band_pass_coef[6], buffer_x_1[0])
-        		+ multiplication(band_pass_coef[7], buffer_x_1[1]) - multiplication(band_pass_coef[8], buffer_y_1[0])
-    			- multiplication(band_pass_coef[9], buffer_y_1[1]))>>10;
-    buffer_y_1[1] = buffer_y_1[0];
-    buffer_y_1[0] = y_n;
-    buffer_x_1[1] = buffer_x_1[0];
-    buffer_x_1[0] = x_n;
-
-    x_n = y_n;
-
-    y_n = (multiplication(band_pass_coef[10], x_n) + multiplication(band_pass_coef[11], buffer_x_2[0])
-    			+ multiplication(band_pass_coef[12], buffer_x_2[1]) - multiplication(band_pass_coef[13], buffer_y_2[0])
-    			- multiplication(band_pass_coef[14], buffer_y_2[1]))>>10;
-    buffer_y_2[1] = buffer_y_2[0];
-    buffer_y_2[0] = y_n;
-    buffer_x_2[1] = buffer_x_2[0];
-    buffer_x_2[0] = x_n;
-
-    x_n = y_n;
-
-    y_n = (multiplication(band_pass_coef[15], x_n) + multiplication(band_pass_coef[16], buffer_x_3[0])
-        		+ multiplication(band_pass_coef[17], buffer_x_3[1]) - multiplication(band_pass_coef[18], buffer_y_3[0])
-    			- multiplication(band_pass_coef[19], buffer_y_3[1]))>>10;
-    buffer_y_3[1] = buffer_y_3[0];
-    buffer_y_3[0] = y_n;
-    buffer_x_3[1] = buffer_x_3[0];
-    buffer_x_3[0] = x_n;
-    x_n = y_n;
-
-    y_n = (multiplication(band_pass_coef[20], x_n) + multiplication(band_pass_coef[21], buffer_x_4[0])
-        		+ multiplication(band_pass_coef[22], buffer_x_4[1])	- multiplication(band_pass_coef[23], buffer_y_4[0])
-    			- multiplication(band_pass_coef[24], buffer_y_4[1]))>>10;
-    buffer_y_4[1] = buffer_y_4[0];
-    buffer_y_4[0] = y_n;
-    buffer_x_4[1] = buffer_x_4[0];
-    buffer_x_4[0] = x_n;
-    x_n = y_n;
-
-    y_n = (multiplication(band_pass_coef[25], x_n) + multiplication(band_pass_coef[26], buffer_x_5[0])
-        		+ multiplication(band_pass_coef[27], buffer_x_5[1]) - multiplication(band_pass_coef[28], buffer_y_5[0])
-    			- multiplication(band_pass_coef[29], buffer_y_5[1]))>>10;
-    buffer_y_5[1] = buffer_y_5[0];
-    buffer_y_5[0] = y_n;
-    buffer_x_5[1] = buffer_x_5[0];
-    buffer_x_5[0] = x_n;
-
-	return y_n;
+    return y_n;
 }
 
 int32_t diferentiator_3000(int32_t value)
 {
-	static int32_t buffer_x[4] = {0,0,0,0};
-	int32_t x_n = value, y_n = 0;
-	uint8_t i;
+	static int32_t dif_buffer[(DIF_ORDER - 1)];
+	int i;
+	int32_t y_n = 0;
 
-	y_n = (multiplication(diferentiator_coef[0], x_n) + multiplication(diferentiator_coef[1], buffer_x[0])
-				+ multiplication(diferentiator_coef[2], buffer_x[1]) + multiplication(diferentiator_coef[3], buffer_x[2])
-				+ multiplication(diferentiator_coef[4], buffer_x[3]))>>3;
+	for(i = (DIF_ORDER - 2); i > 0; i-- ){
+        y_n += (diferentiator_coef[i + 1]) * (dif_buffer[i]);
+        dif_buffer[i] = dif_buffer[i-1];
+	}
 
-    for ( i = 3; i > 0; i--)
-    {
-		buffer_x[i] = buffer_x[i-1];
-    }
-    buffer_x[0] = x_n;
+    y_n += diferentiator_coef[1] * dif_buffer[0];
+    dif_buffer[0] = value;
 
-	return y_n;
+    y_n = y_n + diferentiator_coef[0] * value;
+
+    y_n = (y_n >> 10);
+
+    return y_n;
 }
-
 int32_t integrator_3000(int32_t value)
 {
-	static int32_t buffer_x[INTEGRATION_LENGTH] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-													0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	static int32_t buffer_x[INTEGRATION_LENGTH];
 	int32_t x_n = value, y_n = 0;
 	uint8_t i;
 
@@ -130,7 +118,7 @@ int32_t integrator_3000(int32_t value)
     y_n += buffer_x[0];
     buffer_x[0] = x_n;
 
-	return y_n;
+	return ( y_n >> 5);
 }
 
 int32_t filter_sample(int32_t value)
@@ -141,7 +129,7 @@ int32_t filter_sample(int32_t value)
 	filtered_value = band_pass_filterino(filtered_value);
 	filtered_value = diferentiator_3000(filtered_value);
 
-	filtered_value = multiplication((filtered_value),(filtered_value));
+	filtered_value = (filtered_value >> 4) * (filtered_value >> 4);
 
 	filtered_value = integrator_3000(filtered_value);
 
