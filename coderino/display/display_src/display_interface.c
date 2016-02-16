@@ -104,27 +104,27 @@ void display_interface_write_signal(display_interface_t* display_interface, ecg_
 		}
 
 	//Cook ecg data
-		signal_value = signal_data->data >> 6;
+		signal_value = signal_data->data >> 1;
 
 	//Limit ecg data values
 		if (signal_value > (SIGNAL_LINES >> 1))			//If value goes below screen bottom limit
 		{
-			signal_y_point = SIGNAL_LINES - 1;
-		}
-		else if (signal_value < (- SIGNAL_LINES >> 1))	//If value goes above screen top limit
-		{
 			signal_y_point = 0;
+		}
+		else if (signal_value < (- SIGNAL_LINES >> 2))	//If value goes above screen top limit
+		{
+			signal_y_point = SIGNAL_LINES - 1;
 		}
 		else
 		{
-			signal_y_point = 0x70 - signal_value;
+			signal_y_point = 0x80 - signal_value;
 		}
 
 	//Print data
 		display_functions_write_line(color, current_index - 1, last_signal_y_point,
-						  					current_index, signal_y_point);
+						  					current_index, (uint16_t)signal_y_point);
 
 	//Increment index
 		display_interface_inc_index(display_interface);
-		last_signal_y_point = signal_y_point;
+		last_signal_y_point = (uint16_t)signal_y_point;
 }

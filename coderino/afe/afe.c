@@ -87,7 +87,7 @@ void afe_init()
 		afe_serial_write_register(REG_RESP2, 0x87);			//Enable calibration
 		afe_serial_write_register(REG_CH1SET, 0x01);		// |
 		afe_serial_send(OFFSETCAL);							// | Calibrate
-		afe_serial_write_register(REG_CH1SET, 0x00);		// |
+		afe_serial_write_register(REG_CH1SET, 0x10);		// | ( Set PGA gain to 1)
 		afe_serial_write_register(REG_RESP2, 0x07);			//Disable calibration
 
 

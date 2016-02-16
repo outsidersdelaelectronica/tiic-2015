@@ -14,7 +14,7 @@ extern ecg_data_t last_sample;
 extern int bpm;
 
 #define FS 500
-#define SIGNAL_TH_POS 0x1FFF
+#define SIGNAL_TH 0x0FFF
 
 int shitty_abs(int number)
 {
@@ -44,7 +44,7 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 	static uint8_t flag = 0;
 	static int maxerino_pos = 0,sample_counter = 0;
 	static int32_t threshold = 0x00FFFFFF, maxerino = 0,current_value = 0, prev_value = 0;
-	static int data_tmp = 0;
+	int data_tmp = 0;
 	int check = 0;
 	__disable_interrupt();                    //Make this operation atomic
 
@@ -68,42 +68,42 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 
 		//Store signal data into ecg signal buffer
 
-//		data_tmp = ((int) afe_bytes[0] << 12) | ((int) afe_bytes[1] << 4) | ((int) afe_bytes[2] >> 4);
 		check = ((int) afe_bytes[0] << 12) | ((int) afe_bytes[1] << 4) | ((int) afe_bytes[2] >> 4);
 
-		if ( shitty_abs(check) < SIGNAL_TH_POS)
+		if ( shitty_abs(check) < SIGNAL_TH)
 		{
 //			ecg_data_write(&last_sample, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
 			data_tmp = check;
 		}
 //		current_value = filter_sample(last_sample.data);
-		current_value = filter_sample(data_tmp);
-		last_sample.data = current_value;
-
-		if(current_value >= ((threshold * 7) >>3) )
-		{
-			if (current_value >= maxerino )
-			{
-				maxerino = current_value;
-				maxerino_pos = sample_counter;
-			}else if (flag == 0){
-				threshold = ((maxerino * 7) >>3);
-				flag = 1;
-			}
-		}else if ((prev_value >= ((threshold * 7) >> 3) ) && (maxerino > 0))
-		{
-			bpm =  (60 * FS) / maxerino_pos;
-			threshold = ((threshold * 7 + maxerino) >> 3);
-			sample_counter = sample_counter - maxerino_pos -1;
-			maxerino = 0;
-		}else{
-			threshold = ((threshold * 127) >> 7);
-			maxerino = 0;
-		}
-
-		sample_counter++;
-		prev_value = current_value;
-
+//		current_value = filter_sample((int32_t)data_tmp);
+//		last_sample.data = current_value;
+		last_sample.data = data_tmp;
+//
+//		if(current_value >= ((threshold * 7) >>3) )
+//		{
+//			if (current_value >= maxerino )
+//			{
+//				maxerino = current_value;
+//				maxerino_pos = sample_counter;
+//			}else if (flag == 0){
+//				threshold = ((maxerino * 7) >>3);
+//				flag = 1;
+//			}
+//		}else if ((prev_value >= ((threshold * 7) >> 3) ) && (maxerino > 0))
+//		{
+//			bpm =  (60 * FS) / maxerino_pos;
+//			threshold = ((threshold * 7 + maxerino) >> 3);
+//			sample_counter = sample_counter - maxerino_pos -1;
+//			maxerino = 0;
+//		}else{
+//			threshold = ((threshold * 127) >> 7);
+//			maxerino = 0;
+//		}
+//
+//		sample_counter++;
+//		prev_value = current_value;
+//
 		P1IFG &= ~BIT2;                       	// Clear DRDY (P1.2) flag
 
 	}

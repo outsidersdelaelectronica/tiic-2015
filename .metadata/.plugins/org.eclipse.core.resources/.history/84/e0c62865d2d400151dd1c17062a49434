@@ -1,0 +1,158 @@
+/*
+ * afe_serial.c
+ *
+ *  Created on: 29/9/2015
+ *      Author: Smau
+ */
+
+#include "afe_serial.h"
+
+const uint8_t sin[1500] = {00, 00, 00, 00, 00, 0D, 00, 00, 19, 00, 00, 26, 00, 00, 32, 00, 00, 3F, 00, 00,
+		4B, 00, 00, 58, 00, 00, 64, 00, 00, 71, 00, 00, 7D, 00, 00, 8A, 00, 00, 96, 00, 00, A3, 00, 00, AF,
+		00, 00, BB, 00, 00, C8, 00, 00, D4, 00, 00, E0, 00, 00, EC, 00, 00, F9, 00, 01, 05, 00, 01, 11, 00,
+		01, 1D, 00, 01, 29, 00, 01, 35, 00, 01, 41, 00, 01, 4D, 00, 01, 59, 00, 01, 64, 00, 01, 70, 00, 01,
+		7C, 00, 01, 87, 00, 01, 93, 00, 01, 9E, 00, 01, AA, 00, 01, B5, 00, 01, C0, 00, 01, CC, 00, 01, D7,
+		00, 01, E2, 00, 01, ED, 00, 01, F8, 00, 02, 02, 00, 02, 0D, 00, 02, 18, 00, 02, 22, 00, 02, 2D, 00,
+		02, 37, 00, 02, 42, 00, 02, 4C, 00, 02, 56, 00, 02, 60, 00, 02, 6A, 00, 02, 74, 00, 02, 7D, 00, 02,
+		87, 00, 02, 91, 00, 02, 9A, 00, 02, A3, 00, 02, AD, 00, 02, B6, 00, 02, BF, 00, 02, C8, 00, 02, D0,
+		00, 02, D9, 00, 02, E2, 00, 02, EA, 00, 02, F2, 00, 02, FA, 00, 03, 03, 00, 03, 0A, 00, 03, 12, 00,
+		03, 1A, 00, 03, 22, 00, 03, 29, 00, 03, 30, 00, 03, 38, 00, 03, 3F, 00, 03, 46, 00, 03, 4C, 00, 03,
+		53, 00, 03, 5A, 00, 03, 60, 00, 03, 66, 00, 03, 6C, 00, 03, 72, 00, 03, 78, 00, 03, 7E, 00, 03, 83,
+		00, 03, 89, 00, 03, 8E, 00, 03, 93, 00, 03, 98, 00, 03, 9D, 00, 03, A2, 00, 03, A6, 00, 03, AB, 00,
+		03, AF, 00, 03, B3, 00, 03, B7, 00, 03, BB, 00, 03, BF, 00, 03, C2, 00, 03, C5, 00, 03, C9, 00, 03,
+		CC, 00, 03, CF, 00, 03, D1, 00, 03, D4, 00, 03, D6, 00, 03, D9, 00, 03, DB, 00, 03, DD, 00, 03, DE,
+		00, 03, E0, 00, 03, E2, 00, 03, E3, 00, 03, E4, 00, 03, E5, 00, 03, E6, 00, 03, E7, 00, 03, E7, 00,
+		03, E8, 00, 03, E8, 00, 03, E8, 00, 03, E8, 00, 03, E8, 00, 03, E7, 00, 03, E7, 00, 03, E6, 00, 03,
+		E5, 00, 03, E4, 00, 03, E3, 00, 03, E2, 00, 03, E0, 00, 03, DE, 00, 03, DD, 00, 03, DB, 00, 03, D9,
+		00, 03, D6, 00, 03, D4, 00, 03, D1, 00, 03, CF, 00, 03, CC, 00, 03, C9, 00, 03, C5, 00, 03, C2, 00,
+		03, BF, 00, 03, BB, 00, 03, B7, 00, 03, B3, 00, 03, AF, 00, 03, AB, 00, 03, A6, 00, 03, A2, 00, 03,
+		9D, 00, 03, 98, 00, 03, 93, 00, 03, 8E, 00, 03, 89, 00, 03, 83, 00, 03, 7E, 00, 03, 78, 00, 03, 72,
+		00, 03, 6C, 00, 03, 66, 00, 03, 60, 00, 03, 5A, 00, 03, 53, 00, 03, 4C, 00, 03, 46, 00, 03, 3F, 00,
+		03, 38, 00, 03, 30, 00, 03, 29, 00, 03, 22, 00, 03, 1A, 00, 03, 12, 00, 03, 0A, 00, 03, 03, 00, 02,
+		FA, 00, 02, F2, 00, 02, EA, 00, 02, E2, 00, 02, D9, 00, 02, D0, 00, 02, C8, 00, 02, BF, 00, 02, B6,
+		00, 02, AD, 00, 02, A3, 00, 02, 9A, 00, 02, 91, 00, 02, 87, 00, 02, 7D, 00, 02, 74, 00, 02, 6A, 00,
+		02, 60, 00, 02, 56, 00, 02, 4C, 00, 02, 42, 00, 02, 37, 00, 02, 2D, 00, 02, 22, 00, 02, 18, 00, 02,
+		0D, 00, 02, 02, 00, 01, F8, 00, 01, ED, 00, 01, E2, 00, 01, D7, 00, 01, CC, 00, 01, C0, 00, 01, B5,
+		00, 01, AA, 00, 01, 9E, 00, 01, 93, 00, 01, 87, 00, 01, 7C, 00, 01, 70, 00, 01, 64, 00, 01, 59, 00,
+		01, 4D, 00, 01, 41, 00, 01, 35, 00, 01, 29, 00, 01, 1D, 00, 01, 11, 00, 01, 05, 00, 00, F9, 00, 00,
+		EC, 00, 00, E0, 00, 00, D4, 00, 00, C8, 00, 00, BB, 00, 00, AF, 00, 00, A3, 00, 00, 96, 00, 00, 8A,
+		00, 00, 7D, 00, 00, 71, 00, 00, 64, 00, 00, 58, 00, 00, 4B, 00, 00, 3F, 00, 00, 32, 00, 00, 26, 00,
+		00, 19, 00, 00, 0D, 00, 00, 00, FF, FF, F3, FF, FF, E7, FF, FF, DA, FF, FF, CE, FF, FF, C1, FF, FF,
+		B5, FF, FF, A8, FF, FF, 9C, FF, FF, 8F, FF, FF, 83, FF, FF, 76, FF, FF, 6A, FF, FF, 5D, FF, FF, 51,
+		FF, FF, 45, FF, FF, 38, FF, FF, 2C, FF, FF, 20, FF, FF, 14, FF, FF, 07, FF, FE, FB, FF, FE, EF, FF,
+		FE, E3, FF, FE, D7, FF, FE, CB, FF, FE, BF, FF, FE, B3, FF, FE, A7, FF, FE, 9C, FF, FE, 90, FF, FE,
+		84, FF, FE, 79, FF, FE, 6D, FF, FE, 62, FF, FE, 56, FF, FE, 4B, FF, FE, 40, FF, FE, 34, FF, FE, 29,
+		FF, FE, 1E, FF, FE, 13, FF, FE, 08, FF, FD, FE, FF, FD, F3, FF, FD, E8, FF, FD, DE, FF, FD, D3, FF,
+		FD, C9, FF, FD, BE, FF, FD, B4, FF, FD, AA, FF, FD, A0, FF, FD, 96, FF, FD, 8C, FF, FD, 83, FF, FD,
+		79, FF, FD, 6F, FF, FD, 66, FF, FD, 5D, FF, FD, 53, FF, FD, 4A, FF, FD, 41, FF, FD, 38, FF, FD, 30,
+		FF, FD, 27, FF, FD, 1E, FF, FD, 16, FF, FD, 0E, FF, FD, 06, FF, FC, FD, FF, FC, F6, FF, FC, EE, FF,
+		FC, E6, FF, FC, DE, FF, FC, D7, FF, FC, D0, FF, FC, C8, FF, FC, C1, FF, FC, BA, FF, FC, B4, FF, FC,
+		AD, FF, FC, A6, FF, FC, A0, FF, FC, 9A, FF, FC, 94, FF, FC, 8E, FF, FC, 88, FF, FC, 82, FF, FC, 7D,
+		FF, FC, 77, FF, FC, 72, FF, FC, 6D, FF, FC, 68, FF, FC, 63, FF, FC, 5E, FF, FC, 5A, FF, FC, 55, FF,
+		FC, 51, FF, FC, 4D, FF, FC, 49, FF, FC, 45, FF, FC, 41, FF, FC, 3E, FF, FC, 3B, FF, FC, 37, FF, FC,
+		34, FF, FC, 31, FF, FC, 2F, FF, FC, 2C, FF, FC, 2A, FF, FC, 27, FF, FC, 25, FF, FC, 23, FF, FC, 22,
+		FF, FC, 20, FF, FC, 1E, FF, FC, 1D, FF, FC, 1C, FF, FC, 1B, FF, FC, 1A, FF, FC, 19, FF, FC, 19, FF,
+		FC, 18, FF, FC, 18, FF, FC, 18, FF, FC, 18, FF, FC, 18, FF, FC, 19, FF, FC, 19, FF, FC, 1A, FF, FC,
+		1B, FF, FC, 1C, FF, FC, 1D, FF, FC, 1E, FF, FC, 20, FF, FC, 22, FF, FC, 23, FF, FC, 25, FF, FC, 27,
+		FF, FC, 2A, FF, FC, 2C, FF, FC, 2F, FF, FC, 31, FF, FC, 34, FF, FC, 37, FF, FC, 3B, FF, FC, 3E, FF,
+		FC, 41, FF, FC, 45, FF, FC, 49, FF, FC, 4D, FF, FC, 51, FF, FC, 55, FF, FC, 5A, FF, FC, 5E, FF, FC,
+		63, FF, FC, 68, FF, FC, 6D, FF, FC, 72, FF, FC, 77, FF, FC, 7D, FF, FC, 82, FF, FC, 88, FF, FC, 8E,
+		FF, FC, 94, FF, FC, 9A, FF, FC, A0, FF, FC, A6, FF, FC, AD, FF, FC, B4, FF, FC, BA, FF, FC, C1, FF,
+		FC, C8, FF, FC, D0, FF, FC, D7, FF, FC, DE, FF, FC, E6, FF, FC, EE, FF, FC, F6, FF, FC, FD, FF, FD,
+		06, FF, FD, 0E, FF, FD, 16, FF, FD, 1E, FF, FD, 27, FF, FD, 30, FF, FD, 38, FF, FD, 41, FF, FD, 4A,
+		FF, FD, 53, FF, FD, 5D, FF, FD, 66, FF, FD, 6F, FF, FD, 79, FF, FD, 83, FF, FD, 8C, FF, FD, 96, FF,
+		FD, A0, FF, FD, AA, FF, FD, B4, FF, FD, BE, FF, FD, C9, FF, FD, D3, FF, FD, DE, FF, FD, E8, FF, FD,
+		F3, FF, FD, FE, FF, FE, 08, FF, FE, 13, FF, FE, 1E, FF, FE, 29, FF, FE, 34, FF, FE, 40, FF, FE, 4B,
+		FF, FE, 56, FF, FE, 62, FF, FE, 6D, FF, FE, 79, FF, FE, 84, FF, FE, 90, FF, FE, 9C, FF, FE, A7, FF,
+		FE, B3, FF, FE, BF, FF, FE, CB, FF, FE, D7, FF, FE, E3, FF, FE, EF, FF, FE, FB, FF, FF, 07, FF, FF,
+		14, FF, FF, 20, FF, FF, 2C, FF, FF, 38, FF, FF, 45, FF, FF, 51, FF, FF, 5D, FF, FF, 6A, FF, FF, 76,
+		FF, FF, 83, FF, FF, 8F, FF, FF, 9C, FF, FF, A8, FF, FF, B5, FF, FF, C1, FF, FF, CE, FF, FF, DA, FF,
+		FF, E7, FF, FF, F3
+};
+
+
+
+//uint8_t afe_serial_send(uint8_t data)
+//{
+//	__delay_cycles(120);                    //Wait 7.5us (assuming 24MHz MCLK), required to allow t_sdecode to be 4 T_clk
+//
+//	UCB1RXBUF;								//Dummy read to empty RX buffer
+//											//and clear any overrun conditions
+//
+//	while (!(UCB1IFG & UCTXIFG));           //Wait while not ready for TX
+//	UCB1TXBUF = data;						//Transmit byte (automatically clears UCTXIFG)
+//
+//	while(UCB1STATW & UCBUSY);
+//	while (!(UCB1IFG & UCRXIFG));
+//
+//    return UCB1RXBUF;				//Return received data if any
+//}
+
+uint8_t afe_serial_send(uint8_t data)
+{
+
+	static int i = 0;
+
+	__delay_cycles(120);                    //Wait 7.5us (assuming 24MHz MCLK), required to allow t_sdecode to be 4 T_clk
+
+	UCB1RXBUF;								//Dummy read to empty RX buffer
+											//and clear any overrun conditions
+
+	while (!(UCB1IFG & UCTXIFG));           //Wait while not ready for TX
+	UCB1TXBUF = data;						//Transmit byte (automatically clears UCTXIFG)
+
+	while(UCB1STATW & UCBUSY);
+	while (!(UCB1IFG & UCRXIFG));
+
+    return sin[i++];				//Return received data if any
+}
+
+void afe_serial_write_register(uint8_t address, uint8_t value)
+{
+	__delay_cycles(96);                     //Wait 6us (assuming 24MHz MCLK), required to allow t_sdecode to be 4 T_clk
+											//needed to ensure previous byte was not sent within this time period
+
+	while (!(UCB1IFG & UCTXIFG));          //Wait while not ready for TX
+	UCB1TXBUF = address | WREG;
+	__delay_cycles(120);                    //Wait 7.5us (assuming 24MHz MCLK), required to allow t_sdecode to be 4 T_clk
+
+	while (!(UCB1IFG & UCTXIFG));           //Wait while not ready for TX
+	UCB1TXBUF = 0x00;						// Default size = 1
+	__delay_cycles(120);                   	//Wait 7.5us (assuming 24MHz MCLK), required to allow t_sdecode to be 4 T_clk
+
+	while (!(UCB1IFG & UCTXIFG));          	//Wait while not ready for TX
+	UCB1TXBUF = value;
+
+	while ((UCB1STAT & UCBUSY));            //Wait for all TX/RX to finish
+
+	UCB1RXBUF;                            	//Dummy read to empty RX buffer
+											//and clear any overrun conditions
+}
+
+// NOT USED
+uint8_t afe_serial_read_register(uint8_t address)
+{
+	__delay_cycles(96);
+
+	while (!(UCB1IFG & UCTXIFG)) ;      //Wait while not ready for TX
+	UCB1TXBUF = address | RREG;
+	__delay_cycles(120);               	//Wait 7.5us (assuming 24MHz MCLK), required to allow t_sdecode to be 4 T_clk
+										//this value was determined experimentally
+	while (!(UCB1IFG & UCTXIFG));       //Wait while not ready for TX
+	UCB1TXBUF = 0x00;					// Default size = 1
+	while ((UCB1STAT & UCBUSY));        //Wait for all TX/RX to finish
+
+	UCB1RXBUF;                          //Dummy read to empty RX buffer
+											//and clear any overrun conditions
+	UCB1IFG &= ~UCRXIFG;                //Ensure RXIFG is clear
+
+	// Clock the actual data transfer and receive the bytes
+
+	__delay_cycles(120);                //Wait 7.5us (assuming 24MHz MCLK), required to allow t_sdecode to be 4 T_clk
+
+	while (!(UCB1IFG & UCTXIFG));   	//Wait while not ready for TX
+	UCB1TXBUF = 0xff;					//Write dummy byte
+	while (!(UCB1IFG & UCRXIFG));       //Wait for RX buffer (full)
+
+	return UCB1RXBUF;
+}

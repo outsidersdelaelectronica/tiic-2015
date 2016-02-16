@@ -2,17 +2,28 @@
 **** Build of configuration Debug for project coderino ****
 
 "C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../serial.c'
+'Building file: ../afe/afe_src/afe_serial.c'
 'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="serial.pp"  "../serial.c"
-"../serial.c", line 58: remark #1538-D: (ULP 10.1) ISR Port_1 calls function afe_serial_send. Recommend moving function call away from ISR, or inlining the function, or using pragmas
-"../serial.c", line 64: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../serial.c", line 64: remark #1538-D: (ULP 10.1) ISR Port_1 calls function afe_serial_send. Recommend moving function call away from ISR, or inlining the function, or using pragmas
-"../serial.c", line 74: remark #1538-D: (ULP 10.1) ISR Port_1 calls function shitty_abs. Recommend moving function call away from ISR, or inlining the function, or using pragmas
-"../serial.c", line 80: remark #1538-D: (ULP 10.1) ISR Port_1 calls function filter_sample. Recommend moving function call away from ISR, or inlining the function, or using pragmas
-"../serial.c", line 95: remark #1530-D: (ULP 5.1) Detected divide operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../serial.c", line 42: remark #1535-D: (ULP 8.1) variable "afe_bytes" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../serial.c'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="afe/afe_src/afe_serial.pp" --obj_directory="afe/afe_src"  "../afe/afe_src/afe_serial.c"
+"../afe/afe_src/afe_serial.c", line 99: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 102: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 103: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 94: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 111: remark #1545-D: (ULP 14.1) Array index of type "int". Recommend using "unsigned int"
+"../afe/afe_src/afe_serial.c", line 119: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 123: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 127: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 130: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 121: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 125: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 141: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 145: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 147: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 157: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 159: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 143: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 155: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+'Finished building: ../afe/afe_src/afe_serial.c'
 ' '
 'Building target: coderino.out'
 'Invoking: MSP430 Linker'

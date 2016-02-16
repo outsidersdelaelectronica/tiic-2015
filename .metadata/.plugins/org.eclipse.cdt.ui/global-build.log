@@ -2,22 +2,32 @@
 **** Build of configuration Debug for project coderino ****
 
 "C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
+'Building file: ../serial.c'
 'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 138: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 138: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 139: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 139: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 205: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 195: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-"../filters/filters.c", line 222: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 214: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="serial.pp"  "../serial.c"
+"../serial.c", line 44: warning #179-D: variable "flag" was declared but never referenced
+"../serial.c", line 45: warning #179-D: variable "maxerino_pos" was declared but never referenced
+"../serial.c", line 45: warning #179-D: variable "sample_counter" was declared but never referenced
+"../serial.c", line 46: warning #179-D: variable "threshold" was declared but never referenced
+"../serial.c", line 46: warning #179-D: variable "maxerino" was declared but never referenced
+"../serial.c", line 46: warning #179-D: variable "prev_value" was declared but never referenced
+"../serial.c", line 58: remark #1538-D: (ULP 10.1) ISR Port_1 calls function afe_serial_send. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../serial.c", line 64: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
+"../serial.c", line 64: remark #1538-D: (ULP 10.1) ISR Port_1 calls function afe_serial_send. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../serial.c", line 73: remark #1538-D: (ULP 10.1) ISR Port_1 calls function shitty_abs. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../serial.c", line 79: remark #1538-D: (ULP 10.1) ISR Port_1 calls function filter_sample. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../serial.c", line 44: remark #1535-D: (ULP 8.1) variable "flag" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 45: remark #1535-D: (ULP 8.1) variable "maxerino_pos" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 45: remark #1535-D: (ULP 8.1) variable "sample_counter" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 46: remark #1535-D: (ULP 8.1) variable "threshold" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 46: remark #1535-D: (ULP 8.1) variable "maxerino" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 46: remark #1535-D: (ULP 8.1) variable "prev_value" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 42: remark #1535-D: (ULP 8.1) variable "afe_bytes" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+'Finished building: ../serial.c'
 ' '
 'Building target: coderino.out'
 'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
 <Linking>
 remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
 remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
@@ -39,168 +49,28 @@ gmake: Nothing to be done for `all'.
 **** Build of configuration Debug for project coderino ****
 
 "C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
+'Building file: ../afe/afe_src/afe_serial.c'
 'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 138: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 138: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 139: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 139: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 205: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 195: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-"../filters/filters.c", line 222: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 214: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-gmake: Nothing to be done for `all'.
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 138: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 138: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 139: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 139: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 205: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 195: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-"../filters/filters.c", line 222: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 214: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
-' '
-'Building file: ../display/display_src/display_interface.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="display/display_src/display_interface.pp" --obj_directory="display/display_src"  "../display/display_src/display_interface.c"
-"../display/display_src/display_interface.c", line 13: remark #1537-D: (ULP 9.1) Function parameter color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 27: remark #1537-D: (ULP 9.1) Function parameter signal_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 27: remark #1537-D: (ULP 9.1) Function parameter menubar_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 57: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 64: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 70: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 78: remark #1537-D: (ULP 9.1) Function parameter signal_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 78: remark #1537-D: (ULP 9.1) Function parameter menubar_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 87: remark #1537-D: (ULP 9.1) Function parameter color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-'Finished building: ../display/display_src/display_interface.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 139: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 139: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 140: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 140: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 206: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 196: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-"../filters/filters.c", line 223: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 215: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 142: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 142: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 143: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 143: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 223: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 223: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 224: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 224: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 246: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 238: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 38: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 38: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 39: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 39: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 59: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 59: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 60: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 60: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 82: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 74: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
-' '
-'Building file: ../filters/unused_filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/unused_filters.pp" --obj_directory="filters"  "../filters/unused_filters.c"
-'Finished building: ../filters/unused_filters.c'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="afe/afe_src/afe_serial.pp" --obj_directory="afe/afe_src"  "../afe/afe_src/afe_serial.c"
+"../afe/afe_src/afe_serial.c", line 97: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 100: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 101: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 92: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 103: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
+"../afe/afe_src/afe_serial.c", line 111: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 115: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 119: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 122: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 113: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 117: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 133: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 137: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 139: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 149: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 151: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 135: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 147: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+'Finished building: ../afe/afe_src/afe_serial.c'
 ' '
 'Building target: coderino.out'
 'Invoking: MSP430 Linker'
@@ -219,20 +89,28 @@ remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recomm
 **** Build of configuration Debug for project coderino ****
 
 "C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
+'Building file: ../afe/afe_src/afe_serial.c'
 'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 38: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 38: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 39: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 39: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 59: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 59: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 60: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 60: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 82: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 74: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="afe/afe_src/afe_serial.pp" --obj_directory="afe/afe_src"  "../afe/afe_src/afe_serial.c"
+"../afe/afe_src/afe_serial.c", line 97: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 100: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 101: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 92: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 103: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
+"../afe/afe_src/afe_serial.c", line 111: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 115: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 119: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 122: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 113: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 117: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 133: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 137: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 139: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 149: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 151: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 135: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 147: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+'Finished building: ../afe/afe_src/afe_serial.c'
 ' '
 'Building target: coderino.out'
 'Invoking: MSP430 Linker'
@@ -251,34 +129,28 @@ remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recomm
 **** Build of configuration Debug for project coderino ****
 
 "C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
+'Building file: ../afe/afe_src/afe_serial.c'
 'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 85: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 77: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
-' '
-'Building file: ../display/display_src/display_interface.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="display/display_src/display_interface.pp" --obj_directory="display/display_src"  "../display/display_src/display_interface.c"
-"../display/display_src/display_interface.c", line 13: remark #1537-D: (ULP 9.1) Function parameter color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 27: remark #1537-D: (ULP 9.1) Function parameter signal_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 27: remark #1537-D: (ULP 9.1) Function parameter menubar_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 57: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 64: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 70: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 78: remark #1537-D: (ULP 9.1) Function parameter signal_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 78: remark #1537-D: (ULP 9.1) Function parameter menubar_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 87: remark #1537-D: (ULP 9.1) Function parameter color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-'Finished building: ../display/display_src/display_interface.c'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="afe/afe_src/afe_serial.pp" --obj_directory="afe/afe_src"  "../afe/afe_src/afe_serial.c"
+"../afe/afe_src/afe_serial.c", line 97: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 100: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 101: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 92: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 105: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
+"../afe/afe_src/afe_serial.c", line 113: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 117: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 121: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 124: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 115: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 119: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 135: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 139: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 141: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 151: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 153: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 137: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 149: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+'Finished building: ../afe/afe_src/afe_serial.c'
 ' '
 'Building target: coderino.out'
 'Invoking: MSP430 Linker'
@@ -297,19 +169,27 @@ remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recomm
 **** Build of configuration Debug for project coderino ****
 
 "C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../display/display_src/display_interface.c'
+'Building file: ../afe/afe_src/afe_serial.c'
 'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="display/display_src/display_interface.pp" --obj_directory="display/display_src"  "../display/display_src/display_interface.c"
-"../display/display_src/display_interface.c", line 13: remark #1537-D: (ULP 9.1) Function parameter color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 27: remark #1537-D: (ULP 9.1) Function parameter signal_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 27: remark #1537-D: (ULP 9.1) Function parameter menubar_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 57: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 64: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 70: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 78: remark #1537-D: (ULP 9.1) Function parameter signal_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 78: remark #1537-D: (ULP 9.1) Function parameter menubar_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 87: remark #1537-D: (ULP 9.1) Function parameter color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-'Finished building: ../display/display_src/display_interface.c'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="afe/afe_src/afe_serial.pp" --obj_directory="afe/afe_src"  "../afe/afe_src/afe_serial.c"
+"../afe/afe_src/afe_serial.c", line 97: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 100: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 101: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 92: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 114: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 118: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 122: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 125: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 116: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 120: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 136: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 140: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 142: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 152: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 154: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 138: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 150: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+'Finished building: ../afe/afe_src/afe_serial.c'
 ' '
 'Building target: coderino.out'
 'Invoking: MSP430 Linker'
@@ -328,34 +208,27 @@ remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recomm
 **** Build of configuration Debug for project coderino ****
 
 "C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
+'Building file: ../afe/afe_src/afe_serial.c'
 'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 85: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 77: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
-' '
-'Building file: ../display/display_src/display_interface.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="display/display_src/display_interface.pp" --obj_directory="display/display_src"  "../display/display_src/display_interface.c"
-"../display/display_src/display_interface.c", line 13: remark #1537-D: (ULP 9.1) Function parameter color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 27: remark #1537-D: (ULP 9.1) Function parameter signal_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 27: remark #1537-D: (ULP 9.1) Function parameter menubar_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 57: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 64: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 70: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 78: remark #1537-D: (ULP 9.1) Function parameter signal_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 78: remark #1537-D: (ULP 9.1) Function parameter menubar_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 87: remark #1537-D: (ULP 9.1) Function parameter color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-'Finished building: ../display/display_src/display_interface.c'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="afe/afe_src/afe_serial.pp" --obj_directory="afe/afe_src"  "../afe/afe_src/afe_serial.c"
+"../afe/afe_src/afe_serial.c", line 78: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 81: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 82: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 73: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 113: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 117: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 121: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 124: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 115: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 119: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 135: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 139: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 141: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 151: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 153: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 137: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 149: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+'Finished building: ../afe/afe_src/afe_serial.c'
 ' '
 'Building target: coderino.out'
 'Invoking: MSP430 Linker'
@@ -374,597 +247,51 @@ remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recomm
 **** Build of configuration Debug for project coderino ****
 
 "C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
+'Building file: ../serial.c'
 'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 85: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 77: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="serial.pp"  "../serial.c"
+"../serial.c", line 44: warning #179-D: variable "flag" was declared but never referenced
+"../serial.c", line 45: warning #179-D: variable "maxerino_pos" was declared but never referenced
+"../serial.c", line 45: warning #179-D: variable "sample_counter" was declared but never referenced
+"../serial.c", line 46: warning #179-D: variable "threshold" was declared but never referenced
+"../serial.c", line 46: warning #179-D: variable "maxerino" was declared but never referenced
+"../serial.c", line 46: warning #179-D: variable "prev_value" was declared but never referenced
+"../serial.c", line 58: remark #1538-D: (ULP 10.1) ISR Port_1 calls function afe_serial_send. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../serial.c", line 64: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
+"../serial.c", line 64: remark #1538-D: (ULP 10.1) ISR Port_1 calls function afe_serial_send. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../serial.c", line 73: remark #1538-D: (ULP 10.1) ISR Port_1 calls function shitty_abs. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../serial.c", line 79: remark #1538-D: (ULP 10.1) ISR Port_1 calls function filter_sample. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../serial.c", line 44: remark #1535-D: (ULP 8.1) variable "flag" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 45: remark #1535-D: (ULP 8.1) variable "maxerino_pos" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 45: remark #1535-D: (ULP 8.1) variable "sample_counter" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 46: remark #1535-D: (ULP 8.1) variable "threshold" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 46: remark #1535-D: (ULP 8.1) variable "maxerino" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 46: remark #1535-D: (ULP 8.1) variable "prev_value" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 42: remark #1535-D: (ULP 8.1) variable "afe_bytes" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+'Finished building: ../serial.c'
 ' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
+'Building file: ../afe/afe_src/afe_serial.c'
 'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 85: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 77: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 85: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 77: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 85: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 77: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 85: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 77: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 85: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 77: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../main.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="main.pp"  "../main.c"
-"../main.c", line 66: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
-"../main.c", line 23: remark #1535-D: (ULP 8.1) variable "bpm" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../main.c'
-' '
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 85: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 77: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 85: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 77: remark #1535-D: (ULP 8.1) variable "buffer_x" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
-'Finished building: ../filters/filters.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 41: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 42: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 62: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 63: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 84: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-'Finished building: ../filters/filters.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../afe/afe.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="afe/afe.pp" --obj_directory="afe"  "../afe/afe.c"
-"../afe/afe.c", line 71: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
-'Finished building: ../afe/afe.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../afe/afe.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="afe/afe.pp" --obj_directory="afe"  "../afe/afe.c"
-"../afe/afe.c", line 71: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
-'Finished building: ../afe/afe.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../afe/afe.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="afe/afe.pp" --obj_directory="afe"  "../afe/afe.c"
-"../afe/afe.c", line 71: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
-'Finished building: ../afe/afe.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../afe/afe.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="afe/afe.pp" --obj_directory="afe"  "../afe/afe.c"
-"../afe/afe.c", line 71: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
-'Finished building: ../afe/afe.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 57: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 57: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 58: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 58: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 78: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 78: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 79: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 79: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 100: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-'Finished building: ../filters/filters.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../display/display_src/display_interface.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="display/display_src/display_interface.pp" --obj_directory="display/display_src"  "../display/display_src/display_interface.c"
-"../display/display_src/display_interface.c", line 13: remark #1537-D: (ULP 9.1) Function parameter color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 27: remark #1537-D: (ULP 9.1) Function parameter signal_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 27: remark #1537-D: (ULP 9.1) Function parameter menubar_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 57: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 64: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 70: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 78: remark #1537-D: (ULP 9.1) Function parameter signal_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 78: remark #1537-D: (ULP 9.1) Function parameter menubar_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 87: remark #1537-D: (ULP 9.1) Function parameter color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-'Finished building: ../display/display_src/display_interface.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 72: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 72: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 73: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 73: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 93: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 93: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 94: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 94: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 115: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-'Finished building: ../filters/filters.c'
-' '
-'Building file: ../afe/afe.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="afe/afe.pp" --obj_directory="afe"  "../afe/afe.c"
-"../afe/afe.c", line 71: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
-'Finished building: ../afe/afe.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 72: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 72: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 73: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 73: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 93: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 93: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 94: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 94: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 115: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-'Finished building: ../filters/filters.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../display/display_src/display_interface.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="display/display_src/display_interface.pp" --obj_directory="display/display_src"  "../display/display_src/display_interface.c"
-"../display/display_src/display_interface.c", line 13: remark #1537-D: (ULP 9.1) Function parameter color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 27: remark #1537-D: (ULP 9.1) Function parameter signal_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 27: remark #1537-D: (ULP 9.1) Function parameter menubar_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 57: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 64: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 70: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
-"../display/display_src/display_interface.c", line 78: remark #1537-D: (ULP 9.1) Function parameter signal_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 78: remark #1537-D: (ULP 9.1) Function parameter menubar_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-"../display/display_src/display_interface.c", line 87: remark #1537-D: (ULP 9.1) Function parameter color (type "struct color_t") is being passed by value and should be passed by reference using pointer
-'Finished building: ../display/display_src/display_interface.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 72: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 72: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 73: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 73: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 93: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 93: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 94: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 94: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 115: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-'Finished building: ../filters/filters.c'
-' '
-'Building target: coderino.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: coderino.out'
-' '
-
-**** Build Finished ****
-
-**** Build of configuration Debug for project coderino ****
-
-"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../filters/filters.c'
-'Invoking: MSP430 Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="filters/filters.pp" --obj_directory="filters"  "../filters/filters.c"
-"../filters/filters.c", line 72: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 72: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 73: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 73: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 93: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 93: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 94: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 94: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-"../filters/filters.c", line 115: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
-'Finished building: ../filters/filters.c'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="afe/afe_src/afe_serial.pp" --obj_directory="afe/afe_src"  "../afe/afe_src/afe_serial.c"
+"../afe/afe_src/afe_serial.c", line 97: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 100: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 101: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 92: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 105: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
+"../afe/afe_src/afe_serial.c", line 113: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 117: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 121: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 124: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 115: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 119: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 135: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 139: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 141: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 151: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 153: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 137: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 149: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+'Finished building: ../afe/afe_src/afe_serial.c'
 ' '
 'Building target: coderino.out'
 'Invoking: MSP430 Linker'
@@ -1017,14 +344,137 @@ remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recomm
 'Building file: ../serial.c'
 'Invoking: MSP430 Compiler'
 "C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="serial.pp"  "../serial.c"
+"../serial.c", line 44: warning #179-D: variable "flag" was declared but never referenced
+"../serial.c", line 45: warning #179-D: variable "maxerino_pos" was declared but never referenced
+"../serial.c", line 45: warning #179-D: variable "sample_counter" was declared but never referenced
+"../serial.c", line 46: warning #179-D: variable "threshold" was declared but never referenced
+"../serial.c", line 46: warning #179-D: variable "maxerino" was declared but never referenced
+"../serial.c", line 46: warning #179-D: variable "current_value" was declared but never referenced
+"../serial.c", line 46: warning #179-D: variable "prev_value" was declared but never referenced
 "../serial.c", line 58: remark #1538-D: (ULP 10.1) ISR Port_1 calls function afe_serial_send. Recommend moving function call away from ISR, or inlining the function, or using pragmas
 "../serial.c", line 64: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
 "../serial.c", line 64: remark #1538-D: (ULP 10.1) ISR Port_1 calls function afe_serial_send. Recommend moving function call away from ISR, or inlining the function, or using pragmas
-"../serial.c", line 74: remark #1538-D: (ULP 10.1) ISR Port_1 calls function shitty_abs. Recommend moving function call away from ISR, or inlining the function, or using pragmas
-"../serial.c", line 80: remark #1538-D: (ULP 10.1) ISR Port_1 calls function filter_sample. Recommend moving function call away from ISR, or inlining the function, or using pragmas
-"../serial.c", line 95: remark #1530-D: (ULP 5.1) Detected divide operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../serial.c", line 73: remark #1538-D: (ULP 10.1) ISR Port_1 calls function shitty_abs. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../serial.c", line 44: remark #1535-D: (ULP 8.1) variable "flag" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 45: remark #1535-D: (ULP 8.1) variable "maxerino_pos" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 45: remark #1535-D: (ULP 8.1) variable "sample_counter" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 46: remark #1535-D: (ULP 8.1) variable "threshold" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 46: remark #1535-D: (ULP 8.1) variable "maxerino" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 46: remark #1535-D: (ULP 8.1) variable "current_value" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../serial.c", line 46: remark #1535-D: (ULP 8.1) variable "prev_value" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
 "../serial.c", line 42: remark #1535-D: (ULP 8.1) variable "afe_bytes" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
 'Finished building: ../serial.c'
+' '
+'Building target: coderino.out'
+'Invoking: MSP430 Linker'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
+<Linking>
+remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+'Finished building target: coderino.out'
+' '
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project coderino ****
+
+"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
+'Building file: ../display/display_src/display_interface.c'
+'Invoking: MSP430 Compiler'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="display/display_src/display_interface.pp" --obj_directory="display/display_src"  "../display/display_src/display_interface.c"
+"../display/display_src/display_interface.c", line 13: remark #1537-D: (ULP 9.1) Function parameter color (type "struct color_t") is being passed by value and should be passed by reference using pointer
+"../display/display_src/display_interface.c", line 27: remark #1537-D: (ULP 9.1) Function parameter signal_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
+"../display/display_src/display_interface.c", line 27: remark #1537-D: (ULP 9.1) Function parameter menubar_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
+"../display/display_src/display_interface.c", line 57: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../display/display_src/display_interface.c", line 64: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../display/display_src/display_interface.c", line 70: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../display/display_src/display_interface.c", line 78: remark #1537-D: (ULP 9.1) Function parameter signal_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
+"../display/display_src/display_interface.c", line 78: remark #1537-D: (ULP 9.1) Function parameter menubar_window_bg_color (type "struct color_t") is being passed by value and should be passed by reference using pointer
+"../display/display_src/display_interface.c", line 87: remark #1537-D: (ULP 9.1) Function parameter color (type "struct color_t") is being passed by value and should be passed by reference using pointer
+'Finished building: ../display/display_src/display_interface.c'
+' '
+'Building target: coderino.out'
+'Invoking: MSP430 Linker'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
+<Linking>
+remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+'Finished building target: coderino.out'
+' '
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project coderino ****
+
+"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
+'Building file: ../afe/afe_src/afe_serial.c'
+'Invoking: MSP430 Compiler'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="afe/afe_src/afe_serial.pp" --obj_directory="afe/afe_src"  "../afe/afe_src/afe_serial.c"
+"../afe/afe_src/afe_serial.c", line 99: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 102: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 103: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 94: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 111: remark #1545-D: (ULP 14.1) Array index of type "int". Recommend using "unsigned int"
+"../afe/afe_src/afe_serial.c", line 119: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 123: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 127: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 130: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 121: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 125: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 141: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 145: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 147: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 157: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 159: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 143: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 155: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+'Finished building: ../afe/afe_src/afe_serial.c'
+' '
+'Building target: coderino.out'
+'Invoking: MSP430 Linker'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"coderino.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --reread_libs --priority --define=_MPU_ENABLE --warn_sections --diag_wrap=off --display_error_number --xml_link_info="coderino_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "coderino.out" "./clocks.obj" "./main.obj" "./serial.obj" "./utils.obj" "./touch/touch_src/touch_coordinate.obj" "./touch/touch_src/touch_serial.obj" "./touch/touch.obj" "./filters/filters.obj" "./filters/unused_filters.obj" "./display/display.obj" "./display/display_timer.obj" "./display/display_src/color.obj" "./display/display_src/display_functions.obj" "./display/display_src/display_hal.obj" "./display/display_src/display_interface.obj" "./display/display_src/font.obj" "./data/ecg_data.obj" "./buzzer/buzzer.obj" "./afe/afe_src/afe_serial.obj" "./afe/afe.obj" "../lnk_msp430fr5972.cmd"  -llibmpu_init.a -l"libmath.a" -l"libc.a" 
+<Linking>
+remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port E in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+'Finished building target: coderino.out'
+' '
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project coderino ****
+
+"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
+'Building file: ../afe/afe_src/afe_serial.c'
+'Invoking: MSP430 Compiler'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.5/include" --advice:power="all" --advice:hw_config="all" -g --float_operations_allowed=none --define=__MSP430FR5972__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="afe/afe_src/afe_serial.pp" --obj_directory="afe/afe_src"  "../afe/afe_src/afe_serial.c"
+"../afe/afe_src/afe_serial.c", line 99: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 102: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 103: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 94: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 111: remark #1545-D: (ULP 14.1) Array index of type "int". Recommend using "unsigned int"
+"../afe/afe_src/afe_serial.c", line 119: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 123: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 127: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 130: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 121: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 125: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 141: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 145: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 147: remark #1528-D: (ULP 3.1) Detected flag polling using UCBUSY. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 157: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 159: remark #1528-D: (ULP 3.1) Detected flag polling using UCB1IFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../afe/afe_src/afe_serial.c", line 143: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../afe/afe_src/afe_serial.c", line 155: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+'Finished building: ../afe/afe_src/afe_serial.c'
 ' '
 'Building target: coderino.out'
 'Invoking: MSP430 Linker'
