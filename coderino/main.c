@@ -14,19 +14,26 @@
 #include "display/display.h"
 #include "display/display_src/display_functions.h"
 #include "touch/touch.h"
+#include "filters/filters.h"
 
+#define BUFFER_SIZE 5
 //buzzer_t buzzer;
 
 display_t display;
 //touch_t touch;
-ecg_data_t last_sample;
-int bpm;
+ecg_data_t last_sample, last_sample_1;
+int bpm,flag;
 
 int main()
 {
+	int i = 0, maxerino = 0,current_value = 0;
+
     WDTCTL = WDTPW | WDTHOLD;		//Stop watchdog timer
     bpm = 0;
+    flag = 0;
     ecg_data_clear(&last_sample);
+    ecg_data_clear(&last_sample_1);
+
     /*
      * Setups
      */
@@ -65,5 +72,43 @@ int main()
 
 	while(1)
 	{
+		if (flag > 0)
+		{
+			current_value = filter_sample(last_sample_1.data);
+
+//			last_sample.data = last_sample_1.data;
+			last_sample.data = current_value;
+			if (current_value > maxerino) {
+				maxerino = current_value;
+			}
+			flag = 0;
+//			if(current_value >= ((threshold * 7) >>3) )
+//			{
+//				if (current_value >= maxerino )
+//				{
+//					maxerino = current_value;
+//					maxerino_pos = sample_counter;
+//				}else if (flag == 0){
+//					threshold = ((maxerino * 7) >>3);
+//					flag = 1;
+//				}
+//			}else if ((prev_value >= ((threshold * 7) >> 3) ) && (maxerino > 0))
+//			{
+//				bpm =  (60 * FS) / maxerino_pos;
+//				threshold = ((threshold * 7 + maxerino) >> 3);
+//				sample_counter = sample_counter - maxerino_pos -1;
+//				maxerino = 0;
+//			}else{
+//				threshold = ((threshold * 127) >> 7);
+//				maxerino = 0;
+//			}
+//
+//			sample_counter++;
+//			prev_value = current_value;
+
+
+
+
+		}
 	}
 }

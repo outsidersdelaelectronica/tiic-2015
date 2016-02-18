@@ -6,15 +6,16 @@
  */
 
 #include "serial.h"
-
+#define BUFFER_SIZE 5
 //extern buzzer_t buzzer;
 extern display_t display;
 //extern touch_t touch;
-extern ecg_data_t last_sample;
-extern int bpm;
+extern ecg_data_t last_sample_1,last_sample;
+extern int bpm,flag;
 
-#define FS 500
-#define SIGNAL_TH 0x0FFF
+
+//#define FS 500
+#define SIGNAL_TH 0x07FF
 
 int shitty_abs(int number)
 {
@@ -41,11 +42,12 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 
 	uint8_t afe_bytes[3] = {0x00 , 0x00, 0x00};
 	uint8_t i = 0;
-	static uint8_t flag = 0;
-	static int maxerino_pos = 0,sample_counter = 0;
-	static int32_t threshold = 0x00FFFFFF, maxerino = 0,current_value = 0, prev_value = 0;
+//	static uint8_t flag = 0;
+//	static int maxerino_pos = 0,sample_counter = 0;
+//	static int32_t threshold = 0x00FFFFFF, maxerino = 0,current_value = 0, prev_value = 0;
 	int data_tmp = 0;
-	int check = 0;
+//	int check = 0;
+
 	__disable_interrupt();                    //Make this operation atomic
 
 	if (P1IFG & BIT2)
@@ -61,6 +63,7 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 		//Read ECG signal - another 3 bytes
 		for (i = 3; i > 0; i--)
 		{
+//			afe_bytes[3 - i] = afe_serial_read(0x00);
 			afe_bytes[3 - i] = afe_serial_send(0x00);
 		}
 
@@ -68,18 +71,14 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 
 		//Store signal data into ecg signal buffer
 
-		check = ((int) afe_bytes[0] << 12) | ((int) afe_bytes[1] << 4) | ((int) afe_bytes[2] >> 4);
+		data_tmp = ((int) afe_bytes[0] << 12) | ((int) afe_bytes[1] << 4) | ((int) afe_bytes[2] >> 4);
 
-		if ( shitty_abs(check) < SIGNAL_TH)
+		if ( shitty_abs(data_tmp) < SIGNAL_TH)
 		{
-//			ecg_data_write(&last_sample, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
-			data_tmp = check;
+			ecg_data_write(&last_sample_1, afe_bytes[0], afe_bytes[1], afe_bytes[2]);
+			flag = 1;
 		}
-//		current_value = filter_sample(last_sample.data);
-//		current_value = filter_sample((int32_t)data_tmp);
-//		last_sample.data = current_value;
-		last_sample.data = data_tmp;
-//
+
 //		if(current_value >= ((threshold * 7) >>3) )
 //		{
 //			if (current_value >= maxerino )
