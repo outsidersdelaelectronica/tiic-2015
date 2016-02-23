@@ -1,0 +1,56 @@
+Field=Comment~String~Comment~169|Field=Description~String~Description~78|Field=Footprint~String~Footprint~54|Field=Designator~String~Designator~42|Field=LibRef~String~LibRef~191|Field=Quantity~Integer~Quantity~75|Field=Supplier 1~String~Supplier 1~83|Field=Supplier Part Number 1~String~Supplier Part Number 1~136|Field=Manufacturer Part Number 1~String~Manufacturer Part Number 1~156|Field=Manufacturer 1~String~Manufacturer 1~39|Field=Supplier Unit Price 1~Float~Supplier Unit Price 1~41|Field=Supplier Order Qty 1~Integer~Supplier Order Qty 1~30|Field=Supplier Subtotal 1~Float~Supplier Subtotal 1~56|Field=Supplier Currency 1~String~Supplier Currency 1~30|Field=Supplier Stock 1~Integer~Supplier Stock 1~106|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~H2H Main Board.PrjPCB|ReportField=ProjectFullPath~C:\Users\slopez\workspace\github\tiic-2015\boards\2.0\H2H Main Board\H2H Main Board.PrjPCB|ReportField=Title~Bill of Materials For Project [H2H Main Board.PrjPCB] (No PCB Document Selected)|ReportField=TotalQuantity~165|ReportField=ReportTime~16:50:59|ReportField=ReportDate~17/02/2016|ReportField=ReportDateTime~17/02/2016 16:50:59|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=Address1~|ReportField=Address2~|ReportField=Address3~|ReportField=Address4~|ReportField=Application_BuildNumber~|ReportField=ApprovedBy~|ReportField=Author~Samuel López|ReportField=CheckedBy~|ReportField=CompanyName~|ReportField=ConfigurationParameters~|ReportField=ConfiguratorName~|ReportField=CurrentDate~|ReportField=CurrentTime~|ReportField=Date~2016/01/06|ReportField=DocumentFullPathAndName~|ReportField=DocumentName~|ReportField=DocumentNumber~1|ReportField=DrawnBy~|ReportField=Engineer~|ReportField=ImagePath~|ReportField=IsUserConfigurable~|ReportField=ModifiedDate~|ReportField=Organization~|ReportField=Project~H2H Main Board|ReportField=ProjectName~|ReportField=Revision~|ReportField=Rule~|ReportField=SheetNumber~1|ReportField=SheetTotal~7|ReportField=Time~|ReportField=Title~Main Board|ReportField=VersionControl_RevNumber~|ReportField=DataSourceFileName~H2H Main Board.PrjPCB|ReportField=DataSourceFullPath~C:\Users\slopez\workspace\github\tiic-2015\boards\2.0\H2H Main Board\H2H Main Board.PrjPCB|ReportField=PCBDataSourceFileName~Main Board.PcbDoc|ReportField=PCBDataSourceFullPath~C:\Users\slopez\workspace\github\tiic-2015\boards\2.0\H2H Main Board\PCB\Main Board.PcbDoc
+0|Resistor|R0603|R24, R37, R46|Resistor|3|||||||||
+0.1u|Capacitor|C0402|C47, C48, C49, C50, C51, C52, C55, C56, C57, C58|Capacitor|10|||||||||
+0.1u|Capacitor|C0603|C11, C13, C15, C19, C20, C21, C24, C25, C27, C31, C41, C42, C67, C68, C69, C70, C71, C73|Capacitor|18|||||||||
+0.47u|Capacitor|C0402|C53, C54|Capacitor|2|||||||||
+0.47u|Capacitor|C0603|C22, C60|Capacitor|2|||||||||
+1.2k|Resistor|R0603|R23|Resistor|1|||||||||
+1.5n|Capacitor|C0603|C7|Capacitor|1|||||||||
+100|Resistor|R0603|R12, R13, R15, R16, R36, R38, R40, R42|Resistor|8|||||||||
+100k|Resistor|R0603|R29, R30, R45|Resistor|3|||||||||
+10k|Resistor|R0603|R18, R19, R20, R26, R44, R47, R48, R49, R50, R51|Resistor|10|||||||||
+10n|Capacitor|C0603|C63|Capacitor|1|||||||||
+10p|Capacitor|C0603|C64, C65|Capacitor|2|||||||||
+10u|Capacitor|C0603|C14, C66|Capacitor|2|||||||||
+12p|Capacitor|C0402|C43, C44|Capacitor|2|||||||||
+1M|Resistor|R0603|R11, R17, R21, R22, R27, R31, R32, R33, R34, R35|Resistor|10|||||||||
+1u|Capacitor|C0402|C46, C59|Capacitor|2|||||||||
+1u|Capacitor|C0603|C10, C12, C16, C17, C18, C23, C26, C28, C29, C30, C32, C33, C34, C35, C36, C37, C38, C39, C40, C72|Capacitor|20|||||||||
+220|Resistor|R0603|R41, R43|Resistor|2|||||||||
+22k|Resistor|R2512|R1, R2, R3, R4, R5, R6|Resistor|6|||||||||
+22p|Capacitor|C0402|C45|Capacitor|1|||||||||
+2k|Resistor|R0603|R25|Resistor|1|||||||||
+4.7n|Capacitor|C0603|C8, C9|Capacitor|2|||||||||
+470k|Resistor|R0603|R28|Resistor|1|||||||||
+47k|Resistor|R0603|R7, R8, R9, R10|Resistor|4|||||||||
+47p|Capacitor|C0603|C3, C4, C5, C6|Capacitor|4|||||||||
+6.8n|Capacitor|C0603|C1, C2|Capacitor|2|||||||||
+680|Resistor|R0603|R39|Resistor|1|||||||||
+6p|Capacitor|C0603|C61, C62|Capacitor|2|||||||||
+FFC 40 Pin|Conn - FFC/FPC, 40 Pin, 1.0mm Pitch, ZIF|ER-CON40HB-2|J4|ER-CON40HB-2|1|||||||||
+0.01|Resistor|R1206|R14|Resistor|1|Digi-Key|MCS1632R010FERCT-ND|MCS1632R010FER|Ohmite|0,50|1|0,5|EUR|0
+2N7002P|Transistor - MOSFET, N-Channel, 60V, 300mA|2N7002P|Q2, Q3, Q4, Q5|2N7002P|4|Digi-Key|568-5818-1-ND|2N7002P,215|NXP Semiconductors|0,12|4|0,48|EUR|450674
+ABM3B-16.000MHZ-10-1-U|Crystal - 16 MHz|ABM3B-16.000MHZ-10-1-U|X1|ABM3B-16.000MHZ-10-1-U|1|Digi-Key|300-8206-1-ND|ABM3B-16.000MHZ-10-1-U-T|Abracon LLC|0,61|1|0,61|EUR|55461
+ABS07-120-32.768KHZ-T|Crystal - 32.768 kHz|ABS07-120-32.768KHZ-T|X2|ABS07-120-32.768KHZ-T|1|Digi-Key|535-11937-1-ND|ABS07-120-32.768KHZ-T|Abracon LLC|0,63|1|0,63|EUR|43382
+ADS1292|IC - Analog Front End - Medical|ADS129x|U1|ADS1292|1|Digi-Key|296-30137-5-ND|ADS1292IPBS|Texas Instruments|9,29|1|9,29|EUR|706
+BAS70DW-04|TVS - Dual Schottky Rail-to-rail Protection|BAS70DW-04|D4, D5|BAS70DW-04|2|Digi-Key|BAS70DW-04FDICT-ND|BAS70DW-04-7-F|Diodes Incorporated|0,48|2|0,96|EUR|9716
+BQ24090|IC - Battery Charger, Single Cell Li-Ion/LiPo, 1A|BQ24090|U3|BQ24090|1|Digi-Key|296-38875-1-ND|BQ24090DGQR|Texas Instruments|1,07|1|1,07|EUR|4494
+BQ27441DRZR-G1A|IC - Fuel Gauge, System-Side Impedance Track|BQ27441DRZx-G1A|U2|BQ27441DRZR-G1A|1|Digi-Key|296-39941-1-ND|BQ27441DRZR-G1A|Texas Instruments|2,49|1|2,49|EUR|5147
+DMP3056L|Transistor - MOSFET, P-Channel, 30V, 4.3A|DMP3056L|Q1|DMP3056L|1|Digi-Key|DMP3056L-7DICT-ND|DMP3056L-7|Diodes Incorporated|0,34|1|0,34|EUR|3284
+EVQ-Q2K01W|Switch - Tactile, Off-Mom, SPST|EVQ-Q2K01W|SW2|EVQ-Q2K01W|1|Digi-Key|P12941SCT-ND|EVQ-Q2K01W|Panasonic Electronic Components|0,35|1|0,35|EUR|23044
+GDT|TVS - Gas Discharge Tube|2051-09-SM|N1, N2, N3|2051-09-SM|3|Digi-Key|2051-09-SM-RPLFCT-ND|2051-09-SM-RPLF|Bourns Inc.|0,68|3|2,04|EUR|19313
+JST PH 2 Pin|Conn - Battery, Male, 2 Pin, PCB, Right Angle|S2B-PH-K-S|J2, JE1, JE2, JE3|S2B-PH-K-S|4|Digi-Key|455-1719-ND|S2B-PH-K-S(LF)(SN)|JST Sales America Inc.|0,15|4|0,6|EUR|79222
+JTAG 10 Pin|Conn - JTAG, Header, Male, Right Angle, 10 Pin, 1.27mm Pitch, ARM Standard|3220-10-0200-00|J5|3220-10-0200-00|1|Digi-Key|1175-1628-ND|3220-10-0200-00|CNC Tech|0,56|1|0,56|EUR|7812
+LFB212G45SG8A127|Filter - RF 2.4 GHz|LFB212G45SG8A127|F1|LFB212G45SG8A127|1|Digi-Key|490-5021-1-ND|LFB212G45SG8A127|Murata Electronics North America|0,32|1|0,32|EUR|2618
+LP5907-1.8|Voltage Regulator - Linear|LP5907|U7|LP5907-1.8|1|Digi-Key|296-41463-1-ND|LP5907MFX-1.8/NOPB|Texas Instruments|0,50|1|0,5|EUR|3570
+LP5907-3.3|Voltage Regulator - Linear|LP5907|U4, U6, U8, U9|LP5907-3.3|4|Digi-Key|296-38557-1-ND|LP5907MFX-3.3/NOPB|Texas Instruments|0,50|4|2|EUR|14160
+NX2016SA|Crystal - 26 MHz|NX2016SA|X3|NX2016SA|1|Digi-Key|644-1220-1-ND|NX2016SA-26M-STD-CZS-1|NDK|0,68|1|0,68|EUR|2840
+OVSRRGBCC3|LED - RGB, Top/Side-emmiting|OVSRRGBCC3/SIDE|D6|OVSRRGBCC3|1|Digi-Key|365-1981-1-ND|OVSRRGBCC3TM|TT Electronics/Optek Technology|0,44|1|0,44|EUR|3678
+PESD5V0X1|TVS - Bidirectional Zener Diode|PESD5V0X1BT|D1, D2, D3|PESD5V0X1|3|Digi-Key|568-4676-1-ND|PESD5V0X1BT,215|NXP Semiconductors|0,67|3|2,01|EUR|10331
+PJ-018H-SMT|Conn - DC Power Plug - 4.0 mmOD / 1.7 mmID|PJ-018H-SMT|J3|PJ-018H-SMT|1|Digi-Key|CP-018HPJCT-ND|PJ-018H-SMT-TR|CUI Inc.|1,19|1|1,19|EUR|22864
+SN74LV4T125|IC - Voltage Level Translator|SN74LV4T125|U10, U11|SN74LV4T125|2|Digi-Key|296-40546-1-ND|SN74LV4T125RGYR|Texas Instruments|0,92|2|1,84|EUR|13
+TPS73633|Voltage Regulator - Linear|TPS73633|U5|TPS73633|1|Digi-Key|296-17884-1-ND|TPS73633DRBR|Texas Instruments|1,93|1|1,93|EUR|4537
+WS-TASU 436331045822|Switch - Tactile, Off-Mom, SPST, Side-Actuated|WS-TASU 436331045822|SW1|WS-TASU 436331045822|1|Digi-Key|732-7059-1-ND|436331045822|Wurth Electronics Inc|0,48|1|0,48|EUR|3035
+2.7 kHz|Transductor - Buzzer 2.7 kHz|KSSG74B16|Z1|KSSG74B16|1|Farnell|2215090|KSSG74B16|KINGSTATE|1,43|1||EUR|415
+CC2560A|IC - Bluetooth 4.0 controller (BR/EDR)|CC256x|U12|CC2560A|1|Farnell|2334559|CC2560ARVMT|TEXAS INSTRUMENTS|5,96|1||EUR|2662
+STM32L162VDT6|ARM Cortex-M3 32-bit MCU, 384 KB Flash, 48 KB Internal RAM, 83 I/Os, 100-pin LQFP, -40 to 85 degC, Tray|STM-LQFP100_N|U13|STM32L162VDT6|1|Farnell|2333341|STM32L162VDT6|STMICROELECTRONICS|10,20|1||EUR|-7
