@@ -6,4 +6,5 @@ __Previews/
 *.out
 *.xml
 *.pp
+.metadata\
 .metadata/

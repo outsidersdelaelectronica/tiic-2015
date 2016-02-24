@@ -63,8 +63,8 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 		//Read ECG signal - another 3 bytes
 		for (i = 3; i > 0; i--)
 		{
-//			afe_bytes[3 - i] = afe_serial_read(0x00);
-			afe_bytes[3 - i] = afe_serial_send(0x00);
+			afe_bytes[3 - i] = afe_serial_read(0x00);
+//			afe_bytes[3 - i] = afe_serial_send(0x00);
 		}
 
 		P4OUT |= BIT4;							//Disable CS

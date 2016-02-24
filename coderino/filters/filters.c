@@ -7,7 +7,7 @@
 
 #include "filters.h"
 
-#define INTEGRATION_LENGTH 16
+#define INTEGRATION_LENGTH 32
 #define BP_ORDER 253
 //#define H_ORDER 311
 #define L_ORDER 50
@@ -88,16 +88,14 @@ int32_t diferentiator_3000(int32_t value)
 	int32_t y_n = 0;
 
 	for(i = (DIF_ORDER - 2); i > 0; i-- ){
-        y_n += (diferentiator_coef[i + 1]) * (dif_buffer[i]);
+        y_n += ((diferentiator_coef[i + 1] * dif_buffer[i]) >> 10);
         dif_buffer[i] = dif_buffer[i-1];
 	}
 
-    y_n += diferentiator_coef[1] * dif_buffer[0];
+    y_n += ((diferentiator_coef[1] * dif_buffer[0]) >> 10);
     dif_buffer[0] = value;
 
-    y_n = y_n + diferentiator_coef[0] * value;
-
-    y_n = (y_n >> 10);
+    y_n += ((diferentiator_coef[0] * value) >> 10);
 
     return y_n;
 }
@@ -126,11 +124,11 @@ int32_t filter_sample(int32_t value)
 
 	filtered_value = band_pass_filterino(filtered_value);
 
-//	filtered_value = diferentiator_3000(filtered_value);
-//
-//	filtered_value = (filtered_value >> 4) * (filtered_value >> 4);
-//
-//	filtered_value = integrator_3000(filtered_value);
+	filtered_value = diferentiator_3000(filtered_value);
+
+	filtered_value = (filtered_value >> 2) * (filtered_value >> 2);
+
+	filtered_value = integrator_3000(filtered_value);
 
 	return filtered_value;											//Return true
 }

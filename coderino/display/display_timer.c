@@ -23,8 +23,8 @@ void __attribute__ ((interrupt(TIMER2_A0_VECTOR))) Timer2_A0_ISR (void)
 {
 	static ecg_data_t signal_data_point;					//Temporary storage variable
 	static const color_t signal_color = COLOR_GREEN;
-//	static uint8_t count = 0;
-//	static char numberino[5];
+	static uint8_t count = 0;
+	static char numberino[5];
 	uint16_t gie = __get_SR_register() & GIE; //Store current GIE state
 	/*
 	 * Paint ECG value every display tick
@@ -33,13 +33,13 @@ void __attribute__ ((interrupt(TIMER2_A0_VECTOR))) Timer2_A0_ISR (void)
 
 
 	display_interface_write_signal(&display.display_interface, &last_sample, signal_color);			//Write it
-//	if (++count > 20)
-//	{
-//		count = 0;
-//		itoa(bpm,numberino);
-//	    display_functions_write_string(numberino, COLOR_RED,
-//									   display.display_interface.menubar_window_bg_color, 0x60, 0xC0);
-//	}
+	if (++count > 20)
+	{
+		count = 0;
+		itoa(bpm,numberino);
+	    display_functions_write_string(numberino, COLOR_RED,
+									   display.display_interface.menubar_window_bg_color, 0x60, 0xC0);
+	}
 
 	__bis_SR_register_on_exit(gie);                   //Restore original GIE state
 }

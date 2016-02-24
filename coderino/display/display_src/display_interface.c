@@ -104,7 +104,7 @@ void display_interface_write_signal(display_interface_t* display_interface, ecg_
 		}
 
 	//Cook ecg data
-		signal_value = signal_data->data >> 5;
+		signal_value = signal_data->data >> 4;
 
 	//Limit ecg data values
 		if (signal_value > (SIGNAL_LINES >> 1))			//If value goes below screen bottom limit
