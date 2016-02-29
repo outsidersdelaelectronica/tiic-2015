@@ -198,66 +198,46 @@ DocumentPath=Gerber\Power Supply\NC Drill\Power Supply-Plated.TXT
 DItemRevisionGUID=
 
 [GeneratedDocument3]
-DocumentPath=Gerber\Main Board\NC Drill\Power Supply.DRR
-DItemRevisionGUID=
-
-[GeneratedDocument4]
 DocumentPath=Gerber\Power Supply\NC Drill\Power Supply.DRR
 DItemRevisionGUID=
 
-[GeneratedDocument5]
-DocumentPath=Gerber\Main Board\Gerber\Power Supply.EXTREP
-DItemRevisionGUID=
-
-[GeneratedDocument6]
+[GeneratedDocument4]
 DocumentPath=Gerber\Power Supply\Gerber\Power Supply.EXTREP
 DItemRevisionGUID=
 
-[GeneratedDocument7]
+[GeneratedDocument5]
 DocumentPath=Gerber\Power Supply\Gerber\Power Supply.GBL
 DItemRevisionGUID=
 
-[GeneratedDocument8]
+[GeneratedDocument6]
 DocumentPath=Gerber\Power Supply\Gerber\Power Supply.GBS
 DItemRevisionGUID=
 
-[GeneratedDocument9]
+[GeneratedDocument7]
 DocumentPath=Gerber\Power Supply\Gerber\Power Supply.GM1
 DItemRevisionGUID=
 
-[GeneratedDocument10]
+[GeneratedDocument8]
 DocumentPath=Gerber\Power Supply\Gerber\Power Supply.GTL
 DItemRevisionGUID=
 
-[GeneratedDocument11]
+[GeneratedDocument9]
 DocumentPath=Gerber\Power Supply\Gerber\Power Supply.GTO
 DItemRevisionGUID=
 
-[GeneratedDocument12]
+[GeneratedDocument10]
 DocumentPath=Gerber\Power Supply\Gerber\Power Supply.GTS
 DItemRevisionGUID=
 
-[GeneratedDocument13]
-DocumentPath=Gerber\Main Board\NC Drill\Power Supply.LDP
-DItemRevisionGUID=
-
-[GeneratedDocument14]
+[GeneratedDocument11]
 DocumentPath=Gerber\Power Supply\NC Drill\Power Supply.LDP
 DItemRevisionGUID=
 
-[GeneratedDocument15]
-DocumentPath=Gerber\Main Board\Gerber\Power Supply.REP
-DItemRevisionGUID=
-
-[GeneratedDocument16]
+[GeneratedDocument12]
 DocumentPath=Gerber\Power Supply\Gerber\Power Supply.REP
 DItemRevisionGUID=
 
-[GeneratedDocument17]
-DocumentPath=Gerber\Main Board\Gerber\Power Supply.RUL
-DItemRevisionGUID=
-
-[GeneratedDocument18]
+[GeneratedDocument13]
 DocumentPath=Gerber\Power Supply\Gerber\Power Supply.RUL
 DItemRevisionGUID=
 
