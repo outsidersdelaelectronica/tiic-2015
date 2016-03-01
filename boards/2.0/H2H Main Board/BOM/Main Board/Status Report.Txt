@@ -1,14 +1,14 @@
 Project Outputs Generation Report
 ---------------------------------
-Start Output Generation At 16:50:41 On 17/02/2016
+Start Output Generation At 19:07:51 On 01/03/2016
 
 Output: Bill of Materials
 Type  : BOM
-From  : Variant [[No Variations]] of Project [H2H Main Board.PrjPCB]
-   Generated File[Bill of Materials-H2H Main Board.xls]
+From  : Variant [H2H Main Board (Main Flash Boot)] of Project [H2H Main Board.PrjPCB]
+   Generated File[Bill of Materials-H2H Main Board(H2H Main Board (Main Flash Boot)).xls]
 
 
 Files Generated   : 1
 Documents Printed : 0
 
-Finished Output Generation At 16:51:12 On 17/02/2016
+Finished Output Generation At 19:08:10 On 01/03/2016
