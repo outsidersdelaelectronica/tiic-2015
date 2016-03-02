@@ -155,6 +155,92 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=RQCCFKLL
 
+[Document8]
+DocumentPath=PCB\Power Supply.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=DPORXRIB
+
+[Document9]
+DocumentPath=Output Power Supply.OutJob
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=
+
+[GeneratedDocument1]
+DocumentPath=Project Outputs for H2H Power Supply\Design Rule Check - Power Supply.html
+DItemRevisionGUID=
+
+[GeneratedDocument2]
+DocumentPath=Gerber\Power Supply\NC Drill\Power Supply-Plated.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument3]
+DocumentPath=Gerber\Power Supply\NC Drill\Power Supply.DRR
+DItemRevisionGUID=
+
+[GeneratedDocument4]
+DocumentPath=Gerber\Power Supply\Gerber\Power Supply.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument5]
+DocumentPath=Gerber\Power Supply\Gerber\Power Supply.GBL
+DItemRevisionGUID=
+
+[GeneratedDocument6]
+DocumentPath=Gerber\Power Supply\Gerber\Power Supply.GBS
+DItemRevisionGUID=
+
+[GeneratedDocument7]
+DocumentPath=Gerber\Power Supply\Gerber\Power Supply.GM1
+DItemRevisionGUID=
+
+[GeneratedDocument8]
+DocumentPath=Gerber\Power Supply\Gerber\Power Supply.GTL
+DItemRevisionGUID=
+
+[GeneratedDocument9]
+DocumentPath=Gerber\Power Supply\Gerber\Power Supply.GTO
+DItemRevisionGUID=
+
+[GeneratedDocument10]
+DocumentPath=Gerber\Power Supply\Gerber\Power Supply.GTS
+DItemRevisionGUID=
+
+[GeneratedDocument11]
+DocumentPath=Gerber\Power Supply\NC Drill\Power Supply.LDP
+DItemRevisionGUID=
+
+[GeneratedDocument12]
+DocumentPath=Gerber\Power Supply\Gerber\Power Supply.REP
+DItemRevisionGUID=
+
+[GeneratedDocument13]
+DocumentPath=Gerber\Power Supply\Gerber\Power Supply.RUL
+DItemRevisionGUID=
+
 [Configuration1]
 Name=Default Configuration
 ParameterCount=0
