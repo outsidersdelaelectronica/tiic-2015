@@ -26,10 +26,9 @@ int bpm,flag;
 
 int main()
 {
-	int i = 0;
-	static uint8_t flagerino = 0;
-	static int maxerino_pos = 0,sample_counter = 0;
-	static int32_t threshold = 0x00000FFF,current_value = 0, maxerino = 0, prev_value = 0;
+	volatile uint8_t flagerino = 0;
+	volatile int maxerino_pos = 0,sample_counter = 0;
+	volatile int32_t threshold = 0x00000FFF,current_value = 0, maxerino = 0xFFFFFFFF, prev_value = 0;
 
     WDTCTL = WDTPW | WDTHOLD;		//Stop watchdog timer
     bpm = 0;
@@ -77,18 +76,16 @@ int main()
 	{
 		if (flag > 0)
 		{
+			__disable_interrupt();
 			current_value = filter_sample(last_sample_1.data);
 
 			last_sample.data = current_value;
-			if (current_value > maxerino) {
-				maxerino = current_value;
-			}
 
 			flag = 0;
 
-			if(current_value >= ((threshold * 7) >>3) )
+			if(current_value > threshold)
 			{
-				if (current_value >= maxerino )
+				if (current_value > maxerino)
 				{
 					maxerino = current_value;
 					maxerino_pos = sample_counter;
@@ -96,24 +93,20 @@ int main()
 					threshold = ((maxerino * 7) >>3);
 					flagerino = 1;
 				}
-			}else if ((prev_value >= ((threshold * 7) >> 3) ) && (maxerino > 0))
+			}else if (prev_value > threshold)
 			{
-//				bpm =  (60 * FS) / maxerino_pos;
-				bpm++;
+				//bpm =  ((60 * FS) / sample_counter);
+				bpm =   sample_counter;
 				threshold = ((threshold * 7 + maxerino) >> 3);
-				sample_counter = sample_counter - maxerino_pos -1;
-				maxerino = 0;
+				sample_counter = sample_counter - maxerino_pos - 1;
+				maxerino = 0xFFFFFFFF;
 			}else{
 				threshold = ((threshold * 127) >> 7);
-				maxerino = 0;
 			}
 
 			sample_counter++;
 			prev_value = current_value;
-
-
-
-
+			__enable_interrupt();
 		}
 	}
 }
