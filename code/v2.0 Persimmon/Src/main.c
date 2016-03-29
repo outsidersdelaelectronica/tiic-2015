@@ -59,7 +59,17 @@ void SystemClock_Config(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-
+/**
+  * @brief  Delay Function.
+  * @param  nCount:specifies the Delay time length.
+  * @retval None
+  */
+void Delay(__IO uint32_t nCount)
+{
+  while(nCount--)
+  {
+  }
+}
 /* USER CODE END 0 */
 
 int main(void)
@@ -88,34 +98,32 @@ int main(void)
   MX_TIM4_Init();
 
   /* USER CODE BEGIN 2 */
-  uint32_t i = 0, j = 200000, k = 10000;
+  int j = 100,k = 15;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-  /* USER CODE END WHILE */
-    for(i = 0; i < j ; i++){ 
-      GPIOC->ODR |= (1 << (12));
-    }
-      GPIOC->ODR = 0;
-    for(i = 0; i < j ; i++){ 
-      GPIOC->ODR |= (1 << (11));
-    }
-      GPIOC->ODR = 0;
-    for(i = 0; i < j ; i++){ 
-      GPIOC->ODR |= (1 << (10));
-    }
-      GPIOC->ODR = 0;
+    /* USER CODE END WHILE */
+    GPIOC->BSRR = 0x00000400;
+    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+    HAL_Delay(j);
+    GPIOC->BSRR = 0x04000000;
+    HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
+    HAL_Delay(j);
     
-    j -= k;
-    if ( j < 10000){
-      k = -10000;
-    }else if( j > 200000){
-      k = 10000;
+    j *= k;
+    j >>= 4;
+    if ( j < 5){
+      k = 24;
+      j = 1;
+    }else if ( j > 100){
+      k = 15;
     }
-  /* USER CODE BEGIN 3 */
+    
+    /* USER CODE BEGIN 3 */
 
   }
   /* USER CODE END 3 */
