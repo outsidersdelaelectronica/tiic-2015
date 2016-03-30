@@ -40,7 +40,7 @@
 #include "fsmc.h"
 
 /* USER CODE BEGIN Includes */
-
+#define QUARTER 400
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -59,16 +59,23 @@ void SystemClock_Config(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
+
 /**
-  * @brief  Delay Function.
-  * @param  nCount:specifies the Delay time length.
+  * @brief  Note and flash.
+  * @param  dur:duration of the note in ms.
+  * @param  frec:frequency of the note in Hz.
   * @retval None
   */
-void Delay(__IO uint32_t nCount)
+void note_flash(uint16_t dur , uint16_t frec)
 {
-  while(nCount--)
-  {
-  }
+  uint16_t period = 16000000/((htim3.Init.Prescaler + 1)*frec);
+  htim3.Init.Period = period;
+  HAL_TIM_PWM_Init(&htim3);
+  GPIOC->BSRR = 0x00001C00;
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+  HAL_Delay(dur);
+  GPIOC->BSRR = 0x1C000000;
+  HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
 }
 /* USER CODE END 0 */
 
@@ -98,8 +105,43 @@ int main(void)
   MX_TIM4_Init();
 
   /* USER CODE BEGIN 2 */
-  int j = 100,k = 15;
-
+  int i = 0;
+  for( i = 0; i < 2; i++){
+    note_flash(QUARTER>>1, 784);
+    HAL_Delay((QUARTER*3)>>1);
+    note_flash(QUARTER>>1, 784);
+    HAL_Delay(50);
+    note_flash(QUARTER>>2, 784);
+    HAL_Delay(50);
+    note_flash(QUARTER>>2, 784);
+    HAL_Delay(50);
+    note_flash(QUARTER>>2, 698);
+    HAL_Delay(50);
+    note_flash((QUARTER*3)>>2, 784);
+    HAL_Delay(50);
+  }
+  note_flash(QUARTER>>1, 784);
+  HAL_Delay(QUARTER);
+  note_flash(QUARTER, 932);
+  HAL_Delay(50);
+  note_flash(QUARTER, 784);
+  HAL_Delay(50);
+  note_flash(QUARTER, 698);
+  HAL_Delay(50);
+  note_flash(QUARTER, 622);
+  HAL_Delay(50);
+  note_flash(QUARTER>>1, 523);
+  HAL_Delay(50);
+  note_flash(QUARTER>>1, 523);
+  HAL_Delay(50);
+  note_flash(QUARTER>>1, 587);
+  HAL_Delay(50);
+  note_flash(QUARTER>>1, 622);
+  HAL_Delay(50);    
+  note_flash(QUARTER>>1, 523);
+  HAL_Delay(50); 
+  note_flash(QUARTER, 784);
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -107,21 +149,6 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    GPIOC->BSRR = 0x00000400;
-    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
-    HAL_Delay(j);
-    GPIOC->BSRR = 0x04000000;
-    HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
-    HAL_Delay(j);
-    
-    j *= k;
-    j >>= 4;
-    if ( j < 5){
-      k = 24;
-      j = 1;
-    }else if ( j > 100){
-      k = 15;
-    }
     
     /* USER CODE BEGIN 3 */
 
