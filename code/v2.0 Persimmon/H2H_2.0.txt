@@ -1,6 +1,6 @@
 Configuration	H2H_2.0
 STM32CubeMX 	4.13.0
-Date	03/15/2016
+Date	04/05/2016
 MCU	STM32L162VDTx
 
 
@@ -44,7 +44,6 @@ SYS	JTAG(5-pin)	SYS_JTDI	PA15
 SYS	JTAG(5-pin)	SYS_JTDO-TRACESWO	PB3
 SYS	JTAG(5-pin)	SYS_JTMS-SWDIO	PA13
 SYS	JTAG(5-pin)	SYS_JTRST	PB4
-SYS	SYS_WKUP1	SYS_WKUP1	PA0-WKUP1
 SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
 TIM3	Internal Clock	TIM3_VS_ClockSourceINT	VP_TIM3_VS_ClockSourceINT
 TIM3	PWM Generation CH3	TIM3_CH3	PB0
@@ -71,9 +70,10 @@ Pin Nb	PINs	FUNCTIONs	LABELs
 16	PC1	GPIO_Analog	NC
 17	PC2	GPIO_Output	VDD_AFE_D_EN
 18	PC3	GPIO_Output	VDD_AFE_A_EN
-23	PA0-WKUP1	SYS_WKUP1	
+23	PA0-WKUP1	GPIO_EXTI0	SYS_WKUP1
 24	PA1	GPIO_EXTI1	AFE DRDY
 25	PA2	GPIO_EXTI2	AFE RESET
+26	PA3	GPIO_Output	AFE_START
 29	PA4	GPIO_Output	AFE CS
 30	PA5	SPI1_SCK	AFE SCLK
 31	PA6	SPI1_MISO	AFE DOUT
@@ -146,7 +146,7 @@ SOFTWARE PROJECT
 
 Project Settings : 
 Project Name : H2H_2.0
-Project Folder : C:\Users\carpanta\Desktop\stm_pinout_project\H2H_2.0
+Project Folder : C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon
 Toolchain / IDE : EWARM
 Firmware Package Name and Version : STM32Cube FW_L1 V1.4.0
 

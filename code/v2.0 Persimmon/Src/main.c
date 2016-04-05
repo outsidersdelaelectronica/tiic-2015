@@ -55,35 +55,18 @@ void SystemClock_Config(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-
+void epic_sax_guy(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
 
-/**
-  * @brief  Note and flash.
-  * @param  dur:duration of the note in ms.
-  * @param  frec:frequency of the note in Hz.
-  * @retval None
-  */
-void note_flash(uint16_t dur , uint16_t frec)
-{
-  uint16_t period = 16000000/((htim3.Init.Prescaler + 1)*frec);
-  htim3.Init.Period = period;
-  HAL_TIM_PWM_Init(&htim3);
-  GPIOC->BSRR = 0x00001C00;
-  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
-  HAL_Delay(dur);
-  GPIOC->BSRR = 0x1C000000;
-  HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
-}
 /* USER CODE END 0 */
 
 int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+  HAL_DBGMCU_EnableDBGStandbyMode();
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -105,52 +88,32 @@ int main(void)
   MX_TIM4_Init();
 
   /* USER CODE BEGIN 2 */
-  int i = 0;
-  for( i = 0; i < 2; i++){
-    note_flash(QUARTER>>1, 784);
-    HAL_Delay((QUARTER*3)>>1);
-    note_flash(QUARTER>>1, 784);
-    HAL_Delay(50);
-    note_flash(QUARTER>>2, 784);
-    HAL_Delay(50);
-    note_flash(QUARTER>>2, 784);
-    HAL_Delay(50);
-    note_flash(QUARTER>>2, 698);
-    HAL_Delay(50);
-    note_flash((QUARTER*3)>>2, 784);
-    HAL_Delay(50);
-  }
-  note_flash(QUARTER>>1, 784);
-  HAL_Delay(QUARTER);
-  note_flash(QUARTER, 932);
-  HAL_Delay(50);
-  note_flash(QUARTER, 784);
-  HAL_Delay(50);
-  note_flash(QUARTER, 698);
-  HAL_Delay(50);
-  note_flash(QUARTER, 622);
-  HAL_Delay(50);
-  note_flash(QUARTER>>1, 523);
-  HAL_Delay(50);
-  note_flash(QUARTER>>1, 523);
-  HAL_Delay(50);
-  note_flash(QUARTER>>1, 587);
-  HAL_Delay(50);
-  note_flash(QUARTER>>1, 622);
-  HAL_Delay(50);    
-  note_flash(QUARTER>>1, 523);
-  HAL_Delay(50); 
-  note_flash(QUARTER, 784);
+  GPIOC->BSRR = 0x000000EC;     //LDO's enable
   
+  //HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
+
+//  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_SET);
+//    
+//  HAL_Delay(500);
+//  
+//  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_RESET);
+  
+  //HAL_PWR_EnterSTANDBYMode();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
+  /* USER CODE END WHILE */
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_12, GPIO_PIN_SET);
+      
+    HAL_Delay(500);
     
-    /* USER CODE BEGIN 3 */
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_12, GPIO_PIN_RESET);
+    
+    HAL_Delay(500);
+  /* USER CODE BEGIN 3 */
 
   }
   /* USER CODE END 3 */
@@ -196,7 +159,67 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+/**
+  * @brief  Activate PWM for note and 3 leds for white flashing.
+  * @param  dur:duration of the note in ms.
+  * @param  frec:frequency of the note in Hz.
+  * @retval None
+*/
 
+void note_flash(uint16_t dur , uint16_t frec){   
+//  uint16_t period = 16000000/((htim3.Init.Prescaler + 1)*frec);
+//  htim3.Init.Period = period;
+//  HAL_TIM_PWM_Init(&htim3);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_SET);
+//  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+  HAL_Delay(dur);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_RESET);
+//  HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
+}
+/**
+  * @brief  Epic sax guy song.
+  * @param  None
+  * @retval None
+*/    
+void epic_sax_guy(void)
+{
+  int i = 0;
+  for( i = 0; i < 2; i++){
+    note_flash(QUARTER>>1, 784);
+    HAL_Delay((QUARTER*3)>>1);
+    note_flash(QUARTER>>1, 784);
+    HAL_Delay(50);
+    note_flash(QUARTER>>2, 784);
+    HAL_Delay(50);
+    note_flash(QUARTER>>2, 784);
+    HAL_Delay(50);
+    note_flash(QUARTER>>2, 698);
+    HAL_Delay(50);
+    note_flash((QUARTER*3)>>2, 784);
+    HAL_Delay(50);
+  }
+  note_flash(QUARTER>>1, 784);
+  HAL_Delay(QUARTER);
+  note_flash(QUARTER, 932);
+  HAL_Delay(50);
+  note_flash(QUARTER, 784);
+  HAL_Delay(50);
+  note_flash(QUARTER, 698);
+  HAL_Delay(50);
+  note_flash(QUARTER, 622);
+  HAL_Delay(50);
+  note_flash(QUARTER>>1, 523);
+  HAL_Delay(50);
+  note_flash(QUARTER>>1, 523);
+  HAL_Delay(50);
+  note_flash(QUARTER>>1, 587);
+  HAL_Delay(50);
+  note_flash(QUARTER>>1, 622);
+  HAL_Delay(50);    
+  note_flash(QUARTER>>1, 523);
+  HAL_Delay(50); 
+  note_flash(QUARTER, 784);
+}
 /* USER CODE END 4 */
 
 #ifdef USE_FULL_ASSERT
