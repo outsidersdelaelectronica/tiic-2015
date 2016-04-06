@@ -86,9 +86,13 @@ int main(void)
   MX_TIM3_Init();
   MX_USART1_UART_Init();
   MX_TIM4_Init();
+  MX_TIM5_Init();
 
   /* USER CODE BEGIN 2 */
-  GPIOC->BSRR = 0x000000EC;     //LDO's enable
+    
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_SET); //LDO's enable
+  
+  EXTI->RTSR |= GPIO_PIN_0;
   
   //HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
 
@@ -106,13 +110,7 @@ int main(void)
   while (1)
   {
   /* USER CODE END WHILE */
-    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_12, GPIO_PIN_SET);
-      
-    HAL_Delay(500);
-    
-    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_12, GPIO_PIN_RESET);
-    
-    HAL_Delay(500);
+
   /* USER CODE BEGIN 3 */
 
   }
