@@ -1068,12 +1068,8 @@
       <file>
         <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_rcc_ex.c</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_rtc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_rtc_ex.c</name>
-      </file>
+      
+      
       <file>
         <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_spi.c</name>
       </file>
@@ -1101,8 +1097,6 @@
         <name>$PROJ_DIR$/../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_cortex.c</name>
       </file><file>
         <name>$PROJ_DIR$/../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.c</name>
-      </file><file>
-        <name>$PROJ_DIR$/../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rtc.c</name>
       </file><file>
         <name>$PROJ_DIR$/../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr.c</name>
       </file><file>
@@ -1133,8 +1127,6 @@
         <name>$PROJ_DIR$/../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_sram.c</name>
       </file><file>
         <name>$PROJ_DIR$/../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_uart.c</name>
-      </file><file>
-        <name>$PROJ_DIR$/../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rtc_ex.c</name>
       </file><file>
         <name>$PROJ_DIR$/../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc.c</name>
       </file></group>

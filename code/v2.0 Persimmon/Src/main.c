@@ -77,6 +77,23 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
 
+  /* Enable Power Clock */
+  __HAL_RCC_PWR_CLK_ENABLE();
+  
+  /* Check if the system was resumed from StandBy mode */
+  if (__HAL_PWR_GET_FLAG(PWR_FLAG_SB) != RESET)
+  {
+    /* Wait that user release the Key push-button */
+    sys_wk_initial_config();
+    while(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_0) == RESET){}
+  }
+
+  /* Check and Clear the Wakeup flag */
+  if (__HAL_PWR_GET_FLAG(PWR_FLAG_WU) != RESET)
+  {
+    __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
+  }
+
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_FSMC_Init();
@@ -89,19 +106,9 @@ int main(void)
   MX_TIM5_Init();
 
   /* USER CODE BEGIN 2 */
-    
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_SET); //LDO's enable
-  
-  EXTI->RTSR |= GPIO_PIN_0;
   
   //HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
 
-//  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_SET);
-//    
-//  HAL_Delay(500);
-//  
-//  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_RESET);
-  
   //HAL_PWR_EnterSTANDBYMode();
   /* USER CODE END 2 */
 
@@ -109,6 +116,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    HAL_GPIO_TogglePin(GPIOC, nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
+    
+    HAL_Delay(200);
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -126,7 +136,7 @@ void SystemClock_Config(void)
   RCC_OscInitTypeDef RCC_OscInitStruct;
   RCC_ClkInitTypeDef RCC_ClkInitStruct;
 
-  __PWR_CLK_ENABLE();
+  __HAL_RCC_PWR_CLK_ENABLE();
 
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
@@ -168,10 +178,10 @@ void note_flash(uint16_t dur , uint16_t frec){
 //  uint16_t period = 16000000/((htim3.Init.Prescaler + 1)*frec);
 //  htim3.Init.Period = period;
 //  HAL_TIM_PWM_Init(&htim3);
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOC, nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin, GPIO_PIN_SET);
 //  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
   HAL_Delay(dur);
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin, GPIO_PIN_RESET);
 //  HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
 }
 /**
