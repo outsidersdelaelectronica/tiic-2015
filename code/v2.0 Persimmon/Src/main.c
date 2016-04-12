@@ -106,17 +106,15 @@ int main(void)
   MX_TIM5_Init();
 
   /* USER CODE BEGIN 2 */
-  
-  //HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
+    HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin|UI_LED_G_Pin|UI_LED_R_Pin,GPIO_PIN_RESET);
 
-  //HAL_PWR_EnterSTANDBYMode();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    HAL_GPIO_TogglePin(GPIOC, nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
+    HAL_GPIO_TogglePin(GPIOC, UI_LED_G_Pin);
     
     HAL_Delay(200);
   /* USER CODE END WHILE */

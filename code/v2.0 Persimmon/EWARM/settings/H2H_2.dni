@@ -9,10 +9,10 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [stlink]
-stlinkserialNo=F51BD0D0
+stlinkserialNo=2798FD0D
 stlinkfoundProbes=
 [DebugChecksum]
-Checksum=716709983
+Checksum=1194126228
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -64,10 +64,6 @@ ShowTimeLog=1
 SumEnabled=0
 ShowTimeSum=1
 SumSortOrder=0
-[Disassemble mode]
-mode=0
-[Breakpoints2]
-Count=0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -75,9 +71,6 @@ Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
-[Aliases]
-Count=0
-SuppressDialog=0
 [DriverProfiling]
 Enabled=0
 Mode=3
@@ -88,3 +81,13 @@ Exclusions=
 Enabled=0
 [CallStackStripe]
 ShowTiming=1
+[Disassemble mode]
+mode=0
+[Breakpoints2]
+Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\stm32l1xx_it.c}.107.3" 0 0 1 "" 0 "" 0
+Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\gpio.c}.180.3" 0 0 1 "" 0 "" 0
+Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\stm32l1xx_it.c}.92.3" 0 0 1 "" 0 "" 0
+Count=3
+[Aliases]
+Count=0
+SuppressDialog=0

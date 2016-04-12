@@ -106,11 +106,12 @@ void MX_TIM5_Init(void)
 {
   TIM_ClockConfigTypeDef sClockSourceConfig;
   TIM_MasterConfigTypeDef sMasterConfig;
-
+  
+  TIM5->CR1|= TIM_CR1_URS;
   htim5.Instance = TIM5;
   htim5.Init.Prescaler = 16000;
   htim5.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim5.Init.Period = 1000;
+  htim5.Init.Period = 10000;
   htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   HAL_TIM_Base_Init(&htim5);
 
@@ -121,7 +122,7 @@ void MX_TIM5_Init(void)
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
   HAL_TIMEx_MasterConfigSynchronization(&htim5, &sMasterConfig);
   
-  TIM5->CR1|= TIM_CR1_URS;
+  
 
 }
 
