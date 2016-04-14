@@ -40,7 +40,7 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern TIM_HandleTypeDef htim5;
+extern TIM_HandleTypeDef htim6;
 
 /******************************************************************************/
 /*            Cortex-M3 Processor Interruption and Exception Handlers         */ 
@@ -88,8 +88,15 @@ void SysTick_Handler(void)
 void EXTI0_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI0_IRQn 0 */
-  HAL_TIM_Base_Start_IT(&htim5);
-  HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin,GPIO_PIN_SET);
+  if ( (EXTI-> RTSR)&(GPIO_PIN_0)){
+    HAL_TIM_Base_Start_IT(&htim6);
+    EXTI-> RTSR &= (~GPIO_PIN_0);
+    EXTI-> FTSR |= GPIO_PIN_0;
+  }else{
+    HAL_TIM_Base_Stop_IT(&htim6);
+    EXTI-> FTSR &= (~GPIO_PIN_0);
+    EXTI-> RTSR |= GPIO_PIN_0;
+  }
   /* USER CODE END EXTI0_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
   /* USER CODE BEGIN EXTI0_IRQn 1 */
@@ -98,19 +105,24 @@ void EXTI0_IRQHandler(void)
 }
 
 /**
-* @brief This function handles TIM5 global interrupt.
+* @brief This function handles TIM6 global interrupt.
 */
-void TIM5_IRQHandler(void)
+void TIM6_IRQHandler(void)
 {
-  /* USER CODE BEGIN TIM5_IRQn 0 */
-  HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin,GPIO_PIN_RESET);
-  HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
-  HAL_PWR_EnterSTANDBYMode();
-  /* USER CODE END TIM5_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim5);
-  /* USER CODE BEGIN TIM5_IRQn 1 */
+  static int flag = 0;
+  if (flag == 0){ 
+    flag =1;
+  }else{
+  /* USER CODE BEGIN TIM6_IRQn 0 */
 
-  /* USER CODE END TIM5_IRQn 1 */
+//    HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
+//    HAL_PWR_EnterSTANDBYMode();
+  }
+  /* USER CODE END TIM6_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim6);
+  /* USER CODE BEGIN TIM6_IRQn 1 */
+
+  /* USER CODE END TIM6_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

@@ -77,23 +77,18 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
 
-  /* Enable Power Clock */
-  __HAL_RCC_PWR_CLK_ENABLE();
-  
-  /* Check if the system was resumed from StandBy mode */
   if (__HAL_PWR_GET_FLAG(PWR_FLAG_SB) != RESET)
   {
     /* Wait that user release the Key push-button */
     sys_wk_initial_config();
     while(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_0) == RESET){}
+    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_0);
   }
-
-  /* Check and Clear the Wakeup flag */
+  
   if (__HAL_PWR_GET_FLAG(PWR_FLAG_WU) != RESET)
   {
     __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
   }
-
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_FSMC_Init();
@@ -103,10 +98,9 @@ int main(void)
   MX_TIM3_Init();
   MX_USART1_UART_Init();
   MX_TIM4_Init();
-  MX_TIM5_Init();
+  MX_TIM6_Init();
 
   /* USER CODE BEGIN 2 */
-    HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin|UI_LED_G_Pin|UI_LED_R_Pin,GPIO_PIN_RESET);
 
   /* USER CODE END 2 */
 
