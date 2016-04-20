@@ -105,6 +105,7 @@ void MX_TIM4_Init(void)
 void MX_TIM6_Init(void)
 {
   TIM_MasterConfigTypeDef sMasterConfig;
+
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 16000;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;

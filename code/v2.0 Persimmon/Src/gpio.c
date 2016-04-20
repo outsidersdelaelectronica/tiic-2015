@@ -182,14 +182,7 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 2 */
-void sys_wk_initial_config(){
-  GPIO_InitTypeDef GPIO_InitStruct;
-    
-  GPIO_InitStruct.Pin = SYS_WKUP_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);  
-}
+
 /* USER CODE END 2 */
 
 /**
