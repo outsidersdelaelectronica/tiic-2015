@@ -182,7 +182,24 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 2 */
-
+/**
+  * @brief  Configure PA0 to be falling edge sensitive.
+  * @note   This function is used before full   .
+  * @param  GPIOx: where x can be (A..G depending on device used) to select the GPIO peripheral for STM32L1XX family devices
+  * @param  GPIO_Pin: specifies the port bit to be written.
+  *          This parameter can be one of GPIO_PIN_x where x can be (0..15).
+  * @param  PinState: specifies the value to be written to the selected bit.
+  *          This parameter can be one of the GPIO_PinState enum values:
+  *            @arg GPIO_PIN_RESET: to clear the port pin
+  *            @arg GPIO_PIN_SET: to set the port pin
+  * @retval None
+  */
+void wk_falling_edge_detection(){
+  GPIO_InitStruct.Pin = SYS_WKUP_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+}
 /* USER CODE END 2 */
 
 /**

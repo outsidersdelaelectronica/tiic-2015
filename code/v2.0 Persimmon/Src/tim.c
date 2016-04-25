@@ -34,7 +34,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "tim.h"
-
+#include "stm32l162xd.h"
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
@@ -110,6 +110,7 @@ void MX_TIM6_Init(void)
   htim6.Init.Prescaler = 16000;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim6.Init.Period = 1000;
+
   HAL_TIM_Base_Init(&htim6);
 
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
@@ -144,7 +145,7 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
     HAL_NVIC_SetPriority(TIM6_IRQn, 1, 0);
     HAL_NVIC_EnableIRQ(TIM6_IRQn);
   /* USER CODE BEGIN TIM6_MspInit 1 */
-
+    htim_base->Instance->CR1 |= TIM_CR1_URS;
   /* USER CODE END TIM6_MspInit 1 */
   }
 }

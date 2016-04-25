@@ -47,7 +47,7 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+#define QUARTER 350
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -66,13 +66,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  HAL_PWR_DisableWakeUpPin(PWR_WAKEUP_PIN1);
-  HAL_DBGMCU_EnableDBGStandbyMode();
-  
-  if (__HAL_PWR_GET_FLAG(PWR_FLAG_WU) != RESET)
-  {
-    __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
-  }
+
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -83,6 +77,15 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
 
+  HAL_DBGMCU_EnableDBGStandbyMode();
+  HAL_PWR_DisableWakeUpPin(PWR_WAKEUP_PIN1);  
+  
+  if (__HAL_PWR_GET_FLAG(PWR_FLAG_WU) != RESET)
+  {
+    initial_falling_edge_detection();
+    HAL_Delay(2000);
+    __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
+  }
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_FSMC_Init();
@@ -95,6 +98,8 @@ int main(void)
   MX_TIM6_Init();
 
   /* USER CODE BEGIN 2 */
+
+  
 
   /* USER CODE END 2 */
 
