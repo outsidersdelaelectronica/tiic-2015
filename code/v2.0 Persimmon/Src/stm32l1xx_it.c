@@ -94,6 +94,7 @@ void EXTI0_IRQHandler(void)
     EXTI-> FTSR |= GPIO_PIN_0;
   }else{
     HAL_TIM_Base_Stop_IT(&htim6);
+    __HAL_TIM_SET_COUNTER(&htim6,0);
     EXTI-> FTSR &= (~GPIO_PIN_0);
     EXTI-> RTSR |= GPIO_PIN_0;
   }
@@ -110,7 +111,6 @@ void EXTI0_IRQHandler(void)
 void TIM6_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM6_IRQn 0 */
-
   HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin|UI_LED_B_Pin|UI_LED_G_Pin,GPIO_PIN_RESET);
   /* USER CODE END TIM6_IRQn 0 */
   HAL_TIM_IRQHandler(&htim6);

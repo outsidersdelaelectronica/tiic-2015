@@ -53,7 +53,7 @@
 void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+void wk_falling_edge_detection(void);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

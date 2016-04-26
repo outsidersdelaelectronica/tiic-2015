@@ -6,5 +6,9 @@ __Previews/
 *.out
 *.xml
 *.pp
-.metadata\
-.metadata/
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so

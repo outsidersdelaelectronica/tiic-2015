@@ -145,7 +145,7 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
     HAL_NVIC_SetPriority(TIM6_IRQn, 1, 0);
     HAL_NVIC_EnableIRQ(TIM6_IRQn);
   /* USER CODE BEGIN TIM6_MspInit 1 */
-    htim_base->Instance->CR1 |= TIM_CR1_URS;
+    __HAL_TIM_URS_ENABLE(htim_base); 
   /* USER CODE END TIM6_MspInit 1 */
   }
 }

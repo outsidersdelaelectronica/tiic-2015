@@ -82,9 +82,15 @@ int main(void)
   
   if (__HAL_PWR_GET_FLAG(PWR_FLAG_WU) != RESET)
   {
-    initial_falling_edge_detection();
-    HAL_Delay(2000);
     __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
+    wk_falling_edge_detection();
+    HAL_Delay(2000);
+    if (__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_0) != RESET)
+    {
+      __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_0);
+      HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
+      HAL_PWR_EnterSTANDBYMode();
+    }
   }
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
