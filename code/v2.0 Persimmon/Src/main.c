@@ -76,9 +76,6 @@ int main(void)
 
   /* Configure the system clock */
   SystemClock_Config();
-
-  HAL_DBGMCU_EnableDBGStandbyMode();
-  HAL_PWR_DisableWakeUpPin(PWR_WAKEUP_PIN1);  
   
   if (__HAL_PWR_GET_FLAG(PWR_FLAG_WU) != RESET)
   {
@@ -113,9 +110,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
+    HAL_Delay(200);
   /* USER CODE END WHILE */
-  HAL_GPIO_TogglePin(GPIOC,UI_LED_G_Pin);
-  HAL_Delay(300);
+
   /* USER CODE BEGIN 3 */
 
   }

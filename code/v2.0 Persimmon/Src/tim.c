@@ -34,7 +34,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "tim.h"
-#include "stm32l162xd.h"
+
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
@@ -110,7 +110,6 @@ void MX_TIM6_Init(void)
   htim6.Init.Prescaler = 16000;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim6.Init.Period = 1000;
-
   HAL_TIM_Base_Init(&htim6);
 
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
