@@ -972,6 +972,15 @@
     </group>
     <group>
       <name>User</name>
+      <group>
+        <name>afe</name>
+        <file>
+          <name>$PROJ_DIR$\..\Inc\ADS1291_constants.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\afe.c</name>
+        </file>
+      </group>
       <file>
         <name>$PROJ_DIR$\..\Src\fsmc.c</name>
       </file>
