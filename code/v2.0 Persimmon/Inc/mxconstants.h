@@ -66,8 +66,8 @@
 #define VDD_AFE_D_EN_GPIO_Port GPIOC
 #define VDD_AFE_A_EN_Pin GPIO_PIN_3
 #define VDD_AFE_A_EN_GPIO_Port GPIOC
-#define SYS_WKUP1_Pin GPIO_PIN_0
-#define SYS_WKUP1_GPIO_Port GPIOA
+#define SYS_WKUP_Pin GPIO_PIN_0
+#define SYS_WKUP_GPIO_Port GPIOA
 #define AFE_DRDY_Pin GPIO_PIN_1
 #define AFE_DRDY_GPIO_Port GPIOA
 #define AFE_RESET_Pin GPIO_PIN_2

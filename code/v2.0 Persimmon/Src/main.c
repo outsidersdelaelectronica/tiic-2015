@@ -40,14 +40,14 @@
 #include "fsmc.h"
 
 /* USER CODE BEGIN Includes */
-#define QUARTER 400
+
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+#define QUARTER 350
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -55,7 +55,7 @@ void SystemClock_Config(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-void epic_sax_guy(void);
+
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -66,7 +66,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  HAL_DBGMCU_EnableDBGStandbyMode();
+
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -76,7 +76,19 @@ int main(void)
 
   /* Configure the system clock */
   SystemClock_Config();
-
+  
+  if (__HAL_PWR_GET_FLAG(PWR_FLAG_WU) != RESET)
+  {
+    __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
+    wk_falling_edge_detection();
+    HAL_Delay(2000);
+    if (__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_0) != RESET)
+    {
+      __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_0);
+      HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
+      HAL_PWR_EnterSTANDBYMode();
+    }
+  }
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_FSMC_Init();
@@ -86,33 +98,22 @@ int main(void)
   MX_TIM3_Init();
   MX_USART1_UART_Init();
   MX_TIM4_Init();
+  MX_TIM6_Init();
 
   /* USER CODE BEGIN 2 */
-  GPIOC->BSRR = 0x000000EC;     //LDO's enable
-  
-  //HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
 
-//  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_SET);
-//    
-//  HAL_Delay(500);
-//  
-//  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_RESET);
   
-  //HAL_PWR_EnterSTANDBYMode();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
+    HAL_Delay(200);
   /* USER CODE END WHILE */
-    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_12, GPIO_PIN_SET);
-      
-    HAL_Delay(500);
-    
-    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_12, GPIO_PIN_RESET);
-    
-    HAL_Delay(500);
+
   /* USER CODE BEGIN 3 */
 
   }
@@ -128,7 +129,7 @@ void SystemClock_Config(void)
   RCC_OscInitTypeDef RCC_OscInitStruct;
   RCC_ClkInitTypeDef RCC_ClkInitStruct;
 
-  __PWR_CLK_ENABLE();
+  __HAL_RCC_PWR_CLK_ENABLE();
 
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
@@ -170,10 +171,10 @@ void note_flash(uint16_t dur , uint16_t frec){
 //  uint16_t period = 16000000/((htim3.Init.Prescaler + 1)*frec);
 //  htim3.Init.Period = period;
 //  HAL_TIM_PWM_Init(&htim3);
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOC, nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin, GPIO_PIN_SET);
 //  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
   HAL_Delay(dur);
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin, GPIO_PIN_RESET);
 //  HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
 }
 /**

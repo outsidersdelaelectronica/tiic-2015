@@ -91,7 +91,7 @@ static void HAL_FSMC_MspInit(void){
   }
   FSMC_Initialized = 1;
   /* Peripheral clock enable */
-  __FSMC_CLK_ENABLE();
+  __HAL_RCC_FSMC_CLK_ENABLE();
   
   /** FSMC GPIO Configuration  
   PE7   ------> FSMC_D4
@@ -121,7 +121,7 @@ static void HAL_FSMC_MspInit(void){
                           |GPIO_PIN_15;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   GPIO_InitStruct.Alternate = GPIO_AF12_FSMC;
 
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
@@ -132,7 +132,7 @@ static void HAL_FSMC_MspInit(void){
                           |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_7;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   GPIO_InitStruct.Alternate = GPIO_AF12_FSMC;
 
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
@@ -163,7 +163,7 @@ static void HAL_FSMC_MspDeInit(void){
   }
   FSMC_DeInitialized = 1;
   /* Peripheral clock enable */
-  __FSMC_CLK_DISABLE();
+  __HAL_RCC_FSMC_CLK_DISABLE();
   
   /** FSMC GPIO Configuration  
   PE7   ------> FSMC_D4

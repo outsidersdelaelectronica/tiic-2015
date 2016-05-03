@@ -12,7 +12,7 @@ ByteLimit=50
 stlinkserialNo=2798FD0D
 stlinkfoundProbes=
 [DebugChecksum]
-Checksum=-384914779
+Checksum=-1161527762
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -25,7 +25,7 @@ MixedMode=1
 [SWOTraceHWSettings]
 OverrideDefaultClocks=0
 CpuClock=16000000
-ClockAutoDetect=0
+ClockAutoDetect=1
 ClockWanted=2000000
 JtagSpeed=2000000
 Prescaler=8
@@ -84,7 +84,8 @@ ShowTiming=1
 [Disassemble mode]
 mode=0
 [Breakpoints2]
-Count=0
+Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\stm32l1xx_it.c}.122.1" 0 0 1 "" 0 "" 0
+Count=1
 [Aliases]
 Count=0
 SuppressDialog=0
