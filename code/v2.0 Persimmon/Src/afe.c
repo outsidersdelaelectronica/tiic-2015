@@ -4,11 +4,11 @@
  *  Created on: 29/9/2015
  *      Author: Smau
  */
-
+#include "ADS1291_constants.h"
 #include "afe.h"
-//#include "ADS1291_constants.h"
 #include "gpio.h"
 #include "spi.h"
+
 
 void afe_init()
 {
