@@ -41,7 +41,7 @@
 
 /* External variables --------------------------------------------------------*/
 extern TIM_HandleTypeDef htim6;
-
+extern SPI_HandleTypeDef hspi1;
 /******************************************************************************/
 /*            Cortex-M3 Processor Interruption and Exception Handlers         */ 
 /******************************************************************************/
@@ -83,16 +83,22 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
-* @brief This function handles EXTI line0 interrupt.
+* @brief This function handles EXTI line0 interrupt (SW switch off).
 */
 void EXTI0_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI0_IRQn 0 */
+  // Checks if the interrupt has been triggered by a rising edge( first 
+  // pressing of button), starts a 2secs timer and make the line falling
+  // edge sensitive. 
   if ( (EXTI-> RTSR)&(GPIO_PIN_0)){
     HAL_TIM_Base_Start_IT(&htim6);
     EXTI-> RTSR &= (~GPIO_PIN_0);
     EXTI-> FTSR |= GPIO_PIN_0;
   }else{
+    // If a falling edge is detected( button is released) before the countdown
+    // ends, we stop the countdown, reset it and make the line rising
+    // edge sensitive again.
     HAL_TIM_Base_Stop_IT(&htim6);
     __HAL_TIM_SET_COUNTER(&htim6,0);
     EXTI-> FTSR &= (~GPIO_PIN_0);
@@ -103,6 +109,32 @@ void EXTI0_IRQHandler(void)
   /* USER CODE BEGIN EXTI0_IRQn 1 */
 
   /* USER CODE END EXTI0_IRQn 1 */
+}
+
+/**
+* @brief This function handles EXTI line1 interrupt.
+*/
+void EXTI1_IRQHandler(void)
+{
+  uint8_t dummy[3];
+  int32_t data_tmp;
+  /* USER CODE BEGIN EXTI1_IRQn 0 */
+  //Read 3 ADS1291 status bytes
+  HAL_GPIO_WritePin(GPIOA,AFE_CS_Pin,GPIO_PIN_RESET); //Enable CS   
+  HAL_SPI_Receive(&hspi1, dummy, 3, 100);
+
+  HAL_SPI_Receive(&hspi1, dummy, 3, 100);
+  HAL_GPIO_WritePin(GPIOA,AFE_CS_Pin,GPIO_PIN_SET); //Enable CS   
+
+  //Store signal data into ecg signal buffer
+
+  data_tmp = (((int32_t) dummy[0]) << 16) | (((int32_t) dummy[1]) << 8) 
+                  | ((int32_t) dummy[2]);                 	
+  /* USER CODE END EXTI1_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1); // Clear DRDY (PA1) flag
+  /* USER CODE BEGIN EXTI1_IRQn 1 */
+
+  /* USER CODE END EXTI1_IRQn 1 */
 }
 
 /**

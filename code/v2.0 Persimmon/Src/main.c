@@ -55,7 +55,9 @@ void SystemClock_Config(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-
+void two_secs_wakeup(void);
+void note_flash(uint16_t dur , uint16_t frec);
+void epic_sax_guy(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -77,18 +79,9 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
   
-  if (__HAL_PWR_GET_FLAG(PWR_FLAG_WU) != RESET)
-  {
-    __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
-    wk_falling_edge_detection();
-    HAL_Delay(2000);
-    if (__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_0) != RESET)
-    {
-      __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_0);
-      HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
-      HAL_PWR_EnterSTANDBYMode();
-    }
-  }
+  HAL_DBGMCU_EnableDBGStandbyMode();
+
+  two_secs_wakeup();
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_FSMC_Init();
@@ -97,12 +90,10 @@ int main(void)
   MX_SPI2_Init();
   MX_TIM3_Init();
   MX_USART1_UART_Init();
-  MX_TIM4_Init();
   MX_TIM6_Init();
 
   /* USER CODE BEGIN 2 */
 
-  
 
   /* USER CODE END 2 */
 
@@ -161,6 +152,27 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 /**
+  * @brief  Implements the initial delay of 2secs for wake up .
+  * @param  None
+  * @retval None
+*/
+void two_secs_wakeup(void){
+  // Checks if the system is resumed from standby
+  if (__HAL_PWR_GET_FLAG(PWR_FLAG_WU) != RESET)
+  {
+    __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
+    wk_falling_edge_detection();
+    HAL_Delay(2000);
+    if (__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_0) != RESET)
+    {
+      __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_0);
+      HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
+      HAL_PWR_EnterSTANDBYMode();
+    }
+  }
+  
+}
+/**
   * @brief  Activate PWM for note and 3 leds for white flashing.
   * @param  dur:duration of the note in ms.
   * @param  frec:frequency of the note in Hz.
@@ -182,8 +194,8 @@ void note_flash(uint16_t dur , uint16_t frec){
   * @param  None
   * @retval None
 */    
-void epic_sax_guy(void)
-{
+void epic_sax_guy(void){
+  
   int i = 0;
   for( i = 0; i < 2; i++){
     note_flash(QUARTER>>1, 784);
