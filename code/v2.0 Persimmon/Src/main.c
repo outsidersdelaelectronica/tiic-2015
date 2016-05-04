@@ -40,7 +40,6 @@
 #include "fsmc.h"
 
 /* USER CODE BEGIN Includes */
-
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -55,18 +54,14 @@ void SystemClock_Config(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -89,6 +84,7 @@ int main(void)
       HAL_PWR_EnterSTANDBYMode();
     }
   }
+  
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_FSMC_Init();
@@ -101,9 +97,16 @@ int main(void)
   MX_TIM6_Init();
 
   /* USER CODE BEGIN 2 */
-
   
-
+  /* FSMC TESTING */
+  
+  
+  
+  
+  
+  
+  
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -112,13 +115,11 @@ int main(void)
   {
     HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
     HAL_Delay(200);
+  }
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-
-  }
   /* USER CODE END 3 */
-
 }
 
 /** System Clock Configuration
@@ -159,6 +160,7 @@ void SystemClock_Config(void)
   HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 }
 
+
 /* USER CODE BEGIN 4 */
 /**
   * @brief  Activate PWM for note and 3 leds for white flashing.
@@ -166,8 +168,8 @@ void SystemClock_Config(void)
   * @param  frec:frequency of the note in Hz.
   * @retval None
 */
-
-void note_flash(uint16_t dur , uint16_t frec){   
+void note_flash(uint16_t dur , uint16_t frec)
+{
 //  uint16_t period = 16000000/((htim3.Init.Prescaler + 1)*frec);
 //  htim3.Init.Period = period;
 //  HAL_TIM_PWM_Init(&htim3);
@@ -177,6 +179,7 @@ void note_flash(uint16_t dur , uint16_t frec){
   HAL_GPIO_WritePin(GPIOC, nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin, GPIO_PIN_RESET);
 //  HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
 }
+
 /**
   * @brief  Epic sax guy song.
   * @param  None
@@ -221,10 +224,11 @@ void epic_sax_guy(void)
   HAL_Delay(50); 
   note_flash(QUARTER, 784);
 }
+
 /* USER CODE END 4 */
 
-#ifdef USE_FULL_ASSERT
 
+#ifdef USE_FULL_ASSERT
 /**
    * @brief Reports the name of the source file and the source line number
    * where the assert_param error has occurred.
@@ -240,15 +244,6 @@ void assert_failed(uint8_t* file, uint32_t line)
   /* USER CODE END 6 */
 
 }
-
 #endif
 
-/**
-  * @}
-  */ 
-
-/**
-  * @}
-*/ 
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+/*****END OF FILE****/
