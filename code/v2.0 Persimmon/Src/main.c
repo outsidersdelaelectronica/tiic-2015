@@ -64,6 +64,11 @@ void epic_sax_guy(void);
 
 /* USER CODE END 0 */
 
+extern SRAM_HandleTypeDef hsram1;
+
+#define LCD_REG        ((uint32_t *)(FSMC_BASE))
+#define LCD_DATA       ((uint32_t *)(FSMC_BASE + 0x00000001U))
+
 int main(void)
 {
 
@@ -82,6 +87,7 @@ int main(void)
   HAL_DBGMCU_EnableDBGStandbyMode();
 
   two_secs_wakeup();
+
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_FSMC_Init();
@@ -94,6 +100,13 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
   afe_init();
+  
+  /* FSMC TESTING */
+  uint16_t writeValue = 0x0D;
+  uint16_t readValue;
+  
+  HAL_SRAM_Write_16b(&(hsram1), LCD_REG, &(writeValue), 1);
+  HAL_SRAM_Read_16b(&(hsram1), LCD_DATA, &(readValue), 1);
 
   /* USER CODE END 2 */
 
@@ -105,11 +118,11 @@ int main(void)
     HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
 //    epic_sax_guy();
     HAL_Delay(200);
+
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-
-  }
+}
   /* USER CODE END 3 */
 
 }
@@ -152,6 +165,7 @@ void SystemClock_Config(void)
   HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 }
 
+
 /* USER CODE BEGIN 4 */
 /**
   * @brief  Implements the initial delay of 2secs for wake up .
@@ -191,6 +205,7 @@ void note_flash(uint16_t dur , uint16_t frec){
   HAL_GPIO_WritePin(GPIOC, nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin, GPIO_PIN_RESET);
   HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
 }
+
 /**
   * @brief  Epic sax guy song.
   * @param  None
@@ -235,10 +250,9 @@ void epic_sax_guy(void){
   HAL_Delay(50); 
   note_flash(QUARTER, 784);
 }
+
 /* USER CODE END 4 */
-
 #ifdef USE_FULL_ASSERT
-
 /**
    * @brief Reports the name of the source file and the source line number
    * where the assert_param error has occurred.
@@ -254,15 +268,6 @@ void assert_failed(uint8_t* file, uint32_t line)
   /* USER CODE END 6 */
 
 }
-
 #endif
 
-/**
-  * @}
-  */ 
-
-/**
-  * @}
-*/ 
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+/*****END OF FILE****/
