@@ -59,6 +59,11 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 /* USER CODE END 0 */
 
+extern SRAM_HandleTypeDef hsram1;
+
+#define LCD_REG        ((uint32_t *)(FSMC_BASE))
+#define LCD_DATA       ((uint32_t *)(FSMC_BASE + 0x00000001U))
+
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -99,13 +104,11 @@ int main(void)
   /* USER CODE BEGIN 2 */
   
   /* FSMC TESTING */
+  uint16_t writeValue = 0x0D;
+  uint16_t readValue;
   
-  
-  
-  
-  
-  
-  
+  HAL_SRAM_Write_16b(&(hsram1), LCD_REG, &(writeValue), 1);
+  HAL_SRAM_Read_16b(&(hsram1), LCD_DATA, &(readValue), 1);
   
   /* USER CODE END 2 */
 

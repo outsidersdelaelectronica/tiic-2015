@@ -981,6 +981,12 @@
           <name>$PROJ_DIR$\..\Src\afe.c</name>
         </file>
       </group>
+      <group>
+        <name>lcd</name>
+        <file>
+          <name>$PROJ_DIR$\..\Src\lcd.c</name>
+        </file>
+      </group>
       <file>
         <name>$PROJ_DIR$\..\Src\fsmc.c</name>
       </file>
