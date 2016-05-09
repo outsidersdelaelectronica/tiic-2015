@@ -36,12 +36,15 @@
 #include "stm32l1xx_it.h"
 
 /* USER CODE BEGIN 0 */
+#include "spi.h"
+    
+extern SPI_HandleTypeDef hspi1;
 
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
 extern TIM_HandleTypeDef htim6;
-extern SPI_HandleTypeDef hspi1;
+
 /******************************************************************************/
 /*            Cortex-M3 Processor Interruption and Exception Handlers         */ 
 /******************************************************************************/
@@ -83,7 +86,7 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
-* @brief This function handles EXTI line0 interrupt (SW switch off).
+* @brief This function handles EXTI line0 interrupt.
 */
 void EXTI0_IRQHandler(void)
 {
@@ -116,25 +119,60 @@ void EXTI0_IRQHandler(void)
 */
 void EXTI1_IRQHandler(void)
 {
-  uint8_t dummy[3];
-  int32_t data_tmp;
   /* USER CODE BEGIN EXTI1_IRQn 0 */
+  uint8_t dummy[3] = {0,0,0},data_ch1[3] = {0,0,0},data_ch2[3] = {0,0,0};
+  uint32_t data_tmp_ch1,data_tmp_ch2;
+  static uint32_t data_log_ch1[100],data_log_ch2[100];
+  static uint32_t* ptr_1 = data_log_ch1,*ptr_2 = data_log_ch2;
   //Read 3 ADS1291 status bytes
   HAL_GPIO_WritePin(GPIOA,AFE_CS_Pin,GPIO_PIN_RESET); //Enable CS   
   HAL_SPI_Receive(&hspi1, dummy, 3, 100);
 
-  HAL_SPI_Receive(&hspi1, dummy, 3, 100);
+  HAL_SPI_Receive(&hspi1, data_ch1, 3, 100);
+  
+  HAL_SPI_Receive(&hspi1, data_ch2, 3, 100);
+  
   HAL_GPIO_WritePin(GPIOA,AFE_CS_Pin,GPIO_PIN_SET); //Enable CS   
 
   //Store signal data into ecg signal buffer
 
-  data_tmp = (((int32_t) dummy[0]) << 16) | (((int32_t) dummy[1]) << 8) 
-                  | ((int32_t) dummy[2]);                 	
+  data_tmp_ch1 = (((int32_t) data_ch1[0]) << 16) | (((int32_t) data_ch1[1]) << 8) 
+                  | ((int32_t) data_ch1[2]);     
+  
+  data_tmp_ch2 = (((int32_t) data_ch2[0]) << 16) | (((int32_t) data_ch2[1]) << 8) 
+                | ((int32_t) data_ch2[2]);
+  *(ptr_1++) = data_tmp_ch1;
+  *(ptr_2++) = data_tmp_ch2;
+  if (ptr_1 == &(data_log_ch1[99])) { 
+    ptr_1 = data_log_ch1;
+  }
+  if (ptr_2 == &(data_log_ch2[99])) { 
+    ptr_2 = data_log_ch2;
+  }
   /* USER CODE END EXTI1_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1); // Clear DRDY (PA1) flag
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
   /* USER CODE BEGIN EXTI1_IRQn 1 */
 
   /* USER CODE END EXTI1_IRQn 1 */
+}
+
+/**
+* @brief This function handles EXTI line[15:10] interrupts.
+*/
+void EXTI15_10_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI15_10_IRQn 0 */
+  if (__HAL_GPIO_EXTI_GET_FLAG(GPIO_PIN_10)){
+    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_10);
+  }
+  /* USER CODE END EXTI15_10_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_10);
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_11);
+  /* USER CODE BEGIN EXTI15_10_IRQn 1 */
+  if (__HAL_GPIO_EXTI_GET_FLAG(GPIO_PIN_11)){
+    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_11);
+  }
+  /* USER CODE END EXTI15_10_IRQn 1 */
 }
 
 /**

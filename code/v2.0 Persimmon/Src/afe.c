@@ -35,29 +35,49 @@ void afe_init()
   HAL_Delay(1);		//At least 10 useconds ( need to implement us_delay() )
   HAL_GPIO_WritePin(GPIOA,AFE_RESET_Pin,GPIO_PIN_SET);
 
-  HAL_GPIO_WritePin(GPIOA,AFE_CS_Pin,GPIO_PIN_RESET); //Enable CS        
+  HAL_GPIO_WritePin(GPIOA,AFE_CS_Pin,GPIO_PIN_RESET); //Enable CS    
+  
   data[0] = AFE_SDATAC;
   HAL_SPI_Transmit(&hspi1, data, 1, 100);
   //Write config commands to AFE
   
-  afe_serial_write_register(AFE_REG_CONFIG1, 0x01); //Set data rate to 500 SPS
-  afe_serial_write_register(AFE_REG_CONFIG2, 0xE3); //Enable voltage reference
-                                                    //Enable lead-off comparators
-                                                    //Enable test signal
-                                                    //Test signal @ 1 Hz, +-1 mV
-  afe_serial_write_register(AFE_REG_CH2SET, 0x81);  //Channel 2 power down
-                                                    //Channel 2 input shorted
-  afe_serial_write_register(AFE_REG_LOFF_STAT, 0x40); //Clock divider selection: 
-                                                      //Clock input set to 2.048 MHz
-  afe_serial_write_register(AFE_REG_RESP2, 0x87);   //Enable calibration
-  afe_serial_write_register(AFE_REG_CH1SET, 0x01);  // |
-  data[0] = AFE_OFFSETCAL;                          // | Calibrate
-  HAL_SPI_Transmit(&hspi1, data, 1, 100);           // |
-  afe_serial_write_register(AFE_REG_CH1SET, 0x10);  // | ( Set PGA gain to 1)
-  afe_serial_write_register(AFE_REG_RESP2, 0x07);   //Disable calibration
+  afe_serial_write_register(AFE_REG_CONFIG1, 0x03);
+  afe_serial_write_register(AFE_REG_CONFIG2, 0xA3);     // 0xA0 : normal input | 0xA3 : test signal
+  afe_serial_write_register(AFE_REG_LOFF, 0x10);
+  
+  afe_serial_write_register(AFE_REG_CH1SET, 0x07);
+  afe_serial_write_register(AFE_REG_CH2SET, 0x07);
+  
+  afe_serial_write_register(AFE_REG_RLD_SENS, 0xE0);
+  afe_serial_write_register(AFE_REG_LOFF_SENS, 0x00);
+  afe_serial_write_register(AFE_REG_LOFF_STAT, 0x00);
+  
+  afe_serial_write_register(AFE_REG_RESP1, 0x02);
+  afe_serial_write_register(AFE_REG_RESP2, 0x07);
+    
+  afe_serial_write_register(AFE_REG_GPIO, 0x0C);
+  
+  
+  /* Calibrate */
+  afe_serial_write_register(AFE_REG_RESP2, 0x87);
+  
+  afe_serial_write_register(AFE_REG_CH1SET, 0x11);
+  afe_serial_write_register(AFE_REG_CH2SET, 0x11);
+  
+  data[0] = AFE_OFFSETCAL;
+  HAL_SPI_Transmit(&hspi1, data, 1, 100);
+
+  afe_serial_write_register(AFE_REG_CH1SET, 0x15);      // 0x07 : normal input | 0x05 : test signal
+  afe_serial_write_register(AFE_REG_CH2SET, 0x15);
+  
+  afe_serial_write_register(AFE_REG_RESP2, 0x07);
+  
+  /* End of calibration */
+
 
   //Start capturing data		
   HAL_GPIO_WritePin(GPIOA,AFE_START_Pin,GPIO_PIN_SET); //Start conversions
+  HAL_Delay(1);	
   data[0] = AFE_RDATAC;                        
   HAL_SPI_Transmit(&hspi1, data, 1, 100);     //Enable continuous output of conversion data
                                               //In this mode, a SDATAC command must be issued

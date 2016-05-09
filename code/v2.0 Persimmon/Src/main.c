@@ -40,7 +40,7 @@
 #include "fsmc.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "afe.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -78,7 +78,7 @@ int main(void)
 
   /* Configure the system clock */
   SystemClock_Config();
-  
+
   HAL_DBGMCU_EnableDBGStandbyMode();
 
   two_secs_wakeup();
@@ -93,15 +93,17 @@ int main(void)
   MX_TIM6_Init();
 
   /* USER CODE BEGIN 2 */
-
+  afe_init();
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
   while (1)
   {
     HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
+//    epic_sax_guy();
     HAL_Delay(200);
   /* USER CODE END WHILE */
 
@@ -180,14 +182,14 @@ void two_secs_wakeup(void){
 */
 
 void note_flash(uint16_t dur , uint16_t frec){   
-//  uint16_t period = 16000000/((htim3.Init.Prescaler + 1)*frec);
-//  htim3.Init.Period = period;
-//  HAL_TIM_PWM_Init(&htim3);
+  uint16_t period = 16000000/((htim3.Init.Prescaler + 1)*frec);
+  htim3.Init.Period = period;
+  HAL_TIM_PWM_Init(&htim3);
   HAL_GPIO_WritePin(GPIOC, nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin, GPIO_PIN_SET);
-//  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
   HAL_Delay(dur);
   HAL_GPIO_WritePin(GPIOC, nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin, GPIO_PIN_RESET);
-//  HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
 }
 /**
   * @brief  Epic sax guy song.
