@@ -16,8 +16,6 @@
 
 "--device=STM32L162xD" 
 
-"--drv_interface=SWD" 
-
 "--stlink_reset_strategy=0,2" 
 
 "--drv_swo_clock_setup=16000000,1,2000000" 

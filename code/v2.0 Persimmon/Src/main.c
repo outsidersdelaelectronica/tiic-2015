@@ -40,6 +40,7 @@
 #include "fsmc.h"
 
 /* USER CODE BEGIN Includes */
+#include "afe.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -54,9 +55,13 @@ void SystemClock_Config(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
+void two_secs_wakeup(void);
+void note_flash(uint16_t dur , uint16_t frec);
+void epic_sax_guy(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
+
 /* USER CODE END 0 */
 
 extern SRAM_HandleTypeDef hsram1;
@@ -66,7 +71,9 @@ extern SRAM_HandleTypeDef hsram1;
 
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
+
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -76,20 +83,11 @@ int main(void)
 
   /* Configure the system clock */
   SystemClock_Config();
-  
-  if (__HAL_PWR_GET_FLAG(PWR_FLAG_WU) != RESET)
-  {
-    __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
-    wk_falling_edge_detection();
-    HAL_Delay(2000);
-    if (__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_0) != RESET)
-    {
-      __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_0);
-      HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
-      HAL_PWR_EnterSTANDBYMode();
-    }
-  }
-  
+
+  HAL_DBGMCU_EnableDBGStandbyMode();
+
+  two_secs_wakeup();
+
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_FSMC_Init();
@@ -98,10 +96,10 @@ int main(void)
   MX_SPI2_Init();
   MX_TIM3_Init();
   MX_USART1_UART_Init();
-  MX_TIM4_Init();
   MX_TIM6_Init();
 
   /* USER CODE BEGIN 2 */
+  afe_init();
   
   /* FSMC TESTING */
   uint16_t writeValue = 0x0D;
@@ -109,20 +107,24 @@ int main(void)
   
   HAL_SRAM_Write_16b(&(hsram1), LCD_REG, &(writeValue), 1);
   HAL_SRAM_Read_16b(&(hsram1), LCD_DATA, &(readValue), 1);
-  
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
   while (1)
   {
     HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
+//    epic_sax_guy();
     HAL_Delay(200);
-  }
+
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+}
   /* USER CODE END 3 */
+
 }
 
 /** System Clock Configuration
@@ -166,21 +168,42 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 /**
+  * @brief  Implements the initial delay of 2secs for wake up .
+  * @param  None
+  * @retval None
+*/
+void two_secs_wakeup(void){
+  // Checks if the system is resumed from standby
+  if (__HAL_PWR_GET_FLAG(PWR_FLAG_WU) != RESET)
+  {
+    __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
+    wk_falling_edge_detection();
+    HAL_Delay(2000);
+    if (__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_0) != RESET)
+    {
+      __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_0);
+      HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
+      HAL_PWR_EnterSTANDBYMode();
+    }
+  }
+  
+}
+/**
   * @brief  Activate PWM for note and 3 leds for white flashing.
   * @param  dur:duration of the note in ms.
   * @param  frec:frequency of the note in Hz.
   * @retval None
 */
-void note_flash(uint16_t dur , uint16_t frec)
-{
-//  uint16_t period = 16000000/((htim3.Init.Prescaler + 1)*frec);
-//  htim3.Init.Period = period;
-//  HAL_TIM_PWM_Init(&htim3);
+
+void note_flash(uint16_t dur , uint16_t frec){   
+  uint16_t period = 16000000/((htim3.Init.Prescaler + 1)*frec);
+  htim3.Init.Period = period;
+  HAL_TIM_PWM_Init(&htim3);
   HAL_GPIO_WritePin(GPIOC, nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin, GPIO_PIN_SET);
-//  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
   HAL_Delay(dur);
   HAL_GPIO_WritePin(GPIOC, nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin, GPIO_PIN_RESET);
-//  HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
 }
 
 /**
@@ -188,8 +211,8 @@ void note_flash(uint16_t dur , uint16_t frec)
   * @param  None
   * @retval None
 */    
-void epic_sax_guy(void)
-{
+void epic_sax_guy(void){
+  
   int i = 0;
   for( i = 0; i < 2; i++){
     note_flash(QUARTER>>1, 784);
@@ -229,8 +252,6 @@ void epic_sax_guy(void)
 }
 
 /* USER CODE END 4 */
-
-
 #ifdef USE_FULL_ASSERT
 /**
    * @brief Reports the name of the source file and the source line number
