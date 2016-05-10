@@ -97,12 +97,18 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PAPin PAPin */
-  GPIO_InitStruct.Pin = SYS_WKUP_Pin|AFE_DRDY_Pin;
+  /*Configure GPIO pins : PAPin */
+  GPIO_InitStruct.Pin = SYS_WKUP_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : PAPin */
+  GPIO_InitStruct.Pin = AFE_DRDY_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  
   /*Configure GPIO pins : PAPin PAPin PAPin */
   GPIO_InitStruct.Pin = AFE_RESET_Pin|AFE_START_Pin|AFE_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;

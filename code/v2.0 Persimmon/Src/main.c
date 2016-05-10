@@ -67,7 +67,7 @@ void epic_sax_guy(void);
 extern SRAM_HandleTypeDef hsram1;
 
 #define LCD_REG        ((uint32_t *)(FSMC_BASE))
-#define LCD_DATA       ((uint32_t *)(FSMC_BASE + 0x00000001U))
+#define LCD_DATA       ((uint32_t *)(FSMC_BASE + 0x00020000U))  //See p.620 of STM32L162VD ref. manual
 
 int main(void)
 {
@@ -102,12 +102,22 @@ int main(void)
   afe_init();
   
   /* FSMC TESTING */
-  uint16_t writeValue = 0x0D;
-  uint16_t readValue;
+  uint16_t writeValue = 0x00A1;
+  uint16_t readValue = 0x0000;
   
-  HAL_SRAM_Write_16b(&(hsram1), LCD_REG, &(writeValue), 1);
-  HAL_SRAM_Read_16b(&(hsram1), LCD_DATA, &(readValue), 1);
-
+  uint32_t * lcd_reg = LCD_REG;
+  uint32_t * lcd_data = LCD_DATA;
+    
+  while(1)
+  {
+  HAL_SRAM_Write_16b(&(hsram1), lcd_reg, &(writeValue), 1);
+  HAL_SRAM_Read_16b(&(hsram1), lcd_reg, &(readValue), 1);
+  HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
+  HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
+  HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
+  HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
+  }
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */

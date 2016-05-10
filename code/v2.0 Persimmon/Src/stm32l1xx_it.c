@@ -120,10 +120,12 @@ void EXTI0_IRQHandler(void)
 void EXTI1_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI1_IRQn 0 */
-  uint8_t dummy[3] = {0,0,0},data_ch1[3] = {0,0,0},data_ch2[3] = {0,0,0};
-  uint32_t data_tmp_ch1,data_tmp_ch2;
-  static uint32_t data_log_ch1[100],data_log_ch2[100];
-  static uint32_t* ptr_1 = data_log_ch1,*ptr_2 = data_log_ch2;
+  uint8_t dummy[3] = {0,0,0}, data_ch1[3] = {0,0,0}, data_ch2[3] = {0,0,0};
+  int32_t data_tmp_ch1, data_tmp_ch2;
+  static int32_t data_log_ch1[1000], data_log_ch2[1000];
+  static int32_t *ptr_1 = data_log_ch1; 
+  static int32_t *ptr_2 = data_log_ch2;
+  
   //Read 3 ADS1291 status bytes
   HAL_GPIO_WritePin(GPIOA,AFE_CS_Pin,GPIO_PIN_RESET); //Enable CS   
   HAL_SPI_Receive(&hspi1, dummy, 3, 100);
@@ -132,21 +134,23 @@ void EXTI1_IRQHandler(void)
   
   HAL_SPI_Receive(&hspi1, data_ch2, 3, 100);
   
-  HAL_GPIO_WritePin(GPIOA,AFE_CS_Pin,GPIO_PIN_SET); //Enable CS   
+  HAL_GPIO_WritePin(GPIOA,AFE_CS_Pin,GPIO_PIN_SET); //Disable CS   
 
   //Store signal data into ecg signal buffer
-
-  data_tmp_ch1 = (((int32_t) data_ch1[0]) << 16) | (((int32_t) data_ch1[1]) << 8) 
-                  | ((int32_t) data_ch1[2]);     
+  data_tmp_ch1 = (((int32_t) ((int8_t) data_ch1[0])) << 16) |
+                 (((int32_t) data_ch1[1]) << 8)             |
+                  ((int32_t) data_ch1[2]);
+  data_tmp_ch2 = (((int32_t) ((int8_t) data_ch2[0])) << 16) |
+                 (((int32_t) data_ch2[1]) << 8)             |
+                  ((int32_t) data_ch2[2]);
   
-  data_tmp_ch2 = (((int32_t) data_ch2[0]) << 16) | (((int32_t) data_ch2[1]) << 8) 
-                | ((int32_t) data_ch2[2]);
   *(ptr_1++) = data_tmp_ch1;
   *(ptr_2++) = data_tmp_ch2;
-  if (ptr_1 == &(data_log_ch1[99])) { 
+
+  if (ptr_1 == &(data_log_ch1[999])) { 
     ptr_1 = data_log_ch1;
   }
-  if (ptr_2 == &(data_log_ch2[99])) { 
+  if (ptr_2 == &(data_log_ch2[999])) { 
     ptr_2 = data_log_ch2;
   }
   /* USER CODE END EXTI1_IRQn 0 */

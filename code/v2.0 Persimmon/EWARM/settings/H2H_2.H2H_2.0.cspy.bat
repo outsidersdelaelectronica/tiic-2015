@@ -25,7 +25,7 @@ if not "%1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\common\bin\cspybat" -f "C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\EWARM\settings\H2H_2.H2H_2.0.general.xcl" --backend -f "C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\EWARM\settings\H2H_2.H2H_2.0.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\common\bin\cspybat" -f "C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\EWARM\settings\H2H_2.H2H_2.0.general.xcl" --backend -f "C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\EWARM\settings\H2H_2.H2H_2.0.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\common\bin\cspybat" -f "C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\EWARM\settings\H2H_2.H2H_2.0.general.xcl" "--debug_file=%1" --backend -f "C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\EWARM\settings\H2H_2.H2H_2.0.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\common\bin\cspybat" -f "C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\EWARM\settings\H2H_2.H2H_2.0.general.xcl" "--debug_file=%1" --backend -f "C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\EWARM\settings\H2H_2.H2H_2.0.driver.xcl" 
 
 @echo off 
 :end
