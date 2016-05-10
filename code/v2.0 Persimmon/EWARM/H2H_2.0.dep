@@ -2,7 +2,7 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>4196129700</fileChecksum>
+  <fileChecksum>419538377</fileChecksum>
   <configuration>
     <name>H2H_2.0</name>
     <outputs>
@@ -190,6 +190,9 @@
       <file>$PROJ_DIR$\H2H_2.0\Obj\H2H_2.pbd</file>
       <file>$PROJ_DIR$\H2H_2.0\List\H2H_2.0.map</file>
       <file>$PROJ_DIR$\..\Src\lcd.c</file>
+      <file>$PROJ_DIR$\H2H_2.0\Obj\lcd.pbi</file>
+      <file>$PROJ_DIR$\H2H_2.0\Obj\lcd.o</file>
+      <file>$PROJ_DIR$\..\Inc\lcd.h</file>
     </outputs>
     <file>
       <name>[ROOT_NODE]</name>
@@ -355,7 +358,7 @@
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 58 74 54 145 41 32 44 13 47 67 48 50 107 141 12 150 60 59 57 116 31 90 25 100 68 121 38 23 63 35 70 101 167 87 29 46 43 33 82 21 120 71 42 85 77 73 122 56 8 126 53</file>
+          <file> 58 41 32 145 74 54 44 13 47 67 48 50 107 141 12 150 60 59 57 116 31 90 25 100 68 121 38 23 63 35 70 101 167 87 29 46 43 33 82 21 120 71 42 85 77 73 122 56 8 126 53</file>
         </tool>
       </inputs>
     </file>
@@ -1034,6 +1037,29 @@
         </tool>
       </inputs>
     </file>
+    <file>
+      <name>$PROJ_DIR$\..\Src\lcd.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 185</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 184</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 186 47 44 74 59 57 41 70 67 167 87 50 46 42 77 73 85 58 71 122 48 29 32 54 101 43 56 35 116 107 31 8 90 25 126 33 100 82 68 121 21 38 53 23 120 63</file>
+        </tool>
+      </inputs>
+    </file>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>ILINK</tool>
+    </forcedrebuild>
     <forcedrebuild>
       <name>$PROJ_DIR$\..\Src\gpio.c</name>
       <tool>C-STAT</tool>

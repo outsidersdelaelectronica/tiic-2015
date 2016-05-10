@@ -71,16 +71,13 @@ extern SRAM_HandleTypeDef hsram1;
 
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
   /* Configure the system clock */
   SystemClock_Config();
 
@@ -99,40 +96,31 @@ int main(void)
   MX_TIM6_Init();
 
   /* USER CODE BEGIN 2 */
-  afe_init();
-  
-  /* FSMC TESTING */
-  uint16_t writeValue = 0x00A1;
-  uint16_t readValue = 0x0000;
-  
-  uint32_t * lcd_reg = LCD_REG;
-  uint32_t * lcd_data = LCD_DATA;
+    afe_init();
     
-  while(1)
-  {
-  HAL_SRAM_Write_16b(&(hsram1), lcd_reg, &(writeValue), 1);
-  HAL_SRAM_Read_16b(&(hsram1), lcd_reg, &(readValue), 1);
-  HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
-  HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
-  HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
-  HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
-  }
-  
+    /* FSMC TESTING */
+    uint16_t writeValue = 0x00A1;
+    uint16_t readValue = 0x0000;
+    
+    uint32_t * lcd_reg = LCD_REG;
+    uint32_t * lcd_data = LCD_DATA;
+      
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
-  while (1)
-  {
-    HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
-//    epic_sax_guy();
-    HAL_Delay(200);
-
+    while(1)
+    {
+      HAL_SRAM_Write_16b(&(hsram1), lcd_reg, &(writeValue), 1);
+      HAL_SRAM_Read_16b(&(hsram1), lcd_reg, &(readValue), 1);
+      HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
+      HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
+      HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
+      HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
+    }
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-}
   /* USER CODE END 3 */
 
 }
