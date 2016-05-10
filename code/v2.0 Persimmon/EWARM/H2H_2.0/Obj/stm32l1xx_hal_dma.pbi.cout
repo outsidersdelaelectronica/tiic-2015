@@ -1,16 +1,16 @@
-"C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_dma.c"
+"C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_dma.c"
 -std=c99
 -ferror-limit=100
 -I
-C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\EWARM/../Inc
+C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\EWARM/../Inc
 -I
-C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\EWARM/../Drivers/STM32L1xx_HAL_Driver/Inc
+C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\EWARM/../Drivers/STM32L1xx_HAL_Driver/Inc
 -I
-C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\EWARM/../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy
+C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\EWARM/../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy
 -I
-C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\EWARM/../Drivers/CMSIS/Include
+C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\EWARM/../Drivers/CMSIS/Include
 -I
-C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\EWARM/../Drivers/CMSIS/Device/ST/STM32L1xx/Include
+C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\EWARM/../Drivers/CMSIS/Device/ST/STM32L1xx/Include
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\arm\CMSIS\Include
 -I
@@ -18,15 +18,15 @@ C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\arm\inc\c
 -I
-C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\Inc
+C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\Inc
 -I
-C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\Drivers\STM32L1xx_HAL_Driver\Inc
+C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\Drivers\STM32L1xx_HAL_Driver\Inc
 -I
-C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\Drivers\STM32L1xx_HAL_Driver\Inc\Legacy
+C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\Drivers\STM32L1xx_HAL_Driver\Inc\Legacy
 -I
-C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\Drivers\CMSIS\Include
+C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\Drivers\CMSIS\Include
 -I
-C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\Drivers\CMSIS\Device\ST\STM32L1xx\Include
+C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\Drivers\CMSIS\Device\ST\STM32L1xx\Include
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\arm\CMSIS\Include
 -DUSE_HAL_DRIVER=1

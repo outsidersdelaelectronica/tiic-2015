@@ -9,10 +9,10 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [stlink]
-stlinkserialNo=2798FD0D
+stlinkserialNo=EE5626A6
 stlinkfoundProbes=
 [DebugChecksum]
-Checksum=776578172
+Checksum=1377162439
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -39,6 +39,11 @@ ITMportsEnable=0
 ITMportsTermIO=0
 ITMportsLogFile=0
 ITMlogFile=$PROJ_DIR$\ITM.log
+[watch_formats]
+Fmt0={W}1:data_log_ch1	0	5
+Fmt1={W}1:data_log_ch2	0	5
+Fmt2={W}1:readValue	4	0
+Fmt3={W}1:writeValue	4	0
 [Trace2]
 Enabled=0
 ShowSource=0
@@ -64,13 +69,20 @@ ShowTimeLog=1
 SumEnabled=0
 ShowTimeSum=1
 SumSortOrder=0
+[Disassemble mode]
+mode=0
+[Breakpoints2]
+Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\stm32l1xx_it.c}.151.5" 0 0 1 "" 0 "" 0
+Count=1
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
 Category=_ 0
-[TermIOLog]
-LoggingEnabled=_ 0
-LogFile=_ ""
+[Aliases]
+A0=_ "C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\Drivers\CMSIS\Device\ST\STM32L1xx\Source\Templates\iar\startup_stm32l162xd.s" ""
+A1=_ "C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_i2c.c" ""
+Count=2
+SuppressDialog=0
 [DriverProfiling]
 Enabled=0
 Mode=3
@@ -81,10 +93,6 @@ Exclusions=
 Enabled=0
 [CallStackStripe]
 ShowTiming=1
-[Disassemble mode]
-mode=0
-[Breakpoints2]
-Count=0
-[Aliases]
-Count=0
-SuppressDialog=0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""

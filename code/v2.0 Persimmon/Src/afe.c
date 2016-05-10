@@ -61,14 +61,14 @@ void afe_init()
   /* Calibrate */
   afe_serial_write_register(AFE_REG_RESP2, 0x87);
   
-  afe_serial_write_register(AFE_REG_CH1SET, 0x11);
-  afe_serial_write_register(AFE_REG_CH2SET, 0x11);
+  afe_serial_write_register(AFE_REG_CH1SET, 0x01);
+  afe_serial_write_register(AFE_REG_CH2SET, 0x01);
   
   data[0] = AFE_OFFSETCAL;
   HAL_SPI_Transmit(&hspi1, data, 1, 100);
 
-  afe_serial_write_register(AFE_REG_CH1SET, 0x15);      // 0x07 : normal input | 0x05 : test signal
-  afe_serial_write_register(AFE_REG_CH2SET, 0x15);
+  afe_serial_write_register(AFE_REG_CH1SET, 0x05);      // 0x07 : normal input | 0x05 : test signal
+  afe_serial_write_register(AFE_REG_CH2SET, 0x05);
   
   afe_serial_write_register(AFE_REG_RESP2, 0x07);
   
