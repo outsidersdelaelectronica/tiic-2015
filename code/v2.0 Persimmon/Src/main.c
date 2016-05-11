@@ -101,23 +101,6 @@ int main(void)
   /* USER CODE BEGIN 2 */
   afe_init();
   
-  /* FSMC TESTING */
-  uint16_t writeValue = 0x00A1;
-  uint16_t readValue = 0x0000;
-  
-  uint32_t * lcd_reg = LCD_REG;
-  uint32_t * lcd_data = LCD_DATA;
-    
-  while(1)
-  {
-  HAL_SRAM_Write_16b(&(hsram1), lcd_reg, &(writeValue), 1);
-  HAL_SRAM_Read_16b(&(hsram1), lcd_reg, &(readValue), 1);
-  HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
-  HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
-  HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
-  HAL_SRAM_Read_16b(&(hsram1), lcd_data, &(readValue), 1);
-  }
-  
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -132,7 +115,7 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-}
+  }
   /* USER CODE END 3 */
 
 }

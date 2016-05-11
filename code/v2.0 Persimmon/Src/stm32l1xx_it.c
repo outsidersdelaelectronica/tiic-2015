@@ -37,6 +37,7 @@
 
 /* USER CODE BEGIN 0 */
 #include "spi.h"
+#include "filters.h"   
     
 extern SPI_HandleTypeDef hspi1;
 
@@ -122,10 +123,10 @@ void EXTI1_IRQHandler(void)
   /* USER CODE BEGIN EXTI1_IRQn 0 */
   uint8_t dummy[3] = {0,0,0}, data_ch1[3] = {0,0,0}, data_ch2[3] = {0,0,0};
   int32_t data_tmp_ch1, data_tmp_ch2;
-  static int32_t data_log_ch1[1000], data_log_ch2[1000];
+//  static int32_t data_log_ch1[2500], data_log_ch2[2500];
+//  static int32_t *ptr_1 = data_log_ch1,*ptr_2 = data_log_ch2; 
+  static int32_t data_log_ch1[2500];
   static int32_t *ptr_1 = data_log_ch1; 
-  static int32_t *ptr_2 = data_log_ch2;
-  
   //Read 3 ADS1291 status bytes
   HAL_GPIO_WritePin(GPIOA,AFE_CS_Pin,GPIO_PIN_RESET); //Enable CS   
   HAL_SPI_Receive(&hspi1, dummy, 3, 100);
@@ -144,15 +145,15 @@ void EXTI1_IRQHandler(void)
                  (((int32_t) data_ch2[1]) << 8)             |
                   ((int32_t) data_ch2[2]);
   
-  *(ptr_1++) = data_tmp_ch1;
-  *(ptr_2++) = data_tmp_ch2;
+  *(ptr_1++) = filter_sample(data_tmp_ch1);
+//  *(ptr_2++) = filter_sample(data_tmp_ch2);
 
-  if (ptr_1 == &(data_log_ch1[999])) { 
+  if (ptr_1 == &(data_log_ch1[2499])) { 
     ptr_1 = data_log_ch1;
   }
-  if (ptr_2 == &(data_log_ch2[999])) { 
-    ptr_2 = data_log_ch2;
-  }
+//  if (ptr_2 == &(data_log_ch2[2499])) { 
+//    ptr_2 = data_log_ch2;
+//  }
   /* USER CODE END EXTI1_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
   /* USER CODE BEGIN EXTI1_IRQn 1 */
