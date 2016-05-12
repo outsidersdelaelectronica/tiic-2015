@@ -23,6 +23,7 @@ void afe_serial_write_register(uint8_t reg, uint8_t command){
   
   HAL_SPI_Transmit(&hspi1, data, 3, 100);
 }
+
 void afe_init()
 {
   uint8_t data[1];

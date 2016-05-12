@@ -1051,15 +1051,18 @@
       <group>
         <name>lcd</name>
         <file>
+          <name>$PROJ_DIR$\..\Src\color.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\fonts.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\..\Src\lcd.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\Inc\lcd_constants.h</name>
         </file>
       </group>
-      <file>
-        <name>$PROJ_DIR$\..\Src\color.c</name>
-      </file>
       <file>
         <name>$PROJ_DIR$\..\Src\fsmc.c</name>
       </file>

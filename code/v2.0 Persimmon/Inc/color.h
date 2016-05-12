@@ -10,16 +10,16 @@
 
 #include <stdint.h>
 
-#define COLOR_RED		(color_t){.red=0xFF,.green=0x00,.blue=0x00,.color565=0xF800}
-#define COLOR_GREEN		(color_t){.red=0x00,.green=0xFF,.blue=0x00,.color565=0x07E0}
-#define COLOR_BLUE		(color_t){.red=0x00,.green=0x00,.blue=0xFF,.color565=0x001F}
+#define COLOR_RED       {.red=0xFF,.green=0x00,.blue=0x00,.color565=0xF800}
+#define COLOR_GREEN     {.red=0x00,.green=0xFF,.blue=0x00,.color565=0x07E0}
+#define COLOR_BLUE      {.red=0x00,.green=0x00,.blue=0xFF,.color565=0x001F}
 
-#define COLOR_YELLOW	        (color_t){.red=0xFF,.green=0xFF,.blue=0x00,.color565=0xFFE0}
-#define COLOR_CYAN		(color_t){.red=0x00,.green=0xFF,.blue=0xFF,.color565=0x07FF}
-#define COLOR_MAGENTA	        (color_t){.red=0xFF,.green=0x00,.blue=0xFF,.color565=0xF81F}
+#define COLOR_YELLOW    {.red=0xFF,.green=0xFF,.blue=0x00,.color565=0xFFE0}
+#define COLOR_CYAN      {.red=0x00,.green=0xFF,.blue=0xFF,.color565=0x07FF}
+#define COLOR_MAGENTA   {.red=0xFF,.green=0x00,.blue=0xFF,.color565=0xF81F}
 
-#define COLOR_WHITE		(color_t){.red=0xFF,.green=0xFF,.blue=0xFF,.color565=0xFFFF}
-#define COLOR_BLACK		(color_t){.red=0x00,.green=0x00,.blue=0x00,.color565=0x0000}
+#define COLOR_WHITE     {.red=0xFF,.green=0xFF,.blue=0xFF,.color565=0xFFFF}
+#define COLOR_BLACK     {.red=0x00,.green=0x00,.blue=0x00,.color565=0x0000}
 
 typedef struct color_t
 {

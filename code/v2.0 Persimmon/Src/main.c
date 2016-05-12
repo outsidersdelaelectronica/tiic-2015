@@ -97,12 +97,15 @@ int main(void)
   MX_TIM6_Init();
 
   /* USER CODE BEGIN 2 */
+    uint8_t level = 200;
+  
     afe_init();
     lcd_init();
+    lcd_set_brightness(level);
 
     color_t dot_color = COLOR_RED;
-    uint8_t i = 0;
-    uint8_t j = 0;
+    
+    lcd_clean_screen(&dot_color);
     
   /* USER CODE END 2 */
 
@@ -110,11 +113,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
     while(1)
     {
-      lcd_draw_pixel(i, j, &dot_color);
-      i++; j++;
-      
-//      HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
-//      HAL_Delay(200);
+      HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
+      lcd_set_brightness(level);
+      level += 50;
+      HAL_Delay(200);
     }
   /* USER CODE END WHILE */
 
