@@ -42,6 +42,8 @@
 /* USER CODE BEGIN Includes */
 #include "afe.h"
 #include "lcd.h"
+    
+#include "myriad_pro_semibold.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -62,13 +64,12 @@ void epic_sax_guy(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
 extern SRAM_HandleTypeDef hsram1;
+extern color_t background_color;
 
 #define LCD_REG        ((uint32_t *)(FSMC_BASE))
 #define LCD_DATA       ((uint32_t *)(FSMC_BASE + 0x00020000U))  //See p.620 of STM32L162VD ref. manual
+/* USER CODE END 0 */
 
 int main(void)
 {
@@ -98,24 +99,52 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
     uint8_t level = 200;
-  
+    color_t dot_color;
+    color_t text_color;
+    
     afe_init();
     lcd_init();
     lcd_set_brightness(level);
+    
+    background_color = (color_t) COLOR_BLACK;
+    dot_color = (color_t) COLOR_GREEN;
+    text_color = (color_t) COLOR_BLUE;
 
-    color_t dot_color = COLOR_RED;
+    uint16_t i = 500;
+    uint16_t j = 100;    
+    char number = '0';
+        
+    lcd_draw_char('A', myriad_pro_semibold17x23, &text_color, &i, &j);
+    lcd_draw_char('p', myriad_pro_semibold17x23, &text_color, &i, &j);
+    lcd_draw_char('i', myriad_pro_semibold17x23, &text_color, &i, &j);
+    lcd_draw_char('c', myriad_pro_semibold17x23, &text_color, &i, &j);
+    lcd_draw_char('h', myriad_pro_semibold17x23, &text_color, &i, &j);
+    lcd_draw_char('u', myriad_pro_semibold17x23, &text_color, &i, &j);
+    lcd_draw_char('s', myriad_pro_semibold17x23, &text_color, &i, &j);
+    lcd_draw_char('q', myriad_pro_semibold17x23, &text_color, &i, &j);
+    lcd_draw_char('u', myriad_pro_semibold17x23, &text_color, &i, &j);
+    lcd_draw_char('e', myriad_pro_semibold17x23, &text_color, &i, &j);
     
-    lcd_clean_screen(&dot_color);
-    
+    i = 100;
+    j = 100;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
     while(1)
     {
+      lcd_draw_char(number, myriad_pro_semibold28x39_num, &dot_color, &i, &j);
+      i += 50;
+      j += 20;  
+      
+      if((++number) > '9')
+      {
+        number = '0';
+        i = 100;
+        j = 100;
+      }
+      
       HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
-      lcd_set_brightness(level);
-      level += 50;
       HAL_Delay(200);
     }
   /* USER CODE END WHILE */

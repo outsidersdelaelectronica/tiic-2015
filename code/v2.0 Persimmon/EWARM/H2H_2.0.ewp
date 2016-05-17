@@ -982,13 +982,28 @@
         </file>
       </group>
       <group>
+        <name>gauge</name>
+        <file>
+          <name>$PROJ_DIR$\..\Src\gauge.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Inc\gauge_constants.h</name>
+        </file>
+      </group>
+      <group>
         <name>lcd</name>
-        <file>
-          <name>$PROJ_DIR$\..\Src\color.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Src\fonts.c</name>
-        </file>
+        <group>
+          <name>color</name>
+          <file>
+            <name>$PROJ_DIR$\..\Src\color.c</name>
+          </file>
+        </group>
+        <group>
+          <name>fonts</name>
+          <file>
+            <name>$PROJ_DIR$\..\Inc\myriad_pro_semibold.h</name>
+          </file>
+        </group>
         <file>
           <name>$PROJ_DIR$\..\Src\lcd.c</name>
         </file>

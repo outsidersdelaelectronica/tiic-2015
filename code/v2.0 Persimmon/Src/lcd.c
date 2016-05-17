@@ -7,9 +7,7 @@
 #include "lcd.h"
 
 extern SRAM_HandleTypeDef hsram1;
-extern const font_t font;
-
-color_t background_color = COLOR_BLACK;
+color_t background_color;
 
 /* LCD init parameters */
 uint16_t lcd_param_pll_mn[]                     = {0x0023, 0x0022, 0x0004};     //M=35, N=2, PLL freq=120 Mhz
@@ -37,7 +35,7 @@ uint16_t lcd_param_partial_area[]               = {0x0000, 0x0000, 0x0000, 0x000
 uint16_t lcd_param_scroll_area[]                = {0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000};
 uint16_t lcd_param_scroll_start[]               = {0x0000, 0x0000};
 
-uint16_t lcd_param_pwm_conf[]                   = {0x0000, 0x0000, 0x0001, 0x0000, 0x0000, 0x0001};
+uint16_t lcd_param_pwm_conf[]                   = {0x000C, 0x0000, 0x0001, 0x0000, 0x0000, 0x0001};
 uint16_t lcd_param_dbc_conf[]                   = {0x0042};
 uint16_t lcd_param_post_proc[]                  = {0x0040, 0x0080, 0x0040, 0x0001};
 
@@ -60,14 +58,14 @@ void lcd_init()
   
   if (device_descriptor_ok)
   {
-//    /* Set PLL */
-//    lcd_write_reg(LCD_SET_PLL_MN, lcd_param_pll_mn, 3);
-//    /* Enable PLL */
-//    lcd_write_reg(LCD_SET_PLL, lcd_param_pll, 1);
-//    /* Wait for PLL to start up */
-//    HAL_Delay(1);
-//    /* Lock PLL */
-//    lcd_write_reg(LCD_SET_PLL, lcd_param_pll_lock, 1);
+    /* Set PLL */
+    lcd_write_reg(LCD_SET_PLL_MN, lcd_param_pll_mn, 3);
+    /* Enable PLL */
+    lcd_write_reg(LCD_SET_PLL, lcd_param_pll, 1);
+    /* Wait for PLL to start up */
+    HAL_Delay(1);
+    /* Lock PLL */
+    lcd_write_reg(LCD_SET_PLL, lcd_param_pll_lock, 1);
 
     /* Soft-reset LCD controller */
     lcd_write_command(LCD_SOFT_RESET);
@@ -221,35 +219,85 @@ void lcd_draw_pixel(uint16_t x_pos, uint16_t y_pos, color_t *color)
 
 /**
   * @brief  Draws a char on a specific location.
-  * @param  character: Column position.
-  * @param  col: Column position.
-  * @param  row: Row position.
+  * @param  character: Character to display.
+  * @param  current_font: Font.
   * @param  char_color: Character color.
+  * @param  x_pos: Col position.
+  * @param  y_pos: Row position.
   * @retval None
 */
-void lcd_draw_char(char character, uint16_t col, uint16_t row, color_t *char_color)
+void lcd_draw_char(char character,
+                   const uint8_t *current_font, 
+                   color_t *char_color,
+                   uint16_t *x_pos, uint16_t *y_pos)
 {
-  uint16_t x_pos, y_pos;
-  uint8_t* char_starting_position;
+  // Hardcoded -> TO-DO: build font structure
   
-  /* Look for character pixel matrix in font array */
-  char_starting_position = font_get_char(&font, character);	//Pointer to starting byte of font array
+  uint32_t line = 0x00000000;
+  uint32_t mask = 0x00000001;  
+  
+  uint8_t font_starting_char;           // Font array starting character (character number == 0)
+  uint8_t character_number;             // Character number in font array
+  
+  uint8_t character_properties;         // Character properties position in font array
+  uint8_t character_height;             // Character height in pixels
+  uint8_t character_width;              // Character width in pixels
+  uint32_t character_position;          // Character drawing position in font array
+  
+  int8_t width_calc;                    // Variables used to calculate number of bytes per horizontal line
+  uint8_t bytes_per_line = 0;           //
+  
+  /* Search character in font array */
+  font_starting_char = current_font[2];
+  character_number = character - font_starting_char;          
+
+  /* Get character properties */
+  character_properties = 8 + 4*character_number;
+  character_height = current_font[6];
+  character_width = current_font[character_properties];
+  character_position = ((current_font[character_properties + 3]) << 16) |
+                       ((current_font[character_properties + 2]) << 8)  |
+                        (current_font[character_properties + 1]);
   
   /* Set character drawing zone */
-  x_pos = col * font.font_width;
-  y_pos = row * font.font_height;
-  lcd_set_drawing_address(x_pos,
-                          x_pos + font.font_width,
-                          y_pos,
-                          y_pos + font.font_height);
-
+  lcd_set_drawing_address(*x_pos,
+                          *x_pos + character_width - 1,
+                          *y_pos,
+                          *y_pos + character_height - 1);
+  
   /* Send character pixels */
   lcd_write_command(LCD_WRITE_MEMORY_START);
-
-  //TO-DO: Read font array and send pixels
-  lcd_write_data(char_color->color565);
-  lcd_write_data(background_color.color565);   
+  
+  /* Iterate: for each line... */
+  for (int i = 0; i < character_height; i++)
+  {
+    /* Retrieve char line bits */
+    line = 0x00000000;    // Reset line
+    bytes_per_line = 0;
+    for (width_calc = character_width; width_calc > 0; width_calc -= 8)
+    {
+      line = (line) | (current_font[character_position++] << (8*bytes_per_line));
+      bytes_per_line++;
+    }
     
+    /* Read font array and send pixels of the line*/
+    mask = 0x00000001;
+    for (int j = 0; j < character_width; j++)
+    {
+      if(line & mask)
+      {
+        lcd_write_data(char_color->color565);
+      }
+      else
+      {
+        lcd_write_data(background_color.color565);   
+      }
+      mask = mask << 1;
+    }
+  }
+  
+  /* Update x position */
+  *x_pos += character_width;  
 }
 
 /**

@@ -4,14 +4,13 @@
  *  Created on: 10/05/2016
  *      Author: Smau
  */
-#include "lcd_constants.h"
-#include "color.h"
-#include "fonts.h"
-
-#include "fsmc.h"
-
 #ifndef LCD_LCD_H_
 #define LCD_LCD_H_
+
+#include "color.h"
+#include "lcd_constants.h"
+
+#include "fsmc.h"
 
 #define LCD_REG        ((uint32_t *)(FSMC_BASE))
 #define LCD_DATA       ((uint32_t *)(FSMC_BASE + 0x00020000U))  //See p.620 of STM32L162VD ref. manual
@@ -28,7 +27,10 @@ void lcd_read_reg(uint16_t reg, uint16_t *param_buffer, uint32_t param_buffer_si
 void lcd_write_reg(uint16_t reg, uint16_t *param_buffer, uint32_t param_buffer_size);
 
 void lcd_draw_pixel(uint16_t x_pos, uint16_t y_pos, color_t *color);
-void lcd_draw_char(char character, uint16_t col, uint16_t row, color_t *char_color);
+void lcd_draw_char(char character,
+                   const uint8_t *current_font, 
+                   color_t *char_color,
+                   uint16_t *x_pos, uint16_t *y_pos);
 
 void lcd_clean_screen(color_t *color);
 void lcd_set_brightness(uint8_t level);
