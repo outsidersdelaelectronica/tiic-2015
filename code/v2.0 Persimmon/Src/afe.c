@@ -42,11 +42,11 @@ void afe_init()
   //Write config commands to AFE
   
   afe_serial_write_register(AFE_REG_CONFIG1, 0x03);
-  afe_serial_write_register(AFE_REG_CONFIG2, 0xA3);     // 0xA0 : normal input | 0xA3 : test signal
+  afe_serial_write_register(AFE_REG_CONFIG2, 0xA0);     // 0xA0 : normal input | 0xA3 : test signal
   afe_serial_write_register(AFE_REG_LOFF, 0x10);
   
-  afe_serial_write_register(AFE_REG_CH1SET, 0x07);
-  afe_serial_write_register(AFE_REG_CH2SET, 0x07);
+  afe_serial_write_register(AFE_REG_CH1SET, 0x05);
+  afe_serial_write_register(AFE_REG_CH2SET, 0x05);
   
   afe_serial_write_register(AFE_REG_RLD_SENS, 0xE0);
   afe_serial_write_register(AFE_REG_LOFF_SENS, 0x00);
@@ -61,14 +61,14 @@ void afe_init()
   /* Calibrate */
   afe_serial_write_register(AFE_REG_RESP2, 0x87);
   
-  afe_serial_write_register(AFE_REG_CH1SET, 0x01);
-  afe_serial_write_register(AFE_REG_CH2SET, 0x01);
+  afe_serial_write_register(AFE_REG_CH1SET, 0x11);
+  afe_serial_write_register(AFE_REG_CH2SET, 0x11);
   
   data[0] = AFE_OFFSETCAL;
   HAL_SPI_Transmit(&hspi1, data, 1, 100);
 
-  afe_serial_write_register(AFE_REG_CH1SET, 0x05);      // 0x07 : normal input | 0x05 : test signal
-  afe_serial_write_register(AFE_REG_CH2SET, 0x05);
+  afe_serial_write_register(AFE_REG_CH1SET, 0x15);      // 0xX7 : normal input | 0xX5 : test signal
+  afe_serial_write_register(AFE_REG_CH2SET, 0x15);
   
   afe_serial_write_register(AFE_REG_RESP2, 0x07);
   
