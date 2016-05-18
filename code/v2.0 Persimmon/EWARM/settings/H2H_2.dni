@@ -12,7 +12,7 @@ ByteLimit=50
 stlinkserialNo=EE5626A6
 stlinkfoundProbes=
 [DebugChecksum]
-Checksum=92387854
+Checksum=340460471
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -83,10 +83,6 @@ ShowTimeLog=1
 SumEnabled=0
 ShowTimeSum=1
 SumSortOrder=0
-[Disassemble mode]
-mode=0
-[Breakpoints2]
-Count=0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -94,11 +90,6 @@ Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
-[Aliases]
-A0=_ "C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\Drivers\CMSIS\Device\ST\STM32L1xx\Source\Templates\iar\startup_stm32l162xd.s" ""
-A1=_ "C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_i2c.c" ""
-Count=2
-SuppressDialog=0
 [DriverProfiling]
 Enabled=0
 Mode=3
@@ -109,3 +100,12 @@ Exclusions=
 Enabled=0
 [CallStackStripe]
 ShowTiming=1
+[Disassemble mode]
+mode=0
+[Breakpoints2]
+Count=0
+[Aliases]
+A0=_ "C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\Drivers\CMSIS\Device\ST\STM32L1xx\Source\Templates\iar\startup_stm32l162xd.s" ""
+A1=_ "C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_i2c.c" ""
+Count=2
+SuppressDialog=0

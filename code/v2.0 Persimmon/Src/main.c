@@ -112,8 +112,8 @@ int main(void)
        
     char string[] = "60";
     
-    lcd_draw_line(50, 50, 600, 200, &dot_color);
-    lcd_draw_line(50, 200, 600, 50, &dot_color);
+//    lcd_draw_line(50, 50, 600, 200, &dot_color);
+//    lcd_draw_line(50, 200, 600, 50, &dot_color);
        
   /* USER CODE END 2 */
 
@@ -121,15 +121,15 @@ int main(void)
   /* USER CODE BEGIN WHILE */
     while(1)
     {
-      lcd_draw_string("Ya no te pasas por el parque a", myriad_pro_semibold17x23, &text_color, 160, 310);
+      lcd_draw_string("Ya no te pasas por el parque a", myriad_pro_semibold17x23, &text_color, 230, 240);
       
-      lcd_draw_string(string, myriad_pro_semibold28x39_num, &dot_color, 400, 300);
-      lcd_draw_string("bpm", myriad_pro_semibold17x23, &text_color, 440, 310);
+      lcd_draw_string(string, myriad_pro_semibold28x39_num, &dot_color, 470, 230);
+      lcd_draw_string("bpm", myriad_pro_semibold17x23, &text_color, 510, 240);
 
       //HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
       HAL_Delay(500); 
       
-      lcd_delete_string(string, myriad_pro_semibold28x39_num, 400, 300);
+      lcd_delete_string(string, myriad_pro_semibold28x39_num, 470, 230);
       
       if(string[1] < '9')
       {
