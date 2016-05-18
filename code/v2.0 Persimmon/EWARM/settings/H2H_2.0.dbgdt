@@ -44,7 +44,7 @@
         <expressions>
           
           
-        <item>line</item><item>mask</item><item>bytes_per_line</item><item>width_calc</item><item>number</item><item>character_width</item><item>character</item><item>character_number</item><item>character_position</item><item></item></expressions>
+        <item>line</item><item>mask</item><item>character_number</item><item>character_properties</item><item>character_height</item><item>character_width</item><item>character_position</item><item>number</item><item>string</item><item></item></expressions>
         <col-names>
           
           
@@ -59,7 +59,7 @@
         <item>131</item><item>150</item><item>100</item><item>447</item></col-widths>
       <PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows></WATCH_1>
       <Register/>
-    <QuickWatch><col-names><item>Expression</item><item>Location</item><item>Type</item><item>Value</item></col-names><col-widths><item>100</item><item>150</item><item>100</item><item>598</item></col-widths><QWatchHistory><item>data_tmp_ch2</item><item>readValue</item><item>htim6</item><item>tmpcr1</item><item>uint32_t tmpcr1</item><item>static uint32_t tmpcr1</item><item>uint32_t</item><item>local_tim</item></QWatchHistory><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows></QuickWatch><StaticWatch><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>WATCH_1</Factory></Window></Windows></PreferedWindows><expressions><item/></expressions><col-names><item>Expression</item><item>Location</item><item>Type</item><item>Value</item></col-names><col-widths><item>100</item><item>150</item><item>100</item><item>100</item></col-widths></StaticWatch></Static>
+    <QuickWatch><col-names><item>Expression</item><item>Location</item><item>Type</item><item>Value</item></col-names><col-widths><item>100</item><item>150</item><item>100</item><item>598</item></col-widths><QWatchHistory><item>data_tmp_ch2</item><item>readValue</item><item>htim6</item><item>tmpcr1</item><item>uint32_t tmpcr1</item><item>static uint32_t tmpcr1</item><item>uint32_t</item><item>local_tim</item></QWatchHistory><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows></QuickWatch><StaticWatch><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>WATCH_1</Factory></Window></Windows></PreferedWindows><expressions><item/></expressions><col-names><item>Expression</item><item>Location</item><item>Type</item><item>Value</item></col-names><col-widths><item>100</item><item>150</item><item>100</item><item>100</item></col-widths></StaticWatch><Find-All-Declarations><ColumnWidth0>580</ColumnWidth0><ColumnWidth1>82</ColumnWidth1><ColumnWidth2>994</ColumnWidth2></Find-All-Declarations></Static>
     <Windows>
       
       
@@ -79,7 +79,7 @@
             <Factory>Build</Factory>
             <Session/>
           </Tab>
-        </Tabs>
+        <Tab><Identity>TabID-20996-20362</Identity><TabName>Declarations</TabName><Factory>Find-All-Declarations</Factory><Session/></Tab></Tabs>
         
       <SelectedTab>0</SelectedTab></Wnd0><Wnd4>
         <Tabs>
@@ -123,7 +123,7 @@
       
       
       
-    <Top><Row0><Sizes><Toolbar-004790E0><key>iaridepm.enu1</key></Toolbar-004790E0></Sizes></Row0><Row1><Sizes><Toolbar-20EB4ED0><key>debuggergui.enu1</key></Toolbar-20EB4ED0></Sizes></Row1><Row2><Sizes><Toolbar-20EB4F98><key>armstlink.enu1</key></Toolbar-20EB4F98></Sizes></Row2></Top><Left><Row0><Sizes><Wnd4><Rect><Top>-2</Top><Left>-2</Left><Bottom>677</Bottom><Right>373</Right><x>-2</x><y>-2</y><xscreen>728</xscreen><yscreen>200</yscreen><sizeHorzCX>433333</sizeHorzCX><sizeHorzCY>206612</sizeHorzCY><sizeVertCX>223214</sizeVertCX><sizeVertCY>701446</sizeVertCY></Rect></Wnd4></Sizes></Row0></Left><Right><Row0><Sizes><Wnd5><Rect><Top>-2</Top><Left>-2</Left><Bottom>677</Bottom><Right>253</Right><x>-2</x><y>-2</y><xscreen>728</xscreen><yscreen>200</yscreen><sizeHorzCX>433333</sizeHorzCX><sizeHorzCY>206612</sizeHorzCY><sizeVertCX>151786</sizeVertCX><sizeVertCY>701446</sizeVertCY></Rect></Wnd5></Sizes></Row0><Row1><Sizes><Wnd6><Rect><Top>-2</Top><Left>251</Left><Bottom>677</Bottom><Right>664</Right><x>251</x><y>-2</y><xscreen>832</xscreen><yscreen>206</yscreen><sizeHorzCX>495238</sizeHorzCX><sizeHorzCY>212810</sizeHorzCY><sizeVertCX>245833</sizeVertCX><sizeVertCY>701446</sizeVertCY></Rect></Wnd6></Sizes></Row1></Right><Bottom><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>198</Bottom><Right>1682</Right><x>-2</x><y>-2</y><xscreen>1684</xscreen><yscreen>200</yscreen><sizeHorzCX>1002381</sizeHorzCX><sizeHorzCY>206612</sizeHorzCY><sizeVertCX>433333</sizeVertCX><sizeVertCY>206612</sizeVertCY></Rect></Wnd0></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-00EE90E0><key>iaridepm.enu1</key></Toolbar-00EE90E0></Sizes></Row0><Row1><Sizes><Toolbar-11805668><key>debuggergui.enu1</key></Toolbar-11805668></Sizes></Row1><Row2><Sizes><Toolbar-11804B78><key>armstlink.enu1</key></Toolbar-11804B78></Sizes></Row2></Top><Left><Row0><Sizes><Wnd4><Rect><Top>-2</Top><Left>-2</Left><Bottom>677</Bottom><Right>373</Right><x>-2</x><y>-2</y><xscreen>728</xscreen><yscreen>200</yscreen><sizeHorzCX>433333</sizeHorzCX><sizeHorzCY>206612</sizeHorzCY><sizeVertCX>223214</sizeVertCX><sizeVertCY>701446</sizeVertCY></Rect></Wnd4></Sizes></Row0></Left><Right><Row0><Sizes><Wnd5><Rect><Top>-2</Top><Left>-2</Left><Bottom>677</Bottom><Right>253</Right><x>-2</x><y>-2</y><xscreen>728</xscreen><yscreen>200</yscreen><sizeHorzCX>433333</sizeHorzCX><sizeHorzCY>206612</sizeHorzCY><sizeVertCX>151786</sizeVertCX><sizeVertCY>701446</sizeVertCY></Rect></Wnd5></Sizes></Row0><Row1><Sizes><Wnd6><Rect><Top>-2</Top><Left>251</Left><Bottom>677</Bottom><Right>664</Right><x>251</x><y>-2</y><xscreen>832</xscreen><yscreen>206</yscreen><sizeHorzCX>495238</sizeHorzCX><sizeHorzCY>212810</sizeHorzCY><sizeVertCX>245833</sizeVertCX><sizeVertCY>701446</sizeVertCY></Rect></Wnd6></Sizes></Row1></Right><Bottom><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>198</Bottom><Right>1682</Right><x>-2</x><y>-2</y><xscreen>1684</xscreen><yscreen>200</yscreen><sizeHorzCX>1002381</sizeHorzCX><sizeHorzCY>206612</sizeHorzCY><sizeVertCX>433333</sizeVertCX><sizeVertCY>206612</sizeVertCY></Rect></Wnd0></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Project>
 

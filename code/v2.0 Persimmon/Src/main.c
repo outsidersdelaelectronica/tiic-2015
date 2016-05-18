@@ -98,7 +98,7 @@ int main(void)
   MX_TIM6_Init();
 
   /* USER CODE BEGIN 2 */
-    uint8_t level = 200;
+    uint8_t level = 250;
     color_t dot_color;
     color_t text_color;
     
@@ -107,45 +107,38 @@ int main(void)
     lcd_set_brightness(level);
     
     background_color = (color_t) COLOR_BLACK;
-    dot_color = (color_t) COLOR_GREEN;
-    text_color = (color_t) COLOR_BLUE;
-
-    uint16_t i = 500;
-    uint16_t j = 100;    
-    char number = '0';
-        
-    lcd_draw_char('A', myriad_pro_semibold17x23, &text_color, &i, &j);
-    lcd_draw_char('p', myriad_pro_semibold17x23, &text_color, &i, &j);
-    lcd_draw_char('i', myriad_pro_semibold17x23, &text_color, &i, &j);
-    lcd_draw_char('c', myriad_pro_semibold17x23, &text_color, &i, &j);
-    lcd_draw_char('h', myriad_pro_semibold17x23, &text_color, &i, &j);
-    lcd_draw_char('u', myriad_pro_semibold17x23, &text_color, &i, &j);
-    lcd_draw_char('s', myriad_pro_semibold17x23, &text_color, &i, &j);
-    lcd_draw_char('q', myriad_pro_semibold17x23, &text_color, &i, &j);
-    lcd_draw_char('u', myriad_pro_semibold17x23, &text_color, &i, &j);
-    lcd_draw_char('e', myriad_pro_semibold17x23, &text_color, &i, &j);
+    dot_color = (color_t) COLOR_WHITE;
+    text_color = (color_t) COLOR_GREEN;
+       
+    char string[] = "60";
     
-    i = 100;
-    j = 100;
+    lcd_draw_line(50, 50, 600, 200, &dot_color);
+    lcd_draw_line(50, 200, 600, 50, &dot_color);
+       
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
     while(1)
     {
-      lcd_draw_char(number, myriad_pro_semibold28x39_num, &dot_color, &i, &j);
-      i += 50;
-      j += 20;  
+      lcd_draw_string("Ya no te pasas por el parque a", myriad_pro_semibold17x23, &text_color, 160, 310);
       
-      if((++number) > '9')
+      lcd_draw_string(string, myriad_pro_semibold28x39_num, &dot_color, 400, 300);
+      lcd_draw_string("bpm", myriad_pro_semibold17x23, &text_color, 440, 310);
+
+      //HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
+      HAL_Delay(500); 
+      
+      lcd_delete_string(string, myriad_pro_semibold28x39_num, 400, 300);
+      
+      if(string[1] < '9')
       {
-        number = '0';
-        i = 100;
-        j = 100;
+        string[1] = string[1] + 1;
       }
-      
-      HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
-      HAL_Delay(200);
+      else
+      {
+        string[1] = '0';
+      }  
     }
   /* USER CODE END WHILE */
 

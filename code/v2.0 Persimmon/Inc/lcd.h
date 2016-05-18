@@ -7,6 +7,8 @@
 #ifndef LCD_LCD_H_
 #define LCD_LCD_H_
 
+#include <math.h>
+
 #include "color.h"
 #include "lcd_constants.h"
 
@@ -27,10 +29,16 @@ void lcd_read_reg(uint16_t reg, uint16_t *param_buffer, uint32_t param_buffer_si
 void lcd_write_reg(uint16_t reg, uint16_t *param_buffer, uint32_t param_buffer_size);
 
 void lcd_draw_pixel(uint16_t x_pos, uint16_t y_pos, color_t *color);
-void lcd_draw_char(char character,
-                   const uint8_t *current_font, 
-                   color_t *char_color,
-                   uint16_t *x_pos, uint16_t *y_pos);
+
+void lcd_draw_line(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, color_t *color);
+
+void lcd_draw_string(char *string,
+                     const uint8_t *current_font, 
+                     color_t *char_color,
+                     uint16_t x_pos, uint16_t y_pos);
+void lcd_delete_string(char *string,
+                       const uint8_t *current_font,
+                       uint16_t x_pos, uint16_t y_pos);
 
 void lcd_clean_screen(color_t *color);
 void lcd_set_brightness(uint8_t level);
