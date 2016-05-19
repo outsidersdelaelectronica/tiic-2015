@@ -40,84 +40,6 @@ uint16_t lcd_param_dbc_conf[]                   = {0x0042};
 uint16_t lcd_param_post_proc[]                  = {0x0040, 0x0080, 0x0040, 0x0001};
 
 /**
-  * @brief  Initializes LCD module
-  * @retval None
-*/
-void lcd_init()
-{
-  uint16_t lcd_device_descriptor[5];
-  uint8_t device_descriptor_ok;
-  
-  /* Check device descriptor */
-  lcd_read_reg(LCD_READ_DDB, lcd_device_descriptor, 5);
-  device_descriptor_ok = (lcd_device_descriptor[0] == 0x0001) &&        //Supplier ID (high byte)
-                         (lcd_device_descriptor[1] == 0x0057) &&        //Supplier ID (low byte)
-                         (lcd_device_descriptor[2] == 0x0061) &&        //Product ID
-                         (lcd_device_descriptor[3] == 0x0001) &&        //Revision code
-                         (lcd_device_descriptor[4] == 0x00FF);
-  
-  if (device_descriptor_ok)
-  {
-    /* Set PLL */
-    lcd_write_reg(LCD_SET_PLL_MN, lcd_param_pll_mn, 3);
-    /* Enable PLL */
-    lcd_write_reg(LCD_SET_PLL, lcd_param_pll, 1);
-    /* Wait for PLL to start up */
-    HAL_Delay(1);
-    /* Lock PLL */
-    lcd_write_reg(LCD_SET_PLL, lcd_param_pll_lock, 1);
-
-    /* Soft-reset LCD controller */
-    lcd_write_command(LCD_SOFT_RESET);
-    HAL_Delay(10);
-    
-    /* Set the pixel clock frequency */
-    lcd_write_reg(LCD_SET_LSHIFT_FREQ, lcd_param_lshift_freq, 3);
-
-    /* Set LCD modes, horizontal and vertical sync, and pixel data interface */
-    lcd_write_reg(LCD_SET_LCD_MODE, lcd_param_lcd_mode, 7);
-    lcd_write_reg(LCD_SET_HORI_PERIOD, lcd_param_hori_period, 8);
-    lcd_write_reg(LCD_SET_VERT_PERIOD, lcd_param_vert_period, 7);
-    
-    /* Set GPIO configuration */
-    lcd_write_reg(LCD_SET_GPIO_CONF, lcd_param_gpio_conf, 2);
-    lcd_write_reg(LCD_SET_GPIO_VALUE, lcd_param_gpio_value, 1);
-
-    /* Set pixel data format */
-    lcd_write_reg(LCD_SET_PIXEL_DATA_INTERFACE, lcd_param_pixel_data_interface, 1);
-    
-    /* Set address scan mode and column and row starting pixel */
-    lcd_write_reg(LCD_SET_ADDRESS_MODE, lcd_param_address_mode, 1);
-    lcd_write_reg(LCD_SET_COLUMN_ADDRESS, lcd_param_column_address, 4);
-    lcd_write_reg(LCD_SET_PAGE_ADDRESS, lcd_param_page_address, 4);
-
-    /* Set gamma curve */
-    lcd_write_reg(LCD_SET_GAMMA_CURVE, lcd_param_gamma_curve, 1);
-    
-    /* Set partial area and scrolling configuration */
-    lcd_write_reg(LCD_SET_PARTIAL_AREA, lcd_param_partial_area, 4);
-    lcd_write_reg(LCD_SET_SCROLL_AREA, lcd_param_scroll_area, 6);
-    lcd_write_reg(LCD_SET_SCROLL_START, lcd_param_scroll_start, 2);
-    
-    /* Set backlight brightness and image post processing defaults */
-    lcd_write_reg(LCD_SET_PWM_CONF, lcd_param_pwm_conf, 6);
-    lcd_write_reg(LCD_SET_DBC_CONF, lcd_param_dbc_conf, 1);
-    lcd_write_reg(LCD_SET_POST_PROC, lcd_param_post_proc, 4);
-    
-    /* Turn display off and set TE signal off */
-    lcd_write_command(LCD_SET_TEAR_OFF);
-    
-    /* Clean frame buffer */
-    lcd_clean_screen(&background_color);
-    
-    /* Exit sleep mode and turn display on */
-    lcd_write_command(LCD_EXIT_SLEEP_MODE);
-    HAL_Delay(10);
-    //lcd_write_command(LCD_SET_DISPLAY_ON);    //LCD_EXIT_SLEEP_MODE triggers LCD_SET_DISPLAY_ON
-  }
-}
-
-/**
   * @brief  Writes one command.
   * @param  reg: Command to send.
   * @retval None
@@ -199,6 +121,84 @@ void lcd_set_drawing_address(uint16_t start_col, uint16_t end_col,
   /* Send boundary addresses */
   lcd_write_reg(LCD_SET_COLUMN_ADDRESS, pixel_column_address, 4);
   lcd_write_reg(LCD_SET_PAGE_ADDRESS, pixel_page_address, 4);
+}
+
+/**
+  * @brief  Initializes LCD module
+  * @retval None
+*/
+void lcd_init()
+{
+  uint16_t lcd_device_descriptor[5];
+  uint8_t device_descriptor_ok;
+  
+  /* Check device descriptor */
+  lcd_read_reg(LCD_READ_DDB, lcd_device_descriptor, 5);
+  device_descriptor_ok = (lcd_device_descriptor[0] == 0x0001) &&        // Supplier ID (high byte)
+                         (lcd_device_descriptor[1] == 0x0057) &&        // Supplier ID (low byte)
+                         (lcd_device_descriptor[2] == 0x0061) &&        // Product ID
+                         (lcd_device_descriptor[3] == 0x0001) &&        // Revision code
+                         (lcd_device_descriptor[4] == 0x00FF);          // End code
+  
+  if (device_descriptor_ok)
+  {
+    /* Set PLL */
+    lcd_write_reg(LCD_SET_PLL_MN, lcd_param_pll_mn, 3);
+    /* Enable PLL */
+    lcd_write_reg(LCD_SET_PLL, lcd_param_pll, 1);
+    /* Wait for PLL to start up */
+    HAL_Delay(1);
+    /* Lock PLL */
+    lcd_write_reg(LCD_SET_PLL, lcd_param_pll_lock, 1);
+
+    /* Soft-reset LCD controller */
+    lcd_write_command(LCD_SOFT_RESET);
+    HAL_Delay(10);
+    
+    /* Set the pixel clock frequency */
+    lcd_write_reg(LCD_SET_LSHIFT_FREQ, lcd_param_lshift_freq, 3);
+
+    /* Set LCD modes, horizontal and vertical sync, and pixel data interface */
+    lcd_write_reg(LCD_SET_LCD_MODE, lcd_param_lcd_mode, 7);
+    lcd_write_reg(LCD_SET_HORI_PERIOD, lcd_param_hori_period, 8);
+    lcd_write_reg(LCD_SET_VERT_PERIOD, lcd_param_vert_period, 7);
+    
+    /* Set GPIO configuration */
+    lcd_write_reg(LCD_SET_GPIO_CONF, lcd_param_gpio_conf, 2);
+    lcd_write_reg(LCD_SET_GPIO_VALUE, lcd_param_gpio_value, 1);
+
+    /* Set pixel data format */
+    lcd_write_reg(LCD_SET_PIXEL_DATA_INTERFACE, lcd_param_pixel_data_interface, 1);
+    
+    /* Set address scan mode and column and row starting pixel */
+    lcd_write_reg(LCD_SET_ADDRESS_MODE, lcd_param_address_mode, 1);
+    lcd_write_reg(LCD_SET_COLUMN_ADDRESS, lcd_param_column_address, 4);
+    lcd_write_reg(LCD_SET_PAGE_ADDRESS, lcd_param_page_address, 4);
+
+    /* Set gamma curve */
+    lcd_write_reg(LCD_SET_GAMMA_CURVE, lcd_param_gamma_curve, 1);
+    
+    /* Set partial area and scrolling configuration */
+    lcd_write_reg(LCD_SET_PARTIAL_AREA, lcd_param_partial_area, 4);
+    lcd_write_reg(LCD_SET_SCROLL_AREA, lcd_param_scroll_area, 6);
+    lcd_write_reg(LCD_SET_SCROLL_START, lcd_param_scroll_start, 2);
+    
+    /* Set backlight brightness and image post processing defaults */
+    lcd_write_reg(LCD_SET_PWM_CONF, lcd_param_pwm_conf, 6);
+    lcd_write_reg(LCD_SET_DBC_CONF, lcd_param_dbc_conf, 1);
+    lcd_write_reg(LCD_SET_POST_PROC, lcd_param_post_proc, 4);
+    
+    /* Turn display off and set TE signal off */
+    lcd_write_command(LCD_SET_TEAR_OFF);
+    
+    /* Clean frame buffer */
+    lcd_clean_screen(&background_color);
+    
+    /* Exit sleep mode and turn display on */
+    lcd_write_command(LCD_EXIT_SLEEP_MODE);
+    HAL_Delay(10);
+    //lcd_write_command(LCD_SET_DISPLAY_ON);    //LCD_EXIT_SLEEP_MODE triggers LCD_SET_DISPLAY_ON
+  }
 }
 
 /**

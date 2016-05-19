@@ -22,16 +22,8 @@
 
 void lcd_init();
 
-void lcd_write_command(uint16_t command);
-void lcd_write_data(uint16_t data);
-
-void lcd_read_reg(uint16_t reg, uint16_t *param_buffer, uint32_t param_buffer_size);
-void lcd_write_reg(uint16_t reg, uint16_t *param_buffer, uint32_t param_buffer_size);
-
 void lcd_draw_pixel(uint16_t x_pos, uint16_t y_pos, color_t *color);
-
 void lcd_draw_line(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, color_t *color);
-
 void lcd_draw_string(char *string,
                      const uint8_t *current_font, 
                      color_t *char_color,

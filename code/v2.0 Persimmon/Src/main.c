@@ -112,9 +112,8 @@ int main(void)
        
     char string[] = "60";
     
-//    lcd_draw_line(50, 50, 600, 200, &dot_color);
-//    lcd_draw_line(50, 200, 600, 50, &dot_color);
-       
+    
+    
   /* USER CODE END 2 */
 
   /* Infinite loop */
