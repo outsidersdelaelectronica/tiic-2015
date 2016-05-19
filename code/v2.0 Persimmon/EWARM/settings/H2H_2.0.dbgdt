@@ -44,7 +44,7 @@
         <expressions>
           
           
-        <item>line</item><item>mask</item><item>character_number</item><item>character_properties</item><item>character_height</item><item>character_width</item><item>character_position</item><item>number</item><item>string</item><item></item></expressions>
+        <item>line</item><item>mask</item><item>character_number</item><item>character_properties</item><item>character_height</item><item>character_width</item><item>character_position</item><item>number</item><item>string</item><item/></expressions>
         <col-names>
           
           
