@@ -5,6 +5,7 @@
  *      Author: Smau
  */
 #include "gauge_constants.h"
+#include "i2c.h"
 
 #include <stdint.h>
 

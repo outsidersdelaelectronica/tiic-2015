@@ -12,7 +12,7 @@
           
           
           
-        <Column0>238</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+        <Column0>166</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
       </Workspace>
       <Build>
         
@@ -29,7 +29,7 @@
     <Windows>
       
       
-    <Wnd2>
+    <Wnd0>
         <Tabs>
           <Tab>
             <Identity>TabID-26183-23131</Identity>
@@ -37,11 +37,11 @@
             <Factory>Workspace</Factory>
             <Session>
               
-            <NodeDict><ExpandedNode>H2H_2.0</ExpandedNode><ExpandedNode>H2H_2.0/Application</ExpandedNode><ExpandedNode>H2H_2.0/Application/EWARM</ExpandedNode><ExpandedNode>H2H_2.0/Application/User</ExpandedNode><ExpandedNode>H2H_2.0/Application/User/gauge</ExpandedNode></NodeDict></Session>
+            <NodeDict><ExpandedNode>H2H_2.0</ExpandedNode><ExpandedNode>H2H_2.0/Application</ExpandedNode><ExpandedNode>H2H_2.0/Application/EWARM</ExpandedNode><ExpandedNode>H2H_2.0/Application/User</ExpandedNode><ExpandedNode>H2H_2.0/Application/User/gauge</ExpandedNode><ExpandedNode>H2H_2.0/Application/User/lcd</ExpandedNode></NodeDict></Session>
           </Tab>
         </Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd2><Wnd3>
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1>
         <Tabs>
           
           <Tab>
@@ -52,20 +52,20 @@
           </Tab>
         <Tab><Identity>TabID-7785-17582</Identity><TabName>Declarations</TabName><Factory>Find-All-Declarations</Factory><Session/></Tab><Tab><Identity>TabID-26226-12630</Identity><TabName>Ambiguous Definitions</TabName><Factory>Select-Ambiguous-Definitions</Factory><Session/></Tab><Tab><Identity>TabID-32341-3883</Identity><TabName>References</TabName><Factory>Find-All-References</Factory><Session/></Tab><Tab><Identity>TabID-23446-29840</Identity><TabName>Build</TabName><Factory>Build</Factory><Session/></Tab></Tabs>
         
-      <SelectedTab>4</SelectedTab></Wnd3></Windows>
+      <SelectedTab>4</SelectedTab></Wnd1></Windows>
     <Editor>
       
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\Src\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>97</YPos2><SelStart2>4135</SelStart2><SelEnd2>4135</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\Src\gauge.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\Inc\gauge.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\Inc\gauge_constants.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><ActiveTab>3</ActiveTab></Pane><ActivePane>0</ActivePane><Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\Src\i2c.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>33</YPos2><SelStart2>2052</SelStart2><SelEnd2>2052</SelEnd2></Tab><ActiveTab>0</ActiveTab></Pane><Sizes><Pane><X>500000</X><Y>500000</Y></Pane><Pane><X>500000</X><Y>500000</Y></Pane></Sizes><SplitMode>4</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\Src\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>97</YPos2><SelStart2>4135</SelStart2><SelEnd2>4135</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\Src\gauge.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>181</SelStart2><SelEnd2>181</SelEnd2></Tab><ActiveTab>1</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\Inc\gauge.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>259</SelStart2><SelEnd2>293</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\Inc\gauge_constants.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>210</SelStart2><SelEnd2>224</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\Src\i2c.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>21</YPos2><SelStart2>2219</SelStart2><SelEnd2>2224</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\Src\lcd.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>36</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
     <Positions>
       
       
       
       
       
-    <Top><Row0><Sizes><Toolbar-027490E0><key>iaridepm.enu1</key></Toolbar-027490E0></Sizes></Row0></Top><Left><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>731</Bottom><Right>312</Right><x>-2</x><y>-2</y><xscreen>21</xscreen><yscreen>185</yscreen><sizeHorzCX>12500</sizeHorzCX><sizeHorzCY>191116</sizeHorzCY><sizeVertCX>186905</sizeVertCX><sizeVertCY>757231</sizeVertCY></Rect></Wnd2></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>192</Bottom><Right>1682</Right><x>-2</x><y>-2</y><xscreen>1684</xscreen><yscreen>194</yscreen><sizeHorzCX>1002381</sizeHorzCX><sizeHorzCY>200413</sizeHorzCY><sizeVertCX>12500</sizeVertCX><sizeVertCY>191116</sizeVertCY></Rect></Wnd3></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-002E90E0><key>iaridepm.enu1</key></Toolbar-002E90E0></Sizes></Row0></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>718</Bottom><Right>240</Right><x>-2</x><y>-2</y><xscreen>10</xscreen><yscreen>182</yscreen><sizeHorzCX>12136</sizeHorzCX><sizeHorzCY>191176</sizeHorzCY><sizeVertCX>293689</sizeVertCX><sizeVertCY>756303</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>189</Bottom><Right>826</Right><x>-2</x><y>-2</y><xscreen>828</xscreen><yscreen>191</yscreen><sizeHorzCX>1004854</sizeHorzCX><sizeHorzCY>200630</sizeHorzCY><sizeVertCX>12136</sizeVertCX><sizeVertCY>191176</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Workspace>
 
