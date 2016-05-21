@@ -11,6 +11,7 @@
 #define GAUGE_GAUGE_CONSTANTS_H_
 
 #define FG_I2C_ADDRESS          0x0055
+#define FG_UNSEAL				0x8000
 
 /* Standard commands */
 
