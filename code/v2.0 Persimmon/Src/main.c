@@ -67,6 +67,7 @@ void epic_sax_guy(void);
 /* USER CODE BEGIN 0 */
 extern SRAM_HandleTypeDef hsram1;
 extern color_t background_color;
+uint16_t fg_soc;
 
 #define LCD_REG        ((uint32_t *)(FSMC_BASE))
 #define LCD_DATA       ((uint32_t *)(FSMC_BASE + 0x00020000U))  //See p.620 of STM32L162VD ref. manual
@@ -74,6 +75,7 @@ extern color_t background_color;
 
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   /* USER CODE END 1 */
 
@@ -81,12 +83,9 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
+
   /* Configure the system clock */
   SystemClock_Config();
-
-  HAL_DBGMCU_EnableDBGStandbyMode();
-
-  two_secs_wakeup();
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -100,14 +99,12 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
     uint8_t level = 250;
-    uint16_t bat_capacity = 0;
     color_t dot_color;
     color_t text_color;
     
     afe_init();
     lcd_init();
     lcd_set_brightness(level);
-    
     fg_init();
     
     background_color = (color_t) COLOR_BLACK;
@@ -122,6 +119,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
     while(1)
     {
+      fg_soc = fg_read_reg16(FG_SOC);
+      
       lcd_draw_string("Ya no te pasas por el parque a", myriad_pro_semibold17x23, &text_color, 230, 240);
       
       lcd_draw_string(string, myriad_pro_semibold28x39_num, &dot_color, 470, 230);
@@ -185,7 +184,6 @@ void SystemClock_Config(void)
   /* SysTick_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 }
-
 
 /* USER CODE BEGIN 4 */
 /**
@@ -273,7 +271,9 @@ void epic_sax_guy(void){
 }
 
 /* USER CODE END 4 */
+
 #ifdef USE_FULL_ASSERT
+
 /**
    * @brief Reports the name of the source file and the source line number
    * where the assert_param error has occurred.
@@ -289,6 +289,15 @@ void assert_failed(uint8_t* file, uint32_t line)
   /* USER CODE END 6 */
 
 }
+
 #endif
 
-/*****END OF FILE****/
+/**
+  * @}
+  */ 
+
+/**
+  * @}
+*/ 
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -22,6 +22,8 @@ uint8_t fg_param_terminate_voltage[]    = {0x0D, 0xAC};
 uint8_t fg_param_reserve_capacity[]     = {0x00, 0x0A};
 uint8_t fg_param_taper_rate[]           = {0x00, 0xBB};
 
+uint8_t fg_operation_config[]           = {0x25, 0xF8};
+
 void fg_ram_update(uint8_t data_subclass, uint8_t data_offset,
                    uint8_t *data_buffer, uint8_t data_size)
 {
@@ -114,6 +116,7 @@ void fg_init()
   fg_ram_update(82, 16, fg_param_terminate_voltage, 2);
   fg_ram_update(82, 3,  fg_param_reserve_capacity, 2);
   fg_ram_update(82, 27, fg_param_taper_rate, 2);
+  fg_ram_update(64, 0,  fg_operation_config, 2);
   
   /* Exit config update mode (performing a soft reset)*/
   fg_write_reg16(FG_CNTL, FG_CNTL_SOFT_RESET);

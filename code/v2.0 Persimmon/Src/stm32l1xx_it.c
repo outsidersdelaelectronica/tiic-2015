@@ -37,8 +37,10 @@
 
 /* USER CODE BEGIN 0 */
 #include "spi.h"
+#include "gauge.h"
     
 extern SPI_HandleTypeDef hspi1;
+extern uint16_t fg_soc;
 
 /* USER CODE END 0 */
 
@@ -161,22 +163,18 @@ void EXTI1_IRQHandler(void)
 }
 
 /**
-* @brief This function handles EXTI line[15:10] interrupts.
+* @brief This function handles EXTI line3 interrupt.
 */
-void EXTI15_10_IRQHandler(void)
+void EXTI3_IRQHandler(void)
 {
-  /* USER CODE BEGIN EXTI15_10_IRQn 0 */
-  if (__HAL_GPIO_EXTI_GET_FLAG(GPIO_PIN_10)){
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_10);
-  }
-  /* USER CODE END EXTI15_10_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_10);
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_11);
-  /* USER CODE BEGIN EXTI15_10_IRQn 1 */
-  if (__HAL_GPIO_EXTI_GET_FLAG(GPIO_PIN_11)){
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_11);
-  }
-  /* USER CODE END EXTI15_10_IRQn 1 */
+  /* USER CODE BEGIN EXTI3_IRQn 0 */
+  fg_soc = fg_read_reg16(FG_SOC);
+  
+  /* USER CODE END EXTI3_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_3);
+  /* USER CODE BEGIN EXTI3_IRQn 1 */
+
+  /* USER CODE END EXTI3_IRQn 1 */
 }
 
 /**
