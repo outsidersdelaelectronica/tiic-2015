@@ -14,10 +14,10 @@
 
 void fg_init();
 
-void fg_write_command(uint16_t command);
-void fg_write_data(uint16_t data);
+uint8_t fg_read_reg8(uint8_t reg);
+uint16_t fg_read_reg16(uint8_t reg);
 
-void fg_read_reg(uint16_t reg, uint16_t *param_buffer, uint32_t param_buffer_size);
-void fg_write_reg(uint16_t reg, uint16_t *param_buffer, uint32_t param_buffer_size);
+void fg_write_reg8(uint8_t reg, uint8_t param);
+void fg_write_reg16(uint8_t reg, uint16_t param);
 
 #endif /* GAUGE_GAUGE_H_ */

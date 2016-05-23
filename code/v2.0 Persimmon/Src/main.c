@@ -42,6 +42,7 @@
 /* USER CODE BEGIN Includes */
 #include "afe.h"
 #include "lcd.h"
+#include "gauge.h"
     
 #include "myriad_pro_semibold.h"
 /* USER CODE END Includes */
@@ -99,6 +100,7 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
     uint8_t level = 250;
+    uint16_t bat_capacity = 0;
     color_t dot_color;
     color_t text_color;
     
@@ -106,14 +108,14 @@ int main(void)
     lcd_init();
     lcd_set_brightness(level);
     
+    fg_init();
+    
     background_color = (color_t) COLOR_BLACK;
     dot_color = (color_t) COLOR_WHITE;
     text_color = (color_t) COLOR_GREEN;
        
     char string[] = "60";
-    
-    
-    
+     
   /* USER CODE END 2 */
 
   /* Infinite loop */
