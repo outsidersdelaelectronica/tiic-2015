@@ -12,7 +12,7 @@ ByteLimit=50
 stlinkserialNo=2798FD0D
 stlinkfoundProbes=
 [DebugChecksum]
-Checksum=348505840
+Checksum=1029094812
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0

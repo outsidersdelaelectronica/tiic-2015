@@ -43,6 +43,7 @@
 #include "afe.h"
 #include "gauge.h"
 #include "lcd.h"
+#include "touch.h"
 
 /* USER CODE END Includes */
 
@@ -68,7 +69,12 @@ extern SRAM_HandleTypeDef hsram1;
 extern color_t background_color;
 
 uint16_t fg_soc;
+touch_pos_t last_pos;
 char bat_soc[4];
+
+char x_pos[5];
+char y_pos[5];
+char pressure[5];
 
 #define LCD_REG        ((uint32_t *)(FSMC_BASE))
 #define LCD_DATA       ((uint32_t *)(FSMC_BASE + 0x00020000U))  //See p.620 of STM32L162VD ref. manual
@@ -102,7 +108,8 @@ int main(void)
     uint8_t level = 80;
     color_t dot_color;
     color_t text_color;
-    
+    uint8_t cntl_byte = 0;
+
     uint16_t voltage, temperature, int_temp;
     int16_t avg_current, max_current;
     
@@ -110,6 +117,7 @@ int main(void)
     lcd_init();
     lcd_set_brightness(level);
     fg_init();
+    touch_init();
     
     background_color = (color_t) COLOR_BLACK;
     dot_color = (color_t) COLOR_WHITE;
@@ -131,25 +139,37 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
     while(1)
-    {      
+    {
+      /* Fuel gauge data */
       temperature = fg_read_reg16(FG_TEMP);
       voltage = fg_read_reg16(FG_VOLT);
       avg_current = fg_read_reg16(FG_AVG_CURRENT);
       int_temp = fg_read_reg16(FG_INTERNAL_TEMP);
       max_current = fg_read_reg16(FG_MAX_LOAD_CURRENT);
       
-      
       /* Draw text */
       lcd_draw_string("Ya no te pasas por el parque a", myriad_pro_semibold17x23, &text_color, 230, 240);
-      
       lcd_draw_string(string, myriad_pro_semibold28x39_num, &dot_color, 470, 230);
       lcd_draw_string("bpm", myriad_pro_semibold17x23, &text_color, 510, 240);   
       
+      sprintf(x_pos, "%d", last_pos.x_pos);
+      sprintf(y_pos, "%d", last_pos.y_pos);
+      sprintf(pressure, "%d", last_pos.pressure);
+      
+      lcd_draw_string(x_pos, myriad_pro_semibold17x23, &text_color, 100, 160);
+      lcd_draw_string(y_pos, myriad_pro_semibold17x23, &text_color, 250, 160);
+      lcd_draw_string(pressure, myriad_pro_semibold17x23, &text_color, 400, 160);
+
+      /* Wait and erase text */
       //HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
       HAL_Delay(500); 
-      
       lcd_delete_string(string, myriad_pro_semibold28x39_num, 470, 230);
 
+      lcd_delete_string(x_pos, myriad_pro_semibold17x23, 100, 160);
+      lcd_delete_string(y_pos, myriad_pro_semibold17x23, 250, 160);
+      lcd_delete_string(pressure, myriad_pro_semibold17x23, 400, 160);
+      
+      /* Count */
       if(string[1] < '9')
       {
         string[1] = string[1] + 1;

@@ -16,7 +16,7 @@ void afe_serial_write_register(uint8_t reg, uint8_t command){
   // This is specific for one command in one register since the AFE,
   // allows to write multiple commands to consecutive registers in 
   // one spi transmision.
-  uint8_t data[3] = { reg | AFE_WREG, 0x00 , command};
+  uint8_t data[3] = {reg | AFE_WREG, 0x00, command};
   
   HAL_SPI_Transmit(&hspi1, data, 3, 100);
 }
@@ -26,14 +26,14 @@ void afe_init()
   uint8_t data[1];
   //AFE reset and stop continuous data conversion mode	
   //Power-On-Reset: hold reset line high for 1 second
-  HAL_GPIO_WritePin(GPIOA,AFE_RESET_Pin,GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOA, AFE_RESET_Pin, GPIO_PIN_SET);
   HAL_Delay(1000);	                              
   //Reset pulse: (>= 18 t_clk) => (>= 10 us)
-  HAL_GPIO_WritePin(GPIOA,AFE_RESET_Pin,GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, AFE_RESET_Pin, GPIO_PIN_RESET);
   HAL_Delay(1);		//At least 10 useconds ( need to implement us_delay() )
-  HAL_GPIO_WritePin(GPIOA,AFE_RESET_Pin,GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOA, AFE_RESET_Pin, GPIO_PIN_SET);
 
-  HAL_GPIO_WritePin(GPIOA,AFE_CS_Pin,GPIO_PIN_RESET); //Enable CS    
+  HAL_GPIO_WritePin(GPIOA, AFE_CS_Pin, GPIO_PIN_RESET); //Enable CS    
   
   data[0] = AFE_SDATAC;
   HAL_SPI_Transmit(&hspi1, data, 1, 100);
@@ -74,12 +74,12 @@ void afe_init()
 
 
   //Start capturing data		
-  HAL_GPIO_WritePin(GPIOA,AFE_START_Pin,GPIO_PIN_SET); //Start conversions
+  HAL_GPIO_WritePin(GPIOA, AFE_START_Pin, GPIO_PIN_SET); //Start conversions
   HAL_Delay(1);	
   data[0] = AFE_RDATAC;                        
   HAL_SPI_Transmit(&hspi1, data, 1, 100);     //Enable continuous output of conversion data
                                               //In this mode, a SDATAC command must be issued
                                               //before other commands can be sent to the device
 
-  HAL_GPIO_WritePin(GPIOA,AFE_CS_Pin,GPIO_PIN_SET); //Disable CS     
+  HAL_GPIO_WritePin(GPIOA, AFE_CS_Pin, GPIO_PIN_SET); //Disable CS     
 }

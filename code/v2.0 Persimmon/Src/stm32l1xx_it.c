@@ -39,10 +39,12 @@
 #include "spi.h"
 #include "gauge.h"
 #include "lcd.h"
+#include "touch.h"
 
 #include <stdio.h>
 
 extern uint16_t fg_soc;
+extern touch_pos_t last_pos;
 extern char bat_soc[4];
 color_t bat_color;
 
@@ -193,6 +195,30 @@ void EXTI3_IRQHandler(void)
   /* USER CODE BEGIN EXTI3_IRQn 1 */
 
   /* USER CODE END EXTI3_IRQn 1 */
+}
+
+/**
+* @brief This function handles EXTI line[15:10] interrupts.
+*/
+void EXTI15_10_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI15_10_IRQn 0 */
+  
+  /* Disable touchpad interrupts */
+  HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
+  
+  /* Get position */
+  touch_get_position(&last_pos);
+  
+  /* USER CODE END EXTI15_10_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_10);
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_11);
+  /* USER CODE BEGIN EXTI15_10_IRQn 1 */
+
+  /* Enable touchpad interrupts */
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+  
+  /* USER CODE END EXTI15_10_IRQn 1 */
 }
 
 /**
