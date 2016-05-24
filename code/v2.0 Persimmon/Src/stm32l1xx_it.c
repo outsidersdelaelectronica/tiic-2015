@@ -38,9 +38,14 @@
 /* USER CODE BEGIN 0 */
 #include "spi.h"
 #include "gauge.h"
-    
+#include "lcd.h"
+
+#include <stdio.h>
+
 extern SPI_HandleTypeDef hspi1;
 extern uint16_t fg_soc;
+extern char bat_soc[4];
+color_t bat_color;
 
 /* USER CODE END 0 */
 
@@ -168,7 +173,21 @@ void EXTI1_IRQHandler(void)
 void EXTI3_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI3_IRQn 0 */
+  bat_color = (color_t) COLOR_WHITE;
+  
+  /* Read new battery soc value */
   fg_soc = fg_read_reg16(FG_SOC);
+  
+  /* Delete old value from screen */
+  lcd_delete_string(bat_soc, myriad_pro_semibold28x39_num, 470, 100);
+
+  /* Convert to string
+   * http://www.keil.com/support/man/docs/c51/c51_sprintf.htm
+   */
+  sprintf(bat_soc, "%d", fg_soc);
+
+  /* Draw it */
+  lcd_draw_string(bat_soc, myriad_pro_semibold28x39_num, &bat_color, 470, 100);
   
   /* USER CODE END EXTI3_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_3);

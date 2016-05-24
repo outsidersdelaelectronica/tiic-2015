@@ -4,10 +4,7 @@
  *  Created on: 29/9/2015
  *      Author: Smau
  */
-#include "ADS1291_constants.h"
 #include "afe.h"
-#include "gpio.h"
-#include "spi.h"
 
 /**
   * @brief  Writes a single command to one register.

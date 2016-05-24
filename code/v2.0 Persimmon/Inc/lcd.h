@@ -7,12 +7,13 @@
 #ifndef LCD_LCD_H_
 #define LCD_LCD_H_
 
-#include <math.h>
-
 #include "color.h"
+#include "myriad_pro_semibold.h"
+
 #include "lcd_constants.h"
 
 #include "fsmc.h"
+#include <math.h>
 
 #define LCD_REG        ((uint32_t *)(FSMC_BASE))
 #define LCD_DATA       ((uint32_t *)(FSMC_BASE + 0x00020000U))  //See p.620 of STM32L162VD ref. manual

@@ -1042,10 +1042,10 @@
       <group>
         <name>afe</name>
         <file>
-          <name>$PROJ_DIR$\..\Inc\ADS1291_constants.h</name>
+          <name>$PROJ_DIR$\..\Src\afe.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\Src\afe.c</name>
+          <name>$PROJ_DIR$\..\Inc\afe_constants.h</name>
         </file>
       </group>
       <group>
@@ -1068,7 +1068,7 @@
         <group>
           <name>fonts</name>
           <file>
-            <name>$PROJ_DIR$\..\Inc\myriad_pro_semibold.h</name>
+            <name>$PROJ_DIR$\..\Src\myriad_pro_semibold.c</name>
           </file>
         </group>
         <file>
@@ -1076,6 +1076,15 @@
         </file>
         <file>
           <name>$PROJ_DIR$\..\Inc\lcd_constants.h</name>
+        </file>
+      </group>
+      <group>
+        <name>touch</name>
+        <file>
+          <name>$PROJ_DIR$\..\Src\touch.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Inc\touch_constants.h</name>
         </file>
       </group>
       <file>

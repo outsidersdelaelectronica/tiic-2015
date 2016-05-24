@@ -41,10 +41,9 @@
 
 /* USER CODE BEGIN Includes */
 #include "afe.h"
-#include "lcd.h"
 #include "gauge.h"
-    
-#include "myriad_pro_semibold.h"
+#include "lcd.h"
+
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -67,7 +66,9 @@ void epic_sax_guy(void);
 /* USER CODE BEGIN 0 */
 extern SRAM_HandleTypeDef hsram1;
 extern color_t background_color;
+
 uint16_t fg_soc;
+char bat_soc[4];
 
 #define LCD_REG        ((uint32_t *)(FSMC_BASE))
 #define LCD_DATA       ((uint32_t *)(FSMC_BASE + 0x00020000U))  //See p.620 of STM32L162VD ref. manual
@@ -98,9 +99,12 @@ int main(void)
   MX_TIM6_Init();
 
   /* USER CODE BEGIN 2 */
-    uint8_t level = 250;
+    uint8_t level = 80;
     color_t dot_color;
     color_t text_color;
+    
+    uint16_t voltage, temperature, int_temp;
+    int16_t avg_current, max_current;
     
     afe_init();
     lcd_init();
@@ -112,25 +116,40 @@ int main(void)
     text_color = (color_t) COLOR_GREEN;
        
     char string[] = "60";
-     
+
+    fg_soc = fg_read_reg16(FG_SOC);
+    /* Convert to string
+     * http://www.keil.com/support/man/docs/c51/c51_sprintf.htm
+     */
+    sprintf(bat_soc, "%d", fg_soc);
+
+    /* Draw it */
+    lcd_draw_string(bat_soc, myriad_pro_semibold28x39_num, &dot_color, 470, 100);
+    
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
     while(1)
-    {
-      fg_soc = fg_read_reg16(FG_SOC);
+    {      
+      temperature = fg_read_reg16(FG_TEMP);
+      voltage = fg_read_reg16(FG_VOLT);
+      avg_current = fg_read_reg16(FG_AVG_CURRENT);
+      int_temp = fg_read_reg16(FG_INTERNAL_TEMP);
+      max_current = fg_read_reg16(FG_MAX_LOAD_CURRENT);
       
+      
+      /* Draw text */
       lcd_draw_string("Ya no te pasas por el parque a", myriad_pro_semibold17x23, &text_color, 230, 240);
       
       lcd_draw_string(string, myriad_pro_semibold28x39_num, &dot_color, 470, 230);
-      lcd_draw_string("bpm", myriad_pro_semibold17x23, &text_color, 510, 240);
-
+      lcd_draw_string("bpm", myriad_pro_semibold17x23, &text_color, 510, 240);   
+      
       //HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
       HAL_Delay(500); 
       
       lcd_delete_string(string, myriad_pro_semibold28x39_num, 470, 230);
-      
+
       if(string[1] < '9')
       {
         string[1] = string[1] + 1;
