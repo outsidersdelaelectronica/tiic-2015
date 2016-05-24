@@ -1086,6 +1086,9 @@
         <file>
           <name>$PROJ_DIR$\..\Inc\touch_constants.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$\..\Inc\touch_position.h</name>
+        </file>
       </group>
       <file>
         <name>$PROJ_DIR$\..\Src\fsmc.c</name>

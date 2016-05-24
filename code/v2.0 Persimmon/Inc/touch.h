@@ -11,7 +11,10 @@
 #include "spi.h"
 
 #include "touch_constants.h"
+#include "touch_position.h"
 
 void touch_init();
+
+void touch_get_position(touch_pos_t *position);
 
 #endif /* TOUCH_TOUCH_H_ */

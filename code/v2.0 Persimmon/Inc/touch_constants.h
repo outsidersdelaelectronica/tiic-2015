@@ -13,10 +13,10 @@
 /* Control byte bit definitions */
 #define TOUCH_CNTL_S                    0x80
 
-#define TOUCH_CNTL_                     0x50
-#define TOUCH_CNTL_                     0x40
-#define TOUCH_CNTL_                     0x30
-#define TOUCH_CNTL_                     0x10
+#define TOUCH_CNTL_X                    0x50
+#define TOUCH_CNTL_Z2                   0x40
+#define TOUCH_CNTL_Z1                   0x30
+#define TOUCH_CNTL_Y                    0x10
 
 #define TOUCH_CNTL_MODE_8_BIT           0x08
 #define TOUCH_CNTL_MODE_12_BIT          0x00

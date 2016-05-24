@@ -42,7 +42,6 @@
 
 #include <stdio.h>
 
-extern SPI_HandleTypeDef hspi1;
 extern uint16_t fg_soc;
 extern char bat_soc[4];
 color_t bat_color;

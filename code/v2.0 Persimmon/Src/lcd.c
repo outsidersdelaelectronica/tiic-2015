@@ -6,7 +6,6 @@
  */
 #include "lcd.h"
 
-extern SRAM_HandleTypeDef hsram1;
 color_t background_color;
 
 /* LCD init parameters */
