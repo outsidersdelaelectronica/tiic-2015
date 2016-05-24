@@ -9,10 +9,10 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [stlink]
-stlinkserialNo=2798FD0D
+stlinkserialNo=EE5626A6
 stlinkfoundProbes=
 [DebugChecksum]
-Checksum=-802197129
+Checksum=-742259377
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -69,13 +69,6 @@ ShowTimeLog=1
 SumEnabled=0
 ShowTimeSum=1
 SumSortOrder=0
-[Log file]
-LoggingEnabled=_ 0
-LogFile=_ ""
-Category=_ 0
-[TermIOLog]
-LoggingEnabled=_ 0
-LogFile=_ ""
 [DriverProfiling]
 Enabled=0
 Mode=3
@@ -89,11 +82,15 @@ ShowTiming=1
 [Disassemble mode]
 mode=0
 [Breakpoints2]
-Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\stm32l1xx_it.c}.277.5" 0 0 1 "" 0 "" 0
+Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\stm32l1xx_it.c}.150.5" 0 0 1 "" 0 "" 0
 Count=1
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
 [Aliases]
-A0=_ "C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\Drivers\CMSIS\Device\ST\STM32L1xx\Source\Templates\iar\startup_stm32l162xd.s" ""
-A1=_ "C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_i2c.c" ""
-A2=_ "C:\Users\slopez\workspace\github\tiic-2015\code\v2.0 Persimmon\Src\main.c" "C:\Users\carpanta\Documents\GitHub\tiic-2015\code\v2.0 Persimmon\Src\main.c"
-Count=3
+Count=0
 SuppressDialog=0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
