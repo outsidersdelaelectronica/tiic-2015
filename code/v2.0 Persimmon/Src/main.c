@@ -157,7 +157,7 @@ int main(void)
       sprintf(x_pos, "%d", last_pos.x_pos);
       sprintf(y_pos, "%d", last_pos.y_pos);
       sprintf(pressure, "%d", last_pos.pressure);
-      
+            
       lcd_draw_string(x_pos, myriad_pro_semibold17x23, &text_color, 100, 160);
       lcd_draw_string(y_pos, myriad_pro_semibold17x23, &text_color, 250, 160);
       lcd_draw_string(pressure, myriad_pro_semibold17x23, &text_color, 400, 160);
