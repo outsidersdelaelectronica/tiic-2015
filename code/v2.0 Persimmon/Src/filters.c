@@ -75,7 +75,7 @@ int32_t band_pass_filterino(int32_t value)
 {
   static int32_t bp_buffer[BP_ORDER] = {0};
   int i;
-  int32_t y_n = 0;
+  int32_t y_n = 0; 
 
   bp_buffer[0] = value;
   
