@@ -51,6 +51,7 @@ void touch_get_position(touch_pos_t *position)
 {
   uint8_t cntl_byte = 0;
   uint32_t z1, z2;
+  uint32_t tmp_pressure_cal;
 
   /* Get X param */
   cntl_byte = TOUCH_CNTL_S | TOUCH_CNTL_X |
@@ -79,5 +80,31 @@ void touch_get_position(touch_pos_t *position)
   /* Calculate and store pressure level
    * http://www.unclelarry.com/?p=101
    */
-  position->pressure = (position->x_pos * (((z2 << 12) / z1) - 4096)) >> 12;
+  tmp_pressure_cal = (position->x_pos * (((z2 << 12) / z1) - 4096)) >> 12;
+  
+  /* Check tmp_pressure_cal values */
+  if (tmp_pressure_cal == 0)
+  {
+    /* If there is nothing touching the screen
+     * the controller sends a maximum pressure value,
+     * which corresponds to tmp_pressure_cal = 0.
+     * 
+     * When that happens, store a minimum pressure
+     * value instead.
+     */
+    tmp_pressure_cal = TOUCH_PRESSURE_THRESHOLD;
+  }
+  else if (tmp_pressure_cal > TOUCH_PRESSURE_THRESHOLD)
+  {
+    /* If tactile pressure doesn't reach our
+     * defined minimum pressure value, store a 
+     * minimum pressure value.
+     */
+    tmp_pressure_cal = TOUCH_PRESSURE_THRESHOLD;
+  }
+  
+  /* Rearrange values to make position->pressure
+   * higher with higher pressure values
+   */
+  position->pressure = TOUCH_PRESSURE_THRESHOLD - tmp_pressure_cal;
 }

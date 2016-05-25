@@ -29,4 +29,7 @@
 #define TOUCH_CNTL_REF_OFF_ADC_ON       0x01
 #define TOUCH_CNTL_PD                   0x00
 
+/* Number definitions */
+#define TOUCH_PRESSURE_THRESHOLD        4095
+
 #endif /* TOUCH_TOUCH_CONSTANTS_H_ */

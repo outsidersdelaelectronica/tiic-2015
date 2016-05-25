@@ -141,16 +141,18 @@ int main(void)
     while(1)
     {
       /* Fuel gauge data */
-      temperature = fg_read_reg16(FG_TEMP);
-      voltage = fg_read_reg16(FG_VOLT);
-      avg_current = fg_read_reg16(FG_AVG_CURRENT);
-      int_temp = fg_read_reg16(FG_INTERNAL_TEMP);
-      max_current = fg_read_reg16(FG_MAX_LOAD_CURRENT);
+//      temperature = fg_read_reg16(FG_TEMP);
+//      voltage = fg_read_reg16(FG_VOLT);
+//      avg_current = fg_read_reg16(FG_AVG_CURRENT);
+//      int_temp = fg_read_reg16(FG_INTERNAL_TEMP);
+//      max_current = fg_read_reg16(FG_MAX_LOAD_CURRENT);
       
       /* Draw text */
-      lcd_draw_string("Ya no te pasas por el parque a", myriad_pro_semibold17x23, &text_color, 230, 240);
-      lcd_draw_string(string, myriad_pro_semibold28x39_num, &dot_color, 470, 230);
-      lcd_draw_string("bpm", myriad_pro_semibold17x23, &text_color, 510, 240);   
+//      lcd_draw_string("Ya no te pasas por el parque a", myriad_pro_semibold17x23, &text_color, 230, 240);
+//      lcd_draw_string(string, myriad_pro_semibold28x39_num, &dot_color, 470, 230);
+//      lcd_draw_string("bpm", myriad_pro_semibold17x23, &text_color, 510, 240);   
+      
+      touch_get_position(&last_pos);
       
       sprintf(x_pos, "%d", last_pos.x_pos);
       sprintf(y_pos, "%d", last_pos.y_pos);
@@ -162,22 +164,22 @@ int main(void)
 
       /* Wait and erase text */
       //HAL_GPIO_TogglePin(GPIOC, UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin);
-      HAL_Delay(500); 
-      lcd_delete_string(string, myriad_pro_semibold28x39_num, 470, 230);
+//      HAL_Delay(500); 
+//      lcd_delete_string(string, myriad_pro_semibold28x39_num, 470, 230);
 
       lcd_delete_string(x_pos, myriad_pro_semibold17x23, 100, 160);
       lcd_delete_string(y_pos, myriad_pro_semibold17x23, 250, 160);
       lcd_delete_string(pressure, myriad_pro_semibold17x23, 400, 160);
       
       /* Count */
-      if(string[1] < '9')
-      {
-        string[1] = string[1] + 1;
-      }
-      else
-      {
-        string[1] = '0';
-      }  
+//      if(string[1] < '9')
+//      {
+//        string[1] = string[1] + 1;
+//      }
+//      else
+//      {
+//        string[1] = '0';
+//      }  
     }
   /* USER CODE END WHILE */
 
