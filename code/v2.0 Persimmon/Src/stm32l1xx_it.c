@@ -37,14 +37,21 @@
 
 /* USER CODE BEGIN 0 */
 #include "spi.h"
-#include "filters.h"   
-    
-extern SPI_HandleTypeDef hspi1;
+#include "filters.h"      
+#include "gauge.h"
+#include "lcd.h"
+#include "touch.h"
+#include <stdio.h>
 
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
 extern TIM_HandleTypeDef htim6;
+extern SPI_HandleTypeDef hspi1;
+extern uint16_t fg_soc;
+extern touch_pos_t last_pos;
+extern char bat_soc[4];
+color_t bat_color;
 
 /******************************************************************************/
 /*            Cortex-M3 Processor Interruption and Exception Handlers         */ 
@@ -158,21 +165,55 @@ void EXTI1_IRQHandler(void)
 }
 
 /**
+* @brief This function handles EXTI line3 interrupt.
+*/
+void EXTI3_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI3_IRQn 0 */
+  bat_color = (color_t) COLOR_WHITE;
+  
+  /* Read new battery soc value */
+  fg_soc = fg_read_reg16(FG_SOC);
+  
+  /* Delete old value from screen */
+  lcd_delete_string(bat_soc, myriad_pro_semibold28x39_num, 470, 100);
+
+  /* Convert to string
+   * http://www.keil.com/support/man/docs/c51/c51_sprintf.htm
+   */
+  sprintf(bat_soc, "%d", fg_soc);
+
+  /* Draw it */
+  lcd_draw_string(bat_soc, myriad_pro_semibold28x39_num, &bat_color, 470, 100);
+  
+  /* USER CODE END EXTI3_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_3);
+  /* USER CODE BEGIN EXTI3_IRQn 1 */
+
+  /* USER CODE END EXTI3_IRQn 1 */
+}
+
+/**
 * @brief This function handles EXTI line[15:10] interrupts.
 */
 void EXTI15_10_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
-  if (__HAL_GPIO_EXTI_GET_FLAG(GPIO_PIN_10)){
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_10);
-  }
+  
+  /* Disable touchpad interrupts */
+  HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
+  
+  /* Get position */
+//  touch_get_position(&last_pos);
+  
   /* USER CODE END EXTI15_10_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_10);
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_11);
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
-  if (__HAL_GPIO_EXTI_GET_FLAG(GPIO_PIN_11)){
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_11);
-  }
+
+  /* Enable touchpad interrupts */
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+  
   /* USER CODE END EXTI15_10_IRQn 1 */
 }
 

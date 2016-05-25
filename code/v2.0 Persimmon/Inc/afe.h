@@ -8,8 +8,11 @@
 #ifndef AFE_AFE_H_
 #define AFE_AFE_H_
 
-//#include "ADS1291_constants.h"
+#include "gpio.h"
+#include "spi.h"
 
-void	afe_init();
+#include "afe_constants.h"
+
+void afe_init();
 
 #endif /* AFE_AFE_H_ */

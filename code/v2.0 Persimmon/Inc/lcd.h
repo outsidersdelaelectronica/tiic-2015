@@ -1,13 +1,39 @@
 /*
  * lcd.h
  *
- *  Created on: 09/05/2016
+ *  Created on: 10/05/2016
  *      Author: Smau
  */
-
 #ifndef LCD_LCD_H_
 #define LCD_LCD_H_
 
-void	lcd_init();
+#include "color.h"
+#include "myriad_pro_semibold.h"
+
+#include "lcd_constants.h"
+
+#include "fsmc.h"
+#include <math.h>
+
+#define LCD_REG        ((uint32_t *)(FSMC_BASE))
+#define LCD_DATA       ((uint32_t *)(FSMC_BASE + 0x00020000U))  //See p.620 of STM32L162VD ref. manual
+
+#define LCD_X_SIZE     (uint16_t) 800
+#define LCD_Y_SIZE     (uint16_t) 480
+
+void lcd_init();
+
+void lcd_draw_pixel(uint16_t x_pos, uint16_t y_pos, color_t *color);
+void lcd_draw_line(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, color_t *color);
+void lcd_draw_string(char *string,
+                     const uint8_t *current_font, 
+                     color_t *char_color,
+                     uint16_t x_pos, uint16_t y_pos);
+void lcd_delete_string(char *string,
+                       const uint8_t *current_font,
+                       uint16_t x_pos, uint16_t y_pos);
+
+void lcd_clean_screen(color_t *color);
+void lcd_set_brightness(uint8_t level);
 
 #endif /* LCD_LCD_H_ */

@@ -1,5 +1,5 @@
 /*
- * ADS1291_constants.h
+ * afe_constants.h
  *
  * ADS1291 Medical Analog Front End constant definitions
  *
@@ -7,8 +7,8 @@
  *      Author: slopez
  */
 
-#ifndef AFE_AFE_SRC_ADS1291_CONSTANTS_H_
-#define AFE_AFE_SRC_ADS1291_CONSTANTS_H_
+#ifndef AFE_AFE_CONSTANTS_H_
+#define AFE_AFE_CONSTANTS_H_
 
 ///// SPI commands
 /*
@@ -62,4 +62,4 @@
 #define AFE_REG_GPIO		0x0B
 
 
-#endif /* AFE_AFE_SRC_ADS1291_CONSTANTS_H_ */
+#endif /* AFE_AFE_CONSTANTS_H_ */
