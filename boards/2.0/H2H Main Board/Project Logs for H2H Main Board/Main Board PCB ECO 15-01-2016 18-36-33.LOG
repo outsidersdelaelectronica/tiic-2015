@@ -1,3 +1,0 @@
-Removed Pin From Net: NetName=NetR39_2 Pin=SW1-1
-Removed Pin From Net: NetName=VDD_MCU Pin=SW1-2
-Removed Member From Class: ClassName=U_MCU Member=SW1

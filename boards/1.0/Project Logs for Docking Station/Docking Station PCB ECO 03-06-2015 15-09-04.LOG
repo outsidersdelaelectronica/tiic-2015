@@ -1,5 +1,0 @@
-Added Component: Designator=JP1(HDR1X3)
-Added Pin To Net: NetName=VCC Pin=JP1-1
-Added Pin To Net: NetName=CHARGING Pin=JP1-2
-Added Pin To Net: NetName=GND Pin=JP1-3
-Added Member To Class: ClassName=Docking Station Member=Component JP1 Header 3

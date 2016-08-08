@@ -1,6 +1,0 @@
-Added Component: Designator=SW1(MFS201N-16-Z)
-Added Pin To Net: NetName=NetJ2_2 Pin=SW1-2
-Added Pin To Net: NetName=PACK+ Pin=SW1-3
-Added Pin To Net: NetName=NetJ2_2 Pin=SW1-5
-Added Pin To Net: NetName=PACK+ Pin=SW1-6
-Added Member To Class: ClassName=U_Supply Member=Component SW1 Switch SPDT

@@ -1,6 +1,0 @@
-Change Net Name : Old Net Name=AFE_IN1N New Net Name=AFE_IN1_N
-Change Net Name : Old Net Name=AFE_IN1P New Net Name=AFE_IN1_P
-Change Net Name : Old Net Name=AFE_IN2N New Net Name=AFE_IN2_N
-Change Net Name : Old Net Name=AFE_IN2P New Net Name=AFE_IN2_P
-Added Differential Pair: Name=AFE_IN1
-Added Differential Pair: Name=AFE_IN2

@@ -1,5 +1,0 @@
-Removed Pin From Net: NetName=PACK+ Pin=J2-2
-Added Pin To Net: NetName=NetJ2_2 Pin=J2-2
-Added Net: Name=NetJ2_2
-Added Member To Class: ClassName=U_RF Member=Component C50 0.1u
-Added Member To Class: ClassName=U_RF Member=Component C51 0.1u

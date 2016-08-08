@@ -1,4 +1,0 @@
-Change Component Comment : Designator=ANT Old Comment=Antenna New Comment=2.4 GHz F-antenna
-Change Component Description : Designator=ANT Old Description= New Description=2.4 GHz F-antenna
-Added Pin To Net: NetName=NetANT_0 Pin=ANT-1
-Change Net Name : Old Net Name=NetANT_0 New Net Name=NetANT_1

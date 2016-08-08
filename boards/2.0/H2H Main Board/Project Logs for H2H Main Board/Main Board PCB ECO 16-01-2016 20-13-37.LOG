@@ -1,8 +1,0 @@
-Removed Pin From Net: NetName=FG_GPOUT Pin=U13-1
-Removed Pin From Net: NetName=CHRG_PG Pin=U13-2
-Removed Pin From Net: NetName=CHRG_CHG Pin=U13-3
-Removed Pin From Net: NetName=CHRG_JACK_DET Pin=U13-4
-Added Pin To Net: NetName=FG_GPOUT Pin=U13-2
-Added Pin To Net: NetName=CHRG_PG Pin=U13-3
-Added Pin To Net: NetName=CHRG_CHG Pin=U13-4
-Added Pin To Net: NetName=CHRG_JACK_DET Pin=U13-5

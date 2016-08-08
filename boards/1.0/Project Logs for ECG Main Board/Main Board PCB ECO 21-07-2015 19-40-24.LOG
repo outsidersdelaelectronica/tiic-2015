@@ -1,4 +1,0 @@
-Added Component: Designator=R90(R0603)
-Added Pin To Net: NetName=AGND Pin=R90-1
-Added Pin To Net: NetName=LED Pin=R90-2
-Added Member To Class: ClassName=U_MCU Member=Component R90 10K

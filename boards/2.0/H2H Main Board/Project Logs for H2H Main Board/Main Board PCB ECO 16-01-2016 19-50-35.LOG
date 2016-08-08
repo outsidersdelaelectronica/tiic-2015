@@ -1,4 +1,0 @@
-Change Net Name : Old Net Name=NetC61_2 New Net Name=X2_P
-Change Net Name : Old Net Name=NetC62_2 New Net Name=X2_N
-Added Differential Pair: Name=X2
-Added Member To Class: ClassName=U_MCU Member=Component SW1 WS-TASU 436331045822
