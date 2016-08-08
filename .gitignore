@@ -1,0 +1,36 @@
+*.dep
+*.sim
+*.pbi
+*.cout
+*.o
+*.pbd
+*.browse
+*.dbgdt
+*.crun
+*.dni
+*.bat
+*.xcl
+*.wsdt
+*.wspos
+*.icf
+*.lock
+code/v3.0 PersimmonOS/FSM/.metadata/.log
+*.log
+code/v3.0 PersimmonOS/FSM/.metadata/.plugins/org.eclipse.core.resources/.history/11/70d5a453335b00161807b7e1e9251e1c
+code/v3.0 PersimmonOS/FSM/.metadata/.plugins/org.eclipse.core.resources/.history/6f/407dec8c1b5c0016185eb7e5834bf2d8
+code/v3.0 PersimmonOS/FSM/.metadata/version.ini
+code/v3.0 PersimmonOS/FSM/.metadata/.plugins/org.eclipse.xtend.ide/resource.change.registry
+code/v3.0 PersimmonOS/FSM/.metadata/.plugins/org.eclipse.jdt.core/nonChainingJarsCache
+code/v3.0 PersimmonOS/FSM/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat
+code/v3.0 PersimmonOS/FSM/.metadata/.plugins/org.eclipse.pde.core/.cache/clean-cache.properties
+code/v3.0 PersimmonOS/FSM/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.yakindu.sct.ui.editor.prefs
+*.launch
+*.xmi
+code/v3.0 PersimmonOS/FSM/.metadata/.plugins/org.eclipse.jdt.core/externalFilesCache
+code/v3.0 PersimmonOS/FSM/.metadata/.plugins/org.eclipse.jdt.core/assumedExternalFilesCache
+*.prefs
+*.tree
+*.resources
+code/v3.0 PersimmonOS/FSM/.metadata/.plugins/org.eclipse.gmf.runtime.diagram.ui/_IR6WkFr8Eeavs7mDFflpEA
+*.hex
+*.map

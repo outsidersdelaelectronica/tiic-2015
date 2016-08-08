@@ -1,0 +1,16 @@
+/*
+ * gauge.h
+ *
+ *  Created on: 10/05/2016
+ *      Author: Smau
+ */
+#ifndef GAUGE_H_
+#define GAUGE_H_
+
+#include "gauge_hal.h"
+
+void gauge_init(gauge_t *gauge, I2C_HandleTypeDef *hi2c);
+
+void gauge_read(gauge_t *gauge);
+
+#endif /* GAUGE_H_ */
