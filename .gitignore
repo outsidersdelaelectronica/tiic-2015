@@ -12,9 +12,7 @@
 *.xcl
 *.wsdt
 *.wspos
-*.icf
 *.lock
-code/v3.0 PersimmonOS/FSM/.metadata/.log
 *.log
 code/v3.0 PersimmonOS/FSM/.metadata/.plugins/org.eclipse.core.resources/.history/11/70d5a453335b00161807b7e1e9251e1c
 code/v3.0 PersimmonOS/FSM/.metadata/.plugins/org.eclipse.core.resources/.history/6f/407dec8c1b5c0016185eb7e5834bf2d8
