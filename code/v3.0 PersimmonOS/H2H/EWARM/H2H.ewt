@@ -1141,7 +1141,7 @@
             </file>
           </group>
           <file>
-            <name>$PROJ_DIR$\..\Src\state_menu.c</name>
+            <name>$PROJ_DIR$\..\Src\state_main.c</name>
           </file>
         </group>
         <file>
@@ -1154,13 +1154,16 @@
       <group>
         <name>gui</name>
         <group>
+          <name>color</name>
+          <file>
+            <name>$PROJ_DIR$\..\Src\color.c</name>
+          </file>
+        </group>
+        <group>
           <name>fonts</name>
-          <group>
-            <name>color</name>
-            <file>
-              <name>$PROJ_DIR$\..\Src\color.c</name>
-            </file>
-          </group>
+          <file>
+            <name>$PROJ_DIR$\..\Inc\fonts.h</name>
+          </file>
           <file>
             <name>$PROJ_DIR$\..\Src\myriad_pro_semibold.c</name>
           </file>
@@ -1181,6 +1184,15 @@
           </file>
           <file>
             <name>$PROJ_DIR$\..\Inc\lcd_items_utils.h</name>
+          </file>
+        </group>
+        <group>
+          <name>menus</name>
+          <file>
+            <name>$PROJ_DIR$\..\Src\menu_main.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\Inc\menus.h</name>
           </file>
         </group>
         <file>

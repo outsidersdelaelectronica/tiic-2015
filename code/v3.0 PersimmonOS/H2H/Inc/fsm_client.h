@@ -12,7 +12,7 @@
 #include "state.h"
 
 /* Initial state */
-#include "state_menu.h"
+#include "state_main.h"
 
 typedef struct fsm_client_t* fsm_client_ptr;
 typedef struct fsm_client_t

@@ -3,7 +3,7 @@
 void fsm_client_init(fsm_client_ptr fsm)
 {
   /* Specify the initial state */
-  entry_to_menu(&fsm->state);
+  entry_to_main(&fsm->state);
 }
 
 /*

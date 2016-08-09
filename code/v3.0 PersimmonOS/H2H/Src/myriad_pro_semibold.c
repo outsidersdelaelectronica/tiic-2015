@@ -6,7 +6,7 @@
 //GLCD FontName : myriad_pro_semibold11x16
 //GLCD FontSize : 11 x 16
 
-#include "myriad_pro_semibold.h"
+#include "fonts.h"
 
 const uint8_t myriad_pro_semibold11x16[] = {
    0x00,

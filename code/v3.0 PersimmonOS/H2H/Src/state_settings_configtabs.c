@@ -1,7 +1,7 @@
 #include "state_settings_configtabs.h"
 
 /* Possible transition to the following states */
-#include "state_menu.h"
+#include "state_main.h"
 
 /* Child states */
 #include "state_settings_configtabs_screen.h"
@@ -10,12 +10,12 @@
 #include "state_settings_configtabs_about.h"
 #include "state_settings_configtabs_touch.h"
 
-static void settings_configtabs_to_menu(state_ptr state)
+static void settings_configtabs_to_main(state_ptr state)
 {
   /* Do transition actions */
 
   /* Change state */
-  entry_to_menu(state);
+  entry_to_main(state);
 }
 
 static void settings_configtabs_to_settings_configtabs_screen(state_ptr state)
@@ -62,7 +62,7 @@ static void settings_configtabs_to_settings_configtabs_touch(state_ptr state)
 void behaviour_settings_configtabs(state_ptr state)
 {
   /* Set events to react to */
-  state->back = settings_configtabs_to_menu;
+  state->back = settings_configtabs_to_main;
   state->settings_screen = settings_configtabs_to_settings_configtabs_screen;
   state->settings_timedate = settings_configtabs_to_settings_configtabs_timedate;
   state->settings_bt = settings_configtabs_to_settings_configtabs_bluetooth;

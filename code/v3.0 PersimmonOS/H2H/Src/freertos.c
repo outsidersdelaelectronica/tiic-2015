@@ -49,8 +49,6 @@
 
 #include "click.h"
 
-#include "myriad_pro_semibold.h"
-
 #include "dsp.h"
 
 #include "bluetooth.h"
