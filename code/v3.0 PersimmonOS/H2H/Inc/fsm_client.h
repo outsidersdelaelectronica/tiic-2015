@@ -8,15 +8,20 @@
 #ifndef FSM_CLIENT_H_
 #define FSM_CLIENT_H_
 
+/* State interface */
 #include "state.h"
 
-typedef struct fsm_client_t* fsm_client_ptr;
+/* Initial state */
+#include "state_menu.h"
 
+typedef struct fsm_client_t* fsm_client_ptr;
 typedef struct fsm_client_t
 {
   struct state_t state;
 }
 fsm_client_t;
+
+typedef void (*fsm_event_f)(fsm_client_ptr);
 
 void fsm_client_init(fsm_client_ptr fsm);
 

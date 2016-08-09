@@ -64,8 +64,6 @@ void lcd_init(lcd_t *lcd, SRAM_HandleTypeDef *hsram,
 
   if (device_descriptor_ok)
   {
-    color_t bg_color = (color_t) COLOR_BLACK;
-
     /* Set PLL */
     lcd_hal_write_reg(lcd, LCD_SET_PLL_MN, lcd_param_pll_mn, 3);
     /* Enable PLL */
@@ -122,7 +120,7 @@ void lcd_init(lcd_t *lcd, SRAM_HandleTypeDef *hsram,
     lcd->lcd_x_size = LCD_X_SIZE;
     lcd->lcd_y_size = LCD_Y_SIZE;
     lcd->backlight_level = 100;
-    
+
     /* Exit sleep mode and turn display on */
     lcd_hal_write_command(lcd, LCD_EXIT_SLEEP_MODE);
     HAL_Delay(10);

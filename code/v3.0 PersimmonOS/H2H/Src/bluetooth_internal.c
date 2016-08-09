@@ -280,7 +280,7 @@ int OpenStack(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_Initializatio
 
             if(HCI_Command_Supported(BluetoothStackID, HCI_SUPPORTED_COMMAND_WRITE_DEFAULT_LINK_POLICY_BIT_NUMBER) > 0)
             {
-               HCI_Write_Default_Link_Policy_Settings(BluetoothStackID, 
+               HCI_Write_Default_Link_Policy_Settings(BluetoothStackID,
                                                       (HCI_LINK_POLICY_SETTINGS_ENABLE_MASTER_SLAVE_SWITCH|
                                                        HCI_LINK_POLICY_SETTINGS_ENABLE_SNIFF_MODE), &Status);
             }
@@ -2199,7 +2199,7 @@ int AutomaticReadMode(void)
 {
    int ret_val = INVALID_PARAMETERS_ERROR;/* Initialized to this value to avoid*/
                                           /* the "else"                        */
-   /* Check if 
+   /* Check if */
       /* Check to see if Loopback is active.  If it is then we will not */
       /* process this command (and we will inform the user).            */
    if((BluetoothStackID) && (!LoopbackActive))
