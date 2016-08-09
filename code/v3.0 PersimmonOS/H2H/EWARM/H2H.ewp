@@ -1063,6 +1063,33 @@
             <file>
               <name>$PROJ_DIR$\..\Src\state_settings_configtabs.c</name>
             </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\state_settings_configtabs_about.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\state_settings_configtabs_bluetooth.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\state_settings_configtabs_screen.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\state_settings_configtabs_timedate.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\state_settings_configtabs_touch.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\state_settings_touchcalib.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\state_settings_touchcalib_point_1.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\state_settings_touchcalib_point_2.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\state_settings_touchcalib_point_3.c</name>
+            </file>
           </group>
           <file>
             <name>$PROJ_DIR$\..\Src\state_menu.c</name>
