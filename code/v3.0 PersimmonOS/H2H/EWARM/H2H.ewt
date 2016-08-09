@@ -1136,6 +1136,9 @@
             <file>
               <name>$PROJ_DIR$\..\Src\state_settings.c</name>
             </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\state_settings_configtabs.c</name>
+            </file>
           </group>
           <file>
             <name>$PROJ_DIR$\..\Src\state_menu.c</name>
