@@ -1,13 +1,12 @@
 #include "menus.h"
 
-const lcd_area_t menu_main_ecg =
+const item_area_t menu_main_ecg =
 {
   .width                = 0,
   .height               = 0,
   .pos                  = {.x_pos = 0, .y_pos = 0},
-  .border               = NO_BORDER,
-  .is_active            = ACTIVE,
-  .is_clicked           = GUI_NOT_CLICKED,
+  .border               = GUI_NO_BORDER,
+  .is_active            = GUI_ACTIVE,
   .string               = "",
   .font                 = myriad_pro_semibold11x16,
   .string_width         = 0,

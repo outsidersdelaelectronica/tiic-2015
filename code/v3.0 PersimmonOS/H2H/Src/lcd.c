@@ -128,7 +128,7 @@ void lcd_init(lcd_t *lcd, SRAM_HandleTypeDef *hsram,
   }
 }
 
-gui_status_t lcd_print_area(lcd_t *lcd, void *item)
+gui_status_t lcd_print_area(lcd_t *lcd, item_generic_t *item)
 {
   uint16_t x_pos, x_pos_width;
   uint16_t y_pos, y_pos_height;
@@ -139,47 +139,33 @@ gui_status_t lcd_print_area(lcd_t *lcd, void *item)
   color_t bg_color;
   color_t border_color;
 
-  /* Cast pointer */
-  lcd_area_t *area = (lcd_area_t *) item;
-
-  /* Check if area is clicked */
-  if (area->is_clicked == GUI_CLICKED)
-  {
-    /* Invert colors */
-    color_get_inverse(&(area->text_color), &text_color);
-    color_get_inverse(&(area->bg_color), &bg_color);
-    color_get_inverse(&(area->border_color), &border_color);
-  }
-  else
-  {
-    text_color = area->text_color;
-    bg_color = area->bg_color;
-    border_color = area->border_color;
-  }
+  text_color = item->area.text_color;
+  bg_color = item->area.bg_color;
+  border_color = item->area.border_color;
 
   /* Check if area lies within lcd boundaries */
-  if (area->pos.x_pos + area->width > lcd->lcd_x_size)
+  if (item->area.pos.x_pos + item->area.width > lcd->lcd_x_size)
   {
     return GUI_SIZE_ERROR;
   }
-  if (area->pos.y_pos + area->height > lcd->lcd_y_size)
+  if (item->area.pos.y_pos + item->area.height > lcd->lcd_y_size)
   {
     return GUI_SIZE_ERROR;
   }
 
   /* Draw area rectangle */
   lcd_draw_rectangle(lcd,
-                     area->pos.x_pos, area->width,
-                     area->pos.y_pos, area->height,
+                     item->area.pos.x_pos, item->area.width,
+                     item->area.pos.y_pos, item->area.height,
                      &bg_color);
 
   /* Draw border if present */
-  if (area->border == RECTANGLE)
+  if (item->area.border == GUI_RECTANGLE)
   {
-    x_pos = area->pos.x_pos;
-    y_pos = area->pos.y_pos;
-    x_pos_width = area->pos.x_pos + area->width - 1;
-    y_pos_height = area->pos.y_pos + area->height - 1;
+    x_pos = item->area.pos.x_pos;
+    y_pos = item->area.pos.y_pos;
+    x_pos_width = item->area.pos.x_pos + item->area.width - 1;
+    y_pos_height = item->area.pos.y_pos + item->area.height - 1;
 
     /* Top line */
     lcd_draw_line(lcd,
@@ -204,48 +190,56 @@ gui_status_t lcd_print_area(lcd_t *lcd, void *item)
   }
 
   /* Draw text */
-  switch (area->string_h_align)
+  switch (item->area.string_h_align)
   {
     case LEFT:
-      string_x_pos = area->pos.x_pos;
+      string_x_pos = item->area.pos.x_pos;
       break;
     case CENTER:
-      string_x_pos = area->pos.x_pos + (area->width >> 1) - (area->string_width >> 1);
+      string_x_pos = item->area.pos.x_pos +
+                     (item->area.width >> 1) -
+                     (item->area.string_width >> 1);
       break;
     case RIGHT:
-      string_x_pos = area->pos.x_pos + area->width - area->string_width;
+      string_x_pos = item->area.pos.x_pos +
+                     item->area.width -
+                     item->area.string_width;
       break;
     default:
-      string_x_pos = area->pos.x_pos;
+      string_x_pos = item->area.pos.x_pos;
       break;
   }
 
-  switch (area->string_v_align)
+  switch (item->area.string_v_align)
   {
     case TOP:
-      string_y_pos = area->pos.y_pos;
+      string_y_pos = item->area.pos.y_pos;
       break;
     case MID:
-      string_y_pos = area->pos.y_pos + (area->height >> 1) - (area->string_height >> 1);
+      string_y_pos = item->area.pos.y_pos +
+                     (item->area.height >> 1) -
+                     (item->area.string_height >> 1);
       break;
     case RIGHT:
-      string_y_pos = area->pos.y_pos + area->height - area->string_height;
+      string_y_pos = item->area.pos.y_pos +
+                     item->area.height -
+                     item->area.string_height;
       break;
     default:
-      string_y_pos = area->pos.y_pos;
+      string_y_pos = item->area.pos.y_pos;
       break;
   }
 
   lcd_draw_string(lcd,
-                  area->string,
-                  area->font,
+                  item->area.string,
+                  item->area.font,
                   &text_color, &bg_color,
                   string_x_pos, string_y_pos);
 
   return GUI_OK;
 }
 
-gui_status_t lcd_print_graph(lcd_t *lcd, void *item)
+gui_status_t lcd_print_graph(lcd_t *lcd, item_generic_t *item)
 {
   uint16_t x_pos, x_pos_width;
   uint16_t y_pos, y_pos_height;
@@ -254,53 +248,39 @@ gui_status_t lcd_print_graph(lcd_t *lcd, void *item)
   color_t bg_legend_color;
   color_t border_color;
 
-  /* Cast pointer */
-  lcd_graph_t *graph = (lcd_graph_t *) item;
-
-  /* Check if area is clicked */
-  if (graph->is_clicked == GUI_CLICKED)
-  {
-    /* Invert colors */
-    color_get_inverse(&(graph->text_color), &text_color);
-    color_get_inverse(&(graph->bg_legend_color), &bg_legend_color);
-    color_get_inverse(&(graph->border_color), &border_color);
-  }
-  else
-  {
-    text_color = graph->text_color;
-    bg_legend_color = graph->bg_legend_color;
-    border_color = graph->border_color;
-  }
+  text_color = item->graph.text_color;
+  bg_legend_color = item->graph.bg_legend_color;
+  border_color = item->graph.border_color;
 
   /* Check if area lies within lcd boundaries */
-  if (graph->pos.x_pos + graph->width_legend + graph->width_graph > lcd->lcd_x_size)
+  if (item->graph.pos.x_pos + item->graph.width_legend + item->graph.width_graph > lcd->lcd_x_size)
   {
     return GUI_SIZE_ERROR;
   }
-  if (graph->pos.y_pos + graph->height > lcd->lcd_y_size)
+  if (item->graph.pos.y_pos + item->graph.height > lcd->lcd_y_size)
   {
     return GUI_SIZE_ERROR;
   }
 
   /* Draw legend rectangle */
   lcd_draw_rectangle(lcd,
-                     graph->pos.x_pos, graph->width_legend,
-                     graph->pos.y_pos, graph->height,
+                     item->graph.pos.x_pos, item->graph.width_legend,
+                     item->graph.pos.y_pos, item->graph.height,
                      &bg_legend_color);
 
   /* Draw graph rectangle */
   lcd_draw_rectangle(lcd,
-                     graph->pos.x_pos + graph->width_legend, graph->width_graph,
-                     graph->pos.y_pos, graph->height,
-                     &(graph->bg_graph_color));
+                     item->graph.pos.x_pos + item->graph.width_legend, item->graph.width_graph,
+                     item->graph.pos.y_pos, item->graph.height,
+                     &(item->graph.bg_graph_color));
 
   /* Draw border if present */
-  if (graph->border == RECTANGLE)
+  if (item->graph.border == GUI_RECTANGLE)
   {
-    x_pos = graph->pos.x_pos;
-    y_pos = graph->pos.y_pos;
-    x_pos_width = graph->pos.x_pos + graph->width_legend + graph->width_graph - 1;
-    y_pos_height = graph->pos.y_pos + graph->height - 1;
+    x_pos = item->graph.pos.x_pos;
+    y_pos = item->graph.pos.y_pos;
+    x_pos_width = item->graph.pos.x_pos + item->graph.width_legend + item->graph.width_graph - 1;
+    y_pos_height = item->graph.pos.y_pos + item->graph.height - 1;
 
     /* Top line */
     lcd_draw_line(lcd,
@@ -327,32 +307,29 @@ gui_status_t lcd_print_graph(lcd_t *lcd, void *item)
   return GUI_OK;
 }
 
-gui_status_t lcd_update_graph(lcd_t *lcd, void *item)
+gui_status_t lcd_update_graph(lcd_t *lcd, item_generic_t *item)
 {
   uint32_t y_pos_second_to_last, y_pos_last;
 
-  /* Cast pointer */
-  lcd_graph_t *graph = (lcd_graph_t *) item;
-
   /* Calculate graph points */
-  y_pos_second_to_last = (graph->second_to_last_value * (graph->height >> 1))
-                         / graph->y_axis_full_scale;
-  y_pos_last           = (graph->last_value * (graph->height >> 1))
-                         / graph->y_axis_full_scale;
+  y_pos_second_to_last = (item->graph.second_to_last_value * (item->graph.height >> 1)) /
+                         (item->graph.y_axis_full_scale);
+  y_pos_last           = (item->graph.last_value * (item->graph.height >> 1)) /
+                         (item->graph.y_axis_full_scale);
 
-  if (graph->value_index < graph->width_graph - 1)
+  if (item->graph.value_index < item->graph.width_graph - 1)
   {
     lcd_draw_line(lcd,
-                  graph->pos.x_pos + graph->width_legend + graph->value_index,
-                  graph->pos.y_pos + (graph->height >> 1) + y_pos_second_to_last,
-                  graph->pos.x_pos + graph->width_legend + graph->value_index + 1,
-                  graph->pos.y_pos + (graph->height >> 1) + y_pos_last,
-                  &(graph->line_color));
-    graph->value_index++;
+                  item->graph.pos.x_pos + item->graph.width_legend + item->graph.value_index,
+                  item->graph.pos.y_pos + (item->graph.height >> 1) + y_pos_second_to_last,
+                  item->graph.pos.x_pos + item->graph.width_legend + item->graph.value_index + 1,
+                  item->graph.pos.y_pos + (item->graph.height >> 1) + y_pos_last,
+                  &(item->graph.line_color));
+    item->graph.value_index++;
   }
   else
   {
-    graph->value_index = 0;
+    item->graph.value_index = 0;
   }
 
   return GUI_OK;
@@ -362,21 +339,15 @@ gui_status_t lcd_update_graph(lcd_t *lcd, void *item)
   * @param  level: Backlight PWM duty cycle (0 - 255).
   * @retval None
 */
-gui_status_t lcd_set_config(lcd_t *lcd, void *item)
+gui_status_t lcd_set_config(lcd_t *lcd, item_generic_t *item)
 {
-  /*
-   * Set backlight PWM level
-   */
   uint16_t param_pwm_conf_tmp[7];
-
-  /* Cast pointer */
-  lcd_config_t *config = (lcd_config_t *) item;
 
   /* Read previous configuration */
   lcd_hal_read_reg(lcd, LCD_GET_PWM_CONF, param_pwm_conf_tmp, 7);
 
   /* Change PWM value */
-  param_pwm_conf_tmp[1] = config->backlight_level;
+  param_pwm_conf_tmp[1] = item->config.backlight_level;
 
   /* Send new values */
   lcd_hal_write_reg(lcd, LCD_SET_PWM_CONF, param_pwm_conf_tmp, 6);

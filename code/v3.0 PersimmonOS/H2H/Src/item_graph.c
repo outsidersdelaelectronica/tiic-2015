@@ -1,9 +1,9 @@
-#include "lcd_graph.h"
+#include "item_graph.h"
 
-gui_status_t lcd_graph_init(lcd_graph_t *graph,
+gui_status_t item_graph_t_init(item_graph_t *graph,
                             uint16_t width_legend, uint16_t width_graph, uint16_t height,
                             uint16_t x_pos, uint16_t y_pos,
-                            h_align_t legend_position,
+                            gui_h_align_t legend_position,
                             gui_border_t border,
                             gui_active_t is_active,
                             uint32_t x_axis_full_scale, uint32_t y_axis_full_scale,
@@ -27,7 +27,6 @@ gui_status_t lcd_graph_init(lcd_graph_t *graph,
 
   /* Set behaviour default parameters */
   graph->is_active = is_active;
-  graph->is_clicked = GUI_NOT_CLICKED;
 
   /* Set axis scales */
   graph->x_axis_full_scale = x_axis_full_scale;
@@ -51,33 +50,23 @@ gui_status_t lcd_graph_init(lcd_graph_t *graph,
 /*
  * Getters
  */
-gui_active_t lcd_graph_get_is_active(lcd_graph_t *graph)
+gui_active_t item_graph_t_get_is_active(item_graph_t *graph)
 {
   return graph->is_active;
-}
-
-gui_clicked_t lcd_graph_get_is_clicked(lcd_graph_t *graph)
-{
-  return graph->is_clicked;
 }
 
 /*
  * Setters
  */
-void lcd_graph_set_is_active(lcd_graph_t *graph, gui_active_t is_active)
+void item_graph_t_set_is_active(item_graph_t *graph, gui_active_t is_active)
 {
   graph->is_active = is_active;
-}
-
-void lcd_graph_set_is_clicked(lcd_graph_t *graph, gui_clicked_t is_clicked)
-{
-  graph->is_clicked = is_clicked;
 }
 
 /*
  * Handlers
  */
-void lcd_graph_add_value(lcd_graph_t *graph, int32_t value)
+void item_graph_t_add_value(item_graph_t *graph, int32_t value)
 {
   graph->second_to_last_value = graph->last_value;
   graph->last_value = value;

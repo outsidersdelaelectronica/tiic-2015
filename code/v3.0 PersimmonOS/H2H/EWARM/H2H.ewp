@@ -1093,21 +1093,21 @@
           </file>
         </group>
         <group>
-          <name>items</name>
+          <name>item</name>
           <file>
-            <name>$PROJ_DIR$\..\Src\lcd_area.c</name>
+            <name>$PROJ_DIR$\..\Inc\item.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$\..\Src\lcd_config.c</name>
+            <name>$PROJ_DIR$\..\Src\item_area.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$\..\Src\lcd_graph.c</name>
+            <name>$PROJ_DIR$\..\Src\item_graph.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$\..\Src\lcd_items.c</name>
+            <name>$PROJ_DIR$\..\Inc\item_gui.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$\..\Inc\lcd_items_utils.h</name>
+            <name>$PROJ_DIR$\..\Src\item_lcd_config.c</name>
           </file>
         </group>
         <group>

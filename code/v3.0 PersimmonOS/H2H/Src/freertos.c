@@ -48,6 +48,7 @@
 #include "touch.h"
 
 #include "click.h"
+#include "item.h"
 
 #include "dsp.h"
 
@@ -326,7 +327,7 @@ void MX_FREERTOS_Init(void) {
   osMailQDef(queue_input_click, 4, click_t);
   queue_input_clickHandle = osMailCreate(osMailQ(queue_input_click), NULL);
 
-  osMailQDef(queue_lcd, 4, lcd_item_t);
+  osMailQDef(queue_lcd, 4, item_t);
   queue_lcdHandle = osMailCreate(osMailQ(queue_lcd), NULL);
 
   osMessageQDef(queue_bpmsignal, 4, int32_t);
@@ -569,17 +570,15 @@ void Start_periph_buttonTask(void const * argument)
 {
   /* USER CODE BEGIN Start_periph_buttonTask */
   GPIO_InitTypeDef GPIO_InitStruct;
-
-  lcd_config_t lcd_config;
-  lcd_item_t lcd_config_item;
+  item_t lcd_config;
 
   uint8_t is_lcd_on = 0;
   /* Take both semaphores for the first time */
   osSemaphoreWait(sem_periph_button_short_pressHandle, osWaitForever);
   osSemaphoreWait(sem_periph_button_long_pressHandle, osWaitForever);
 
-  /* Associate config item */
-  lcd_item_set(&lcd_config_item, (void *) &lcd_config, lcd_set_config);
+  /* Create config item */
+  item_lcd_config_init(&lcd_config.item.config, 0);
 
   /* Infinite loop */
   for(;;)
@@ -632,8 +631,8 @@ void Start_periph_buttonTask(void const * argument)
       if (is_lcd_on)
       {
         /* Turn it off */
-        lcd_config.backlight_level = 0;
-        osMailPut(queue_lcdHandle, (void *) &lcd_config_item);
+        lcd_config.item.config.backlight_level = 0;
+        osMailPut(queue_lcdHandle, (void *) &lcd_config);
 
         is_lcd_on = 0;
       }
@@ -641,8 +640,8 @@ void Start_periph_buttonTask(void const * argument)
       else
       {
         /* Turn it on, turn it on again */
-        lcd_config.backlight_level = lcd.backlight_level;
-        osMailPut(queue_lcdHandle, (void *) &lcd_config_item);
+        lcd_config.item.config.backlight_level = lcd.backlight_level;
+        osMailPut(queue_lcdHandle, (void *) &lcd_config);
 
         is_lcd_on = 1;
       }
@@ -849,7 +848,7 @@ void Start_periph_screenTask(void const * argument)
 {
   /* USER CODE BEGIN Start_periph_screenTask */
   osEvent event;
-  lcd_item_t *current_item;
+  item_t *current_item;
 
   for(;;)
   {
@@ -857,9 +856,9 @@ void Start_periph_screenTask(void const * argument)
     if (event.status == osEventMail)
     {
       /* Get item information */
-      current_item = (lcd_item_t *) event.value.p;
+      current_item = (item_t *) event.value.p;
       /* Do item function */
-      (*(current_item->item_print_function))(&lcd, current_item->item);
+      (*(current_item->item_print_function))(&lcd, &current_item->item);
     }
   }
 

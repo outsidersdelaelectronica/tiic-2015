@@ -1,13 +1,13 @@
-#include "lcd_area.h"
+#include "item_area.h"
 
-gui_status_t lcd_area_init(lcd_area_t *area,
-                           uint16_t width, uint16_t height,
-                           uint16_t x_pos, uint16_t y_pos,
-                           gui_border_t border,
-                           gui_active_t is_active,
-                           char *string, const uint8_t *font,
-                           h_align_t string_h_align, v_align_t string_v_align,
-                           color_t text_color, color_t bg_color, color_t border_color)
+gui_status_t item_area_init(item_area_t *area,
+                            uint16_t width, uint16_t height,
+                            uint16_t x_pos, uint16_t y_pos,
+                            gui_border_t border,
+                            gui_active_t is_active,
+                            char *string, const uint8_t *font,
+                            gui_h_align_t string_h_align, gui_v_align_t string_v_align,
+                            color_t text_color, color_t bg_color, color_t border_color)
 {
   gui_status_t status;
 
@@ -32,7 +32,6 @@ gui_status_t lcd_area_init(lcd_area_t *area,
 
   /* Set behaviour default parameters */
   area->is_active = is_active;
-  area->is_clicked = GUI_NOT_CLICKED;
 
   /* Set colors */
   area->text_color = text_color;
@@ -46,31 +45,21 @@ gui_status_t lcd_area_init(lcd_area_t *area,
  *  Getters
  *
  */
-gui_active_t lcd_area_get_is_active(lcd_area_t *area)
+gui_active_t item_area_get_is_active(item_area_t *area)
 {
   return area->is_active;
-}
-
-gui_clicked_t lcd_area_get_is_clicked(lcd_area_t *area)
-{
-  return area->is_clicked;
 }
 
 /*
  *  Setters
  *
  */
-void lcd_area_set_is_active(lcd_area_t *area, gui_active_t is_active)
+void item_area_set_is_active(item_area_t *area, gui_active_t is_active)
 {
   area->is_active = is_active;
 }
 
-void lcd_area_set_is_clicked(lcd_area_t *area, gui_clicked_t is_clicked)
-{
-  area->is_clicked = is_clicked;
-}
-
-gui_status_t lcd_area_set_text(lcd_area_t *area, char *string)
+gui_status_t item_area_set_text(item_area_t *area, char *string)
 {
   uint16_t string_height = 0;
   uint16_t string_width = 0;
