@@ -128,7 +128,7 @@ void lcd_init(lcd_t *lcd, SRAM_HandleTypeDef *hsram,
   }
 }
 
-gui_status_t lcd_print_area(lcd_t *lcd, item_generic_t *item)
+gui_status_t lcd_print_area(lcd_t *lcd, item_t *item)
 {
   uint16_t x_pos, x_pos_width;
   uint16_t y_pos, y_pos_height;
@@ -239,7 +239,7 @@ gui_status_t lcd_print_area(lcd_t *lcd, item_generic_t *item)
   return GUI_OK;
 }
 
-gui_status_t lcd_print_graph(lcd_t *lcd, item_generic_t *item)
+gui_status_t lcd_print_graph(lcd_t *lcd, item_t *item)
 {
   uint16_t x_pos, x_pos_width;
   uint16_t y_pos, y_pos_height;
@@ -307,7 +307,7 @@ gui_status_t lcd_print_graph(lcd_t *lcd, item_generic_t *item)
   return GUI_OK;
 }
 
-gui_status_t lcd_update_graph(lcd_t *lcd, item_generic_t *item)
+gui_status_t lcd_update_graph(lcd_t *lcd, item_t *item)
 {
   uint32_t y_pos_second_to_last, y_pos_last;
 
@@ -339,7 +339,7 @@ gui_status_t lcd_update_graph(lcd_t *lcd, item_generic_t *item)
   * @param  level: Backlight PWM duty cycle (0 - 255).
   * @retval None
 */
-gui_status_t lcd_set_config(lcd_t *lcd, item_generic_t *item)
+gui_status_t lcd_set_config(lcd_t *lcd, item_t *item)
 {
   uint16_t param_pwm_conf_tmp[7];
 

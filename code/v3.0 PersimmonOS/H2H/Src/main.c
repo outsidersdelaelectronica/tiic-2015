@@ -30,7 +30,6 @@
   *
   ******************************************************************************
   */
-/* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_hal.h"
 #include "cmsis_os.h"
 #include "dma.h"
@@ -42,39 +41,32 @@
 #include "gpio.h"
 #include "fsmc.h"
 
-/* USER CODE BEGIN Includes */
-#define QUARTER 350
-/* USER CODE END Includes */
+#include "afe.h"
+#include "buzzer.h"
+#include "gauge.h"
+#include "lcd.h"
+#include "touch.h"
+#include "bluetooth.h"
+#include "fsm_client.h"
 
-/* Private variables ---------------------------------------------------------*/
-
-/* USER CODE BEGIN PV */
-/* Private variables ---------------------------------------------------------*/
-
-/* USER CODE END PV */
-
-/* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void Error_Handler(void);
 void MX_FREERTOS_Init(void);
-
-/* USER CODE BEGIN PFP */
-/* Private function prototypes -----------------------------------------------*/
 void wakeup_check(void);
+void system_init(void);
 
-/* USER CODE END PFP */
+/* Hardware */
+afe_t afe;
+buzzer_t buzzer;
+gauge_t gauge;
+lcd_t lcd;
+touch_t touch;
 
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
+/* FSM */
+fsm_client_t fsm;
 
 int main(void)
 {
-
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
   /* MCU Configuration----------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -99,11 +91,8 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM4_Init();
 
-  /* USER CODE BEGIN 2 */
-//  /* Place before peripheral configuration */
-//  HAL_DBGMCU_EnableDBGStandbyMode();
-//  wakeup_check();
-  /* USER CODE END 2 */
+  /* Initialize system */
+  system_init();
 
   /* Call init function for freertos objects (in freertos.c) */
   MX_FREERTOS_Init();
@@ -112,22 +101,15 @@ int main(void)
   osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
-
   /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  while (1)
+  for (;;)
   {
-  /* USER CODE END WHILE */
-
-  /* USER CODE BEGIN 3 */
-
   }
-  /* USER CODE END 3 */
-
 }
 
-/** System Clock Configuration
-*/
+/*
+ * System Clock Configuration
+ */
 void SystemClock_Config(void)
 {
 
@@ -179,12 +161,11 @@ void SystemClock_Config(void)
   HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
 }
 
-/* USER CODE BEGIN 4 */
-/**
-  * @brief  Implements the initial delay of 2secs for wake up .
-  * @param  None
-  * @retval None
-*/
+/*
+ * @brief  Implements the initial delay of 2secs for wake up.
+ * @param  None
+ * @retval None
+ */
 void wakeup_check(void)
 {
   /* Checks if the system is resumed from standby */
@@ -217,7 +198,21 @@ void wakeup_check(void)
     }
   }
 }
-/* USER CODE END 4 */
+
+/*
+ * Hardware and object initialization
+ */
+void system_init(void)
+{
+  bluetooth_init();
+  afe_init(&afe, &hspi1);
+  gauge_init(&gauge, &hi2c1);
+  buzzer_init(&buzzer, &htim3, &htim4);
+  lcd_init(&lcd, &hsram1, LCD_REG, LCD_DATA, LCD_X_SIZE, LCD_Y_SIZE);
+  touch_init(&touch, &hspi2, TOUCH_X_SIZE, TOUCH_Y_SIZE);
+
+  fsm_client_init(&fsm);
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.
@@ -226,12 +221,10 @@ void wakeup_check(void)
   */
 void Error_Handler(void)
 {
-  /* USER CODE BEGIN Error_Handler */
   /* User can add his own implementation to report the HAL error return state */
   while(1)
   {
   }
-  /* USER CODE END Error_Handler */
 }
 
 #ifdef USE_FULL_ASSERT
@@ -245,21 +238,10 @@ void Error_Handler(void)
    */
 void assert_failed(uint8_t* file, uint32_t line)
 {
-  /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
-
 }
 
 #endif
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-*/
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

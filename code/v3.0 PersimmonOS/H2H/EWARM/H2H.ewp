@@ -1225,41 +1225,59 @@
           </file>
         </group>
       </group>
-      <file>
-        <name>$PROJ_DIR$\..\Src\dma.c</name>
-      </file>
+      <group>
+        <name>modules</name>
+        <file>
+          <name>$PROJ_DIR$\..\Src\dma.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\fsmc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\gpio.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\i2c.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\rtc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\spi.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\tim.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\usart.c</name>
+        </file>
+      </group>
+      <group>
+        <name>tasks</name>
+        <file>
+          <name>$PROJ_DIR$\..\Src\tasks_bt.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\tasks_ecg.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\tasks_input.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\tasks_periph.c</name>
+        </file>
+      </group>
       <file>
         <name>$PROJ_DIR$\..\Src\freertos.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Src\fsmc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\gpio.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\i2c.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$\..\Src\main.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\rtc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\spi.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\Src\stm32l1xx_hal_msp.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\Src\stm32l1xx_it.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\tim.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\usart.c</name>
       </file>
     </group>
   </group>
@@ -1390,7 +1408,7 @@
     </group>
   </group>
   <group>
-    <name>trace recorder</name>
+    <name>Tracer</name>
     <file>
       <name>$PROJ_DIR$\..\GenericRecorderLibSrc\trcBase.c</name>
     </file>

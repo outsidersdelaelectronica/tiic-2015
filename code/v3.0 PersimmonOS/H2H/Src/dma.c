@@ -48,12 +48,12 @@
 
 DMA_HandleTypeDef hdma_memtomem_dma2_channel1;
 
-/** 
+/**
   * Enable DMA controller clock
   * Configure DMA for memory to memory transfers
   *   hdma_memtomem_dma2_channel1
   */
-void MX_DMA_Init(void) 
+void MX_DMA_Init(void)
 {
   /* DMA controller clock enable */
   __HAL_RCC_DMA1_CLK_ENABLE();
@@ -72,8 +72,6 @@ void MX_DMA_Init(void)
   {
     Error_Handler();
   }
-        
-  
 
   /* DMA interrupt init */
   /* DMA1_Channel2_IRQn interrupt configuration */

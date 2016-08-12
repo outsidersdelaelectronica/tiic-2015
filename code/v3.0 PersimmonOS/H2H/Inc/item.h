@@ -16,20 +16,20 @@
 
 #include "lcd_hal.h"
 
-typedef union item_generic_t
+typedef union item_t
 {
   item_area_t area;
   item_graph_t graph;
   item_lcd_config_t config;
 }
-item_generic_t;
+item_t;
 
-typedef gui_status_t (*lcd_print_function_f)(lcd_t *lcd, item_generic_t *item);
-typedef struct item_t
+typedef gui_status_t (*lcd_print_function_f)(lcd_t *lcd, item_t *item);
+typedef struct item_action_t
 {
   lcd_print_function_f item_print_function;
-  item_generic_t item;
+  item_t item;
 }
-item_t;
+item_action_t;
 
 #endif /* ITEMS_H_ */

@@ -7,9 +7,9 @@
 #ifndef MENUS_H_
 #define MENUS_H_
 
-#include "item_area.h"
+#include "item.h"
 #include "fonts.h"
 
-extern const item_area_t menu_main;
+extern const item_t menu_main;
 
 #endif /* MENUS_H_ */
