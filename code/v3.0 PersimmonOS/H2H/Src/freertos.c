@@ -43,6 +43,8 @@
 
 #include "fsm_client.h"
 
+#include "menus.h"
+
 #include "tasks_ecg.h"
 #include "tasks_input.h"
 #include "tasks_bt.h"
@@ -96,6 +98,12 @@ void system_init(void)
   fsm_client_init(&fsm);
 }
 
+/* TEST Task */
+osThreadId testTaskHandle;
+void Start_testTask(void const * argument);
+
+extern osMailQId queue_lcdHandle;
+
 void MX_FREERTOS_Init(void)
 {
   /* Initialize system */
@@ -106,6 +114,24 @@ void MX_FREERTOS_Init(void)
   tasks_bt_init();
   tasks_input_init();
   tasks_periph_init();
+
+  /* TEST Task */
+  osThreadDef(testTask, Start_testTask, osPriorityIdle, 0, 64);
+  testTaskHandle = osThreadCreate(osThread(testTask), NULL);
+}
+
+void Start_testTask(void const * argument)
+{
+  item_action_t lcd_config;
+
+  item_lcd_config_init(&lcd_config.item.config, 200);
+  lcd_config.item_print_function = lcd_set_config;
+
+  osMailPut(queue_lcdHandle, (void *) &lcd_config);
+  osMailPut(queue_lcdHandle, (void *) &menu_main[0]);
+  for (;;)
+  {
+  }
 }
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -7,7 +7,8 @@ gui_status_t item_area_init(item_area_t *area,
                             gui_active_t is_active,
                             char *string, const uint8_t *font,
                             gui_h_align_t string_h_align, gui_v_align_t string_v_align,
-                            color_t text_color, color_t bg_color, color_t border_color)
+                            color_t text_color, color_t bg_color, color_t border_color,
+                            fsm_event_f event)
 {
   gui_status_t status;
 
@@ -38,25 +39,10 @@ gui_status_t item_area_init(item_area_t *area,
   area->bg_color = bg_color;
   area->border_color = border_color;
 
+  /* Set triggered event */
+  area->event = event;
+
   return status;
-}
-
-/*
- *  Getters
- *
- */
-gui_active_t item_area_get_is_active(item_area_t *area)
-{
-  return area->is_active;
-}
-
-/*
- *  Setters
- *
- */
-void item_area_set_is_active(item_area_t *area, gui_active_t is_active)
-{
-  area->is_active = is_active;
 }
 
 gui_status_t item_area_set_text(item_area_t *area, char *string)

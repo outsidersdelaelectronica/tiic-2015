@@ -10,6 +10,8 @@
 #include "item.h"
 #include "fonts.h"
 
-extern const item_t menu_main;
+#include "lcd.h"
+
+extern const item_action_t menu_main[];
 
 #endif /* MENUS_H_ */

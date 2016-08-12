@@ -63,7 +63,7 @@ void tasks_periph_init()
   periph_buzzerTaskHandle = osThreadCreate(osThread(periph_buzzerTask), NULL);
 
   /* periph_screenTask */
-  osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityLow, 0, 512);
+  osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityBelowNormal, 0, 512);
   periph_screenTaskHandle = osThreadCreate(osThread(periph_screenTask), NULL);
 }
 
@@ -178,7 +178,7 @@ void Start_periph_buzzerTask(void const * argument)
       buzzer_note_t beep;
       beep.note = A5;
       beep.ms = 50;
-      osMailPut(buzzerHandle, (void *) &beep);
+      osMailPut(queue_periph_buzzerHandle, (void *) &beep);
    *
    * from any task
    */

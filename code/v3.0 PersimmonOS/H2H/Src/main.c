@@ -44,8 +44,8 @@
 void SystemClock_Config(void);
 void Error_Handler(void);
 
-void wakeup_check(void);
 void MX_FREERTOS_Init(void);
+void wakeup_check(void);
 
 int main(void)
 {
@@ -83,6 +83,44 @@ int main(void)
   /* Infinite loop */
   for (;;)
   {
+  }
+}
+
+/*
+ * @brief  Implements the initial delay of 2secs for wake up.
+ * @param  None
+ * @retval None
+ */
+void wakeup_check(void)
+{
+  /* Checks if the system is resumed from standby */
+  if (__HAL_PWR_GET_FLAG(PWR_FLAG_WU))
+  {
+    GPIO_InitTypeDef GPIO_InitStruct;
+
+    /* Make falling edge sensitive */
+    GPIO_InitStruct.Pin = SYS_WKUP_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+    /* Wait */
+    HAL_Delay(1000);
+
+    /* If a falling edge has occured
+     * the press was not long enough
+     * to wake up the device
+     */
+    if (__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_0) == SET)
+    {
+      /* Clear interrupt flag */
+      __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_0);
+
+      /* Enable wakeup pin and go to sleep */
+      HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
+      __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
+      HAL_PWR_EnterSTANDBYMode();
+    }
   }
 }
 
@@ -138,44 +176,6 @@ void SystemClock_Config(void)
 
   /* SysTick_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
-}
-
-/*
- * @brief  Implements the initial delay of 2secs for wake up.
- * @param  None
- * @retval None
- */
-void wakeup_check(void)
-{
-  /* Checks if the system is resumed from standby */
-  if (__HAL_PWR_GET_FLAG(PWR_FLAG_WU))
-  {
-    GPIO_InitTypeDef GPIO_InitStruct;
-
-    /* Make falling edge sensitive */
-    GPIO_InitStruct.Pin = SYS_WKUP_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-    /* Wait */
-    HAL_Delay(1000);
-
-    /* If a falling edge has occured
-     * the press was not long enough
-     * to wake up the device
-     */
-    if (__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_0) == SET)
-    {
-      /* Clear interrupt flag */
-      __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_0);
-
-      /* Enable wakeup pin and go to sleep */
-      HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
-      __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
-      HAL_PWR_EnterSTANDBYMode();
-    }
-  }
 }
 
 /**
