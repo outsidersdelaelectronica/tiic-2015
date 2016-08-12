@@ -12,6 +12,9 @@
 
 #include "lcd.h"
 
-extern const item_action_t menu_main[];
+extern item_action_t menu_welcome[];
+
+extern item_action_t menu_main[];
+extern item_action_t menu_top_bar[];
 
 #endif /* MENUS_H_ */

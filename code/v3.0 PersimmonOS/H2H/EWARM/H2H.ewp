@@ -1116,6 +1116,12 @@
             <name>$PROJ_DIR$\..\Src\menu_main.c</name>
           </file>
           <file>
+            <name>$PROJ_DIR$\..\Src\menu_top_bar.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\Src\menu_welcome.c</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$\..\Inc\menus.h</name>
           </file>
         </group>

@@ -110,3 +110,7 @@ void fsm_click(fsm_client_ptr fsm)
   /* Trigger event function */
   fsm->state.click(&fsm->state);
 }
+
+void fsm_no_event(fsm_client_ptr fsm)
+{
+}
