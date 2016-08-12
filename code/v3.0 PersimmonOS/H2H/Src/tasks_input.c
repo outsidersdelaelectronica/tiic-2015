@@ -30,11 +30,11 @@ void tasks_input_init()
 
   /* Tasks */
   /* input_touchTask */
-  osThreadDef(input_touchTask, Start_input_touchTask, osPriorityNormal, 0, 64);
+  osThreadDef(input_touchTask, Start_input_touchTask, osPriorityAboveNormal, 0, 64);
   input_touchTaskHandle = osThreadCreate(osThread(input_touchTask), NULL);
 
   /* input_clickTask */
-  osThreadDef(input_clickTask, Start_input_clickTask, osPriorityNormal, 0, 64);
+  osThreadDef(input_clickTask, Start_input_clickTask, osPriorityAboveNormal, 0, 64);
   input_clickTaskHandle = osThreadCreate(osThread(input_clickTask), NULL);
 }
 

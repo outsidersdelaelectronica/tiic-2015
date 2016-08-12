@@ -34,12 +34,33 @@
 #include "task.h"
 #include "cmsis_os.h"
 
+#include "afe.h"
+#include "buzzer.h"
+#include "gauge.h"
+#include "lcd.h"
+#include "touch.h"
+#include "bluetooth.h"
+
+#include "fsm_client.h"
+
 #include "tasks_ecg.h"
 #include "tasks_input.h"
 #include "tasks_bt.h"
 #include "tasks_periph.h"
 
+/* Hardware */
+afe_t afe;
+buzzer_t buzzer;
+gauge_t gauge;
+lcd_t lcd;
+touch_t touch;
+
+/* FSM */
+fsm_client_t fsm;
+
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
+void system_init(void);
+
 void PreSleepProcessing(uint32_t *ulExpectedIdleTime);
 void PostSleepProcessing(uint32_t *ulExpectedIdleTime);
 void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName);
@@ -63,11 +84,27 @@ void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
     */
 }
 
+void system_init(void)
+{
+  afe_init(&afe, &hspi1);
+  afe_test_signal_on(&afe);
+
+  buzzer_init(&buzzer, &htim3, &htim4);
+  lcd_init(&lcd, &hsram1, LCD_REG, LCD_DATA, LCD_X_SIZE, LCD_Y_SIZE);
+  touch_init(&touch, &hspi2, TOUCH_X_SIZE, TOUCH_Y_SIZE);
+
+  fsm_client_init(&fsm);
+}
+
 void MX_FREERTOS_Init(void)
 {
+  /* Initialize system */
+  system_init();
+
+  /* Start tasks */
   tasks_ecg_init();
-  tasks_input_init();
   tasks_bt_init();
+  tasks_input_init();
   tasks_periph_init();
 }
 

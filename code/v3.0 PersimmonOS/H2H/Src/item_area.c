@@ -24,7 +24,7 @@ gui_status_t item_area_init(item_area_t *area,
 
   /* Set area text */
   area->font = font;
-  status = lcd_area_set_text(area, string);
+  status = item_area_set_text(area, string);
 
   /* Set text alignment */
   area->string_h_align = string_h_align;

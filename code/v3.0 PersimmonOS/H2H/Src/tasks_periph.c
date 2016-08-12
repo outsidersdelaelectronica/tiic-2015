@@ -55,11 +55,11 @@ void tasks_periph_init()
   periph_buttonTaskHandle = osThreadCreate(osThread(periph_buttonTask), NULL);
 
   /* periph_batteryTask */
-  osThreadDef(periph_batteryTask, Start_periph_batteryTask, osPriorityLow, 0, 64);
+  osThreadDef(periph_batteryTask, Start_periph_batteryTask, osPriorityAboveNormal, 0, 64);
   periph_batteryTaskHandle = osThreadCreate(osThread(periph_batteryTask), NULL);
 
   /* periph_buzzerTask */
-  osThreadDef(periph_buzzerTask, Start_periph_buzzerTask, osPriorityLow, 0, 64);
+  osThreadDef(periph_buzzerTask, Start_periph_buzzerTask, osPriorityBelowNormal, 0, 64);
   periph_buzzerTaskHandle = osThreadCreate(osThread(periph_buzzerTask), NULL);
 
   /* periph_screenTask */
@@ -79,6 +79,7 @@ void Start_periph_buttonTask(void const * argument)
 
   /* Create config item */
   item_lcd_config_init(&lcd_config.item.config, 0);
+  lcd_config.item_print_function = lcd_set_config;
 
   /* Infinite loop */
   for(;;)
@@ -124,9 +125,6 @@ void Start_periph_buttonTask(void const * argument)
        */
 
       /* Do something */
-
-      //TO-DO: Do it through the interpreter!
-
       /* If lcd is on */
       if (is_lcd_on)
       {

@@ -31,36 +31,31 @@
   *
   ******************************************************************************
   */
-/* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_hal.h"
 
-extern void Error_Handler(void);
-
-/* USER CODE BEGIN 0 */
 #include "buzzer.h"
 #include "cmsis_os.h"
 #include "HCITRANS.h"
 
-extern buzzer_t buzzer;
+extern void Error_Handler(void);
 
+extern buzzer_t buzzer;
 extern xSemaphoreHandle DataReceivedEvent;
+
 extern osSemaphoreId sem_ecg_afe_dma_rxHandle;
 extern osSemaphoreId sem_ecg_afe_drdyHandle;
+
+extern osSemaphoreId sem_input_touch_penHandle;
+
 extern osSemaphoreId sem_periph_button_short_pressHandle;
 extern osSemaphoreId sem_periph_button_long_pressHandle;
 extern osSemaphoreId sem_periph_batteryHandle;
-extern osSemaphoreId sem_input_touch_penHandle;
-/* USER CODE END 0 */
 
 /**
   * Initializes the Global MSP.
   */
 void HAL_MspInit(void)
 {
-  /* USER CODE BEGIN MspInit 0 */
-
-  /* USER CODE END MspInit 0 */
-
   __HAL_RCC_COMP_CLK_ENABLE();
    __HAL_RCC_SYSCFG_CLK_ENABLE();
 
@@ -81,13 +76,7 @@ void HAL_MspInit(void)
   HAL_NVIC_SetPriority(PendSV_IRQn, 15, 0);
   /* SysTick_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
-
-  /* USER CODE BEGIN MspInit 1 */
-
-  /* USER CODE END MspInit 1 */
 }
-
-/* USER CODE BEGIN 1 */
 
 /**
   * @brief Tx and Rx Transfer completed callbacks
@@ -190,14 +179,5 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     }
   }
 }
-/* USER CODE END 1 */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

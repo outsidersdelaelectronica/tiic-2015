@@ -41,29 +41,11 @@
 #include "gpio.h"
 #include "fsmc.h"
 
-#include "afe.h"
-#include "buzzer.h"
-#include "gauge.h"
-#include "lcd.h"
-#include "touch.h"
-#include "bluetooth.h"
-#include "fsm_client.h"
-
 void SystemClock_Config(void);
 void Error_Handler(void);
-void MX_FREERTOS_Init(void);
+
 void wakeup_check(void);
-void system_init(void);
-
-/* Hardware */
-afe_t afe;
-buzzer_t buzzer;
-gauge_t gauge;
-lcd_t lcd;
-touch_t touch;
-
-/* FSM */
-fsm_client_t fsm;
+void MX_FREERTOS_Init(void);
 
 int main(void)
 {
@@ -90,9 +72,6 @@ int main(void)
   MX_TIM3_Init();
   MX_USART1_UART_Init();
   MX_TIM4_Init();
-
-  /* Initialize system */
-  system_init();
 
   /* Call init function for freertos objects (in freertos.c) */
   MX_FREERTOS_Init();
@@ -197,21 +176,6 @@ void wakeup_check(void)
       HAL_PWR_EnterSTANDBYMode();
     }
   }
-}
-
-/*
- * Hardware and object initialization
- */
-void system_init(void)
-{
-  bluetooth_init();
-  afe_init(&afe, &hspi1);
-  gauge_init(&gauge, &hi2c1);
-  buzzer_init(&buzzer, &htim3, &htim4);
-  lcd_init(&lcd, &hsram1, LCD_REG, LCD_DATA, LCD_X_SIZE, LCD_Y_SIZE);
-  touch_init(&touch, &hspi2, TOUCH_X_SIZE, TOUCH_Y_SIZE);
-
-  fsm_client_init(&fsm);
 }
 
 /**

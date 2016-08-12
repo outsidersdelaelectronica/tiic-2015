@@ -94,19 +94,19 @@ void tasks_ecg_init()
   ecg_afeTaskHandle = osThreadCreate(osThread(ecg_afeTask), NULL);
 
   /* ecg_filterTask */
-  osThreadDef(ecg_filterTask, Start_ecg_filterTask, osPriorityAboveNormal, 0, 128);
+  osThreadDef(ecg_filterTask, Start_ecg_filterTask, osPriorityNormal, 0, 128);
   ecg_filterTaskHandle = osThreadCreate(osThread(ecg_filterTask), NULL);
 
   /* leadGenTask */
-  osThreadDef(ecg_leadGenTask, Start_ecg_leadGenTask, osPriorityAboveNormal, 0, 64);
+  osThreadDef(ecg_leadGenTask, Start_ecg_leadGenTask, osPriorityNormal, 0, 128);
   ecg_leadGenTaskHandle = osThreadCreate(osThread(ecg_leadGenTask), NULL);
 
   /* ecg_bpmDetTask */
-  osThreadDef(ecg_bpmDetTask, Start_ecg_bpmDetTask, osPriorityAboveNormal, 0, 128);
+  osThreadDef(ecg_bpmDetTask, Start_ecg_bpmDetTask, osPriorityNormal, 0, 128);
   ecg_bpmDetTaskHandle = osThreadCreate(osThread(ecg_bpmDetTask), NULL);
 
   /* ecg_keyGenTask */
-  osThreadDef(ecg_keyGenTask, Start_ecg_keyGenTask, osPriorityAboveNormal, 0, 64);
+  osThreadDef(ecg_keyGenTask, Start_ecg_keyGenTask, osPriorityNormal, 0, 64);
   ecg_keyGenTaskHandle = osThreadCreate(osThread(ecg_keyGenTask), NULL);
 }
 
@@ -159,9 +159,9 @@ void Start_ecg_filterTask(void const * argument)
       ch2_data = (int32_t) event_ch2.value.v;
 
       /* Filter channel 1 */
-//      filtered_ch1_data = ;
+      filtered_ch1_data = ch1_data;
       /* Filter channel 2 */
-//      filtered_ch2_data = ;
+      filtered_ch2_data = ch2_data;
 
       /* Output data to queues */
       osMessagePut(queue_ecg_filter_ch_1Handle, filtered_ch1_data, 0);
@@ -284,15 +284,15 @@ void Start_ecg_keyGenTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-//    /* Get bpm data */
-//    event = osMessageGet(queue_ecg_bpmHandle, osWaitForever);
-//    if (event.status == osEventMessage)
-//    {
-//      /* Retrieve value */
-//      bpm = (uint32_t) event.value.v;
+    /* Get bpm data */
+    event = osMessageGet(queue_ecg_bpmHandle, osWaitForever);
+    if (event.status == osEventMessage)
+    {
+      /* Retrieve value */
+      bpm = (uint32_t) event.value.v;
 //      sprintf(data,"%d",bpm);
 //      SendData(5,(unsigned char*)data);
-//    }
+    }
 
     /* Security magic */
 
