@@ -111,7 +111,7 @@ void MX_FREERTOS_Init(void)
 
   /* Start tasks */
   tasks_ecg_init();
-  tasks_bt_init();
+//  tasks_bt_init();
   tasks_input_init();
   tasks_periph_init();
 

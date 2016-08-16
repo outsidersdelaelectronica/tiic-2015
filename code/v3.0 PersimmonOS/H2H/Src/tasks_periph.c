@@ -175,10 +175,10 @@ void Start_periph_buzzerTask(void const * argument)
 
   /* HOW TO beep beep
    *
-      buzzer_note_t beep;
-      beep.note = A5;
-      beep.ms = 50;
-      osMailPut(queue_periph_buzzerHandle, (void *) &beep);
+   *  buzzer_note_t beep;
+   *  beep.note = A5;
+   *  beep.ms = 50;
+   *  osMailPut(queue_periph_buzzerHandle, (void *) &beep);
    *
    * from any task
    */

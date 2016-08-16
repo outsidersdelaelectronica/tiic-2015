@@ -7,125 +7,51 @@
 
 #include "dsp.h"
 
-#define BP_ORDER 305
-#define BP_FOLD_CONSTANT ((BP_ORDER-1)>>1)
-#define DIF_ORDER 32
-#define DIF_FOLD_CONSTANT (DIF_ORDER>>1)
-#define LP_ORDER 46
-#define LP_FOLD_CONSTANT (LP_ORDER>>1)
-#define INTEGRATION_LENGTH 32
-#define INTPOLE 1022
 
-// FIR BPF 2-35 hz (500 SPS / ORDER 305)
-//FOLDED
-const int32_t band_pass_coef[BP_FOLD_CONSTANT + 1] = {
-  -10, -15, 1, -8, -2, -4, -1, -1, 0, 0, 0, 0, -1, -2, -2, -3, -3, -3, -3, -2, 
-  -2, -1, 0, 0, 0, -1, -1, -2, -3, -4, -4, -4, -3, -3, -2, -1, 0, 0, 0, -1, -2,
-  -3, -4, -5, -5, -5, -4, -3, -2, -1, 0, 0, 0, -1, -2, -3, -5, -5, -6, -6, -5,
-  -4, -2, -1, 0, 0, 0, -1, -3, -4, -6, -7, -7, -7, -6, -4, -2, -1, 0, 0, 0, -1,
-  -3, -5, -7, -8, -8, -8, -6, -4, -2, 0, 1, 1, 1, -1, -3, -6, -8, -9, -10, -9, 
-  -7, -5, -2, 1, 2, 3, 2, 0, -4, -7, -10, -12, -13, -11, -9, -5, -1, 3, 5, 6, 4,
-  1, -4, -9, -14, -17, -18, -16, -12, -5, 2, 8, 13, 14, 12, 5, -4, -15, -25, 
-  -33, -37, -33, -23, -5, 18, 46, 75, 101, 123, 137, 142
-};
-// FIR DIF (500 SPS)
-//FOLDED
-const int32_t diferentiator_coef[DIF_FOLD_CONSTANT] = {
-  -4, 6, -3, 3, -3, 3, -4, 5, -6, 8, -11, 16, -27, 52, -145, 1304 };
+#define POLE_CONSTANT 1022
+#define LP_151_HZ_ORDER 141
+#define LP_151_HZ_FOLDING_CONST  ((LP_151_HZ_ORDER - 1) >> 1)
+#define LP_41_HZ_ORDER 146
+#define LP_41_HZ_FOLDING_CONST  (LP_151_HZ_ORDER >> 1)
+#define DIF_ORDER 10
+#define DIF_FOLDING_CONST  (DIF_ORDER >> 1)
+#define INTEGRATION_LENGTH 16
+#define INTEGRATION_FACTOR 4
+/* The following coeficients were obtained with matlab tool "filterbuilder"     */
+/* All of the coeficients are stored to make it clearer for the reader, but     */
+/* we will only use one half ( because they are simetric ).                     */
+/* Design parameters are annotated in case someone wants to reproduce it and    */
+/* take a deeper look. The scaling factor for fixed point is 1024               */
 
-// FIR LPF 140 (f3dB = 150) (500 SPS)
-//FOLDED
-const int32_t low_pass_coef[LP_FOLD_CONSTANT] = {  
-  -3, -1, 3, -1, -4, 5, 3, -9, 4, 10, -13, -3, 21, -13, -19, 34, -1, -50, 46, 
-  40, -127, 53, 535};
+/* FIR low pass filter with f3db = 151 Hz                                       */
+/* fpass = 145	fstop=165	ripple = 0.1	at = 60                         */
 
-//FOLDED VERSION
-int32_t band_pass_filterino(int32_t value)
-{
-  static int32_t bp_buffer[BP_ORDER] = {0};
-  int i;
-  int32_t y_n = 0; 
+const int32_t low_pass_coef_151hz[LP_151_HZ_ORDER] = { 
+  0, 1, 1, 1, 1, 0, -1, -1, 0, 1, 1, 1, -1, -1, -1, 0,2, 2, 0, -2, -2, -1, 2, 3,
+  1, -2, -3, -2, 1, 4, 4, 0, -4, -5, -1, 4, 6, 3, -3, -7, -5, 2, 8, 8, 0, -8, 
+  -10, -3, 8, 13, 7, -7, -16, -12, 4, 19, 18, 0, -21, -27, -8, 23, 40, 21, -25,
+  -64, -54, 26, 152, 268, 315, 268, 152, 26, -54, -64, -25, 21, 40, 23, -8, -27,
+  -21, 0, 18, 19, 4, -12,-16, -7, 7, 13, 8, -3, -10, -8, 0, 8, 8, 2, -5, -7, -3, 
+  3, 6, 4, -1, -5, -4, 0, 4, 4, 1,-2, -3, -2, 1, 3, 2, -1, -2, -2, 0, 2, 2, 0,
+  -1,-1, -1, 1, 1, 1, 0, -1, -1, 0, 1, 1, 1, 1, 0};
 
-  bp_buffer[0] = value;
+/* FIR low pass filter with f3db = 41 Hz                                       */
+/* fpass = 35	fstop=45	ripple = 0.1	at = 60                        */
 
-  y_n += ((band_pass_coef[BP_FOLD_CONSTANT] * bp_buffer[BP_FOLD_CONSTANT])>>10);
-  
-  for(i = 0 ; i < BP_FOLD_CONSTANT; i++ ){
-    y_n += ((band_pass_coef[i] * (bp_buffer[i] + bp_buffer[BP_ORDER - 1 - i]))>>10);
-  } 
-  
-  for(i = (BP_ORDER - 1) ; i > 0; i-- ){
-    bp_buffer[i] = bp_buffer[i-1];
-  }  
- 
-  return y_n;
-}
+const int32_t low_pass_coef_41hz[LP_41_HZ_ORDER] = {
+  1, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 1, 1, 2, 2, 2, 2, 
+  2, 2, 1, 1, 0, -1, -2, -3, -4, -4, -5, -4, -4, -3, -2, -1, 1, 3, 5, 6, 8, 8, 
+  9, 8, 7, 5, 2, -1, -4, -8, -11, -14, -17, -18, -18, -16, -13, -8, -1, 7, 16,
+  27, 37, 48, 59, 68, 76, 83, 87, 90, 90, 87, 83, 76, 68, 59, 48, 37, 27, 16, 7,
+  -1, -8, -13, -16, -18, -18, -17, -14, -11, -8, -4, -1, 2, 5, 7, 8, 9, 8, 8, 6,
+  5, 3, 1, -1, -2, -3, -4, -4, -5, -4, -4, -3, -2, -1, 0, 1, 1, 2, 2, 2, 2, 2,
+  2, 1, 1, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 1};
 
-//FOLDED VERSION
-int32_t diferentiator_3000(int32_t value){
-  static int32_t dif_buffer[DIF_ORDER] = {0};
-  int i;
-  int32_t y_n = 0; 
-
-  dif_buffer[0] = value;
-  
-  for(i = 0 ; i < DIF_FOLD_CONSTANT; i++ ){
-    y_n += ((band_pass_coef[i] * (dif_buffer[(DIF_ORDER - 1) - i] - dif_buffer[i]))>>10);
-  } 
-  
-  for(i = (DIF_ORDER - 1) ; i > 0; i-- ){
-    dif_buffer[i] = dif_buffer[i-1];
-  }  
- 
-  return y_n;
-}
-
-float integrator_3000(float value)
-{
-  static float buffer_x[INTEGRATION_LENGTH] = {0};
-  float x_n = value, y_n = 0;
-  uint8_t i;
-
-  for ( i = INTEGRATION_LENGTH - 1; i > 0; i--){
-    y_n += buffer_x[i];
-    buffer_x[i] = buffer_x[i-1];
-  }
-
-  y_n += buffer_x[0];
-  buffer_x[0] = x_n;
-
-  return (y_n / INTEGRATION_LENGTH);
-}
-
-int32_t chuster_abs(int32_t value){
-  if(value > 0){
-    return value;
-  }else{
-    return (-1)*value;
-  }
-}
-
-int32_t bpm_preprocessing(int32_t value)
-{
-  int32_t bp_filtered, dif_filtered, denormalized;
-  static int32_t max_value = 1000;
-  float normalized, squared, integrated;
-
-  bp_filtered = band_pass_filterino(value);
-  dif_filtered = diferentiator_3000(bp_filtered);
-  
-  if( (chuster_abs(dif_filtered) > max_value)){ 
-     max_value = chuster_abs(dif_filtered);
-  }else{
-    max_value = ((max_value > 1) ? ((max_value*511)>>9): 1);
-  }
-  normalized = ((float)dif_filtered)/max_value;
-  squared = (normalized) * (normalized);
-  integrated = integrator_3000(squared);
-  denormalized = (int32_t)(integrated * 10000);
-  
-  return denormalized;
-}
+/* FIR all pass differenciator filter                                          */
+/* fpass = 500	fstop=500	ripple = 0.1	at = 60(irrelevant)            */
+/* Note that in this case the coeficients are anti-simetric                    */
+const int32_t all_pass_diff_coef[DIF_ORDER] = {
+  20, -40, 56, -148, 1306, -1306, 148, -56, 40, -20};
 
 int32_t dc_blocker(int32_t value)
 {
@@ -135,26 +61,29 @@ int32_t dc_blocker(int32_t value)
   dife = value - prev_x;
   prev_x = value;
   
-  inte = ((INTPOLE * prev_y) >> 10) + dife;
+  inte = ((POLE_CONSTANT * prev_y) >> 10) + dife;
   prev_y = inte;
   
   return inte;
 }
 
 //FOLDED VERSION
-int32_t low_pass_filterino(int32_t value){
-  static int32_t lp_buffer[LP_ORDER] = {0};
+int32_t low_pass_filterino_151Hz(int32_t value){
+  static int32_t lp_buffer_151Hz[LP_151_HZ_ORDER] = {0};
   int i;
   int32_t y_n = 0; 
 
-  lp_buffer[0] = value;
+  lp_buffer_151Hz[0] = value;
   
-  for(i = 0 ; i < LP_FOLD_CONSTANT; i++ ){
-    y_n += ((low_pass_coef[i] * (lp_buffer[i] + lp_buffer[(LP_ORDER - 1) - i]))>>10);
+  for(i = 0 ; i < LP_151_HZ_FOLDING_CONST; i++ ){
+    y_n += ((low_pass_coef_151hz[i] * 
+             (lp_buffer_151Hz[i] + lp_buffer_151Hz[(LP_151_HZ_ORDER - 1) - i]))>>10);
   } 
+  y_n += ((low_pass_coef_151hz[LP_151_HZ_FOLDING_CONST] 
+           * lp_buffer_151Hz[LP_151_HZ_FOLDING_CONST])>>10);
   
-  for(i = (LP_ORDER - 1) ; i > 0; i-- ){
-    lp_buffer[i] = lp_buffer[i-1];
+  for(i = (LP_151_HZ_ORDER - 1) ; i > 0; i-- ){
+    lp_buffer_151Hz[i] = lp_buffer_151Hz[i-1];
   }  
  
   return y_n;
@@ -165,7 +94,80 @@ int32_t show_filter(int32_t value)
   int32_t dc_blocked, lp_filtered;
   
   dc_blocked = dc_blocker(value);
-  lp_filtered = low_pass_filterino(dc_blocked);
+  lp_filtered = low_pass_filterino_151Hz(dc_blocked);
   
   return lp_filtered;
+}
+
+int32_t low_pass_filterino_41Hz(int32_t value){
+  static int32_t lp_buffer_41Hz[LP_41_HZ_ORDER] = {0};
+  int i;
+  int32_t y_n = 0; 
+
+  lp_buffer_41Hz[0] = value;
+  
+  for(i = 0 ; i < LP_41_HZ_FOLDING_CONST; i++ ){
+    y_n += ((low_pass_coef_41hz[i] * 
+             (lp_buffer_41Hz[i] + lp_buffer_41Hz[(LP_41_HZ_ORDER - 1) - i]))>>10);
+  } 
+
+  for(i = (LP_41_HZ_ORDER - 1) ; i > 0; i-- ){
+    lp_buffer_41Hz[i] = lp_buffer_41Hz[i-1];
+  }  
+ 
+  return y_n;
+}
+
+int32_t diferentiator_3000(int32_t value){
+  static int32_t dif_buffer[DIF_ORDER] = {0};
+  int i;
+  int32_t y_n = 0; 
+
+  dif_buffer[0] = value;
+  
+  for(i = 0 ; i < DIF_FOLDING_CONST; i++ ){
+    y_n += ((all_pass_diff_coef[i] * 
+             (dif_buffer[i] - dif_buffer[(DIF_ORDER - 1) - i]))>>10);
+  } 
+  
+  for(i = (DIF_ORDER - 1) ; i > 0; i-- ){
+    dif_buffer[i] = dif_buffer[i-1];
+  }  
+ 
+  return y_n;
+}
+
+/* This is supposed to be the fastest way, yet not the cleanest nor the faciest*/
+int32_t chuster_abs(int32_t value) 
+{
+  return value * ((value>0) - (value<0));
+}
+
+int32_t integrator_3000(int32_t value)
+{
+  static int32_t buffer_x[INTEGRATION_LENGTH] = {0};
+  int32_t x_n = value, y_n = 0;
+  uint8_t i;
+
+  for ( i = INTEGRATION_LENGTH - 1; i > 0; i--){
+    y_n += buffer_x[i];
+    buffer_x[i] = buffer_x[i-1];
+  }
+
+  y_n += buffer_x[0];
+  buffer_x[0] = x_n;
+
+  return (y_n >> INTEGRATION_FACTOR);
+}
+
+int32_t bpm_preprocessing_legacy(int32_t value)
+{
+  int32_t lp_filtered, dif_filtered, abs_valued,integrated;
+  
+  lp_filtered = low_pass_filterino_41Hz(value);
+  dif_filtered = diferentiator_3000(lp_filtered);
+  abs_valued = chuster_abs(dif_filtered);
+  integrated = integrator_3000(abs_valued);
+  
+  return integrated;
 }
