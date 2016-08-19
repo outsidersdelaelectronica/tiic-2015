@@ -6,8 +6,6 @@
  */
 
 #include "bluetooth_internal.h"
-
-#include "lcd.h"
 #include "stm32l1xx_hal.h"
 
 extern unsigned int        BluetoothStackID;
@@ -106,23 +104,6 @@ static unsigned char       Buffer[64];
 
 static Boolean_t           BufferFull;
 
-   /* The following string table is used to map HCI Version information */
-   /* to an easily displayable version string.                          */
-static BTPSCONST char *HCIVersionStrings[] =
-{
-   "1.0b",
-   "1.1",
-   "1.2",
-   "2.0",
-   "2.1",
-   "3.0",
-   "4.0",
-   "4.1",
-   "Unknown (greater 4.1)"
-} ;
-
-#define NUM_SUPPORTED_HCI_VERSIONS              (sizeof(HCIVersionStrings)/sizeof(char *) - 1)
-
    /* The following string table is used to map the API I/O Capabilities*/
    /* values to an easily displayable string.                           */
 static BTPSCONST char *IOCapabilitiesStrings[] =
@@ -132,6 +113,126 @@ static BTPSCONST char *IOCapabilitiesStrings[] =
    "Keyboard Only",
    "No Input/Output"
 } ;
+
+
+   /* The following function is responsible for placing the Local       */
+   /* Bluetooth Device into General Discoverablity Mode.  Once in this  */
+   /* mode the Device will respond to Inquiry Scans from other Bluetooth*/
+   /* Devices.  This function requires that a valid Bluetooth Stack ID  */
+   /* exists before running.  This function returns zero on successful  */
+   /* execution and a negative value if an error occurred.              */
+static int SetDisc(void)
+{
+   int ret_val = 0;
+
+   /* First, check that a valid Bluetooth Stack ID exists.              */
+   if(BluetoothStackID)
+   {
+      /* A semi-valid Bluetooth Stack ID exists, now attempt to set the */
+      /* attached Devices Discoverablity Mode to General.               */
+      ret_val = GAP_Set_Discoverability_Mode(BluetoothStackID, dmGeneralDiscoverableMode, 0);
+
+      /* Next, check the return value of the GAP Set Discoverability    */
+      /* Mode command for successful execution.                         */
+      if(ret_val)
+      {
+         /* An error occurred while trying to set the Discoverability   */
+         /* Mode of the Device.                                         */
+      }
+   }
+   else
+   {
+      /* No valid Bluetooth Stack ID exists.                            */
+      ret_val = INVALID_STACK_ID_ERROR;
+   }
+
+   return(ret_val);
+}
+
+   /* The following function is responsible for placing the Local       */
+   /* Bluetooth Device into Connectable Mode.  Once in this mode the    */
+   /* Device will respond to Page Scans from other Bluetooth Devices.   */
+   /* This function requires that a valid Bluetooth Stack ID exists     */
+   /* before running.  This function returns zero on success and a      */
+   /* negative value if an error occurred.                              */
+static int SetConnect(void)
+{
+   int ret_val = 0;
+
+   /* First, check that a valid Bluetooth Stack ID exists.              */
+   if(BluetoothStackID)
+   {
+      /* Attempt to set the attached Device to be Connectable.          */
+      ret_val = GAP_Set_Connectability_Mode(BluetoothStackID, cmConnectableMode);
+
+      /* Next, check the return value of the                            */
+      /* GAP_Set_Connectability_Mode() function for successful          */
+      /* execution.                                                     */
+      if(ret_val)
+      {
+         /* An error occurred while trying to make the Device           */
+         /* Connectable.                                                */
+      }
+   }
+   else
+   {
+      /* No valid Bluetooth Stack ID exists.                            */
+      ret_val = INVALID_STACK_ID_ERROR;
+   }
+
+   return(ret_val);
+}
+
+   /* The following function is responsible for placing the local       */
+   /* Bluetooth device into Pairable mode.  Once in this mode the device*/
+   /* will response to pairing requests from other Bluetooth devices.   */
+   /* This function returns zero on successful execution and a negative */
+   /* value on all errors.                                              */
+static int SetPairable(void)
+{
+   int Result;
+   int ret_val = 0;
+
+   /* First, check that a valid Bluetooth Stack ID exists.              */
+   if(BluetoothStackID)
+   {
+      /* Attempt to set the attached device to be pairable.             */
+      Result = GAP_Set_Pairability_Mode(BluetoothStackID, pmPairableMode_EnableSecureSimplePairing);
+
+      /* Next, check the return value of the GAP Set Pairability mode   */
+      /* command for successful execution.                              */
+      if(!Result)
+      {
+         /* The device has been set to pairable mode, now register an   */
+         /* Authentication Callback to handle the Authentication events */
+         /* if required.                                                */
+         Result = GAP_Register_Remote_Authentication(BluetoothStackID, GAP_Event_Callback, (unsigned long)0);
+
+         /* Next, check the return value of the GAP Register Remote     */
+         /* Authentication command for successful execution.            */
+         if(Result)
+         {
+            /* An error occurred while trying to execute this function. */
+
+            ret_val = Result;
+         }
+      }
+      else
+      {
+         /* An error occurred while trying to make the device pairable. */
+
+
+         ret_val = Result;
+      }
+   }
+   else
+   {
+      /* No valid Bluetooth Stack ID exists.                            */
+      ret_val = INVALID_STACK_ID_ERROR;
+   }
+
+   return(ret_val);
+}
 
  /* The following function is used to initialize the application      */
    /* instance.  This function should open the stack and prepare to     */
@@ -163,22 +264,23 @@ int InitializeApplication(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_I
          /* The stack was opened successfully.  Now set some defaults.  */
 
          /* First, attempt to set the Device to be Connectable.         */
-         ret_val = SetConnect();
-
+//         ret_val = SetConnectabilityMode(cmConnectableMode);
+          ret_val =SetConnect();
          /* Next, check to see if the Device was successfully made      */
          /* Connectable.                                                */
          if(!ret_val)
          {
             /* Now that the device is Connectable attempt to make it    */
             /* Discoverable.                                            */
-            ret_val = SetDiscoverabilityMode(dmGeneralDiscoverableMode);
-
+//            ret_val = SetDiscoverabilityMode(dmGeneralDiscoverableMode);
+            ret_val = SetDisc();
             /* Next, check to see if the Device was successfully made   */
             /* Discoverable.                                            */
             if(!ret_val)
             {
                /* Now that the device is discoverable attempt to make it*/
                /* pairable.                                             */
+//               ret_val = SetPairabilityMode(pmPairableMode_EnableSecureSimplePairing);
                ret_val = SetPairable();
                if(!ret_val)
                {
@@ -192,8 +294,7 @@ int InitializeApplication(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_I
                      ret_val = (int)BluetoothStackID;
                      if(ret_val > 0)
                      {
-                       // BOOOOOOOOOOOOOM HEADSHOT
-                       OpenServer((ParameterList_t *) NULL);
+                       OpenServer();
                      }
                   }
                }
@@ -250,9 +351,7 @@ int OpenStack(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_Initializatio
          /* it was successful.                                          */
          if(Result > 0)
          {
-           HAL_GPIO_WritePin(GPIOC, UI_LED_R_Pin,GPIO_PIN_SET);
-           HAL_Delay(1000);
-           HAL_GPIO_WritePin(GPIOC, UI_LED_R_Pin,GPIO_PIN_RESET);
+            HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin,GPIO_PIN_SET);
             /* The Stack was initialized successfully, inform the user  */
             /* and set the return value of the initialization function  */
             /* to the Bluetooth Stack ID.                               */
@@ -294,6 +393,7 @@ int OpenStack(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_Initializatio
             /* The Stack was NOT initialized successfully, inform the   */
             /* user and set the return value of the initialization      */
             /* function to an error.                                    */
+            HAL_GPIO_WritePin(GPIOC, UI_LED_R_Pin,GPIO_PIN_SET);
             BluetoothStackID = 0;
             ret_val          = UNABLE_TO_INITIALIZE_STACK;
          }
@@ -409,68 +509,6 @@ int SendData(uint16_t length, unsigned char *buff)
    /* The following function is responsible for setting the             */
    /* Discoverability Mode of the local device.  This function returns  */
    /* zero on successful execution and a negative value on all errors.  */
-//static int SetDiscoverabilityMode(ParameterList_t *TempParam)
-//{
-//   int                        Result;
-//   int                        ret_val;
-//   GAP_Discoverability_Mode_t DiscoverabilityMode;
-//
-//   /* First, check that valid Bluetooth Stack ID exists.                */
-//   if(BluetoothStackID)
-//   {
-//      /* Make sure that all of the parameters required for this function*/
-//      /* appear to be at least semi-valid.                              */
-//      if((TempParam) && (TempParam->NumberofParameters > 0)
-//         && (TempParam->Params[0].intParam >= 0) && (TempParam->Params[0].intParam <= 2))
-//      {
-//         /* Parameters appear to be valid, map the specified parameters */
-//         /* into the API specific parameters.                           */
-//         if(TempParam->Params[0].intParam == 1)
-//            DiscoverabilityMode = dmLimitedDiscoverableMode;
-//         else
-//         {
-//            if(TempParam->Params[0].intParam == 2)
-//               DiscoverabilityMode = dmGeneralDiscoverableMode;
-//            else
-//               DiscoverabilityMode = dmNonDiscoverableMode;
-//         }
-//
-//         /* Parameters mapped, now set the Discoverability Mode.        */
-//         Result = GAP_Set_Discoverability_Mode(BluetoothStackID, DiscoverabilityMode,
-//                                               (DiscoverabilityMode == dmLimitedDiscoverableMode)?60:0);
-//
-//         /* Next, check the return value to see if the command was      */
-//         /* issued successfully.                                        */
-//         if(Result >= 0)
-//         {
-//            /* The Mode was changed successfully.                       */
-//
-//            /* Flag success to the caller.                              */
-//            ret_val = 0;
-//         }
-//         else
-//         {
-//            /* There was an error setting the Mode.                     */
-//
-//            /* Flag that an error occurred while submitting the command.*/
-//            ret_val = FUNCTION_ERROR;
-//         }
-//      }
-//      else
-//      {
-//         /* One or more of the necessary parameters is/are invalid.     */
-//
-//         ret_val = INVALID_PARAMETERS_ERROR;
-//      }
-//   }
-//   else
-//   {
-//      /* No valid Bluetooth Stack ID exists.                            */
-//      ret_val = INVALID_STACK_ID_ERROR;
-//   }
-//
-//   return(ret_val);
-//}
 
 int SetDiscoverabilityMode(GAP_Discoverability_Mode_t DiscoverabilityMode)
 {
@@ -484,88 +522,6 @@ int SetDiscoverabilityMode(GAP_Discoverability_Mode_t DiscoverabilityMode)
          ret_val = (Result >= 0)?0:FUNCTION_ERROR;
    }
    return ret_val;
-}
-
-   /* The following function is responsible for placing the Local       */
-   /* Bluetooth Device into Connectable Mode.  Once in this mode the    */
-   /* Device will respond to Page Scans from other Bluetooth Devices.   */
-   /* This function requires that a valid Bluetooth Stack ID exists     */
-   /* before running.  This function returns zero on success and a      */
-   /* negative value if an error occurred.                              */
-int SetConnect(void)
-{
-   int ret_val = 0;
-
-   /* First, check that a valid Bluetooth Stack ID exists.              */
-   if(BluetoothStackID)
-   {
-      /* Attempt to set the attached Device to be Connectable.          */
-      ret_val = GAP_Set_Connectability_Mode(BluetoothStackID, cmConnectableMode);
-
-      /* Next, check the return value of the                            */
-      /* GAP_Set_Connectability_Mode() function for successful          */
-      /* execution.                                                     */
-      if(ret_val)
-      {
-         /* An error occurred while trying to make the Device           */
-         /* Connectable.                                                */
-      }
-   }
-   else
-   {
-      /* No valid Bluetooth Stack ID exists.                            */
-      ret_val = INVALID_STACK_ID_ERROR;
-   }
-
-   return(ret_val);
-}
-
-   /* The following function is responsible for placing the local       */
-   /* Bluetooth device into Pairable mode.  Once in this mode the device*/
-   /* will response to pairing requests from other Bluetooth devices.   */
-   /* This function returns zero on successful execution and a negative */
-   /* value on all errors.                                              */
-int SetPairable(void)
-{
-   int Result;
-   int ret_val = 0;
-
-   /* First, check that a valid Bluetooth Stack ID exists.              */
-   if(BluetoothStackID)
-   {
-      /* Attempt to set the attached device to be pairable.             */
-      Result = GAP_Set_Pairability_Mode(BluetoothStackID, pmPairableMode_EnableSecureSimplePairing);
-
-      /* Next, check the return value of the GAP Set Pairability mode   */
-      /* command for successful execution.                              */
-      if(!Result)
-      {
-         /* The device has been set to pairable mode, now register an   */
-         /* Authentication Callback to handle the Authentication events */
-         /* if required.                                                */
-         Result = GAP_Register_Remote_Authentication(BluetoothStackID, GAP_Event_Callback, (unsigned long)0);
-
-         /* Next, check the return value of the GAP Register Remote     */
-         /* Authentication command for successful execution.            */
-         if(Result)
-         {
-            /* An error occurred while trying to execute this function. */
-            ret_val = Result;
-         }
-      }
-      else
-      {
-         /* An error occurred while trying to make the device pairable. */
-         ret_val = Result;
-      }
-   }
-   else
-   {
-      /* No valid Bluetooth Stack ID exists.                            */
-      ret_val = INVALID_STACK_ID_ERROR;
-   }
-
-   return(ret_val);
 }
 
    /* The following function is a utility function that exists to delete*/
@@ -660,57 +616,17 @@ int Inquiry(ParameterList_t *TempParam)
    /* The following function is responsible for setting the             */
    /* Connectability Mode of the local device.  This function returns   */
    /* zero on successful execution and a negative value on all errors.  */
-static int SetConnectabilityMode(ParameterList_t *TempParam)
+static int SetConnectabilityMode(GAP_Connectability_Mode_t ConnectableMode)
 {
    int                       Result;
-   int                       ret_val;
-   GAP_Connectability_Mode_t ConnectableMode;
+   int                       ret_val = INVALID_STACK_ID_ERROR;
 
    /* First, check that valid Bluetooth Stack ID exists.                */
    if(BluetoothStackID)
    {
-      /* Make sure that all of the parameters required for this function*/
-      /* appear to be at least semi-valid.                              */
-      if((TempParam) && (TempParam->NumberofParameters > 0) && (TempParam->Params[0].intParam >= 0) && (TempParam->Params[0].intParam <= 1))
-      {
-         /* Parameters appear to be valid, map the specified parameters */
-         /* into the API specific parameters.                           */
-         if(TempParam->Params[0].intParam == 0)
-            ConnectableMode = cmNonConnectableMode;
-         else
-            ConnectableMode = cmConnectableMode;
-
-         /* Parameters mapped, now set the Connectabilty Mode.          */
-         Result = GAP_Set_Connectability_Mode(BluetoothStackID, ConnectableMode);
-
-         /* Next, check the return value to see if the command was      */
-         /* issued successfully.                                        */
-         if(Result >= 0)
-         {
-            /* The Mode was changed successfully.                       */
-
-            /* Flag success to the caller.                              */
-            ret_val = 0;
-         }
-         else
-         {
-            /* There was an error setting the Mode.                     */
-
-            /* Flag that an error occurred while submitting the command.*/
-            ret_val = FUNCTION_ERROR;
-         }
-      }
-      else
-      {
-         /* One or more of the necessary parameters is/are invalid.     */
-
-         ret_val = INVALID_PARAMETERS_ERROR;
-      }
-   }
-   else
-   {
-      /* No valid Bluetooth Stack ID exists.                            */
-      ret_val = INVALID_STACK_ID_ERROR;
+      Result = GAP_Set_Connectability_Mode(BluetoothStackID, ConnectableMode);
+      /* After setting, notify the caller */
+      ret_val = (Result >= 0)? 0:FUNCTION_ERROR;
    }
 
    return(ret_val);
@@ -719,43 +635,14 @@ static int SetConnectabilityMode(ParameterList_t *TempParam)
    /* The following function is responsible for setting the Pairability */
    /* Mode of the local device.  This function returns zero on          */
    /* successful execution and a negative value on all errors.          */
-static int SetPairabilityMode(ParameterList_t *TempParam)
+static int SetPairabilityMode(GAP_Pairability_Mode_t  PairabilityMode)
 {
-   int                     Result;
-   int                     ret_val;
-   char                   *Mode;
-   GAP_Pairability_Mode_t  PairabilityMode;
+   int    Result;
+   int    ret_val = INVALID_STACK_ID_ERROR;
 
    /* First, check that valid Bluetooth Stack ID exists.                */
    if(BluetoothStackID)
    {
-      /* Make sure that all of the parameters required for this function*/
-      /* appear to be at least semi-valid.                              */
-      if((TempParam) && (TempParam->NumberofParameters > 0)
-         && (TempParam->Params[0].intParam >= 0) && (TempParam->Params[0].intParam <= 2))
-      {
-         /* Parameters appear to be valid, map the specified parameters */
-         /* into the API specific parameters.                           */
-         if(TempParam->Params[0].intParam == 0)
-         {
-            PairabilityMode = pmNonPairableMode;
-            Mode            = "pmNonPairableMode";
-         }
-         else
-         {
-            if(TempParam->Params[0].intParam == 1)
-            {
-               PairabilityMode = pmPairableMode;
-               Mode            = "pmPairableMode";
-            }
-            else
-            {
-               PairabilityMode = pmPairableMode_EnableSecureSimplePairing;
-               Mode            = "pmPairableMode_EnableSecureSimplePairing";
-            }
-         }
-
-         /* Parameters mapped, now set the Pairability Mode.            */
          Result = GAP_Set_Pairability_Mode(BluetoothStackID, PairabilityMode);
 
          /* Next, check the return value to see if the command was      */
@@ -763,33 +650,10 @@ static int SetPairabilityMode(ParameterList_t *TempParam)
          if(Result >= 0)
          {
             /* The Mode was changed successfully.                       */
-
-            /* If Secure Simple Pairing has been enabled, inform the    */
-            /* user of the current Secure Simple Pairing parameters.    */
-            if(PairabilityMode == pmPairableMode_EnableSecureSimplePairing)
-
-            /* Flag success to the caller.                              */
-            ret_val = 0;
+            Result = GAP_Register_Remote_Authentication(BluetoothStackID, GAP_Event_Callback, (unsigned long)0);
+            
+            ret_val = (Result >= 0)? 0:FUNCTION_ERROR;
          }
-         else
-         {
-            /* There was an error setting the Mode.                     */
-
-            /* Flag that an error occurred while submitting the command.*/
-            ret_val = FUNCTION_ERROR;
-         }
-      }
-      else
-      {
-         /* One or more of the necessary parameters is/are invalid.     */
-
-         ret_val = INVALID_PARAMETERS_ERROR;
-      }
-   }
-   else
-   {
-      /* No valid Bluetooth Stack ID exists.                            */
-      ret_val = INVALID_STACK_ID_ERROR;
    }
 
    return(ret_val);
@@ -1630,7 +1494,7 @@ int ExitSniffMode(ParameterList_t *TempParam)
    /* Server on the specified RFCOMM Channel.  This function returns    */
    /* zero if successful, or a negative return value if an error        */
    /* occurred.                                                         */
-int OpenServer(ParameterList_t *TempParam)
+int OpenServer(void)
 {
   int  ret_val;
   char *ServiceName;

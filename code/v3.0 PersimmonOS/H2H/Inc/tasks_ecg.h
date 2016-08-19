@@ -6,6 +6,6 @@
 
 #include "dsp.h"
 
-#define FS 500
+#define FS 1000
 
 void tasks_ecg_init();

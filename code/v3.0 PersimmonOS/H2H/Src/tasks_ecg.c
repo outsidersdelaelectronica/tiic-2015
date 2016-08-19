@@ -144,7 +144,7 @@ void Start_ecg_filterTask(void const * argument)
   osEvent event_ch1, event_ch2;
 
   int32_t ch1_data = 0, ch2_data = 0;
-  int32_t filtered_ch1_data = 0, filtered_ch2_data = 0;
+  int32_t filtered_ch1_data = 0, filtered_ch2_data = 0, bpm_preprocessed = 0;
 
   /* Infinite loop */
   for(;;)
@@ -157,15 +157,18 @@ void Start_ecg_filterTask(void const * argument)
       /* Retrieve values */
       ch1_data = (int32_t) event_ch1.value.v;
       ch2_data = (int32_t) event_ch2.value.v;
-
-      /* Filter channel 1 */
-      filtered_ch1_data = ch1_data;
-      /* Filter channel 2 */
-      filtered_ch2_data = ch2_data;
-
-      /* Output data to queues */
-      osMessagePut(queue_ecg_filter_ch_1Handle, filtered_ch1_data, 0);
-      osMessagePut(queue_ecg_filter_ch_2Handle, filtered_ch2_data, 0);
+      
+//      /* Filter channel 1 */
+//      filtered_ch1_data = show_filter(ch1_data);
+//      /* Filter channel 2 */
+//      filtered_ch2_data = show_filter(ch2_data);
+//      /* Filter channel 1 for bpm detection */
+//      bpm_preprocessed = bpm_preprocessing(ch1_data);
+//      
+//      /* Output data to queues */
+//      osMessagePut(queue_ecg_filter_ch_1Handle, filtered_ch1_data, 0);
+//      osMessagePut(queue_ecg_filter_ch_2Handle, filtered_ch2_data, 0);
+      osMessagePut(queue_ecg_bpmHandle, ch1_data, 0);
     }
   }
 }
@@ -219,7 +222,7 @@ void Start_ecg_bpmDetTask(void const * argument)
   osEvent event;
   int32_t ecg_lead = 0;
 
-  static int32_t threshold = 0, maxerino = 0, prev_value = 0;
+  static int32_t threshold = 100, maxerino = 0, prev_value = 0;
   static uint32_t maxerino_pos = 0, sample_counter = 0;
   float bpm = 0;
 
@@ -227,7 +230,7 @@ void Start_ecg_bpmDetTask(void const * argument)
   for(;;)
   {
     /* Get lead I data (or any other lead) */
-    event = osMessageGet(queue_ecg_lead_IHandle, osWaitForever);
+    event = osMessageGet(queue_ecg_bpmHandle, osWaitForever);
     if (event.status == osEventMessage)
     {
       /* Retrieve value */
@@ -255,18 +258,19 @@ void Start_ecg_bpmDetTask(void const * argument)
     }
     else if (prev_value > threshold)
     {
-      bpm =              ((60 * FS) << 10 ) / maxerino_pos;
-      sample_counter =   sample_counter - maxerino_pos - 1;
-      threshold =        (threshold + maxerino) >> 1;
+      if( maxerino_pos > (FS >> 2)) /* this limits bpm <= 240*/
+      {
+        bpm =              ((60 * FS) << 10 ) / maxerino_pos;
+        sample_counter =   sample_counter - maxerino_pos - 1;
+        threshold =        (threshold + maxerino) >> 1;
+        /* Output data to queue */
+        osMessagePut(queue_ecg_bpmHandle, (uint32_t) bpm, 0);
+      }
       maxerino =         0;
-      ecg_lead =         0;
-
-      /* Output data to queue */
-      osMessagePut(queue_ecg_bpmHandle, (uint32_t) bpm, 0);
     }
-    else
+    else if (threshold > 100) /* Minimum threshold */
     {
-      threshold = ((threshold > 1) ? ((threshold*511)>>9): 1);
+      threshold = ((threshold*511)>>9);
     }
 
     sample_counter++;

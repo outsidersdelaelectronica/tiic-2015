@@ -40,7 +40,7 @@
 extern void Error_Handler(void);
 
 extern buzzer_t buzzer;
-extern xSemaphoreHandle DataReceivedEvent;
+extern osSemaphoreId sem_bt_data_receiveHandle;
 
 extern osSemaphoreId sem_ecg_afe_dma_rxHandle;
 extern osSemaphoreId sem_ecg_afe_drdyHandle;
@@ -114,8 +114,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
   /* BT UART Rx complete */
   if (huart->Instance == USART1)
   {
-    if(DataReceivedEvent != NULL){
-      osSemaphoreRelease(DataReceivedEvent);
+    if(sem_bt_data_receiveHandle != NULL){
+      osSemaphoreRelease(sem_bt_data_receiveHandle);
     }
   }
 }

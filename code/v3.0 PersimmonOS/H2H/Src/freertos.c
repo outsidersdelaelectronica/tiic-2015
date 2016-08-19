@@ -110,10 +110,10 @@ void MX_FREERTOS_Init(void)
   system_init();
 
   /* Start tasks */
-  tasks_ecg_init();
-//  tasks_bt_init();
-  tasks_input_init();
-  tasks_periph_init();
+//  tasks_ecg_init();
+  tasks_bt_init();
+//  tasks_input_init();
+//  tasks_periph_init();
 
   /* TEST Task */
   osThreadDef(testTask, Start_testTask, osPriorityIdle, 0, 64);
@@ -159,6 +159,7 @@ void Start_testTask(void const * argument)
 
   for (;;)
   {
+    osDelay(2000);
   }
 }
 

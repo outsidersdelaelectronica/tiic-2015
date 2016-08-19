@@ -22,10 +22,6 @@
 
 #include "cmsis_os.h"
 
-//#include "FreeRTOS.h"         /* FreeRTOS Kernel Prototypes/Constants.        */
-//#include "task.h"             /* FreeRTOS Task Prototypes/Constants.          */
-//#include "semphr.h"           /* FreeRTOS Semaphore Prototypes/Constants.     */
-
    /* The following MACRO maps Timeouts (specified in Milliseconds) to  */
    /* System Ticks that are required by the Operating System Timeout    */
    /* functions (Waiting only).                                         */
@@ -550,7 +546,6 @@ void BTPSAPI BTPS_FreeMemory(void *MemoryPointer)
 {
    if(BTPS_WaitMutex(KernelMutex, BTPS_INFINITE_WAIT))
    {
-//      MemFree(MemoryBuffer, MemoryPointer);
       vPortFree(MemoryPointer);
       
       BTPS_ReleaseMutex(KernelMutex);
@@ -710,7 +705,6 @@ ThreadHandle_t BTPSAPI BTPS_CreateThread(Thread_t ThreadFunction, unsigned int S
             /* An error occurred while attempting to create the thread. */
             /* Free any previously allocated resources and set the      */
             /* return value to indicate and error has occurred.         */
-//            DBG_MSG(DBG_ZONE_BTPSKRNL, ("xTaskCreate failed.\r\n"));
             BTPS_FreeMemory(ThreadWrapperInfo);
             ret_val = NULL;
          }
@@ -975,7 +969,6 @@ void BTPSAPI BTPS_Init(void *UserParam)
       MessageOutputCallback = NULL;
    }
    /* Initailize the Heap.                                              */
-//   HeapInit(MemoryBuffer, sizeof(MemoryBuffer));
 
    KernelMutex = BTPS_CreateMutex(FALSE);
 

@@ -7,6 +7,8 @@
 /* Parent states */
 #include "state_h2h.h"
 
+#include "gpio.h"
+
 static void h2h_connect_to_main(state_ptr state)
 {
   /* Do transition actions */

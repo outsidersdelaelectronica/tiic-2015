@@ -21,20 +21,41 @@ int                      HCITransportOpen        = 0;
 uint8_t                  RxBuffer[INPUT_BUFFER_SIZE];
 unsigned long            COMDataCallbackParameter;
 HCITR_COMDataCallback_t  COMDataCallbackFunction;
-xSemaphoreHandle         DataReceivedEvent;
-volatile ThreadHandle_t  ReceiveThreadHandle;
+osSemaphoreId            sem_bt_data_receiveHandle;
+osThreadId               bt_recieveTaskHandle;
 
+HAL_StatusTypeDef rx_dma_abort(UART_HandleTypeDef *huart)
+{
+  
+  /* Disable the UART Rx DMA requests */
+  CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAR);
+
+  /* Abort the UART DMA rx channel */
+  if(huart->hdmarx != NULL)
+  {
+    HAL_DMA_Abort(huart->hdmarx);
+  }
+  
+  if( huart->State == HAL_UART_STATE_BUSY_RX)
+  {
+    huart->State = HAL_UART_STATE_READY;
+  }else if( huart->State == HAL_UART_STATE_BUSY_TX_RX )
+  {
+    huart->State = HAL_UART_STATE_BUSY_TX;
+  }
+  
+  return HAL_OK;
+}
 void RxThread(void const * argument)
 {
   for(;;)
   {
-    /* If the transport is open and we have a new data              */
-    if(osSemaphoreWait(DataReceivedEvent , osWaitForever) == osOK)
+    if(osSemaphoreWait(sem_bt_data_receiveHandle , 1) == osOK)
     {
       /* Call the upper layer back with the data.                    */
-      (*COMDataCallbackFunction)(TRANSPORT_ID, 1,RxBuffer, COMDataCallbackParameter);
+      (*COMDataCallbackFunction)(TRANSPORT_ID, INPUT_BUFFER_SIZE ,RxBuffer, COMDataCallbackParameter);
       /* We start a new reception */
-      HAL_UART_Receive_DMA(&huart1, RxBuffer, 1);
+      HAL_UART_Receive_DMA(&huart1, RxBuffer, INPUT_BUFFER_SIZE);
     }
   }
 }
@@ -70,43 +91,42 @@ int BTPSAPI HCITR_COMOpen(HCI_COMMDriverInformation_t *COMMDriverInformation,
 
       /* Flag that the HCI Transport is open.                           */
       HCITransportOpen = 1;
-
+      
+      /* Initialize hardware                                            */
+      HAL_GPIO_WritePin(GPIOC,nSHUTD_Pin,GPIO_PIN_RESET);
+      MX_USART1_UART_Init();                                           
+      BTPS_Delay(10);
+      HAL_GPIO_WritePin(GPIOC,nSHUTD_Pin,GPIO_PIN_SET);
+      BTPS_Delay(250);
+      
+      /* Start the reception */ 
+      HAL_UART_Receive_DMA(&huart1, RxBuffer, INPUT_BUFFER_SIZE);
+      
       /* Create the event that will be used to signal data has arrived. */
       osSemaphoreDef(sem_BtRxDMA);
-      DataReceivedEvent = osSemaphoreCreate(osSemaphore(sem_BtRxDMA), 1);
-      
-      if(DataReceivedEvent)
+      sem_bt_data_receiveHandle = osSemaphoreCreate(osSemaphore(sem_BtRxDMA), 1);
+
+      if(sem_bt_data_receiveHandle)
       {
          /* Make sure that the event is in the reset state.             */
-         osSemaphoreWait(DataReceivedEvent , osWaitForever);
+         osSemaphoreWait(sem_bt_data_receiveHandle , osWaitForever);
 
          /* Create a thread that will process the received data.        */
-         osThreadDef(BtRxDmaTask, RxThread, osPriorityAboveNormal, 0, 256);
-         ReceiveThreadHandle = osThreadCreate(osThread(BtRxDmaTask), NULL);
+         osThreadDef(BtRxDmaTask, RxThread, osPriorityRealtime, 0, 256);
+         bt_recieveTaskHandle = osThreadCreate(osThread(BtRxDmaTask), NULL);
          
-         if(!ReceiveThreadHandle)
+         if(!bt_recieveTaskHandle)
          {
             /* Failed to start the thread, delete the semaphore.        */
-            vQueueDelete(DataReceivedEvent);
+            vQueueDelete(sem_bt_data_receiveHandle);
             ret_val = HCITR_ERROR_UNABLE_TO_OPEN_TRANSPORT;
          }
       }else{
          ret_val = HCITR_ERROR_UNABLE_TO_OPEN_TRANSPORT;
       }
-      /* If there was no error, then continue to setup the port.        */
-      if(ret_val != HCITR_ERROR_UNABLE_TO_OPEN_TRANSPORT)
-      {
-        HAL_GPIO_WritePin(GPIOC,nSHUTD_Pin,GPIO_PIN_RESET);
-        MX_USART1_UART_Init();                                           
-        BTPS_Delay(10);
-        HAL_GPIO_WritePin(GPIOC,nSHUTD_Pin,GPIO_PIN_SET);
-        BTPS_Delay(250);
-        /* Start the reception */ 
-        HAL_UART_Receive_DMA(&huart1, RxBuffer, 1);
-      }else{
-         HCITransportOpen = 0;
-      }
+      
   }else{
+      HCITransportOpen = 0;
       ret_val = HCITR_ERROR_UNABLE_TO_OPEN_TRANSPORT;
   }
    return(ret_val);
@@ -147,13 +167,13 @@ void BTPSAPI HCITR_COMClose(unsigned int HCITransportID)
 
       /* Signal the receive thread to terminate and wait for it to      */
       /* close.                                                         */
-      xSemaphoreGive(DataReceivedEvent);
+      xSemaphoreGive(sem_bt_data_receiveHandle);
       
-      while( osThreadTerminate (ReceiveThreadHandle) != osOK){
+      while( osThreadTerminate (bt_recieveTaskHandle) != osOK){
         BTPS_Delay(1);
       }
       /* Close the semaphore.                                           */
-      osSemaphoreDelete(DataReceivedEvent);
+      osSemaphoreDelete(sem_bt_data_receiveHandle);
       
       /* Note the Callback information.                                 */
       COMDataCallback   = COMDataCallbackFunction;

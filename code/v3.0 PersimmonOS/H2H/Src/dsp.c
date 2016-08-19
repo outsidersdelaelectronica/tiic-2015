@@ -16,7 +16,7 @@
 #define DIF_ORDER 10
 #define DIF_FOLDING_CONST  (DIF_ORDER >> 1)
 #define INTEGRATION_LENGTH 16
-#define INTEGRATION_FACTOR 4
+#define INTEGRATION_FACTOR 4            // Shifting factor
 /* The following coeficients were obtained with matlab tool "filterbuilder"     */
 /* All of the coeficients are stored to make it clearer for the reader, but     */
 /* we will only use one half ( because they are simetric ).                     */
@@ -160,14 +160,41 @@ int32_t integrator_3000(int32_t value)
   return (y_n >> INTEGRATION_FACTOR);
 }
 
-int32_t bpm_preprocessing_legacy(int32_t value)
+int32_t bpm_preprocessing(int32_t value)
 {
-  int32_t lp_filtered, dif_filtered, abs_valued,integrated;
+  static int32_t normalize_value = 1;
+  int32_t lp_filtered, dif_filtered, fixed_point_normalized ,squared, integrated;
+  float normalized;
   
-  lp_filtered = low_pass_filterino_41Hz(value);
-  dif_filtered = diferentiator_3000(lp_filtered);
-  abs_valued = chuster_abs(dif_filtered);
-  integrated = integrator_3000(abs_valued);
+  if( chuster_abs(value) > normalize_value)
+  {
+    normalize_value = chuster_abs(value);
+  }
+  else if (normalize_value > 1)
+  {
+    normalize_value = ((normalize_value*511)>>9);
+  }
   
-  return integrated;
+/* we limit amplitude between +- 10000 ( +-1 if we have float hardware support */
+  normalized = (float)value/(float)normalize_value;
+  fixed_point_normalized = (int32_t)(normalized * 10000);
+  
+  dif_filtered = diferentiator_3000(fixed_point_normalized);
+  lp_filtered = low_pass_filterino_41Hz(dif_filtered);
+
+  /* We elminate the negative part of the dif signal since it introduce one     */
+  /* aditional max which distords the detection( sometimes this max is bigger   */
+  /* than the one we want to detect)                                            */
+   if( lp_filtered > 0){
+    squared = lp_filtered*lp_filtered;
+    /* squared max value = 10000*10000 * Gdiff * Glp, so we to "renormalize"    */
+    squared = squared / 1000;
+    integrated = integrator_3000(squared);
+    
+    return integrated;
+  }
+  else
+  {
+    return 0;
+  }
 }

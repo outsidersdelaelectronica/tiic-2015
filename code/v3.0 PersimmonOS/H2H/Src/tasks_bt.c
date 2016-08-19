@@ -1,5 +1,6 @@
 #include "tasks_bt.h"
 
+/* This will be probably moved to hacitrans */
 /* Semaphores */
 
 /* Queues */
@@ -18,13 +19,14 @@ void tasks_bt_init()
 
   /* Tasks */
   /* bt_txTask */
-  osThreadDef(bt_txTask, Start_bt_txTask, osPriorityNormal, 0, 256);
+  osThreadDef(bt_txTask, Start_bt_txTask, osPriorityAboveNormal, 0, 512);
   bt_txTaskHandle = osThreadCreate(osThread(bt_txTask), NULL);
 }
 
 void Start_bt_txTask(void const * argument)
 {
   /* Infinite loop */
+  bluetooth_init(); // Small test 
   for(;;)
   {
     osDelay(1);

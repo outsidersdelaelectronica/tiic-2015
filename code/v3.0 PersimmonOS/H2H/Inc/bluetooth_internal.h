@@ -29,8 +29,8 @@ int SendData(uint16_t length, unsigned char *buff);
 int DeleteLinkKey(BD_ADDR_t BD_ADDR);
 int Inquiry(ParameterList_t *TempParam);
 
-int SetConnectabilityMode(ParameterList_t *TempParam);
-int SetPairabilityMode(ParameterList_t *TempParam);
+
+
 int ChangeSimplePairingParameters(ParameterList_t *TempParam);
 int Pair(ParameterList_t *TempParam);
 int EndPairing(ParameterList_t *TempParam);
@@ -59,10 +59,10 @@ int SetBaudRate(ParameterList_t *TempParam);
 /* Setters w/o parameters                                        */
 
 int SetDiscoverabilityMode(GAP_Discoverability_Mode_t DiscoverabilityMode);
-int SetConnect(void);
-int SetPairable(void);
+int SetConnectabilityMode(GAP_Connectability_Mode_t ConnectableMode);
+int SetPairabilityMode(GAP_Pairability_Mode_t  PairabilityMode);
 int AutomaticReadMode(void);
-int OpenServer(ParameterList_t *TempParam);
+int OpenServer(void);
 int CloseServer(ParameterList_t *TempParam);
 int OpenRemoteServer(ParameterList_t *TempParam);
 int CloseRemoteServer(ParameterList_t *TempParam);

@@ -12,7 +12,7 @@
 #include "BTVSAPI.h"             /* Vendror Specific header.                  */
 #include "bluetooth_internal.h"
 
-#define VENDOR_BAUD_RATE                                    2000000L
+#define VENDOR_BAUD_RATE                                    115200L
 
 void bluetooth_init(void);
 

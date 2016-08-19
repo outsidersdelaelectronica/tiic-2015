@@ -41,7 +41,7 @@ void bluetooth_init(void)
    
    /* Configure the UART Parameters.                                    */
    HCI_DRIVER_SET_COMM_INFORMATION(&HCI_DriverInformation, 1, VENDOR_BAUD_RATE, cpHCILL_RTS_CTS);
-   HCI_DriverInformation.DriverInformation.COMMDriverInformation.InitializationDelay = 100;
+   HCI_DriverInformation.DriverInformation.COMMDriverInformation.InitializationDelay = 1000;
 
    /* Set up the application callbacks.                                 */
    BTPS_Initialization.MessageOutputCallback = BTPSInitCallback;

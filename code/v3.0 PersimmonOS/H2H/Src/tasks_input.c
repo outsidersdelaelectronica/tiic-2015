@@ -1,5 +1,5 @@
 #include "tasks_input.h"
-
+#include "bluetooth.h"
 /* Semaphores */
 osSemaphoreId sem_input_touch_penHandle;
 
@@ -34,7 +34,7 @@ void tasks_input_init()
   input_touchTaskHandle = osThreadCreate(osThread(input_touchTask), NULL);
 
   /* input_clickTask */
-  osThreadDef(input_clickTask, Start_input_clickTask, osPriorityAboveNormal, 0, 64);
+  osThreadDef(input_clickTask, Start_input_clickTask, osPriorityAboveNormal, 0, 256);
   input_clickTaskHandle = osThreadCreate(osThread(input_clickTask), NULL);
 }
 
@@ -82,8 +82,7 @@ void Start_input_touchTask(void const * argument)
             /* If it is not the first one (it keeps pressing the screen) */
             else
             {
-              /* Finger is still pressing the screen!
-               */
+              /* Finger is still pressing the screen!                    */
               click.click_type = CLICK_HOLD;
               osMailPut(queue_input_clickHandle, (void *) &click);
             }
