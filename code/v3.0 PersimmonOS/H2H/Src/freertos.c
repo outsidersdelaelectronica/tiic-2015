@@ -43,8 +43,6 @@
 
 #include "fsm_client.h"
 
-#include "menus.h"
-
 #include "tasks_ecg.h"
 #include "tasks_input.h"
 #include "tasks_bt.h"
@@ -60,6 +58,11 @@ touch_t touch;
 
 /* FSM */
 fsm_client_t fsm;
+
+/* Menus */
+extern menu_t menu_welcome;
+extern menu_t menu_main;
+extern menu_t menu_top_bar;
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 void system_init(void);

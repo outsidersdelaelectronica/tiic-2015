@@ -125,22 +125,30 @@ void Start_input_touchTask(void const * argument)
 
 void Start_input_clickTask(void const * argument)
 {
-  osEvent event;
+  osEvent event_click, event_menu;
   item_t item;
 
   click_t *click;
   menu_t *current_menu;
   buzzer_note_t beep;
 
+  /* Block task until a concrete state is reached */
+  event_menu = osMailGet(queue_input_menuHandle, osWaitForever);
+  if (event_menu.status == osEventMail)
+  {
+    /* Get menu */
+      current_menu = (menu_t *) event_menu.value.p;
+  }
+
   /* Infinite loop */
   for(;;)
   {
     /* Get click */
-    event = osMailGet(queue_input_clickHandle, osWaitForever);
-    if (event.status == osEventMail)
-    {
+    event_click = osMailGet(queue_input_clickHandle, osWaitForever);
+    if (event_click.status == osEventMail)
+  {
       /* Get click position */
-      click = (click_t *) event.value.p;
+      click = (click_t *) event_click.value.p;
 
       /* Do something based on click type */
       switch (click->click_type)
@@ -150,8 +158,15 @@ void Start_input_clickTask(void const * argument)
         case CLICK_HOLD:
           break;
         case CLICK_UP:
-          /* Retrieve current menu */
-          current_menu = &menu_main;
+          /* Check if a new state put a new menu in the queue */
+          event_menu = osMailGet(queue_input_menuHandle, 0);
+          if (event_menu.status == osEventMail)
+          {
+            /* Get new menu */
+              current_menu = (menu_t *) event_menu.value.p;
+          }
+
+          /* Search item in menu on click position */
           if (menu_search_click(current_menu, click, &item))
           {
             /* Send item event */
@@ -162,6 +177,7 @@ void Start_input_clickTask(void const * argument)
             beep.ms = 50;
             osMailPut(queue_periph_buzzerHandle, (void *) &beep);
           }
+
           break;
         default:
           break;

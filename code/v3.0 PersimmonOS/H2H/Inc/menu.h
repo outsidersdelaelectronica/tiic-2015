@@ -1,11 +1,11 @@
 /*
- * menus.h
+ * menu.h
  *
  *  Created on: 24/05/2016
  *      Author: Smau
  */
-#ifndef MENUS_H_
-#define MENUS_H_
+#ifndef MENU_H_
+#define MENU_H_
 
 #include "item.h"
 #include "fonts.h"
@@ -22,11 +22,11 @@ typedef struct menu_t
 }
 menu_t;
 
-extern menu_t menu_welcome;
-
-extern menu_t menu_main;
-extern menu_t menu_top_bar;
-
 int32_t menu_search_click(menu_t *menu, click_t *click, item_t *item);
 
-#endif /* MENUS_H_ */
+/* Menus */
+extern menu_t menu_welcome;
+extern menu_t menu_top_bar;
+extern menu_t menu_main;
+
+#endif /* MENU_H_ */

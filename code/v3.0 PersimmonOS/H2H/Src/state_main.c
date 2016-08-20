@@ -5,6 +5,9 @@
 #include "state_h2h.h"
 #include "state_settings.h"
 
+/* Queues */
+extern osMailQId queue_input_menuHandle;
+
 static void main_to_ecg(state_ptr state)
 {
   /* Do transition actions */
@@ -38,6 +41,9 @@ void behaviour_main(state_ptr state)
   state->settings = main_to_settings;
 
   /* Do state actions */
+
+  /* Set menu */
+  osMailPut(queue_input_menuHandle, (void *) &menu_main);
 }
 
 /* Entry point to the state */

@@ -1159,6 +1159,9 @@
         <group>
           <name>menus</name>
           <file>
+            <name>$PROJ_DIR$\..\Src\menu.c</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$\..\Src\menu_main.c</name>
           </file>
           <file>
@@ -1166,9 +1169,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$\..\Src\menu_welcome.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\..\Src\menus.c</name>
           </file>
         </group>
         <group>
