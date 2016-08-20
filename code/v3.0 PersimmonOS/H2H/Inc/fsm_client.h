@@ -21,6 +21,7 @@ typedef struct fsm_client_t
 }
 fsm_client_t;
 
+/* Event function pointer */
 typedef void (*fsm_event_f)(fsm_client_ptr);
 
 void fsm_client_init(fsm_client_ptr fsm);

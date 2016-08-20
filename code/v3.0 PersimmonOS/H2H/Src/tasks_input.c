@@ -1,5 +1,5 @@
 #include "tasks_input.h"
-#include "bluetooth.h"
+
 /* Semaphores */
 osSemaphoreId sem_input_touch_penHandle;
 
@@ -53,7 +53,8 @@ void Start_input_touchTask(void const * argument)
         EXTI->IMR &= (~TP_PEN_Pin);
 
         /* A finger is touching the screen.
-         * Keep reading values until finger is lifted */
+         * Keep reading values until finger is lifted
+         */
         do
         {
           /* Read value */
@@ -82,7 +83,8 @@ void Start_input_touchTask(void const * argument)
             /* If it is not the first one (it keeps pressing the screen) */
             else
             {
-              /* Finger is still pressing the screen!                    */
+              /* Finger is still pressing the screen!
+               */
               click.click_type = CLICK_HOLD;
               osMailPut(queue_input_clickHandle, (void *) &click);
             }
@@ -140,15 +142,14 @@ void Start_input_clickTask(void const * argument)
         case CLICK_HOLD:
           break;
         case CLICK_UP:
-          /* Beep */
-          beep.note = A5;
-          beep.ms = 50;
-          osMailPut(queue_periph_buzzerHandle, (void *) &beep);
-
           /* Search for command */
 
           /* Send command */
 
+          /* Beep */
+          beep.note = A5;
+          beep.ms = 50;
+          osMailPut(queue_periph_buzzerHandle, (void *) &beep);
           break;
         default:
           break;

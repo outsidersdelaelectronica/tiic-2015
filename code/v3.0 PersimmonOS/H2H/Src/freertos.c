@@ -49,6 +49,7 @@
 #include "tasks_input.h"
 #include "tasks_bt.h"
 #include "tasks_periph.h"
+#include "tasks_fsm.h"
 
 /* Hardware */
 afe_t afe;
@@ -103,6 +104,7 @@ osThreadId testTaskHandle;
 void Start_testTask(void const * argument);
 
 extern osMailQId queue_lcdHandle;
+extern osMailQId queue_fsm_eventsHandle;
 
 void MX_FREERTOS_Init(void)
 {
@@ -110,10 +112,11 @@ void MX_FREERTOS_Init(void)
   system_init();
 
   /* Start tasks */
-//  tasks_ecg_init();
+  tasks_ecg_init();
   tasks_bt_init();
-//  tasks_input_init();
-//  tasks_periph_init();
+  tasks_input_init();
+  tasks_periph_init();
+  tasks_fsm_init();
 
   /* TEST Task */
   osThreadDef(testTask, Start_testTask, osPriorityIdle, 0, 64);
@@ -125,9 +128,9 @@ void Start_testTask(void const * argument)
   item_action_t lcd_config;
   color_t bg = COLOR_BLACK;
 
+  /* LCD config */
   item_lcd_config_init(&lcd_config.item.config, 200);
   lcd_config.item_print_function = lcd_set_config;
-
   osMailPut(queue_lcdHandle, (void *) &lcd_config);
 
   /* Welcome test */
@@ -149,11 +152,9 @@ void Start_testTask(void const * argument)
   item_area_set_text(&menu_main[2].item.area, "Settings");
   item_area_set_text(&menu_top_bar[0].item.area, "");
   item_area_set_text(&menu_top_bar[1].item.area, "16:20");
-
   osMailPut(queue_lcdHandle, (void *) &menu_main[0]);
   osMailPut(queue_lcdHandle, (void *) &menu_main[1]);
   osMailPut(queue_lcdHandle, (void *) &menu_main[2]);
-
   osMailPut(queue_lcdHandle, (void *) &menu_top_bar[0]);
   osMailPut(queue_lcdHandle, (void *) &menu_top_bar[1]);
 

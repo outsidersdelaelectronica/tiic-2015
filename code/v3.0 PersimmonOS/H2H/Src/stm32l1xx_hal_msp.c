@@ -40,6 +40,7 @@
 extern void Error_Handler(void);
 
 extern buzzer_t buzzer;
+
 extern osSemaphoreId sem_bt_data_receiveHandle;
 
 extern osSemaphoreId sem_ecg_afe_dma_rxHandle;
