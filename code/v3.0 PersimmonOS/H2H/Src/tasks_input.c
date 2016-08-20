@@ -5,6 +5,7 @@ osSemaphoreId sem_input_touch_penHandle;
 
 /* Queues */
 osMailQId queue_input_clickHandle;
+osMailQId queue_input_menuHandle;
 extern osMailQId queue_periph_buzzerHandle;
 extern osMailQId queue_fsm_eventsHandle;
 
@@ -28,6 +29,10 @@ void tasks_input_init()
   /* queue_input_click */
   osMailQDef(queue_input_click, 4, click_t);
   queue_input_clickHandle = osMailCreate(osMailQ(queue_input_click), NULL);
+
+  /* queue_input_menu */
+  osMailQDef(queue_input_menu, 1, menu_t *);
+  queue_input_menuHandle = osMailCreate(osMailQ(queue_input_menu), NULL);
 
   /* Tasks */
   /* input_touchTask */
@@ -137,7 +142,7 @@ void Start_input_clickTask(void const * argument)
       /* Get click position */
       click = (click_t *) event.value.p;
 
-      /* Beep, search through clickable objects, etc. */
+      /* Do something based on click type */
       switch (click->click_type)
       {
         case CLICK_DOWN:
@@ -145,11 +150,11 @@ void Start_input_clickTask(void const * argument)
         case CLICK_HOLD:
           break;
         case CLICK_UP:
-          /* Search for command */
+          /* Retrieve current menu */
           current_menu = &menu_main;
           if (menu_search_click(current_menu, click, &item))
           {
-            /* Send command */
+            /* Send item event */
             osMailPut(queue_fsm_eventsHandle, (void *) &(item.area.event));
 
             /* Beep */
