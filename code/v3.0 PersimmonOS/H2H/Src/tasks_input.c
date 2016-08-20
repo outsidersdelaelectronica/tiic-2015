@@ -6,6 +6,7 @@ osSemaphoreId sem_input_touch_penHandle;
 /* Queues */
 osMailQId queue_input_clickHandle;
 extern osMailQId queue_periph_buzzerHandle;
+extern osMailQId queue_fsm_eventsHandle;
 
 /* Tasks */
 osThreadId input_touchTaskHandle;
@@ -145,6 +146,7 @@ void Start_input_clickTask(void const * argument)
           /* Search for command */
 
           /* Send command */
+//          osMailPut(queue_fsm_eventsHandle, (void *) &test_event);
 
           /* Beep */
           beep.note = A5;
