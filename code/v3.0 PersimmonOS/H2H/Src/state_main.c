@@ -26,7 +26,7 @@ static void main_to_settings(state_ptr state)
   /* Do transition actions */
 
   /* Change state */
-//  entry_to_settings(state);
+  entry_to_settings(state);
 }
 
 /* State behaviour */

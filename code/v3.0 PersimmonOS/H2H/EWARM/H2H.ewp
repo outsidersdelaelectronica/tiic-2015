@@ -1092,7 +1092,7 @@
             <name>$PROJ_DIR$\..\Src\menu_welcome.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$\..\Inc\menus.h</name>
+            <name>$PROJ_DIR$\..\Src\menus.c</name>
           </file>
         </group>
         <group>

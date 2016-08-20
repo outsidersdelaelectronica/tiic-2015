@@ -11,10 +11,22 @@
 #include "fonts.h"
 
 #include "lcd.h"
+#include "click.h"
 
-extern item_action_t menu_welcome[];
+#define MENU_MAX_ITEMS 20
 
-extern item_action_t menu_main[];
-extern item_action_t menu_top_bar[];
+typedef struct menu_t
+{
+  uint32_t item_num;
+  item_action_t items[MENU_MAX_ITEMS];
+}
+menu_t;
+
+extern menu_t menu_welcome;
+
+extern menu_t menu_main;
+extern menu_t menu_top_bar;
+
+int32_t menu_search_click(menu_t *menu, click_t *click, item_t *item);
 
 #endif /* MENUS_H_ */

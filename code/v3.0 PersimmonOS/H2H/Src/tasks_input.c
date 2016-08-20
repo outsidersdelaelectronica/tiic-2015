@@ -121,8 +121,10 @@ void Start_input_touchTask(void const * argument)
 void Start_input_clickTask(void const * argument)
 {
   osEvent event;
+  item_t item;
 
   click_t *click;
+  menu_t *current_menu;
   buzzer_note_t beep;
 
   /* Infinite loop */
@@ -144,14 +146,17 @@ void Start_input_clickTask(void const * argument)
           break;
         case CLICK_UP:
           /* Search for command */
+          current_menu = &menu_main;
+          if (menu_search_click(current_menu, click, &item))
+          {
+            /* Send command */
+            osMailPut(queue_fsm_eventsHandle, (void *) &(item.area.event));
 
-          /* Send command */
-//          osMailPut(queue_fsm_eventsHandle, (void *) &test_event);
-
-          /* Beep */
-          beep.note = A5;
-          beep.ms = 50;
-          osMailPut(queue_periph_buzzerHandle, (void *) &beep);
+            /* Beep */
+            beep.note = A5;
+            beep.ms = 50;
+            osMailPut(queue_periph_buzzerHandle, (void *) &beep);
+          }
           break;
         default:
           break;
