@@ -43,7 +43,7 @@ void behaviour_main(state_ptr state)
   /* Do state actions */
 
   /* Set menu */
-  osMailPut(queue_input_menuHandle, (void *) &menu_main);
+//  osMailPut(queue_input_menuHandle, (void *) &menu_main);
 }
 
 /* Entry point to the state */
