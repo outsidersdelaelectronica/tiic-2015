@@ -21,7 +21,7 @@ void tasks_bt_init()
 
   /* Tasks */
   /* bt_txTask */
-  osThreadDef(bt_txTask, Start_bt_txTask, osPriorityHigh, 0, 64);
+  osThreadDef(bt_txTask, Start_bt_txTask, osPriorityHigh, 0, 256);
   bt_txTaskHandle = osThreadCreate(osThread(bt_txTask), NULL);
   
   osThreadDef(bt_initTask, Start_bt_initTask, osPriorityRealtime, 0, 512);
@@ -34,9 +34,8 @@ void Start_bt_txTask(void const * argument)
   
   for(;;)
   {
-    
-    SendData(1,"HOLAA");
-    osDelay(1000);
+    SendData(sizeof("HOLA"),"HOLA");
+    osDelay(5000);
   }
 }
 
