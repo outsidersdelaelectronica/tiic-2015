@@ -1,11 +1,13 @@
 #include "tasks_input.h"
-#include "bluetooth.h"
+
 /* Semaphores */
 osSemaphoreId sem_input_touch_penHandle;
 
 /* Queues */
 osMailQId queue_input_clickHandle;
+osMailQId queue_input_menuHandle;
 extern osMailQId queue_periph_buzzerHandle;
+extern osMailQId queue_fsm_eventsHandle;
 
 /* Tasks */
 osThreadId input_touchTaskHandle;
@@ -27,6 +29,10 @@ void tasks_input_init()
   /* queue_input_click */
   osMailQDef(queue_input_click, 4, click_t);
   queue_input_clickHandle = osMailCreate(osMailQ(queue_input_click), NULL);
+
+  /* queue_input_menu */
+  osMailQDef(queue_input_menu, 1, menu_t *);
+  queue_input_menuHandle = osMailCreate(osMailQ(queue_input_menu), NULL);
 
   /* Tasks */
   /* input_touchTask */
@@ -53,7 +59,8 @@ void Start_input_touchTask(void const * argument)
         EXTI->IMR &= (~TP_PEN_Pin);
 
         /* A finger is touching the screen.
-         * Keep reading values until finger is lifted */
+         * Keep reading values until finger is lifted
+         */
         do
         {
           /* Read value */
@@ -82,7 +89,8 @@ void Start_input_touchTask(void const * argument)
             /* If it is not the first one (it keeps pressing the screen) */
             else
             {
-              /* Finger is still pressing the screen!                    */
+              /* Finger is still pressing the screen!
+               */
               click.click_type = CLICK_HOLD;
               osMailPut(queue_input_clickHandle, (void *) &click);
             }
@@ -117,22 +125,32 @@ void Start_input_touchTask(void const * argument)
 
 void Start_input_clickTask(void const * argument)
 {
-  osEvent event;
+  osEvent event_click, event_menu;
+  item_t item;
 
   click_t *click;
+  menu_t *current_menu;
   buzzer_note_t beep;
+
+  /* Block task until a concrete state is reached */
+  event_menu = osMailGet(queue_input_menuHandle, osWaitForever);
+  if (event_menu.status == osEventMail)
+  {
+    /* Get menu */
+      current_menu = (menu_t *) event_menu.value.p;
+  }
 
   /* Infinite loop */
   for(;;)
   {
     /* Get click */
-    event = osMailGet(queue_input_clickHandle, osWaitForever);
-    if (event.status == osEventMail)
-    {
+    event_click = osMailGet(queue_input_clickHandle, osWaitForever);
+    if (event_click.status == osEventMail)
+  {
       /* Get click position */
-      click = (click_t *) event.value.p;
+      click = (click_t *) event_click.value.p;
 
-      /* Beep, search through clickable objects, etc. */
+      /* Do something based on click type */
       switch (click->click_type)
       {
         case CLICK_DOWN:
@@ -140,14 +158,25 @@ void Start_input_clickTask(void const * argument)
         case CLICK_HOLD:
           break;
         case CLICK_UP:
-          /* Beep */
-          beep.note = A5;
-          beep.ms = 50;
-          osMailPut(queue_periph_buzzerHandle, (void *) &beep);
+          /* Check if a new state put a new menu in the queue */
+          event_menu = osMailGet(queue_input_menuHandle, 0);
+          if (event_menu.status == osEventMail)
+          {
+            /* Get new menu */
+              current_menu = (menu_t *) event_menu.value.p;
+          }
 
-          /* Search for command */
+          /* Search item in menu on click position */
+          if (menu_search_click(current_menu, click, &item))
+          {
+            /* Send item event */
+            osMailPut(queue_fsm_eventsHandle, (void *) &(item.area.event));
 
-          /* Send command */
+            /* Beep */
+            beep.note = A5;
+            beep.ms = 50;
+            osMailPut(queue_periph_buzzerHandle, (void *) &beep);
+          }
 
           break;
         default:

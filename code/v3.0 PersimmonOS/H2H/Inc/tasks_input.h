@@ -6,5 +6,6 @@
 #include "touch.h"
 
 #include "click.h"
+#include "menu.h"
 
 void tasks_input_init();

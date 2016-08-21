@@ -8,6 +8,8 @@
 #ifndef STATE_H_
 #define STATE_H_
 
+#include "cmsis_os.h"
+
 typedef struct state_t* state_ptr;
 
 typedef void (*event_back_f)(state_ptr);
