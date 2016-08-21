@@ -10,22 +10,22 @@
 
 /* State interface */
 #include "state.h"
-
-/* Initial state */
 #include "state_main.h"
 
+/* FSM client */
 typedef struct fsm_client_t* fsm_client_ptr;
 typedef struct fsm_client_t
 {
-  struct state_t state;
+  state_t state;
 }
 fsm_client_t;
+
+void fsm_client_init(fsm_client_ptr fsm);
 
 /* Event function pointer */
 typedef void (*fsm_event_f)(fsm_client_ptr);
 
-void fsm_client_init(fsm_client_ptr fsm);
-
+/* Events */
 void fsm_back(fsm_client_ptr fsm);
 
 void fsm_ecg(fsm_client_ptr fsm);
