@@ -10,8 +10,6 @@
 
 #include "state.h"
 
-#include <string.h>
-
 void behaviour_settings_touchcalib(state_ptr state);
 void entry_to_settings_touchcalib(state_ptr state);
 

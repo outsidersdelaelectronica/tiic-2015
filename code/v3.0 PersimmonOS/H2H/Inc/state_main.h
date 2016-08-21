@@ -10,8 +10,6 @@
 
 #include "state.h"
 
-#include <string.h>
-
 void behaviour_main(state_ptr state);
 void entry_to_main(state_ptr state);
 

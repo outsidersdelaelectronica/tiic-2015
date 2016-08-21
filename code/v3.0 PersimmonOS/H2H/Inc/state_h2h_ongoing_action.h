@@ -10,8 +10,6 @@
 
 #include "state.h"
 
-#include <string.h>
-
 void behaviour_h2h_ongoing_action(state_ptr state);
 void entry_to_h2h_ongoing_action(state_ptr state);
 

@@ -10,8 +10,6 @@
 
 #include "state.h"
 
-#include <string.h>
-
 void behaviour_ecg_1_lead(state_ptr state);
 void entry_to_ecg_1_lead(state_ptr state);
 

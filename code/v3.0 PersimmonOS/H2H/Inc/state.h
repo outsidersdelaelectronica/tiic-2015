@@ -1,4 +1,4 @@
-/*
+#include <string.h>/*
  *  state.h
  *
  *  Created on: 29/9/2015
@@ -7,6 +7,8 @@
 
 #ifndef STATE_H_
 #define STATE_H_
+
+#include <string.h>
 
 #include "cmsis_os.h"
 
