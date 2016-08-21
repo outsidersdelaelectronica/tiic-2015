@@ -2,6 +2,6 @@
 #include "task.h"
 #include "cmsis_os.h"
 
-#include "bluetooth.h"
+#include "bluetooth_internal.h"
 
 void tasks_bt_init();

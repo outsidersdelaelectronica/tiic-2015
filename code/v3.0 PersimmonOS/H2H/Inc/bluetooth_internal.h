@@ -16,56 +16,64 @@
 #include "bt_const_and_struct.h"
 #include "command_interpreter.h"
 
-/* Functions non accessable by user                              */
+#define VENDOR_BAUD_RATE                                    115200L
+/* Init/close function                           */
 
-int InitializeApplication(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_Initialization_t *BTPS_Initialization);
-int OpenStack(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_Initialization_t *BTPS_Initialization);
+void bluetooth_init(void);
+//int InitializeApplication(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_Initialization_t *BTPS_Initialization);
+//int OpenStack(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_Initialization_t *BTPS_Initialization);
 int CloseStack(void);
-void BD_ADDRToStr(BD_ADDR_t Board_Address, BoardStr_t BoardStr);
+
+/* SPP server functions */
+int OpenServer(void);
+int CloseServer(void);
+
+int OpenRemoteServer(BD_ADDR_t remote_address, uint16_t server_port);
+int CloseRemoteServer(void);
+
+/* Setter */
+int SetLoopback(Boolean_t state);
+int SetBaudRate(DWord_t baud_rate);
+int SetLocalName(char *device_name);
+int SetClassOfDevice(int class_device);
+int SetAutomaticReadMode(Boolean_t state);
+int SetDisplayRawModeData(Boolean_t state);
+int SetPairabilityMode(GAP_Pairability_Mode_t  PairabilityMode);
+int SetConnectabilityMode(GAP_Connectability_Mode_t ConnectableMode);
+int SetDiscoverabilityMode(GAP_Discoverability_Mode_t DiscoverabilityMode);
+int SetSimplePairingParameters(GAP_IO_Capability_t iocap, Boolean_t mim_proct);
+int SetQueueParams(unsigned int maximum_number_data_packets,unsigned int queue_threshold);
+int SetConfigParams(uint16_t MaximumFrameSize, uint16_t TransmitBufferSize, uint16_t ReceiveBufferSize);
+
+/* Getters */
+
+int GetQueueParams(unsigned int *params);
+int GetRemoteName(BD_ADDR_t remote_address);
+int GetLocalAddress(BD_ADDR_t local_addres);
+int GetLocalName(char *LocalName, uint16_t lenght);
+int GetClassOfDevice(Class_of_Device_t Class_of_Device);
+int GetConfigParams(SPP_Configuration_Params_t *SPPConfigurationParams);
+
+/* interative functions                        */
+
+int Inquiry(void);
+int Pair(GAP_Bonding_Type_t bondtype, uint16_t table_pos);
+int EndPairing(void);
+int PINCodeResponse(char *pin);
+int PassKeyResponse(char *Passkey);
+int UserConfirmationResponse(Boolean_t confirmation);
+int SniffMode( Word_t Sniff_Max_Interval, Word_t Sniff_Min_Interval, 
+              Word_t Sniff_Attempt, Word_t Sniff_Timeout);
+int ExitSniffMode(void);
+
+int ReadData(char* Buffer, uint16_t lenght);
 int SendData(uint16_t length, unsigned char *buff);
 
-/* Functions accessable by user menu                        */
-
 int DeleteLinkKey(BD_ADDR_t BD_ADDR);
-int Inquiry(ParameterList_t *TempParam);
 
+/* so called Parser */
 
-
-int ChangeSimplePairingParameters(ParameterList_t *TempParam);
-int Pair(ParameterList_t *TempParam);
-int EndPairing(ParameterList_t *TempParam);
-int PINCodeResponse(ParameterList_t *TempParam);
-int PassKeyResponse(ParameterList_t *TempParam);
-int UserConfirmationResponse(ParameterList_t *TempParam);
-int GetLocalAddress(ParameterList_t *TempParam);
-int SetLocalName(ParameterList_t *TempParam);
-int GetLocalName(ParameterList_t *TempParam);
-int SetClassOfDevice(ParameterList_t *TempParam);
-int GetClassOfDevice(ParameterList_t *TempParam);
-int GetRemoteName(ParameterList_t *TempParam);
-int SniffMode(ParameterList_t *TempParam);
-int ExitSniffMode(ParameterList_t *TempParam);
-
-int Read(ParameterList_t *TempParam);
-int Write(ParameterList_t *TempParam);
-int GetConfigParams(ParameterList_t *TempParam);
-int SetConfigParams(ParameterList_t *TempParam);
-int GetQueueParams(ParameterList_t *TempParam);
-int SetQueueParams(ParameterList_t *TempParam);
-int Loopback(ParameterList_t *TempParam);
-int DisplayRawModeData(ParameterList_t *TempParam);
-int SetBaudRate(ParameterList_t *TempParam);
-
-/* Setters w/o parameters                                        */
-
-int SetDiscoverabilityMode(GAP_Discoverability_Mode_t DiscoverabilityMode);
-int SetConnectabilityMode(GAP_Connectability_Mode_t ConnectableMode);
-int SetPairabilityMode(GAP_Pairability_Mode_t  PairabilityMode);
-int AutomaticReadMode(void);
-int OpenServer(void);
-int CloseServer(ParameterList_t *TempParam);
-int OpenRemoteServer(ParameterList_t *TempParam);
-int CloseRemoteServer(ParameterList_t *TempParam);
+void BD_ADDRToStr(BD_ADDR_t Board_Address, BoardStr_t BoardStr);
 
 /* Callbacks for bt events                                   */
 void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t *GAP_Event_Data, unsigned long CallbackParameter);

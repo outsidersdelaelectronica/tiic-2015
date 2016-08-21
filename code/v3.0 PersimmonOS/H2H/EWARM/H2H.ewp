@@ -1152,9 +1152,6 @@
         <group>
           <name>bluetooth</name>
           <file>
-            <name>$PROJ_DIR$\..\Src\bluetooth.c</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$\..\Src\bluetooth_internal.c</name>
           </file>
           <file>
