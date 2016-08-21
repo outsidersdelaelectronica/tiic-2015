@@ -525,7 +525,6 @@ void *BTPSAPI BTPS_AllocateMemory(unsigned long MemorySize)
 
    if(BTPS_WaitMutex(KernelMutex, BTPS_INFINITE_WAIT))
    {
-//      ret_val = MemAlloc(MemoryBuffer, MemorySize);
       ret_val = pvPortMalloc(MemorySize);
 
       BTPS_ReleaseMutex(KernelMutex);
@@ -968,8 +967,6 @@ void BTPSAPI BTPS_Init(void *UserParam)
    }else{
       MessageOutputCallback = NULL;
    }
-   /* Initailize the Heap.                                              */
-
    KernelMutex = BTPS_CreateMutex(FALSE);
 
    /* Initialize the static variables for this module.                  */

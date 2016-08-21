@@ -67,7 +67,7 @@
 
 
    /* The following define the size of the buffers used by HCITRANS.    */
-#define INPUT_BUFFER_SIZE        1
+#define INPUT_BUFFER_SIZE        2
 
 #define TRANSPORT_ID             1
 

@@ -158,17 +158,17 @@ void Start_ecg_filterTask(void const * argument)
       ch1_data = (int32_t) event_ch1.value.v;
       ch2_data = (int32_t) event_ch2.value.v;
       
-//      /* Filter channel 1 */
-//      filtered_ch1_data = show_filter(ch1_data);
-//      /* Filter channel 2 */
-//      filtered_ch2_data = show_filter(ch2_data);
-//      /* Filter channel 1 for bpm detection */
-//      bpm_preprocessed = bpm_preprocessing(ch1_data);
-//      
-//      /* Output data to queues */
-//      osMessagePut(queue_ecg_filter_ch_1Handle, filtered_ch1_data, 0);
-//      osMessagePut(queue_ecg_filter_ch_2Handle, filtered_ch2_data, 0);
-      osMessagePut(queue_ecg_bpmHandle, ch1_data, 0);
+      /* Filter channel 1 */
+      filtered_ch1_data = show_filter(ch1_data);
+      /* Filter channel 2 */
+      filtered_ch2_data = show_filter(ch2_data);
+      /* Filter channel 1 for bpm detection */
+      bpm_preprocessed = bpm_preprocessing(ch1_data);
+      
+      /* Output data to queues */
+      osMessagePut(queue_ecg_filter_ch_1Handle, filtered_ch1_data, 0);
+      osMessagePut(queue_ecg_filter_ch_2Handle, filtered_ch2_data, 0);
+      osMessagePut(queue_ecg_bpmHandle, bpm_preprocessed, 0);
     }
   }
 }

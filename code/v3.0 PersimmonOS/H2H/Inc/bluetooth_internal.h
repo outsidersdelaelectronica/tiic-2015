@@ -16,7 +16,7 @@
 #include "bt_const_and_struct.h"
 #include "command_interpreter.h"
 
-#define VENDOR_BAUD_RATE                                    115200L
+#define VENDOR_BAUD_RATE                                    2000000L
 /* Init/close function                           */
 
 void bluetooth_init(void);

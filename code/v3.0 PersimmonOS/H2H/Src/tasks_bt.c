@@ -21,10 +21,10 @@ void tasks_bt_init()
 
   /* Tasks */
   /* bt_txTask */
-  osThreadDef(bt_txTask, Start_bt_txTask, osPriorityAboveNormal, 0, 64);
+  osThreadDef(bt_txTask, Start_bt_txTask, osPriorityHigh, 0, 64);
   bt_txTaskHandle = osThreadCreate(osThread(bt_txTask), NULL);
   
-  osThreadDef(bt_initTask, Start_bt_initTask, osPriorityAboveNormal, 0, 512);
+  osThreadDef(bt_initTask, Start_bt_initTask, osPriorityRealtime, 0, 512);
   bt_initTaskHandle = osThreadCreate(osThread(bt_initTask), NULL);
 }
 
@@ -34,7 +34,9 @@ void Start_bt_txTask(void const * argument)
   
   for(;;)
   {
-    osDelay(1);
+    
+    SendData(1,"HOLAA");
+    osDelay(1000);
   }
 }
 
@@ -42,14 +44,6 @@ void Start_bt_initTask(void const * argument)
 {
 
   bluetooth_init(); 
-  
-  Inquiry();
-  
-
-  while(Pair(btDedicated,0) !=0)
-  {
-    osDelay(3000);
-  }
   
   while(osThreadTerminate(bt_initTaskHandle) != osOK);
 }

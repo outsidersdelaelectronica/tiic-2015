@@ -21,41 +21,20 @@ int                      HCITransportOpen        = 0;
 uint8_t                  RxBuffer[INPUT_BUFFER_SIZE];
 unsigned long            COMDataCallbackParameter;
 HCITR_COMDataCallback_t  COMDataCallbackFunction;
-osSemaphoreId            sem_bt_data_receiveHandle;
-osThreadId               bt_recieveTaskHandle;
+xSemaphoreHandle         sem_bt_data_receiveHandle;
+volatile ThreadHandle_t  bt_recieveTaskHandle;
 
-HAL_StatusTypeDef rx_dma_abort(UART_HandleTypeDef *huart)
-{
-  
-  /* Disable the UART Rx DMA requests */
-  CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAR);
-
-  /* Abort the UART DMA rx channel */
-  if(huart->hdmarx != NULL)
-  {
-    HAL_DMA_Abort(huart->hdmarx);
-  }
-  
-  if( huart->State == HAL_UART_STATE_BUSY_RX)
-  {
-    huart->State = HAL_UART_STATE_READY;
-  }else if( huart->State == HAL_UART_STATE_BUSY_TX_RX )
-  {
-    huart->State = HAL_UART_STATE_BUSY_TX;
-  }
-  
-  return HAL_OK;
-}
 void RxThread(void const * argument)
 {
   for(;;)
   {
-    if(osSemaphoreWait(sem_bt_data_receiveHandle , 1) == osOK)
+    /* If the transport is open and we have a new data              */
+    if((HCITransportOpen)&&(osSemaphoreWait(sem_bt_data_receiveHandle , osWaitForever) == osOK))
     {
       /* Call the upper layer back with the data.                    */
-      (*COMDataCallbackFunction)(TRANSPORT_ID, INPUT_BUFFER_SIZE ,RxBuffer, COMDataCallbackParameter);
+      (*COMDataCallbackFunction)(TRANSPORT_ID, 1,RxBuffer, COMDataCallbackParameter);
       /* We start a new reception */
-      HAL_UART_Receive_DMA(&huart1, RxBuffer, INPUT_BUFFER_SIZE);
+      HAL_UART_Receive_DMA(&huart1, RxBuffer, 1);
     }
   }
 }
@@ -91,21 +70,11 @@ int BTPSAPI HCITR_COMOpen(HCI_COMMDriverInformation_t *COMMDriverInformation,
 
       /* Flag that the HCI Transport is open.                           */
       HCITransportOpen = 1;
-      
-      /* Initialize hardware                                            */
-      HAL_GPIO_WritePin(GPIOC,nSHUTD_Pin,GPIO_PIN_RESET);
-      MX_USART1_UART_Init();                                           
-      BTPS_Delay(10);
-      HAL_GPIO_WritePin(GPIOC,nSHUTD_Pin,GPIO_PIN_SET);
-      BTPS_Delay(250);
-      
-      /* Start the reception */ 
-      HAL_UART_Receive_DMA(&huart1, RxBuffer, INPUT_BUFFER_SIZE);
-      
+
       /* Create the event that will be used to signal data has arrived. */
       osSemaphoreDef(sem_BtRxDMA);
       sem_bt_data_receiveHandle = osSemaphoreCreate(osSemaphore(sem_BtRxDMA), 1);
-
+      
       if(sem_bt_data_receiveHandle)
       {
          /* Make sure that the event is in the reset state.             */
@@ -124,9 +93,20 @@ int BTPSAPI HCITR_COMOpen(HCI_COMMDriverInformation_t *COMMDriverInformation,
       }else{
          ret_val = HCITR_ERROR_UNABLE_TO_OPEN_TRANSPORT;
       }
-      
+      /* If there was no error, then continue to setup the port.        */
+      if(ret_val != HCITR_ERROR_UNABLE_TO_OPEN_TRANSPORT)
+      {
+        HAL_GPIO_WritePin(GPIOC,nSHUTD_Pin,GPIO_PIN_RESET);
+        MX_USART1_UART_Init();                                           
+        BTPS_Delay(10);
+        HAL_GPIO_WritePin(GPIOC,nSHUTD_Pin,GPIO_PIN_SET);
+        BTPS_Delay(250);
+        /* Start the reception */ 
+        HAL_UART_Receive_DMA(&huart1, RxBuffer, 1);
+      }else{
+         HCITransportOpen = 0;
+      }
   }else{
-      HCITransportOpen = 0;
       ret_val = HCITR_ERROR_UNABLE_TO_OPEN_TRANSPORT;
   }
    return(ret_val);
@@ -307,6 +287,10 @@ int BTPSAPI HCITR_COMSuspend(unsigned int HCITransportID)
       if(UartContext.SuspendState == hssSuspendWait)
       {
          UartContext.SuspendState = hssSuspended;
+
+         /* Disable the UART clock.                                     */
+//         DisableUartPeriphClock();
+
          ret_val = 0;
       }
       else
