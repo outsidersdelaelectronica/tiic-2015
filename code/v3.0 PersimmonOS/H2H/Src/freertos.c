@@ -65,7 +65,7 @@ extern menu_t menu_main;
 extern menu_t menu_top_bar;
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
-void system_init(void);
+void hw_init(void);
 
 void PreSleepProcessing(uint32_t *ulExpectedIdleTime);
 void PostSleepProcessing(uint32_t *ulExpectedIdleTime);
@@ -90,7 +90,7 @@ void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
     */
 }
 
-void system_init(void)
+void hw_init(void)
 {
   afe_init(&afe, &hspi1);
   afe_test_signal_on(&afe);
@@ -98,8 +98,6 @@ void system_init(void)
   buzzer_init(&buzzer, &htim3, &htim4);
   lcd_init(&lcd, &hsram1, LCD_REG, LCD_DATA, LCD_X_SIZE, LCD_Y_SIZE);
   touch_init(&touch, &hspi2, TOUCH_X_SIZE, TOUCH_Y_SIZE);
-
-  fsm_client_init(&fsm);
 }
 
 /* TEST Task */
@@ -108,11 +106,12 @@ void Start_testTask(void const * argument);
 
 extern osMailQId queue_lcdHandle;
 extern osMailQId queue_fsm_eventsHandle;
+extern osMailQId queue_input_menuHandle;
 
 void MX_FREERTOS_Init(void)
 {
-  /* Initialize system */
-  system_init();
+  /* Initialize system hardware */
+  hw_init();
 
   /* Init tasks */
   tasks_ecg_init();
@@ -123,7 +122,7 @@ void MX_FREERTOS_Init(void)
 
   /* Start tasks */
   tasks_ecg_start();
-//  tasks_bt_start();
+  tasks_bt_start();
   tasks_input_start();
   tasks_periph_start();
   tasks_fsm_start();
@@ -153,7 +152,8 @@ void Start_testTask(void const * argument)
 //  osMailPut(queue_lcdHandle, (void *) &menu_welcome.items[2]);
 //  osMailPut(queue_lcdHandle, (void *) &menu_welcome.items[3]);
 //
-//  osDelay(200);
+  osDelay(2000);
+//  osMailPut(queue_input_menuHandle, (void *) &menu_main);
 //
 //  lcd_draw_background(&lcd, &bg);
 //

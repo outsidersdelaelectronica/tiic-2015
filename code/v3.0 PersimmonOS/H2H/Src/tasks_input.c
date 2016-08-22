@@ -136,7 +136,7 @@ void Start_input_clickTask(void const * argument)
   buzzer_note_t beep;
 
   /* Block task until a concrete state is reached */
-  event_menu = osMailGet(queue_input_menuHandle, 0);
+  event_menu = osMailGet(queue_input_menuHandle, osWaitForever);
   if (event_menu.status == osEventMail)
   {
     /* Get menu */
