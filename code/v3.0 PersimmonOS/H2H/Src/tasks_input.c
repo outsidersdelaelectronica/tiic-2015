@@ -33,14 +33,17 @@ void tasks_input_init()
   /* queue_input_menu */
   osMailQDef(queue_input_menu, 1, menu_t *);
   queue_input_menuHandle = osMailCreate(osMailQ(queue_input_menu), NULL);
+}
 
+void tasks_input_start()
+{
   /* Tasks */
   /* input_touchTask */
   osThreadDef(input_touchTask, Start_input_touchTask, osPriorityAboveNormal, 0, 64);
   input_touchTaskHandle = osThreadCreate(osThread(input_touchTask), NULL);
 
   /* input_clickTask */
-  osThreadDef(input_clickTask, Start_input_clickTask, osPriorityAboveNormal, 0, 256);
+  osThreadDef(input_clickTask, Start_input_clickTask, osPriorityHigh, 0, 256);
   input_clickTaskHandle = osThreadCreate(osThread(input_clickTask), NULL);
 }
 
@@ -133,7 +136,7 @@ void Start_input_clickTask(void const * argument)
   buzzer_note_t beep;
 
   /* Block task until a concrete state is reached */
-  event_menu = osMailGet(queue_input_menuHandle, osWaitForever);
+  event_menu = osMailGet(queue_input_menuHandle, 0);
   if (event_menu.status == osEventMail)
   {
     /* Get menu */
@@ -146,7 +149,7 @@ void Start_input_clickTask(void const * argument)
     /* Get click */
     event_click = osMailGet(queue_input_clickHandle, osWaitForever);
     if (event_click.status == osEventMail)
-  {
+    {
       /* Get click position */
       click = (click_t *) event_click.value.p;
 

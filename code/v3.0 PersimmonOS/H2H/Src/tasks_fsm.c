@@ -20,7 +20,10 @@ void tasks_fsm_init()
   /* queue_fsm_events */
   osMailQDef(queue_fsm_events, 4, fsm_event_f);
   queue_fsm_eventsHandle = osMailCreate(osMailQ(queue_fsm_events), NULL);
+}
 
+void tasks_fsm_start()
+{
   /* Tasks */
   /* fsm_managerTask */
   osThreadDef(fsm_managerTask, Start_fsm_managerTask, osPriorityHigh, 0, 64);

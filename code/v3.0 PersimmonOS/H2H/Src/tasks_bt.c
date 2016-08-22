@@ -19,6 +19,10 @@ void tasks_bt_init()
 
   /* Queues */
 
+}
+
+void tasks_bt_start()
+{
   /* Tasks */
   /* bt_txTask */
   osThreadDef(bt_txTask, Start_bt_txTask, osPriorityHigh, 0, 256);
