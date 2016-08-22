@@ -5,6 +5,10 @@
 #include "state_h2h.h"
 #include "state_settings.h"
 
+/* State includes */
+#include "cmsis_os.h"
+#include "menu.h"
+
 /* Queues */
 extern osMailQId queue_input_menuHandle;
 
@@ -43,7 +47,7 @@ void behaviour_main(state_ptr state)
   /* Do state actions */
 
   /* Set menu */
-//  osMailPut(queue_input_menuHandle, (void *) &menu_main);
+  osMailPut(queue_input_menuHandle, (void *) &menu_main);
 }
 
 /* Entry point to the state */
