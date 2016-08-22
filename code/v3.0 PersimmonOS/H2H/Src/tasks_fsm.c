@@ -33,7 +33,6 @@ void tasks_fsm_start()
 void Start_fsm_managerTask(void const * argument)
 {
   osEvent event;
-
   fsm_event_f fsm_event;
 
   /* Initialize FSM */

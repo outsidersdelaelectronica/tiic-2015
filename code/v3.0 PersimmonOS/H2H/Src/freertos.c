@@ -49,6 +49,8 @@
 #include "tasks_periph.h"
 #include "tasks_fsm.h"
 
+#include "menu.h"
+
 /* Hardware */
 afe_t afe;
 buzzer_t buzzer;
@@ -58,11 +60,6 @@ touch_t touch;
 
 /* FSM */
 fsm_client_t fsm;
-
-/* Menus */
-extern menu_t menu_welcome;
-extern menu_t menu_main;
-extern menu_t menu_top_bar;
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 void hw_init(void);
@@ -105,8 +102,6 @@ osThreadId testTaskHandle;
 void Start_testTask(void const * argument);
 
 extern osMailQId queue_lcdHandle;
-extern osMailQId queue_fsm_eventsHandle;
-extern osMailQId queue_input_menuHandle;
 
 void MX_FREERTOS_Init(void)
 {
@@ -142,31 +137,30 @@ void Start_testTask(void const * argument)
   lcd_config.item_print_function = lcd_set_config;
   osMailPut(queue_lcdHandle, (void *) &lcd_config);
 
-//  /* Welcome test */
-//  item_area_set_text(&menu_welcome.items[0].item.area, "Persimmon Access Device");
-//  item_area_set_text(&menu_welcome.items[1].item.area, "H2H Main Board v1.1");
-//  item_area_set_text(&menu_welcome.items[2].item.area, "Samuel López Asunción");
-//  item_area_set_text(&menu_welcome.items[3].item.area, "Tomás Valencia Noheda");
-//  osMailPut(queue_lcdHandle, (void *) &menu_welcome.items[0]);
-//  osMailPut(queue_lcdHandle, (void *) &menu_welcome.items[1]);
-//  osMailPut(queue_lcdHandle, (void *) &menu_welcome.items[2]);
-//  osMailPut(queue_lcdHandle, (void *) &menu_welcome.items[3]);
-//
-  osDelay(2000);
-//  osMailPut(queue_input_menuHandle, (void *) &menu_main);
-//
-//  lcd_draw_background(&lcd, &bg);
-//
-//  item_area_set_text(&menu_main.items[0].item.area, "ECG");
-//  item_area_set_text(&menu_main.items[1].item.area, "H2H");
-//  item_area_set_text(&menu_main.items[2].item.area, "Settings");
-//  item_area_set_text(&menu_top_bar.items[0].item.area, "");
-//  item_area_set_text(&menu_top_bar.items[1].item.area, "16:20");
-//  osMailPut(queue_lcdHandle, (void *) &menu_main.items[0]);
-//  osMailPut(queue_lcdHandle, (void *) &menu_main.items[1]);
-//  osMailPut(queue_lcdHandle, (void *) &menu_main.items[2]);
-//  osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[0]);
-//  osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[1]);
+  /* Welcome test */
+  item_area_set_text(&menu_welcome.items[0].item.area, "Persimmon Access Device");
+  item_area_set_text(&menu_welcome.items[1].item.area, "H2H Main Board v1.1");
+  item_area_set_text(&menu_welcome.items[2].item.area, "Samuel López Asunción");
+  item_area_set_text(&menu_welcome.items[3].item.area, "Tomás Valencia Noheda");
+  osMailPut(queue_lcdHandle, (void *) &menu_welcome.items[0]);
+  osMailPut(queue_lcdHandle, (void *) &menu_welcome.items[1]);
+  osMailPut(queue_lcdHandle, (void *) &menu_welcome.items[2]);
+  osMailPut(queue_lcdHandle, (void *) &menu_welcome.items[3]);
+
+  osDelay(1000);
+
+  lcd_draw_background(&lcd, &bg);
+
+  item_area_set_text(&menu_main.items[0].item.area, "ECG");
+  item_area_set_text(&menu_main.items[1].item.area, "H2H");
+  item_area_set_text(&menu_main.items[2].item.area, "Settings");
+  item_area_set_text(&menu_top_bar.items[0].item.area, "");
+  item_area_set_text(&menu_top_bar.items[1].item.area, "16:20");
+  osMailPut(queue_lcdHandle, (void *) &menu_main.items[0]);
+  osMailPut(queue_lcdHandle, (void *) &menu_main.items[1]);
+  osMailPut(queue_lcdHandle, (void *) &menu_main.items[2]);
+  osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[0]);
+  osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[1]);
 
   for (;;)
   {
