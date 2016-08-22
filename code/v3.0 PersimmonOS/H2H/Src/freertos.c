@@ -39,7 +39,6 @@
 #include "gauge.h"
 #include "lcd.h"
 #include "touch.h"
-#include "bluetooth.h"
 
 #include "fsm_client.h"
 
@@ -121,9 +120,9 @@ void MX_FREERTOS_Init(void)
   tasks_periph_init();
   tasks_fsm_init();
 
-//  /* TEST Task */
-//  osThreadDef(testTask, Start_testTask, osPriorityIdle, 0, 64);
-//  testTaskHandle = osThreadCreate(osThread(testTask), NULL);
+  /* TEST Task */
+  osThreadDef(testTask, Start_testTask, osPriorityIdle, 0, 64);
+  testTaskHandle = osThreadCreate(osThread(testTask), NULL);
 }
 
 void Start_testTask(void const * argument)

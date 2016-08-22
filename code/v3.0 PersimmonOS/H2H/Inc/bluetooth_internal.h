@@ -16,12 +16,16 @@
 #include "bt_const_and_struct.h"
 #include "command_interpreter.h"
 
-#define VENDOR_BAUD_RATE                                    2000000L
+#define VENDOR_BAUD_RATE          2000000L
+#define PACKET_SIZE               16
+
+typedef struct bt_packet_t{
+  unsigned char       packet_content[PACKET_SIZE];
+}bt_packet_t;
+
 /* Init/close function                           */
 
 void bluetooth_init(void);
-//int InitializeApplication(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_Initialization_t *BTPS_Initialization);
-//int OpenStack(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_Initialization_t *BTPS_Initialization);
 int CloseStack(void);
 
 /* SPP server functions */
@@ -36,7 +40,6 @@ int SetLoopback(Boolean_t state);
 int SetBaudRate(DWord_t baud_rate);
 int SetLocalName(char *device_name);
 int SetClassOfDevice(int class_device);
-int SetAutomaticReadMode(Boolean_t state);
 int SetDisplayRawModeData(Boolean_t state);
 int SetPairabilityMode(GAP_Pairability_Mode_t  PairabilityMode);
 int SetConnectabilityMode(GAP_Connectability_Mode_t ConnectableMode);

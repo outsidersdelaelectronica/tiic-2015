@@ -1,5 +1,5 @@
 #include "tasks_periph.h"
-
+#include "bluetooth_internal.h"
 /* Semaphores */
 osSemaphoreId sem_periph_button_short_pressHandle;
 osSemaphoreId sem_periph_button_long_pressHandle;
@@ -51,7 +51,7 @@ void tasks_periph_init()
 
   /* Tasks */
   /* periph_buttonTask */
-  osThreadDef(periph_buttonTask, Start_periph_buttonTask, osPriorityHigh, 0, 64);
+  osThreadDef(periph_buttonTask, Start_periph_buttonTask, osPriorityHigh, 0, 512);
   periph_buttonTaskHandle = osThreadCreate(osThread(periph_buttonTask), NULL);
 
   /* periph_batteryTask */
@@ -63,7 +63,7 @@ void tasks_periph_init()
   periph_buzzerTaskHandle = osThreadCreate(osThread(periph_buzzerTask), NULL);
 
   /* periph_screenTask */
-  osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityBelowNormal, 0, 512);
+  osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityBelowNormal, 0, 128);
   periph_screenTaskHandle = osThreadCreate(osThread(periph_screenTask), NULL);
 }
 
@@ -123,7 +123,7 @@ void Start_periph_buttonTask(void const * argument)
       /* If falling edge is detected before timeout
        * we have a short press
        */
-
+      bluetooth_init(); 
       /* Do something */
       /* If lcd is on */
       if (is_lcd_on)

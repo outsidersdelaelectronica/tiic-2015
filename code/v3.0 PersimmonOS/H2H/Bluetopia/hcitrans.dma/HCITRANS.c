@@ -21,10 +21,10 @@ int                      HCITransportOpen        = 0;
 uint8_t                  RxBuffer[INPUT_BUFFER_SIZE];
 unsigned long            COMDataCallbackParameter;
 HCITR_COMDataCallback_t  COMDataCallbackFunction;
-xSemaphoreHandle         sem_bt_data_receiveHandle;
-volatile ThreadHandle_t  bt_recieveTaskHandle;
+osSemaphoreId            sem_bt_data_receiveHandle;
+osThreadId               bt_recieveTaskHandle;
 
-void RxThread(void const * argument)
+void Start_bt_transportTask(void const * argument)
 {
   for(;;)
   {
@@ -81,7 +81,7 @@ int BTPSAPI HCITR_COMOpen(HCI_COMMDriverInformation_t *COMMDriverInformation,
          osSemaphoreWait(sem_bt_data_receiveHandle , osWaitForever);
 
          /* Create a thread that will process the received data.        */
-         osThreadDef(BtRxDmaTask, RxThread, osPriorityRealtime, 0, 256);
+         osThreadDef(BtRxDmaTask, Start_bt_transportTask, osPriorityRealtime, 0, 256);
          bt_recieveTaskHandle = osThreadCreate(osThread(BtRxDmaTask), NULL);
          
          if(!bt_recieveTaskHandle)

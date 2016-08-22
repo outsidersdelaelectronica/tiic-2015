@@ -185,16 +185,16 @@ int32_t bpm_preprocessing(int32_t value)
   /* We elminate the negative part of the dif signal since it introduce one     */
   /* aditional max which distords the detection( sometimes this max is bigger   */
   /* than the one we want to detect)                                            */
-   if( lp_filtered > 0){
+//   if( lp_filtered > 0){
     squared = lp_filtered*lp_filtered;
     /* squared max value = 10000*10000 * Gdiff * Glp, so we to "renormalize"    */
     squared = squared / 1000;
     integrated = integrator_3000(squared);
     
     return integrated;
-  }
-  else
-  {
-    return 0;
-  }
+//  }
+//  else
+//  {
+//    return 0;
+//  }
 }
