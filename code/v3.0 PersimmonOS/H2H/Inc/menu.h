@@ -27,6 +27,8 @@ int32_t menu_search_click(menu_t *menu, click_t *click, item_t *item);
 /* Menus */
 extern menu_t menu_welcome;
 extern menu_t menu_top_bar;
+
 extern menu_t menu_main;
+extern menu_t menu_ecg;
 
 #endif /* MENU_H_ */

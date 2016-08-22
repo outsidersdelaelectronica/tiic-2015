@@ -1086,6 +1086,9 @@
             <name>$PROJ_DIR$\..\Src\menu.c</name>
           </file>
           <file>
+            <name>$PROJ_DIR$\..\Src\menu_ecg.c</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$\..\Src\menu_main.c</name>
           </file>
           <file>

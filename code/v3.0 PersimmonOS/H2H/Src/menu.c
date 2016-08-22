@@ -15,15 +15,20 @@ int32_t menu_search_click(menu_t *menu, click_t *click, item_t *item)
     item_width = menu->items[i].item.area.width;
     item_height = menu->items[i].item.area.height;
 
-    /* Check item boundaries */
+    /* If an item is found */
     if (((item_x_pos <= click->pos.x_pos) &&
                        (click->pos.x_pos <= item_x_pos + item_width)) &&
         ((item_y_pos <= click->pos.y_pos) &&
                        (click->pos.y_pos <= item_y_pos + item_height)))
     {
-      /* If an item is found */
-      *item = menu->items[i].item;
-      return 1;
+      /* If that item is active and triggers an action */
+      if ((menu->items[i].item.area.is_active == GUI_ACTIVE) &&
+          (menu->items[i].item.area.event != fsm_no_event))
+      {
+        /* Get item and return true */
+        *item = menu->items[i].item;
+        return 1;
+      }
     }
   }
 

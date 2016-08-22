@@ -11,6 +11,7 @@
 
 /* Queues */
 extern osMailQId queue_input_menuHandle;
+extern osMailQId queue_lcdHandle;
 
 static void main_to_ecg(state_ptr state)
 {
@@ -48,6 +49,13 @@ void behaviour_main(state_ptr state)
 
   /* Set menu */
   osMailPut(queue_input_menuHandle, (void *) &menu_main);
+
+  /* Display menu */
+  uint32_t i;
+  for (i = 0; i < menu_main.item_num; i++)
+  {
+    osMailPut(queue_lcdHandle, (void *) &menu_main.items[i]);
+  }
 }
 
 /* Entry point to the state */

@@ -172,13 +172,17 @@ void Start_input_clickTask(void const * argument)
           /* Search item in menu on click position */
           if (menu_search_click(current_menu, click, &item))
           {
-            /* Send item event */
-            osMailPut(queue_fsm_eventsHandle, (void *) &(item.area.event));
+            /* Check if it triggers an event */
+            if (item.area.event != fsm_no_event)
+            {
+              /* Send item event */
+              osMailPut(queue_fsm_eventsHandle, (void *) &(item.area.event));
 
-            /* Beep */
-            beep.note = A5;
-            beep.ms = 50;
-            osMailPut(queue_periph_buzzerHandle, (void *) &beep);
+              /* Beep */
+              beep.note = A5;
+              beep.ms = 50;
+              osMailPut(queue_periph_buzzerHandle, (void *) &beep);
+            }
           }
 
           break;
