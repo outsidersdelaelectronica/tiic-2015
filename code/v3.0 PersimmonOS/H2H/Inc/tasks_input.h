@@ -9,3 +9,4 @@
 #include "menu.h"
 
 void tasks_input_init();
+void tasks_input_start();

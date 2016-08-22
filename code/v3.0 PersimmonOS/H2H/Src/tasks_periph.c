@@ -46,9 +46,12 @@ void tasks_periph_init()
   queue_periph_buzzerHandle = osMailCreate(osMailQ(queue_periph_buzzer), NULL);
 
   /* queue_lcd */
-  osMailQDef(queue_lcd, 4, item_action_t);
+  osMailQDef(queue_lcd, 10, item_action_t);
   queue_lcdHandle = osMailCreate(osMailQ(queue_lcd), NULL);
+}
 
+void tasks_periph_start()
+{
   /* Tasks */
   /* periph_buttonTask */
   osThreadDef(periph_buttonTask, Start_periph_buttonTask, osPriorityHigh, 0, 512);

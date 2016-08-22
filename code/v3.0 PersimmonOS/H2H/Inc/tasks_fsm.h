@@ -5,3 +5,4 @@
 #include "fsm_client.h"
 
 void tasks_fsm_init();
+void tasks_fsm_start();

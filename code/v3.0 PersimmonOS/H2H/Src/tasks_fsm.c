@@ -20,18 +20,23 @@ void tasks_fsm_init()
   /* queue_fsm_events */
   osMailQDef(queue_fsm_events, 4, fsm_event_f);
   queue_fsm_eventsHandle = osMailCreate(osMailQ(queue_fsm_events), NULL);
+}
 
+void tasks_fsm_start()
+{
   /* Tasks */
   /* fsm_managerTask */
-  osThreadDef(fsm_managerTask, Start_fsm_managerTask, osPriorityHigh, 0, 64);
+  osThreadDef(fsm_managerTask, Start_fsm_managerTask, osPriorityNormal, 0, 512);
   fsm_managerTaskHandle = osThreadCreate(osThread(fsm_managerTask), NULL);
 }
 
 void Start_fsm_managerTask(void const * argument)
 {
   osEvent event;
-
   fsm_event_f fsm_event;
+
+  /* Initialize FSM */
+  fsm_client_init(&fsm);
 
   /* Infinite loop */
   for(;;)

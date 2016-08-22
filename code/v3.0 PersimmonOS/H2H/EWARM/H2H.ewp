@@ -621,7 +621,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>Project.srec</state>
+          <state>H2H.srec</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -1084,6 +1084,9 @@
           <name>menus</name>
           <file>
             <name>$PROJ_DIR$\..\Src\menu.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\Src\menu_ecg.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$\..\Src\menu_main.c</name>

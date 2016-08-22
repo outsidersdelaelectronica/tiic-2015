@@ -15,12 +15,15 @@ void Start_bt_rxTask(void const * argument);
 
 /* Objects */
 
-void tasks_bt_init()
+
+void tasks_bt_start()
 {
+
   /* Semaphores */
   osSemaphoreDef(sem_bt_conected);
   sem_bt_conectedHandle = osSemaphoreCreate(osSemaphore(sem_bt_conected), 1);
   /* Queues */
+
   osMailQDef(queue_bt_packet_recieve, 4, bt_packet_t);
   queue_bt_packet_recievedHandle = osMailCreate(osMailQ(queue_bt_packet_recieve), NULL);
   
@@ -33,11 +36,13 @@ void tasks_bt_init()
   
   osThreadDef(bt_rxTask, Start_bt_rxTask, osPriorityHigh, 0, 256);
   bt_rxTaskHandle = osThreadCreate(osThread(bt_rxTask), NULL);
+
 }
 
 void Start_bt_txTask(void const * argument)
 {
   /* Infinite loop */
+
   osEvent event_pk_to_send;
   bt_packet_t* send_packet;
   for(;;)
@@ -54,6 +59,7 @@ void Start_bt_txTask(void const * argument)
 
 void Start_bt_rxTask(void const * argument)
 {
+
   /* Infinite loop */
   osEvent event_pk_rec;
   bt_packet_t rec_packet;
@@ -68,3 +74,4 @@ void Start_bt_rxTask(void const * argument)
     }
   }
 }
+

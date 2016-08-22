@@ -1,4 +1,4 @@
-#include <string.h>/*
+/*
  *  state.h
  *
  *  Created on: 29/9/2015
@@ -9,7 +9,6 @@
 #define STATE_H_
 
 #include <string.h>
-#include "cmsis_os.h"
 
 /* State pointer */
 typedef struct state_t* state_ptr;
@@ -48,4 +47,4 @@ state_t;
 
 void default_implementation(state_ptr state);
 
-#endif /* MENU_STATE_H_ */
+#endif /* STATE_H_ */

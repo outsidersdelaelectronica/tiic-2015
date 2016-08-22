@@ -5,3 +5,4 @@
 #include "bluetooth_internal.h"
 
 void tasks_bt_init();
+void tasks_bt_start();
