@@ -23,7 +23,7 @@ void tasks_bt_init()
   /* bt_txTask */
   osThreadDef(bt_txTask, Start_bt_txTask, osPriorityHigh, 0, 256);
   bt_txTaskHandle = osThreadCreate(osThread(bt_txTask), NULL);
-  
+
   osThreadDef(bt_initTask, Start_bt_initTask, osPriorityRealtime, 0, 512);
   bt_initTaskHandle = osThreadCreate(osThread(bt_initTask), NULL);
 }
@@ -31,10 +31,10 @@ void tasks_bt_init()
 void Start_bt_txTask(void const * argument)
 {
   /* Infinite loop */
-  
+
   for(;;)
   {
-    SendData(sizeof("HOLA"),"HOLA");
+    SendData(sizeof("HOLA\n"),"HOLA\n");
     osDelay(5000);
   }
 }
@@ -42,7 +42,7 @@ void Start_bt_txTask(void const * argument)
 void Start_bt_initTask(void const * argument)
 {
 
-  bluetooth_init(); 
-  
+  bluetooth_init();
+
   while(osThreadTerminate(bt_initTaskHandle) != osOK);
 }

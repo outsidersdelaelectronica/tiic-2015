@@ -122,8 +122,8 @@ void MX_FREERTOS_Init(void)
   tasks_fsm_init();
 
 //  /* TEST Task */
-//  osThreadDef(testTask, Start_testTask, osPriorityIdle, 0, 64);
-//  testTaskHandle = osThreadCreate(osThread(testTask), NULL);
+  osThreadDef(testTask, Start_testTask, osPriorityIdle, 0, 64);
+  testTaskHandle = osThreadCreate(osThread(testTask), NULL);
 }
 
 void Start_testTask(void const * argument)
