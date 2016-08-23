@@ -54,7 +54,7 @@ void tasks_periph_start()
 {
   /* Tasks */
   /* periph_buttonTask */
-  osThreadDef(periph_buttonTask, Start_periph_buttonTask, osPriorityHigh, 0, 512);
+  osThreadDef(periph_buttonTask, Start_periph_buttonTask, osPriorityHigh, 0, 128);
   periph_buttonTaskHandle = osThreadCreate(osThread(periph_buttonTask), NULL);
 
   /* periph_batteryTask */
@@ -62,11 +62,11 @@ void tasks_periph_start()
   periph_batteryTaskHandle = osThreadCreate(osThread(periph_batteryTask), NULL);
 
   /* periph_buzzerTask */
-  osThreadDef(periph_buzzerTask, Start_periph_buzzerTask, osPriorityBelowNormal, 0, 64);
+  osThreadDef(periph_buzzerTask, Start_periph_buzzerTask, osPriorityNormal, 0, 64);
   periph_buzzerTaskHandle = osThreadCreate(osThread(periph_buzzerTask), NULL);
 
   /* periph_screenTask */
-  osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityBelowNormal, 0, 128);
+  osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityNormal, 0, 128);
   periph_screenTaskHandle = osThreadCreate(osThread(periph_screenTask), NULL);
 }
 
@@ -126,7 +126,7 @@ void Start_periph_buttonTask(void const * argument)
       /* If falling edge is detected before timeout
        * we have a short press
        */
-      bluetooth_init(); 
+      bluetooth_init();
       /* Do something */
       /* If lcd is on */
       if (is_lcd_on)

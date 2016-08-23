@@ -7,6 +7,14 @@
 /* Parent states */
 #include "state_h2h.h"
 
+/* State includes */
+#include "cmsis_os.h"
+#include "menu.h"
+
+/* Queues */
+extern osMailQId queue_input_menuHandle;
+extern osMailQId queue_lcdHandle;
+
 static void h2h_connect_to_main(state_ptr state)
 {
   /* Do transition actions */
@@ -31,6 +39,16 @@ void behaviour_h2h_connect(state_ptr state)
   state->h2h_connect = h2h_connect_to_h2h_ongoing;
 
   /* Do state actions */
+
+  /* Set menu */
+  osMailPut(queue_input_menuHandle, (void *) &menu_h2h_connect);
+
+  /* Display menu */
+  uint32_t i;
+  for (i = 0; i < menu_h2h_connect.item_num; i++)
+  {
+    osMailPut(queue_lcdHandle, (void *) &menu_h2h_connect.items[i]);
+  }
 }
 
 /* Entry point to the state */

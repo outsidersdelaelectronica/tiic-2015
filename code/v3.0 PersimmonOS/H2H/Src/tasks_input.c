@@ -43,7 +43,7 @@ void tasks_input_start()
   input_touchTaskHandle = osThreadCreate(osThread(input_touchTask), NULL);
 
   /* input_clickTask */
-  osThreadDef(input_clickTask, Start_input_clickTask, osPriorityAboveNormal, 0, 512);
+  osThreadDef(input_clickTask, Start_input_clickTask, osPriorityAboveNormal, 0, 128);
   input_clickTaskHandle = osThreadCreate(osThread(input_clickTask), NULL);
 }
 

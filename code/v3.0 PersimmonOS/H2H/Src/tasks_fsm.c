@@ -26,7 +26,7 @@ void tasks_fsm_start()
 {
   /* Tasks */
   /* fsm_managerTask */
-  osThreadDef(fsm_managerTask, Start_fsm_managerTask, osPriorityNormal, 0, 512);
+  osThreadDef(fsm_managerTask, Start_fsm_managerTask, osPriorityNormal, 0, 256);
   fsm_managerTaskHandle = osThreadCreate(osThread(fsm_managerTask), NULL);
 }
 

@@ -1,6 +1,6 @@
 #include "menu.h"
 
-menu_t menu_h2h_connect =
+menu_t menu_h2h_ongoing_action =
 {
   .item_num = 4,
   .items =
@@ -52,11 +52,11 @@ menu_t menu_h2h_connect =
       .item.area =
       {
         .width                = 610,
-        .height               = 100,
-        .pos                  = {.x_pos = 20, .y_pos = 380},
+        .height               = 60,
+        .pos                  = {.x_pos = 20, .y_pos = 90},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
-        .string               = "Connect",
+        .string               = "Device: Pacemaker 266178",
         .font                 = myriad_pro_semibold17x23,
         .string_width         = 0,
         .string_height        = 0,
@@ -72,9 +72,9 @@ menu_t menu_h2h_connect =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 760,
-        .height               = 300,
-        .pos                  = {.x_pos = 20, .y_pos = 60},
+        .width                = 610,
+        .height               = 320,
+        .pos                  = {.x_pos = 20, .y_pos = 120},
         .border               = GUI_RECTANGLE,
         .is_active            = GUI_ACTIVE,
         .string               = "",
@@ -88,6 +88,6 @@ menu_t menu_h2h_connect =
         .border_color         = COLOR_WHITE,
         .event                = fsm_no_event
       }
-    }
+    },
   }
 };

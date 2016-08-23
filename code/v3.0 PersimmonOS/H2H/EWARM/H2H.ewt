@@ -1169,6 +1169,15 @@
             <file>
               <name>$PROJ_DIR$\..\Src\menu_h2h_connect.c</name>
             </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_action.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_connecting.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_error.c</name>
+            </file>
           </group>
           <group>
             <name>settings</name>
