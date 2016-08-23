@@ -1082,11 +1082,23 @@
         <name>gui</name>
         <group>
           <name>menus</name>
+          <group>
+            <name>ecg</name>
+            <file>
+              <name>$PROJ_DIR$\..\Src\menu_ecg.c</name>
+            </file>
+          </group>
+          <group>
+            <name>h2h</name>
+            <file>
+              <name>$PROJ_DIR$\..\Src\menu_h2h_connect.c</name>
+            </file>
+          </group>
+          <group>
+            <name>settings</name>
+          </group>
           <file>
             <name>$PROJ_DIR$\..\Src\menu.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\..\Src\menu_ecg.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$\..\Src\menu_main.c</name>

@@ -30,5 +30,6 @@ extern menu_t menu_top_bar;
 
 extern menu_t menu_main;
 extern menu_t menu_ecg;
+extern menu_t menu_h2h_connect;
 
 #endif /* MENU_H_ */

@@ -33,7 +33,10 @@ void tasks_input_init()
   /* queue_input_menu */
   osMailQDef(queue_input_menu, 1, menu_t *);
   queue_input_menuHandle = osMailCreate(osMailQ(queue_input_menu), NULL);
+}
 
+void tasks_input_start()
+{
   /* Tasks */
   /* input_touchTask */
   osThreadDef(input_touchTask, Start_input_touchTask, osPriorityAboveNormal, 0, 64);
