@@ -14,10 +14,35 @@
 
 #include "gauge_constants.h"
 
+typedef struct gauge_data_t
+{
+  int32_t temp;
+  int32_t volt;
+  uint32_t flags;
+
+  uint32_t nom_avail_cap;
+  uint32_t full_avail_cap;
+  uint32_t remaining_cap;
+  uint32_t full_chg_cap;
+
+  int32_t avg_current;
+  int32_t standby_current;
+  int32_t max_load_current;
+  int32_t avg_power;
+
+  uint32_t soc;
+  uint32_t soh;
+}
+gauge_data_t;
+
 typedef struct gauge_t
 {
   /* Hardware/memory map location */
   I2C_HandleTypeDef *hi2c;
+
+  /* Last data received */
+  uint8_t last_data_buf[32];
+  gauge_data_t last_data;
 }
 gauge_t;
 

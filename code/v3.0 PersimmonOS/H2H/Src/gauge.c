@@ -6,7 +6,7 @@
  */
 #include "gauge.h"
 
-/* 
+/*
  * Fuel gauge design parameters
  *
  * DESIGN_CAPACITY      1050   mAh
@@ -33,7 +33,7 @@ void gauge_init(gauge_t *gauge, I2C_HandleTypeDef *hi2c)
 
   /* Initialize gauge structure */
   gauge_hal_init(gauge, hi2c);
-  
+
   /* Unseal device */
   gauge_hal_write_reg16(gauge, FG_CNTL, FG_UNSEAL);
   gauge_hal_write_reg16(gauge, FG_CNTL, FG_UNSEAL);     // Send unseal key twice
@@ -45,7 +45,7 @@ void gauge_init(gauge_t *gauge, I2C_HandleTypeDef *hi2c)
     gauge_hal_read_reg16 (gauge, FG_FLAGS, &flags);
   }
   while (!(flags & 0x0010));        // Wait for CFGUPMODE bit to be set
-  
+
   /* Update parameters */
   gauge_hal_ram_update(gauge, 82, 10, gauge_param_design_capacity, 2);
   gauge_hal_ram_update(gauge, 82, 12, gauge_param_design_energy, 2);
@@ -53,7 +53,7 @@ void gauge_init(gauge_t *gauge, I2C_HandleTypeDef *hi2c)
   gauge_hal_ram_update(gauge, 82, 3,  gauge_param_reserve_capacity, 2);
   gauge_hal_ram_update(gauge, 82, 27, gauge_param_taper_rate, 2);
   gauge_hal_ram_update(gauge, 64, 0,  gauge_operation_config, 2);
-  
+
   /* Exit config update mode (performing a soft reset)*/
   gauge_hal_write_reg16(gauge, FG_CNTL, FG_CNTL_SOFT_RESET);
   do
@@ -61,7 +61,20 @@ void gauge_init(gauge_t *gauge, I2C_HandleTypeDef *hi2c)
     gauge_hal_read_reg16 (gauge, FG_FLAGS, &flags);
   }
   while (flags & 0x0010);           // Wait for CFGUPMODE bit to be cleared
-  
+
   /* Seal device */
   gauge_hal_write_reg16(gauge, FG_CNTL, FG_CNTL_SEALED);
+}
+
+void gauge_start_read(gauge_t *gauge)
+{
+  uint8_t initial_reg = FG_TEMP;
+
+  HAL_I2C_Master_Transmit(gauge->hi2c, FG_I2C_ADDRESS, &initial_reg, 1, 100);
+  HAL_I2C_Master_Receive_DMA(gauge->hi2c, FG_I2C_ADDRESS, gauge->last_data_buf, 32);
+}
+
+void gauge_format_data(gauge_t *gauge)
+{
+
 }

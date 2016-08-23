@@ -162,10 +162,11 @@ void Start_periph_batteryTask(void const * argument)
     if (osSemaphoreWait(sem_periph_batteryHandle, osWaitForever) == osOK)
     {
       /* Read gauge values */
+      gauge_read(&gauge);
 
       /* Read charger values */
 
-      /* Do something */
+      /* Display battery status */
 
     }
   }
