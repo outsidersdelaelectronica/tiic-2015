@@ -104,7 +104,7 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
   *                the configuration information for the specified I2C.
   * @retval None
   */
-__weak void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c)
+void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c)
 {
   /* Gauge Rx complete */
   if(hi2c->Instance == I2C1)

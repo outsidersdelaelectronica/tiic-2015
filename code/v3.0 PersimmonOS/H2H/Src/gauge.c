@@ -76,5 +76,6 @@ void gauge_start_read(gauge_t *gauge)
 
 void gauge_format_data(gauge_t *gauge)
 {
-
+  gauge->last_data.volt = ((int32_t) ((int8_t) gauge->last_data_buf[3] << 8)) |
+                          ((int32_t) gauge->last_data_buf[2]);
 }
