@@ -12,7 +12,6 @@
  * AFE low level functions
  *
  */
-
 void afe_hal_init(afe_t *afe, SPI_HandleTypeDef *hspi)
 {
   /* Associate with spi handle */
@@ -27,7 +26,7 @@ void afe_hal_init(afe_t *afe, SPI_HandleTypeDef *hspi)
 
   afe->last_data.ch1_data = 0;
   afe->last_data.ch2_data = 0;
-  
+
   afe->afe_gain_ch1 = 6;        /* Default gain */
   afe->afe_gain_ch2 = 6;        /* Default gain */
 }

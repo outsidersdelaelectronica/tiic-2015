@@ -68,14 +68,45 @@ void gauge_init(gauge_t *gauge, I2C_HandleTypeDef *hi2c)
 
 void gauge_start_read(gauge_t *gauge)
 {
-  uint8_t initial_reg = FG_TEMP;
+  uint8_t initial_reg = FG_CNTL;
 
   HAL_I2C_Master_Transmit(gauge->hi2c, FG_I2C_ADDRESS, &initial_reg, 1, 100);
-  HAL_I2C_Master_Receive_DMA(gauge->hi2c, FG_I2C_ADDRESS, gauge->last_data_buf, 32);
+  HAL_I2C_Master_Receive_DMA(gauge->hi2c, FG_I2C_ADDRESS, gauge->last_data_buf, 34);
 }
 
 void gauge_format_data(gauge_t *gauge)
 {
-  gauge->last_data.volt = ((int32_t) ((int8_t) gauge->last_data_buf[3] << 8)) |
-                          ((int32_t) gauge->last_data_buf[2]);
+  gauge->last_data.cntl  = ((uint32_t) gauge->last_data_buf[FG_CNTL + 1] << 8) |
+                           ((uint32_t) gauge->last_data_buf[FG_CNTL]);
+  gauge->last_data.flags = ((uint32_t) gauge->last_data_buf[FG_FLAGS + 1] << 8) |
+                           ((uint32_t) gauge->last_data_buf[FG_FLAGS]);
+
+  gauge->last_data.temp = ((int32_t) ((int8_t) gauge->last_data_buf[FG_TEMP + 1] << 8)) |
+                          ((int32_t) gauge->last_data_buf[FG_TEMP]);
+  gauge->last_data.volt = ((int32_t) ((int8_t) gauge->last_data_buf[FG_VOLT + 1] << 8)) |
+                          ((int32_t) gauge->last_data_buf[FG_VOLT]);
+
+  gauge->last_data.nom_avail_cap  = ((uint32_t) gauge->last_data_buf[FG_NOM_AVAIL_CAP + 1] << 8) |
+                                    ((uint32_t) gauge->last_data_buf[FG_NOM_AVAIL_CAP]);
+  gauge->last_data.full_avail_cap = ((uint32_t) gauge->last_data_buf[FG_FULL_AVAIL_CAP + 1] << 8) |
+                                    ((uint32_t) gauge->last_data_buf[FG_FULL_AVAIL_CAP]);
+  gauge->last_data.remaining_cap  = ((uint32_t) gauge->last_data_buf[FG_REMAINING_CAP + 1] << 8) |
+                                    ((uint32_t) gauge->last_data_buf[FG_REMAINING_CAP]);
+  gauge->last_data.full_chg_cap   = ((uint32_t) gauge->last_data_buf[FG_FULL_CHG_CAP + 1] << 8) |
+                                    ((uint32_t) gauge->last_data_buf[FG_FULL_CHG_CAP]);
+
+  gauge->last_data.avg_current       = ((int32_t) ((int8_t) gauge->last_data_buf[FG_AVG_CURRENT + 1] << 8)) |
+                                       ((int32_t) gauge->last_data_buf[FG_AVG_CURRENT]);
+  gauge->last_data.standby_current   = ((int32_t) ((int8_t) gauge->last_data_buf[FG_STANDBY_CURRENT + 1] << 8)) |
+                                       ((int32_t) gauge->last_data_buf[FG_STANDBY_CURRENT]);
+  gauge->last_data.max_load_current  = ((int32_t) ((int8_t) gauge->last_data_buf[FG_MAX_LOAD_CURRENT + 1] << 8)) |
+                                       ((int32_t) gauge->last_data_buf[FG_MAX_LOAD_CURRENT]);
+  gauge->last_data.avg_power         = ((int32_t) ((int8_t) gauge->last_data_buf[FG_AVG_POWER + 1] << 8)) |
+                                       ((int32_t) gauge->last_data_buf[FG_AVG_POWER]);
+
+  gauge->last_data.soc        = ((uint32_t) gauge->last_data_buf[FG_SOC + 1] << 8) |
+                                ((uint32_t) gauge->last_data_buf[FG_SOC]);
+  gauge->last_data.soh        = ((uint32_t) gauge->last_data_buf[FG_SOH]);
+  gauge->last_data.soh_status = ((uint32_t) gauge->last_data_buf[FG_SOH + 1]);
+
 }
