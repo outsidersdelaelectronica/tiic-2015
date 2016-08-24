@@ -4,6 +4,7 @@
 osSemaphoreId sem_periph_button_short_pressHandle;
 osSemaphoreId sem_periph_button_long_pressHandle;
 osSemaphoreId sem_periph_batteryHandle;
+osSemaphoreId sem_periph_gauge_dma_rxHandle;
 
 /* Queues */
 osMailQId queue_periph_buzzerHandle;
@@ -39,6 +40,10 @@ void tasks_periph_init()
   /* sem_periph_battery */
   osSemaphoreDef(sem_periph_battery);
   sem_periph_batteryHandle = osSemaphoreCreate(osSemaphore(sem_periph_battery), 1);
+
+  /* sem_periph_gauge_dma_rx */
+  osSemaphoreDef(sem_periph_gauge_dma_rx);
+  sem_periph_gauge_dma_rxHandle = osSemaphoreCreate(osSemaphore(sem_periph_gauge_dma_rx), 1);
 
   /* Queues */
   /* queue_periph_buzzer */
@@ -154,6 +159,7 @@ void Start_periph_batteryTask(void const * argument)
 {
   /* Reset semaphore */
   osSemaphoreWait(sem_periph_batteryHandle, osWaitForever);
+  osSemaphoreWait(sem_periph_gauge_dma_rxHandle, osWaitForever);
 
   /* Infinite loop */
   for(;;)
@@ -162,7 +168,14 @@ void Start_periph_batteryTask(void const * argument)
     if (osSemaphoreWait(sem_periph_batteryHandle, osWaitForever) == osOK)
     {
       /* Read gauge values */
-      gauge_read(&gauge);
+      gauge_start_read(&gauge);
+
+      /* Wait for DMA to complete transaction */
+      if (osSemaphoreWait(sem_periph_gauge_dma_rxHandle, osWaitForever) == osOK)
+      {
+        /* Format received bytes into usable data */
+        gauge_format_data(&gauge);
+      }
 
       /* Read charger values */
 

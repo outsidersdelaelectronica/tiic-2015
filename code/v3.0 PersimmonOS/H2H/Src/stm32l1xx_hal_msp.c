@@ -51,6 +51,7 @@ extern osSemaphoreId sem_input_touch_penHandle;
 extern osSemaphoreId sem_periph_button_short_pressHandle;
 extern osSemaphoreId sem_periph_button_long_pressHandle;
 extern osSemaphoreId sem_periph_batteryHandle;
+extern osSemaphoreId sem_periph_gauge_dma_rxHandle;
 
 /**
   * Initializes the Global MSP.
@@ -93,6 +94,24 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
     if(sem_ecg_afe_dma_rxHandle != NULL)
     {
       osSemaphoreRelease(sem_ecg_afe_dma_rxHandle);
+    }
+  }
+}
+
+/**
+  * @brief  Master Rx Transfer completed callback.
+  * @param  hi2c Pointer to a I2C_HandleTypeDef structure that contains
+  *                the configuration information for the specified I2C.
+  * @retval None
+  */
+__weak void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c)
+{
+  /* Gauge Rx complete */
+  if(hi2c->Instance == I2C1)
+  {
+    if(sem_periph_gauge_dma_rxHandle != NULL)
+    {
+      osSemaphoreRelease(sem_periph_gauge_dma_rxHandle);
     }
   }
 }

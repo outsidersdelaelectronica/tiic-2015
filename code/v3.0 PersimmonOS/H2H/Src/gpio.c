@@ -45,9 +45,9 @@
 
 /* USER CODE END 1 */
 
-/** Configure pins as 
-        * Analog 
-        * Input 
+/** Configure pins as
+        * Analog
+        * Input
         * Output
         * EVENT_OUT
         * EXTI
@@ -84,17 +84,17 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PCPin PCPin PCPin PCPin 
+  /*Configure GPIO pins : PCPin PCPin PCPin PCPin
                            PCPin */
-  GPIO_InitStruct.Pin = NCC13_Pin|NCC0_Pin|NCC1_Pin|NCC4_Pin 
+  GPIO_InitStruct.Pin = NCC13_Pin|NCC0_Pin|NCC1_Pin|NCC4_Pin
                           |NCC8_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PCPin PCPin PCPin PCPin 
+  /*Configure GPIO pins : PCPin PCPin PCPin PCPin
                            PCPin PCPin */
-  GPIO_InitStruct.Pin = VDD_AFE_D_EN_Pin|VDD_AFE_A_EN_Pin|VDD_SCREEN_EN_Pin|VDD_RF_PW_EN_Pin 
+  GPIO_InitStruct.Pin = VDD_AFE_D_EN_Pin|VDD_AFE_A_EN_Pin|VDD_SCREEN_EN_Pin|VDD_RF_PW_EN_Pin
                           |VDD_RF_IO_EN_Pin|nSHUTD_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -120,13 +120,19 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PBPin PBPin PBPin PBPin 
+  /*Configure GPIO pins : PBPin PBPin PBPin PBPin
                            PBPin */
-  GPIO_InitStruct.Pin = NCB1_Pin|TP_BUSY_Pin|NCB5_Pin|NCB8_Pin 
+  GPIO_InitStruct.Pin = NCB1_Pin|TP_BUSY_Pin|NCB5_Pin|NCB8_Pin
                           |NCB9_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+//  /*Configure GPIO pins : PBPin PBPin */
+//  GPIO_InitStruct.Pin = FG_SCL_Pin|FG_SDA_Pin;
+//  GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
+//  GPIO_InitStruct.Pull = GPIO_PULLUP;
+//  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = BOOT1_Pin;
@@ -182,7 +188,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, VDD_AFE_D_EN_Pin|VDD_AFE_A_EN_Pin|nSHUTD_Pin|UI_LED_R_Pin 
+  HAL_GPIO_WritePin(GPIOC, VDD_AFE_D_EN_Pin|VDD_AFE_A_EN_Pin|nSHUTD_Pin|UI_LED_R_Pin
                           |UI_LED_G_Pin|UI_LED_B_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
