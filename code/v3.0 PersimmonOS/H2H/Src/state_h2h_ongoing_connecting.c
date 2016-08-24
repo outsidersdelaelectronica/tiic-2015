@@ -40,6 +40,7 @@ void behaviour_h2h_ongoing_connecting(state_ptr state)
   state->h2h_ok = h2h_ongoing_connecting_to_h2h_ongoing_action;
 
   /* Do state actions */
+  bluetooth_init();
 
   /* Set menu */
   osMailPut(queue_input_menuHandle, (void *) &menu_h2h_ongoing_connecting);

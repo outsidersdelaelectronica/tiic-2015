@@ -19,12 +19,13 @@
 #define VENDOR_BAUD_RATE          2000000L
 #define PACKET_SIZE               16
 
-typedef struct bt_packet_t{
-  unsigned char       packet_content[PACKET_SIZE];
-}bt_packet_t;
+typedef struct bt_packet_t
+{
+  unsigned char packet_content[PACKET_SIZE];
+}
+bt_packet_t;
 
 /* Init/close function                           */
-
 void bluetooth_init(void);
 int CloseStack(void);
 
@@ -65,7 +66,7 @@ int EndPairing(void);
 int PINCodeResponse(char *pin);
 int PassKeyResponse(char *Passkey);
 int UserConfirmationResponse(Boolean_t confirmation);
-int SniffMode( Word_t Sniff_Max_Interval, Word_t Sniff_Min_Interval, 
+int SniffMode( Word_t Sniff_Max_Interval, Word_t Sniff_Min_Interval,
               Word_t Sniff_Attempt, Word_t Sniff_Timeout);
 int ExitSniffMode(void);
 
