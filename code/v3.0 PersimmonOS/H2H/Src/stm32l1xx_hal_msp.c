@@ -52,6 +52,7 @@ extern osSemaphoreId sem_periph_button_short_pressHandle;
 extern osSemaphoreId sem_periph_button_long_pressHandle;
 extern osSemaphoreId sem_periph_batteryHandle;
 extern osSemaphoreId sem_periph_gauge_dma_rxHandle;
+extern osSemaphoreId sem_periph_rtcHandle;
 
 /**
   * Initializes the Global MSP.
@@ -146,6 +147,24 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
   if (huart->Instance == USART1)
   {
     HAL_GPIO_WritePin(GPIOC, UI_LED_R_Pin,GPIO_PIN_SET);
+  }
+}
+
+/**
+  * @brief  Alarm A callback.
+  * @param  hrtc: pointer to a RTC_HandleTypeDef structure that contains
+  *                the configuration information for RTC.
+  * @retval None
+  */
+void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
+{
+  /* A minute has passed */
+  if(hrtc->Instance == RTC)
+  {
+    if(sem_periph_rtcHandle != NULL)
+    {
+      osSemaphoreRelease(sem_periph_rtcHandle);
+    }
   }
 }
 

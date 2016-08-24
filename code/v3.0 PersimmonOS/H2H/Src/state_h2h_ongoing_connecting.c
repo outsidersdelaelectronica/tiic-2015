@@ -11,6 +11,7 @@
 /* State includes */
 #include "cmsis_os.h"
 #include "menu.h"
+#include "bluetooth_internal.h"
 
 /* Queues */
 extern osMailQId queue_input_menuHandle;

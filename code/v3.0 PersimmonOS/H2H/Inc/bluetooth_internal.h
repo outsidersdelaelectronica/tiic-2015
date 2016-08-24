@@ -9,7 +9,7 @@
 #define BLUETOOTH_INTERNAL_H_
 
 #include "HCITRANS.h"
-#include "BTVSAPI.h"             /* Vendror Specific header.                  */
+#include "BTVSAPI.h"             /* Vendor Specific header.                   */
 #include "SS1BTPS.h"             /* Main SS1 Bluetooth Stack Header.          */
 #include "BTPSKRNL.h"            /* BTPS Kernel Header.                       */
 
@@ -25,7 +25,7 @@ typedef struct bt_packet_t
 }
 bt_packet_t;
 
-/* Init/close function                           */
+/* Init/close function */
 void bluetooth_init(void);
 int CloseStack(void);
 

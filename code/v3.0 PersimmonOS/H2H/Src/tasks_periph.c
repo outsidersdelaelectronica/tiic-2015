@@ -1,10 +1,11 @@
 #include "tasks_periph.h"
-#include "bluetooth_internal.h"
+
 /* Semaphores */
 osSemaphoreId sem_periph_button_short_pressHandle;
 osSemaphoreId sem_periph_button_long_pressHandle;
 osSemaphoreId sem_periph_batteryHandle;
 osSemaphoreId sem_periph_gauge_dma_rxHandle;
+osSemaphoreId sem_periph_rtcHandle;
 
 /* Queues */
 osMailQId queue_periph_buzzerHandle;
@@ -15,10 +16,12 @@ osThreadId periph_buttonTaskHandle;
 osThreadId periph_batteryTaskHandle;
 osThreadId periph_buzzerTaskHandle;
 osThreadId periph_screenTaskHandle;
+osThreadId periph_rtcTaskHandle;
 void Start_periph_buttonTask(void const * argument);
 void Start_periph_batteryTask(void const * argument);
 void Start_periph_buzzerTask(void const * argument);
 void Start_periph_screenTask(void const * argument);
+void Start_periph_rtcTask(void const * argument);
 
 /* Objects */
 extern RTC_HandleTypeDef hrtc;
@@ -44,6 +47,10 @@ void tasks_periph_init()
   /* sem_periph_gauge_dma_rx */
   osSemaphoreDef(sem_periph_gauge_dma_rx);
   sem_periph_gauge_dma_rxHandle = osSemaphoreCreate(osSemaphore(sem_periph_gauge_dma_rx), 1);
+
+  /* sem_periph_rtc */
+  osSemaphoreDef(sem_periph_rtc);
+  sem_periph_rtcHandle = osSemaphoreCreate(osSemaphore(sem_periph_rtc), 1);
 
   /* Queues */
   /* queue_periph_buzzer */
@@ -73,6 +80,10 @@ void tasks_periph_start()
   /* periph_screenTask */
   osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityNormal, 0, 128);
   periph_screenTaskHandle = osThreadCreate(osThread(periph_screenTask), NULL);
+
+  /* periph_rtcTask */
+  osThreadDef(periph_rtcTask, Start_periph_rtcTask, osPriorityLow, 0, 64);
+  periph_rtcTaskHandle = osThreadCreate(osThread(periph_rtcTask), NULL);
 }
 
 void Start_periph_buttonTask(void const * argument)
@@ -227,6 +238,25 @@ void Start_periph_screenTask(void const * argument)
       current_item = (item_action_t *) event.value.p;
       /* Do item function */
       (*(current_item->item_print_function))(&lcd, &current_item->item);
+    }
+  }
+}
+
+void Start_periph_rtcTask(void const * argument)
+{
+  /* Reset semaphore */
+  osSemaphoreWait(sem_periph_rtcHandle, osWaitForever);
+
+  /* Infinite loop */
+  for(;;)
+  {
+    /* When rtc alarm rings */
+    if (osSemaphoreWait(sem_periph_rtcHandle, osWaitForever) == osOK)
+    {
+      /* Draw time on screen */
+
+      /* Draw date on screen */
+
     }
   }
 }
