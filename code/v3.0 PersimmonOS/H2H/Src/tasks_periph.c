@@ -244,8 +244,9 @@ void Start_periph_screenTask(void const * argument)
 
 void Start_periph_rtcTask(void const * argument)
 {
-  /* Reset semaphore */
-  osSemaphoreWait(sem_periph_rtcHandle, osWaitForever);
+  char time_hr_string[3];
+  char time_min_string[3];
+  char time_string[6];
 
   /* Infinite loop */
   for(;;)
@@ -254,6 +255,7 @@ void Start_periph_rtcTask(void const * argument)
     if (osSemaphoreWait(sem_periph_rtcHandle, osWaitForever) == osOK)
     {
       /* Draw time on screen */
+      osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[1]);
 
       /* Draw date on screen */
 
