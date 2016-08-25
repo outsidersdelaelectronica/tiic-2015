@@ -139,24 +139,22 @@ void lcd_draw_char(lcd_t *lcd,
                    color_t *char_color, color_t *bg_color,
                    uint16_t *x_pos, uint16_t *y_pos)
 {
-  // Hardcoded -> TO-DO: build font structure
-
   uint32_t line = 0x00000000;
   uint32_t mask = 0x00000001;
 
-  uint8_t font_starting_char;           // Font array starting character (character number == 0)
-  uint8_t character_number;             // Character number in font array
+  uint32_t font_starting_char;          // Font array starting character (character number == 0)
+  uint32_t character_number;            // Character number in font array
 
   uint32_t character_properties_index;  // Character properties position in font array
-  uint8_t  character_height;            // Character height in pixels
-  uint8_t  character_width;             // Character width in pixels
+  uint32_t character_height;            // Character height in pixels
+  uint32_t character_width;             // Character width in pixels
   uint32_t character_position;          // Character drawing position in font array
 
   int8_t width_calc;                    // Variables used to calculate number of bytes per horizontal line
   uint8_t bytes_per_line = 0;           //
 
   /* Search character in font array */
-  font_starting_char = font[2];
+  font_starting_char = ((uint32_t) font[3] << 8) | (uint32_t) font[2];
   character_number = character - font_starting_char;
 
   /* Get character properties */
@@ -224,8 +222,8 @@ void lcd_draw_string(lcd_t *lcd,
                      color_t *char_color, color_t *bg_color,
                      uint16_t x_pos, uint16_t y_pos)
 {
-  uint32_t char_index = 0;
   char character;
+  uint32_t char_index = 0;
   uint16_t x_pos_sweep = x_pos;
 
   /* While there is still a character left in the string to be printed... */

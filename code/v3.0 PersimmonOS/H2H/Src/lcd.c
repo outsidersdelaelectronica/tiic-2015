@@ -36,6 +36,9 @@ uint16_t lcd_param_pwm_conf[]                   = {0x000C, 0x0000, 0x0001, 0x000
 uint16_t lcd_param_dbc_conf[]                   = {0x0042};
 uint16_t lcd_param_post_proc[]                  = {0x0040, 0x0080, 0x0040, 0x0001};
 
+static uint32_t lcd_get_string_width(char *string, const uint8_t *font);
+static uint32_t lcd_get_string_height(char *string, const uint8_t *font);
+
 /**
   * @brief  Initializes LCD module
   * @retval None
@@ -134,6 +137,7 @@ gui_status_t lcd_print_area(lcd_t *lcd, item_t *item)
   uint16_t y_pos, y_pos_height;
 
   uint16_t string_x_pos, string_y_pos;
+  uint32_t string_width, string_height;
 
   color_t text_color;
   color_t bg_color;
@@ -149,6 +153,18 @@ gui_status_t lcd_print_area(lcd_t *lcd, item_t *item)
     return GUI_SIZE_ERROR;
   }
   if (item->area.pos.y_pos + item->area.height > lcd->lcd_y_size)
+  {
+    return GUI_SIZE_ERROR;
+  }
+
+  /* Check if string fits in area */
+  string_width = lcd_get_string_width(item->area.string, item->area.font);
+  string_height = lcd_get_string_height(item->area.string, item->area.font);
+  if (item->area.width < string_width)
+  {
+    return GUI_SIZE_ERROR;
+  }
+  if (item->area.height < string_height)
   {
     return GUI_SIZE_ERROR;
   }
@@ -198,12 +214,12 @@ gui_status_t lcd_print_area(lcd_t *lcd, item_t *item)
     case CENTER:
       string_x_pos = item->area.pos.x_pos +
                      (item->area.width >> 1) -
-                     (item->area.string_width >> 1);
+                     (string_width >> 1);
       break;
     case RIGHT:
       string_x_pos = item->area.pos.x_pos +
                      item->area.width -
-                     item->area.string_width;
+                     string_width;
       break;
     default:
       string_x_pos = item->area.pos.x_pos;
@@ -218,12 +234,12 @@ gui_status_t lcd_print_area(lcd_t *lcd, item_t *item)
     case MID:
       string_y_pos = item->area.pos.y_pos +
                      (item->area.height >> 1) -
-                     (item->area.string_height >> 1);
+                     (string_height >> 1);
       break;
     case RIGHT:
       string_y_pos = item->area.pos.y_pos +
                      item->area.height -
-                     item->area.string_height;
+                     string_height;
       break;
     default:
       string_y_pos = item->area.pos.y_pos;
@@ -353,4 +369,42 @@ gui_status_t lcd_set_config(lcd_t *lcd, item_t *item)
   lcd_hal_write_reg(lcd, LCD_SET_PWM_CONF, param_pwm_conf_tmp, 6);
 
   return GUI_OK;
+}
+
+static uint32_t lcd_get_string_width(char *string, const uint8_t *font)
+{
+  uint32_t string_width = 0;
+
+  uint32_t font_starting_char;          // Font array starting character (character number == 0)
+  uint32_t character_number;            // Character number in font array
+
+  uint32_t character_properties_index;  // Character properties position in font array
+  uint32_t character_width;             // Character width in pixels
+
+  char character;
+  uint32_t char_index = 0;
+
+  /* Find starting char in font */
+  font_starting_char = ((uint32_t) font[3] << 8) | (uint32_t) font[2];
+
+  /* Accumulate character widths */
+  while ((character = string[char_index++]) != 0)
+  {
+    /* Get character number */
+    character_number = character - font_starting_char;
+
+    /* Get character width */
+    character_properties_index = 8 + 4*character_number;
+    character_width = font[character_properties_index];
+
+    /* Add to string total value */
+    string_width += character_width;
+  }
+
+  return string_width;
+}
+
+static uint32_t lcd_get_string_height(char *string, const uint8_t *font)
+{
+  return font[6];
 }
