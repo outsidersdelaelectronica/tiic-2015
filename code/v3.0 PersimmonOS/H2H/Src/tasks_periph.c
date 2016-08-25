@@ -82,7 +82,7 @@ void tasks_periph_start()
   periph_screenTaskHandle = osThreadCreate(osThread(periph_screenTask), NULL);
 
   /* periph_rtcTask */
-  osThreadDef(periph_rtcTask, Start_periph_rtcTask, osPriorityLow, 0, 64);
+  osThreadDef(periph_rtcTask, Start_periph_rtcTask, osPriorityLow, 0, 80);
   periph_rtcTaskHandle = osThreadCreate(osThread(periph_rtcTask), NULL);
 }
 
@@ -244,9 +244,13 @@ void Start_periph_screenTask(void const * argument)
 
 void Start_periph_rtcTask(void const * argument)
 {
-  char time_hr_string[3];
-  char time_min_string[3];
+  /* RTC time and date structures */
+  RTC_TimeTypeDef sTime;
+  RTC_DateTypeDef sDate;
+
+  /* Time and date strings */
   char time_string[6];
+  char date_string[11];
 
   /* Infinite loop */
   for(;;)
@@ -254,11 +258,42 @@ void Start_periph_rtcTask(void const * argument)
     /* When rtc alarm rings */
     if (osSemaphoreWait(sem_periph_rtcHandle, osWaitForever) == osOK)
     {
-      /* Draw time on screen */
+      /* Get time and date from rtc calendar */
+      HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
+      HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
+
+      /* Create time and date strings */
+      if (sTime.Hours < 10)
+      {
+        if (sTime.Minutes < 10)
+        {
+          sprintf(time_string, "0%u:0%u", sTime.Hours, sTime.Minutes);
+        }
+        else
+        {
+          sprintf(time_string, "0%u:%u", sTime.Hours, sTime.Minutes);
+        }
+      }
+      else
+      {
+        if (sTime.Minutes < 10)
+        {
+          sprintf(time_string, "%u:0%u", sTime.Hours, sTime.Minutes);
+        }
+        else
+        {
+          sprintf(time_string, "%u:%u", sTime.Hours, sTime.Minutes);
+        }
+      }
+      sprintf(date_string, "%u/%u/20%u", sDate.Date, sDate.Month, sDate.Year);
+
+      /* Update screen items */
+      item_area_set_text(&menu_top_bar.items[2].item.area, time_string);
+      item_area_set_text(&menu_top_bar.items[1].item.area, date_string);
+
+      /* Draw time and date on screen */
+      osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[2]);
       osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[1]);
-
-      /* Draw date on screen */
-
     }
   }
 }

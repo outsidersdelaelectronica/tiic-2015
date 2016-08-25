@@ -105,9 +105,7 @@ void system_init(void)
 /* TEST Task */
 osThreadId testTaskHandle;
 void Start_testTask(void const * argument);
-
 extern osMailQId queue_lcdHandle;
-extern osMailQId queue_fsm_eventsHandle;
 
 void MX_FREERTOS_Init(void)
 {
@@ -135,15 +133,11 @@ void MX_FREERTOS_Init(void)
 
 void Start_testTask(void const * argument)
 {
+  /* Test menu bar */
   item_action_t lcd_config;
-
-  /* LCD config */
   item_lcd_config_init(&lcd_config.item.config, 200);
   lcd_config.item_print_function = lcd_set_config;
   osMailPut(queue_lcdHandle, (void *) &lcd_config);
-
-  item_area_set_text(&menu_top_bar.items[0].item.area, "");
-  item_area_set_text(&menu_top_bar.items[1].item.area, "16:20");
   osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[0]);
   osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[1]);
 
