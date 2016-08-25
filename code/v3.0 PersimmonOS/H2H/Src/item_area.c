@@ -66,4 +66,7 @@ void item_area_set_text(item_area_t *area, char *string)
     /* Next character */
     character_index++;
   }
+
+  /* Close string */
+  area->string[character_index] = 0;
 }
