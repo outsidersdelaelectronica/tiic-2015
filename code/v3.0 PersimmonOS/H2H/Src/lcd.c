@@ -36,8 +36,8 @@ uint16_t lcd_param_pwm_conf[]                   = {0x000C, 0x0000, 0x0001, 0x000
 uint16_t lcd_param_dbc_conf[]                   = {0x0042};
 uint16_t lcd_param_post_proc[]                  = {0x0040, 0x0080, 0x0040, 0x0001};
 
-static uint32_t lcd_get_string_width(char *string, const uint8_t *font);
-static uint32_t lcd_get_string_height(char *string, const uint8_t *font);
+static uint32_t lcd_get_string_width(wchar_t *string, const uint8_t *font);
+static uint32_t lcd_get_string_height(wchar_t *string, const uint8_t *font);
 
 /**
   * @brief  Initializes LCD module
@@ -371,7 +371,7 @@ gui_status_t lcd_set_config(lcd_t *lcd, item_t *item)
   return GUI_OK;
 }
 
-static uint32_t lcd_get_string_width(char *string, const uint8_t *font)
+static uint32_t lcd_get_string_width(wchar_t *string, const uint8_t *font)
 {
   uint32_t string_width = 0;
 
@@ -381,7 +381,7 @@ static uint32_t lcd_get_string_width(char *string, const uint8_t *font)
   uint32_t character_properties_index;  // Character properties position in font array
   uint32_t character_width;             // Character width in pixels
 
-  char character;
+  wchar_t character;
   uint32_t char_index = 0;
 
   /* Find starting char in font */
@@ -404,7 +404,7 @@ static uint32_t lcd_get_string_width(char *string, const uint8_t *font)
   return string_width;
 }
 
-static uint32_t lcd_get_string_height(char *string, const uint8_t *font)
+static uint32_t lcd_get_string_height(wchar_t *string, const uint8_t *font)
 {
   return font[6];
 }

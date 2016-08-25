@@ -8,6 +8,8 @@
 #ifndef ITEM_AREA_H_
 #define ITEM_AREA_H_
 
+#include <stdlib.h>
+
 #include "item_gui.h"
 
 #include "lcd_position.h"
@@ -27,7 +29,7 @@ typedef struct item_area_t
   gui_border_t border;
   gui_active_t is_active;
 
-  char string[MAX_STRING_LENGTH];
+  wchar_t string[MAX_STRING_LENGTH];
   const uint8_t *font;
 
   gui_h_align_t string_h_align;
@@ -46,11 +48,12 @@ void item_area_init(item_area_t *area,
                     uint16_t x_pos, uint16_t y_pos,
                     gui_border_t border,
                     gui_active_t is_active,
-                    char *string, const uint8_t *font,
+                    wchar_t *string, const uint8_t *font,
                     gui_h_align_t string_h_align, gui_v_align_t string_v_align,
                     color_t text_color, color_t bg_color, color_t border_color,
                     fsm_event_f event);
 
 void item_area_set_text(item_area_t *area, char *string);
+void item_area_set_text_16(item_area_t *area, wchar_t *string);
 
 #endif /* ITEM_AREA_H_ */

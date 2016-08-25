@@ -5,7 +5,7 @@ void item_area_init(item_area_t *area,
                     uint16_t x_pos, uint16_t y_pos,
                     gui_border_t border,
                     gui_active_t is_active,
-                    char *string, const uint8_t *font,
+                    wchar_t *string, const uint8_t *font,
                     gui_h_align_t string_h_align, gui_v_align_t string_v_align,
                     color_t text_color, color_t bg_color, color_t border_color,
                     fsm_event_f event)
@@ -23,7 +23,7 @@ void item_area_init(item_area_t *area,
 
   /* Set area text */
   area->font = font;
-  item_area_set_text(area, string);
+  item_area_set_text_16(area, string);
 
   /* Set text alignment */
   area->string_h_align = string_h_align;
@@ -44,6 +44,36 @@ void item_area_init(item_area_t *area,
 void item_area_set_text(item_area_t *area, char *string)
 {
   char character = 0;                   // Iterating char
+  uint32_t character_index = 0;         // String iteration
+
+  /* Calculate string width */
+  while ((character = string[character_index]) != 0)
+  {
+    /* If string still fits into area
+     * store character in area->string
+     */
+    if (character_index < MAX_STRING_LENGTH - 1)
+    {
+      /* If there is enough space to keep copying the string */
+      area->string[character_index] = (wchar_t) character;
+    }
+    else
+    {
+        /* Close string */
+        area->string[character_index] = 0;
+        return;
+    }
+    /* Next character */
+    character_index++;
+  }
+
+  /* Close string */
+  area->string[character_index] = 0;
+}
+
+void item_area_set_text_16(item_area_t *area, wchar_t *string)
+{
+  wchar_t character = 0;                // Iterating char
   uint32_t character_index = 0;         // String iteration
 
   /* Calculate string width */

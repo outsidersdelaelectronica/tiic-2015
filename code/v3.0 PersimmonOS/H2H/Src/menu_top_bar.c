@@ -2,7 +2,7 @@
 
 menu_t menu_top_bar =
 {
-  .item_num = 4,
+  .item_num = 5,
   .items =
   {
     {
@@ -14,11 +14,30 @@ menu_t menu_top_bar =
         .pos                  = {.x_pos = 0, .y_pos = 0},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
-        .string               = "",
+        .string               = L"",
         .font                 = myriad_pro_semibold_16,
         .string_h_align       = CENTER,
         .string_v_align       = MID,
         .text_color           = COLOR_WHITE,
+        .bg_color             = COLOR_WHITE,
+        .border_color         = COLOR_BLACK,
+        .event                = fsm_no_event
+      }
+    },
+    {
+      .item_print_function = lcd_print_area,
+      .item.area =
+      {
+        .width                = 40,
+        .height               = 30,
+        .pos                  = {.x_pos = 0, .y_pos = 0},
+        .border               = GUI_NO_BORDER,
+        .is_active            = GUI_ACTIVE,
+        .string               = L"",
+        .font                 = fontawesome_16,
+        .string_h_align       = CENTER,
+        .string_v_align       = MID,
+        .text_color           = COLOR_BLACK,
         .bg_color             = COLOR_WHITE,
         .border_color         = COLOR_BLACK,
         .event                = fsm_no_event
@@ -33,7 +52,7 @@ menu_t menu_top_bar =
         .pos                  = {.x_pos = 40, .y_pos = 0},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
-        .string               = "",
+        .string               = L"",
         .font                 = myriad_pro_semibold_16,
         .string_h_align       = LEFT,
         .string_v_align       = MID,
@@ -52,7 +71,7 @@ menu_t menu_top_bar =
         .pos                  = {.x_pos = 590, .y_pos = 0},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
-        .string               = "",
+        .string               = L"",
         .font                 = myriad_pro_semibold_16,
         .string_h_align       = RIGHT,
         .string_v_align       = MID,
@@ -71,7 +90,7 @@ menu_t menu_top_bar =
         .pos                  = {.x_pos = 720, .y_pos = 0},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
-        .string               = "",
+        .string               = L"",
         .font                 = myriad_pro_semibold_16,
         .string_h_align       = CENTER,
         .string_v_align       = MID,

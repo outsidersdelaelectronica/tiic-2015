@@ -134,7 +134,7 @@ void lcd_draw_rectangle(lcd_t *lcd,
   * @retval None
 */
 void lcd_draw_char(lcd_t *lcd,
-                   char character,
+                   wchar_t character,
                    const uint8_t *font,
                    color_t *char_color, color_t *bg_color,
                    uint16_t *x_pos, uint16_t *y_pos)
@@ -143,6 +143,7 @@ void lcd_draw_char(lcd_t *lcd,
   uint32_t mask = 0x00000001;
 
   uint32_t font_starting_char;          // Font array starting character (character number == 0)
+  uint32_t font_ending_char;            // Font array ending character
   uint32_t character_number;            // Character number in font array
 
   uint32_t character_properties_index;  // Character properties position in font array
@@ -153,8 +154,18 @@ void lcd_draw_char(lcd_t *lcd,
   int8_t width_calc;                    // Variables used to calculate number of bytes per horizontal line
   uint8_t bytes_per_line = 0;           //
 
-  /* Search character in font array */
+  /* Check if character is in font array */
   font_starting_char = ((uint32_t) font[3] << 8) | (uint32_t) font[2];
+  font_ending_char   = ((uint32_t) font[5] << 8) | (uint32_t) font[4];
+
+  /* If the character is off limits do not print anything */
+  if ((character < font_starting_char) ||
+      (character > font_ending_char))
+  {
+    return;
+  };
+
+  /* Search character in font array */
   character_number = character - font_starting_char;
 
   /* Get character properties */
@@ -217,12 +228,12 @@ void lcd_draw_char(lcd_t *lcd,
   * @retval None
 */
 void lcd_draw_string(lcd_t *lcd,
-                     char *string,
+                     wchar_t *string,
                      const uint8_t *current_font,
                      color_t *char_color, color_t *bg_color,
                      uint16_t x_pos, uint16_t y_pos)
 {
-  char character;
+  wchar_t character;
   uint32_t char_index = 0;
   uint16_t x_pos_sweep = x_pos;
 
