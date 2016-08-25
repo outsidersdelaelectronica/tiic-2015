@@ -10,8 +10,10 @@
 
 #include <stdint.h>
 
-extern const uint8_t myriad_pro_semibold11x16[];
-extern const uint8_t myriad_pro_semibold17x23[];
-extern const uint8_t myriad_pro_semibold28x39_num[];
+extern const uint8_t myriad_pro_semibold_12[];
+extern const uint8_t myriad_pro_semibold_16[];
+extern const uint8_t myriad_pro_semibold_24[];
+
+extern const uint8_t fontawesome_16[];
 
 #endif /* FONTS_H_ */

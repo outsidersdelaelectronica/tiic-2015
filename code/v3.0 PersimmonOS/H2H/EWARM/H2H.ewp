@@ -1130,10 +1130,13 @@
           <group>
             <name>fonts</name>
             <file>
+              <name>$PROJ_DIR$\..\Src\font_awesome.c</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$\..\Inc\fonts.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$\..\Src\myriad_pro_semibold.c</name>
+              <name>$PROJ_DIR$\..\Src\myriad_pro.c</name>
             </file>
           </group>
           <group>
