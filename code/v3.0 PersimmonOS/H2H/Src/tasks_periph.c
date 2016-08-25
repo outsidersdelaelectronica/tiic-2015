@@ -58,7 +58,7 @@ void tasks_periph_init()
   queue_periph_buzzerHandle = osMailCreate(osMailQ(queue_periph_buzzer), NULL);
 
   /* queue_lcd */
-  osMailQDef(queue_lcd, 10, item_action_t);
+  osMailQDef(queue_lcd, 12, item_action_t);
   queue_lcdHandle = osMailCreate(osMailQ(queue_lcd), NULL);
 }
 
@@ -70,7 +70,7 @@ void tasks_periph_start()
   periph_buttonTaskHandle = osThreadCreate(osThread(periph_buttonTask), NULL);
 
   /* periph_batteryTask */
-  osThreadDef(periph_batteryTask, Start_periph_batteryTask, osPriorityLow, 0, 64);
+  osThreadDef(periph_batteryTask, Start_periph_batteryTask, osPriorityLow, 0, 128);
   periph_batteryTaskHandle = osThreadCreate(osThread(periph_batteryTask), NULL);
 
   /* periph_buzzerTask */
@@ -78,11 +78,11 @@ void tasks_periph_start()
   periph_buzzerTaskHandle = osThreadCreate(osThread(periph_buzzerTask), NULL);
 
   /* periph_screenTask */
-  osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityNormal, 0, 128);
+  osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityNormal, 0, 256);
   periph_screenTaskHandle = osThreadCreate(osThread(periph_screenTask), NULL);
 
   /* periph_rtcTask */
-  osThreadDef(periph_rtcTask, Start_periph_rtcTask, osPriorityLow, 0, 80);
+  osThreadDef(periph_rtcTask, Start_periph_rtcTask, osPriorityLow, 0, 128);
   periph_rtcTaskHandle = osThreadCreate(osThread(periph_rtcTask), NULL);
 }
 
@@ -92,6 +92,7 @@ void Start_periph_buttonTask(void const * argument)
   item_action_t lcd_config;
 
   uint8_t is_lcd_on = 0;
+
   /* Take both semaphores for the first time */
   osSemaphoreWait(sem_periph_button_short_pressHandle, osWaitForever);
   osSemaphoreWait(sem_periph_button_long_pressHandle, osWaitForever);
@@ -194,10 +195,33 @@ void Start_periph_batteryTask(void const * argument)
       /* Display battery status */
         /* Create batt soc string */
         sprintf(batt_soc_string, "%u%%", gauge.last_data.soc);
-        /* Update screen items */
-        item_area_set_text(&menu_top_bar.items[1].item.area, batt_soc_string);
-        /* Draw batt soc on screen */
+        item_area_set_text(&menu_top_bar.items[2].item.area, batt_soc_string);
+
+        /* Create batt icon */
+        if (gauge.last_data.soc < 5)
+        {
+          item_area_set_text_16(&menu_top_bar.items[1].item.area, L"\xF244");
+        }
+        else if (gauge.last_data.soc < 25)
+        {
+          item_area_set_text_16(&menu_top_bar.items[1].item.area, L"\xF243");
+        }
+        else if (gauge.last_data.soc < 50)
+        {
+          item_area_set_text_16(&menu_top_bar.items[1].item.area, L"\xF242");
+        }
+        else if (gauge.last_data.soc < 75)
+        {
+          item_area_set_text_16(&menu_top_bar.items[1].item.area, L"\xF241");
+        }
+        else if (gauge.last_data.soc <= 100)
+        {
+          item_area_set_text_16(&menu_top_bar.items[1].item.area, L"\xF240");
+        }
+
+        /* Display screen items */
         osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[1]);
+        osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[2]);
     }
   }
 }
@@ -294,12 +318,12 @@ void Start_periph_rtcTask(void const * argument)
       sprintf(date_string, "%u/%u/20%u", sDate.Date, sDate.Month, sDate.Year);
 
       /* Update screen items */
-      item_area_set_text(&menu_top_bar.items[3].item.area, time_string);
-      item_area_set_text(&menu_top_bar.items[2].item.area, date_string);
+      item_area_set_text(&menu_top_bar.items[4].item.area, time_string);
+      item_area_set_text(&menu_top_bar.items[3].item.area, date_string);
 
       /* Draw time and date on screen */
+      osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[4]);
       osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[3]);
-      osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[2]);
     }
   }
 }
