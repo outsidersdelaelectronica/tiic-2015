@@ -168,8 +168,9 @@ void Start_periph_buttonTask(void const * argument)
 
 void Start_periph_batteryTask(void const * argument)
 {
+  char batt_soc_string[5];
+
   /* Reset semaphore */
-  osSemaphoreWait(sem_periph_batteryHandle, osWaitForever);
   osSemaphoreWait(sem_periph_gauge_dma_rxHandle, osWaitForever);
 
   /* Infinite loop */
@@ -191,7 +192,12 @@ void Start_periph_batteryTask(void const * argument)
       /* Read charger values */
 
       /* Display battery status */
-
+        /* Create batt soc string */
+        sprintf(batt_soc_string, "%u%%", gauge.last_data.soc);
+        /* Update screen items */
+        item_area_set_text(&menu_top_bar.items[1].item.area, batt_soc_string);
+        /* Draw batt soc on screen */
+        osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[1]);
     }
   }
 }
@@ -288,12 +294,12 @@ void Start_periph_rtcTask(void const * argument)
       sprintf(date_string, "%u/%u/20%u", sDate.Date, sDate.Month, sDate.Year);
 
       /* Update screen items */
-      item_area_set_text(&menu_top_bar.items[2].item.area, time_string);
-      item_area_set_text(&menu_top_bar.items[1].item.area, date_string);
+      item_area_set_text(&menu_top_bar.items[3].item.area, time_string);
+      item_area_set_text(&menu_top_bar.items[2].item.area, date_string);
 
       /* Draw time and date on screen */
+      osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[3]);
       osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[2]);
-      osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[1]);
     }
   }
 }
