@@ -61,20 +61,12 @@ typedef struct _tagMailboxHeader_t
    unsigned int  SlotSize;
 } MailboxHeader_t;
 
-   /* The following mutex is used to guard access to the function that  */
-   /* sends Messages to the console.                                    */
-static Mutex_t                      IOMutex;
-
    /* The following mutex is used to guard access to BTPSKRNL resources.*/
 static Mutex_t                      KernelMutex;
 
    /* Variable that stores the number of threads that have been created */
    /* by BTPS_CreateThread().                                           */
 static char                         ThreadCount;
-
-   /* The following buffer is used when writing Debug Messages to Debug */
-   /* UART.                                                             */
-static BTPS_MessageOutputCallback_t MessageOutputCallback;
 
    /* Internal Function Prototypes.                                     */
 static void ThreadWrapper(void *UserData);
@@ -195,13 +187,14 @@ Boolean_t BTPSAPI BTPS_WaitMutex(Mutex_t Mutex, unsigned long Timeout)
       } 
       else
       {
-         Timeout = (unsigned long)MILLISECONDS_TO_TICKS(Timeout);
-
-         if(Timeout > portMAX_DELAY){
-            DecrementWait = portMAX_DELAY;
-         }else{
-            DecrementWait = Timeout;
-         }
+//         Timeout = (unsigned long)MILLISECONDS_TO_TICKS(Timeout);
+//
+//         if(Timeout > portMAX_DELAY){
+//            DecrementWait = portMAX_DELAY;
+//         }else{
+//            DecrementWait = Timeout;
+//         }
+         DecrementWait = (unsigned long)MILLISECONDS_TO_TICKS(Timeout);
       }
 
       while((Timeout) && (!ret_val))
@@ -363,13 +356,14 @@ Boolean_t BTPSAPI BTPS_WaitEvent(Event_t Event, unsigned long Timeout)
             DecrementWait = portMAX_DELAY;
          else
          {
-            Timeout = (unsigned long)MILLISECONDS_TO_TICKS(Timeout);
-
-            if(Timeout > portMAX_DELAY){
-               DecrementWait = portMAX_DELAY;
-            }else{
-               DecrementWait = Timeout;
-            }
+//            Timeout = (unsigned long)MILLISECONDS_TO_TICKS(Timeout);
+//
+//            if(Timeout > portMAX_DELAY){
+//               DecrementWait = portMAX_DELAY;
+//            }else{
+//               DecrementWait = Timeout;
+//            }
+            DecrementWait = (unsigned long)MILLISECONDS_TO_TICKS(Timeout);
          }
 
          ret_val = FALSE;
@@ -954,33 +948,15 @@ void BTPSAPI BTPS_Init(void *UserParam)
 {
    /* Input parameter represents the Debug Message Output Callback      */
    /* function.                                                         */
-   if(UserParam)
+   if(!KernelMutex)
    {
-      if(((BTPS_Initialization_t *)UserParam)->MessageOutputCallback)
-      {
-        if((IOMutex = BTPS_CreateMutex(FALSE)) != NULL){
-            MessageOutputCallback = ((BTPS_Initialization_t *)UserParam)->MessageOutputCallback;
-        }else{
-            MessageOutputCallback = NULL;
-        }
-      }
-   }else{
-      MessageOutputCallback = NULL;
+      KernelMutex = BTPS_CreateMutex(FALSE);
    }
-   KernelMutex = BTPS_CreateMutex(FALSE);
-
+   else
+   {
+      BTPS_ReleaseMutex(KernelMutex);
+   }
    /* Initialize the static variables for this module.                  */
    ThreadCount                = 0;
 }
 
-   /* The following function is used to cleanup the Platform module.    */
-void BTPSAPI BTPS_DeInit(void)
-{
-   if(IOMutex)
-   {
-      MessageOutputCallback = NULL;
-
-      BTPS_CloseMutex(IOMutex);
-      IOMutex = NULL;
-   }
-}

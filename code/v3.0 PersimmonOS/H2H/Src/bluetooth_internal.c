@@ -12,242 +12,39 @@ extern osSemaphoreId sem_bt_conectedHandle;
 extern osMailQId queue_bt_packet_recievedHandle;
 extern osMailQId queue_bt_packet_sendHandle;
 
-unsigned int        BluetoothStackID;               /* Variable which holds the Handle */
-                                                    /* of the opened Bluetooth Protocol*/
-                                                    /* Stack.                          */
-
-int                        UI_Mode;                 /* Holds the UI Mode.              */
-
-static int                 SerialPortID;            /* Variable which contains the     */
-                                                    /* Handle of the most recent       */
-                                                    /* SPP Port that was opened.       */
-
-static int                 ServerPortID;            /* Variable which contains the     */
-                                                    /* Handle of the SPP Server Port   */
-                                                    /* that was opened.                */
-
-static Word_t              Connection_Handle;       /* Holds the Connection Handle of  */
-                                                    /* the most recent SPP Connection. */
-
-static Boolean_t           Connected;               /* Variable which flags whether or */
-                                                    /* not there is currently an active*/
-                                                    /* connection.                     */
-
-static DWord_t             SPPServerSDPHandle;      /* Variable used to hold the Serial*/
-                                                    /* Port Service Record of the      */
-                                                    /* Serial Port Server SDP Service  */
-                                                    /* Record.                         */
-
-static BD_ADDR_t           InquiryResultList[MAX_INQUIRY_RESULTS]; /* Variable which   */
-                                                    /* contains the inquiry result     */
-                                                    /* received from the most recently */
-                                                    /* preformed inquiry.              */
-
-static unsigned int        NumberofValidResponses;  /* Variable which holds the number */
-                                                    /* of valid inquiry results within */
-                                                    /* the inquiry results array.      */
-
-static LinkKeyInfo_t       LinkKeyInfo[MAX_SUPPORTED_LINK_KEYS]; /* Variable holds     */
-                                                    /* BD_ADDR <-> Link Keys for       */
-                                                    /* pairing.                        */
-
-static BD_ADDR_t           CurrentRemoteBD_ADDR;    /* Variable which holds the        */
-                                                    /* current BD_ADDR of the device   */
-                                                    /* which is currently pairing or   */
-                                                    /* authenticating.                 */
-
-static BD_ADDR_t           PairedRemoteBD_ADDR;     /* Variable which holds the        */
-                                                    /* current BD_ADDR of the device   */
-                                                    /* which is paired                 */
-
-static GAP_IO_Capability_t IOCapability;            /* Variable which holds the        */
-                                                    /* current I/O Capabilities that   */
-                                                    /* are to be used for Secure Simple*/
-                                                    /* Pairing.                        */
-
-static Boolean_t           OOBSupport;              /* Variable which flags whether    */
-                                                    /* or not Out of Band Secure Simple*/
-                                                    /* Pairing exchange is supported.  */
-
-static Boolean_t           MITMProtection;          /* Variable which flags whether or */
-                                                    /* not Man in the Middle (MITM)    */
-                                                    /* protection is to be requested   */
-                                                    /* during a Secure Simple Pairing  */
-                                                    /* procedure.                      */
-
-static BD_ADDR_t           SelectedBD_ADDR;         /* Holds address of selected Device*/
-
-static BD_ADDR_t           NullADDR;                /* Holds a NULL BD_ADDR for comp.  */
-                                                    /* purposes.                       */
-
-static Boolean_t           LoopbackActive;          /* Variable which flags whether or */
-                                                    /* not the application is currently*/
-                                                    /* operating in Loopback Mode      */
-                                                    /* (TRUE) or not (FALSE).          */
-
-static Boolean_t           DisplayRawData;          /* Variable which flags whether or */
-                                                    /* not the application is to       */
-                                                    /* simply display the Raw Data     */
-                                                    /* when it is received (when not   */
-                                                    /* operating in Loopback Mode).    */
-
-   /* Variables which contain information used by the loopback          */
-   /* functionality of this test application.                           */
-
-static unsigned char       packet_Buffer[PACKET_SIZE];
-
-   /* The following function is for an SPP Event Callback.  This        */
-   /* function will be called whenever a SPP Event occurs that is       */
-   /* associated with the Bluetooth Stack.  This function passes to the */
-   /* caller the SPP Event Data that occurred and the SPP Event Callback*/
-   /* Parameter that was specified when this Callback was installed.    */
-   /* The caller is free to use the contents of the SPP Event Data ONLY */
-   /* in the context of this callback.  If the caller requires the Data */
-   /* for a longer period of time, then the callback function MUST copy */
-   /* the data into another Data Buffer.  This function is guaranteed   */
-   /* NOT to be invoked more than once simultaneously for the specified */
-   /* installed callback (i.e.  this function DOES NOT have be          */
-   /* reentrant).  It Needs to be noted however, that if the same       */
-   /* Callback is installed more than once, then the callbacks will be  */
-   /* called serially.  Because of this, the processing in this function*/
-   /* should be as efficient as possible.  It should also be noted that */
-   /* this function is called in the Thread Context of a Thread that the*/
-   /* User does NOT own.  Therefore, processing in this function should */
-   /* be as efficient as possible (this argument holds anyway because   */
-   /* another SPP Event will not be processed while this function call  */
-   /* is outstanding).                                                  */
-   /* * NOTE * This function MUST NOT Block and wait for Events that can*/
-   /*          only be satisfied by Receiving SPP Event Packets.  A     */
-   /*          Deadlock WILL occur because NO SPP Event Callbacks will  */
-   /*          be issued while this function is currently outstanding.  */
-void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t *SPP_Event_Data, unsigned long CallbackParameter)
-{
-  int       Result;
-  bt_packet_t packet;
-  /* First, check to see if the required parameters appear to be       */
-  /* semi-valid.                                                       */
-  if((SPP_Event_Data) && (BluetoothStackID))
-  {
-    /* The parameters appear to be semi-valid, now check to see what  */
-    /* type the incoming event is.                                    */
-    switch(SPP_Event_Data->Event_Data_Type)
-    {
-      case etPort_Open_Indication:
-        /* Save the Serial Port ID for later use.                   */
-        SerialPortID = SPP_Event_Data->Event_Data.SPP_Open_Port_Indication_Data->SerialPortID;
-        /* Flag that we are now connected.                          */
-        Connected  = TRUE;
-        /* Query the connection handle.                             */
-        Result = GAP_Query_Connection_Handle(BluetoothStackID, 
-                        SPP_Event_Data->Event_Data.SPP_Open_Port_Indication_Data->BD_ADDR, 
-                        &Connection_Handle);
-        if(Result != 0)
-        {
-          /* Failed to Query the Connection Handle.                */
-          Result           = 0;
-          Connection_Handle = 0;
-        }else{
-          /* thik for some actions when we already connected */
-        }
-        break;
-      case etPort_Open_Confirmation:
-        /* A Client Port was opened.  The Status indicates the      */
-        /* Status of the Open.                                      */
-
-        /* Check the Status to make sure that an error did not      */
-        /* occur.                                                   */
-        if(SPP_Event_Data->Event_Data.SPP_Open_Port_Confirmation_Data->PortOpenStatus)
-        {
-          /* An error occurred while opening the Serial Port so    */
-          /* invalidate the Serial Port ID.                        */
-          SerialPortID      = 0;
-          Connection_Handle = 0;
-
-          /* Flag that we are no longer connected.                 */
-          Connected         = FALSE;
-        }
-        else
-        {
-          /* Flag that we are now connected.                       */
-          Connected  = TRUE;
-
-          /* Query the connection Handle.                          */
-          Result = GAP_Query_Connection_Handle(BluetoothStackID, SelectedBD_ADDR, &Connection_Handle);
-          if(Result)
-          {
-            /* Failed to Query the Connection Handle.             */
-            Result           = 0;
-            Connection_Handle = 0;
-          }
-        }
-        break;
-      case etPort_Close_Port_Indication:
-        /* The Remote Port was Disconnected.                        */
-        /* If we are the client side, close the Vserialport         */
-        if(UI_Mode == UI_MODE_IS_CLIENT)
-        {
-          SerialPortID = 0;
-        }
-        Connection_Handle = 0;
-        /* Flag that we are no longer connected.                    */
-        Connected         = FALSE;
-        break;
-      case etPort_Status_Indication:
-        /* Display Information about the new Port Status.           */
-        break;
-      case etPort_Data_Indication:
-        /* We recieve a packet and send it to bt_rx task */
-        SPP_Data_Read(BluetoothStackID, SerialPortID, PACKET_SIZE, (Byte_t *)packet.packet_content);
-        /* put into the queue */
-        osMailPut(queue_bt_packet_recievedHandle, (void *) &packet);
-        break;
-      case etPort_Transmit_Buffer_Empty_Indication:
-        /* The transmit buffer is now empty after being full. */
-        /* Signal the bt_tx_thread we can send again */
-
-        break;
-      case etPort_Line_Status_Indication:
-        break;
-      case etPort_Send_Port_Information_Indication:
-        /* This should be OUR INFO, consider redo it */
-        /* Simply Respond with the information that was sent to us. */
-        Result = SPP_Respond_Port_Information(BluetoothStackID, 
-                     SPP_Event_Data->Event_Data.SPP_Send_Port_Information_Indication_Data->SerialPortID, 
-                     &SPP_Event_Data->Event_Data.SPP_Send_Port_Information_Indication_Data->SPPPortInformation);
-        break;
-      case etPort_Send_Port_Information_Confirmation:
-        break;
-      case etPort_Query_Port_Information_Indication:
-        break;
-      case etPort_Query_Port_Information_Confirmation:
-        break;
-      case etPort_Open_Request_Indication:
-        /* A remote port is requesting a connection.                */
-        /* Accept the connection always.                            */
-        Result = SPP_Open_Port_Request_Response(BluetoothStackID, 
-                   SPP_Event_Data->Event_Data.SPP_Open_Port_Request_Indication_Data->SerialPortID,
-                   TRUE);
-        if( Result == 0)
-        {
-          SelectedBD_ADDR = SPP_Event_Data->Event_Data.SPP_Open_Port_Request_Indication_Data->BD_ADDR;
-//          if(sem_bt_conectedHandle != NULL)
-//          {
-//            osSemaphoreRelease(sem_bt_conectedHandle);
-//          }
-        }
-        break;
-      default:
-        /* An unknown/unexpected SPP event was received.            */
-        HAL_GPIO_WritePin(GPIOC,UI_LED_G_Pin, GPIO_PIN_SET);
-        break;    
-    }
-  }
-  else
-  {
-    /* There was an error with one or more of the input parameters.   */
-    HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
-  }
-}
+ /* Holds the Handle of the opened Bluetooth Protocol Stack                     */
+unsigned int               BluetoothStackID;              
+/* Holds the UI Mode.                                                           */
+int                        UI_Mode;                 
+/* Contains the Handle of the most recent SPP Port.                             */
+static int                 SerialPortID;           
+/* Contains the Handle of the SPP Server Port.                                  */
+static int                 ServerPortID;            
+/* Holds the Connection Handle of the most recent SPP Connection.               */
+static Word_t              Connection_Handle;       
+/* Flags whether or not there is currently an active connection                 */
+static Boolean_t           Connected;               
+/* Hold the Serial Port Service Record of SDP Service Record.                   */
+static DWord_t             SPPServerSDPHandle;
+/* Contains the inquiry result received from the last performed inquiry.        */
+static BD_ADDR_t           InquiryResultList[MAX_INQUIRY_RESULTS]; 
+/* Holds the number of valid inquiry results within the inquiry results array.  */
+static unsigned int        NumberofValidResponses;  
+/* Holds BD_ADDR <-> Link Keys for pairing.                                     */
+static LinkKeyInfo_t       LinkKeyInfo[MAX_SUPPORTED_LINK_KEYS];
+/* Holds the current BD_ADDR which is currently pairing or authenticating.      */
+static BD_ADDR_t           CurrentRemoteBD_ADDR;
+/* Holds the current BD_ADDR of the device which is paired/connected.           */
+static BD_ADDR_t           SelectedBD_ADDR;    
+/* Holds the current I/O Capabilities that are to be used for SSP.              */
+static GAP_IO_Capability_t IOCapability; 
+/* Flags whether or not Out of Band Secure Simple Pairing exchange is supported.*/
+static Boolean_t           OOBSupport;              
+/* Flags whether or not Man in the Middle (MITM) protection is to be requested  */
+/* during a Secure Simple Pairing procedure.                                    */
+static Boolean_t           MITMProtection;                              
+/* Holds a NULL BD_ADDR for compataration purposes                              */
+static BD_ADDR_t           NullADDR;                
 
    /* The following function is responsible for opening the SS1         */
    /* Bluetooth Protocol Stack.  This function accepts a pre-populated  */
@@ -336,10 +133,9 @@ int InitializeApplication(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_I
    /* Initiailize some defaults.                                        */
    SerialPortID           = 0;
    UI_Mode                = UI_MODE_SELECT;
-   LoopbackActive         = FALSE;
-   DisplayRawData         = FALSE;
    NumberofValidResponses = 0;
-
+   // Pa que se calle el compilador, hay que quitarlo en cuanto se pueda
+   UNUSED(NumberofValidResponses);
    /* Next, makes sure that the Driver Information passed appears to be */
    /* semi-valid.                                                       */
    if((HCI_DriverInformation) && (BTPS_Initialization))
@@ -442,15 +238,13 @@ int CloseStack(void)
    {
       /* Simply close the Stack                                         */
       BSC_Shutdown(BluetoothStackID);
-
-      /* Free BTPSKRNL allocated memory.                                */
-      BTPS_DeInit();
-
+      
       /* Flag that the Stack is no longer initialized.                  */
       BluetoothStackID = 0;
 
       /* Flag success to the caller.                                    */
       ret_val          = 0;
+      HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin,GPIO_PIN_RESET);
    }
 
    return(ret_val);
@@ -644,25 +438,6 @@ int CloseRemoteServer(void)
   return(ret_val);
 }
 
-   /* The following function is responsible for setting the application */
-   /* state to support loopback mode.  This function will return zero on*/
-   /* successful execution and a negative value on errors.              */
-int SetLoopback(Boolean_t state)
-{
-  int ret_val = INVALID_STACK_ID_ERROR;
-
-  /* First check to see if the parameters required for the execution of*/
-  /* this function appear to be semi-valid.                            */
-  if(BluetoothStackID)
-  {
-    LoopbackActive = state;
-    ret_val = 0;
-  }
-
-  return(ret_val);
-}
-
-
    /* The following thread is responsible for checking changing the     */
    /* current Baud Rate used to talk to the Radio.                      */
    /* * NOTE * This function ONLY configures the Baud Rate for a TI     */
@@ -723,24 +498,6 @@ int SetClassOfDevice(int class_device)
 
     /* Check the return value of the submitted command for success.*/
     ret_val = (ret_val)?FUNCTION_ERROR:0;
-  }
-
-  return(ret_val);
-}
-
-   /* The following function is responsible for setting the application */
-   /* state to support displaying Raw Data.  This function will return  */
-   /* zero on successful execution and a negative value on errors.      */
-int SetDisplayRawModeData(Boolean_t state)
-{
-  int ret_val = INVALID_STACK_ID_ERROR;
-
-  /* First check to see if the parameters required for the execution of*/
-  /* this function appear to be semi-valid.                            */
-  if(BluetoothStackID)
-  {
-    DisplayRawData = state;
-    ret_val = 0;
   }
 
   return(ret_val);
@@ -1072,7 +829,7 @@ int Pair(GAP_Bonding_Type_t bondtype, uint16_t table_pos)
                               BondingType, GAP_Event_Callback, (unsigned long)0);
       if(!ret_val)
       {
-        PairedRemoteBD_ADDR = CurrentRemoteBD_ADDR;
+        SelectedBD_ADDR = CurrentRemoteBD_ADDR;
         ASSIGN_BD_ADDR(CurrentRemoteBD_ADDR, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
       }
     }
@@ -1096,13 +853,13 @@ int EndPairing(void)
      if(Connected)
      {
          /* Attempt to submit the command.                              */
-         ret_val = GAP_End_Bonding(BluetoothStackID, PairedRemoteBD_ADDR);
+         ret_val = GAP_End_Bonding(BluetoothStackID, SelectedBD_ADDR);
 
          /* Check the return value of the submitted command for success.*/
          if(!ret_val)
          {
             /* Cleans PairedRemoteBD_ADDR */
-            ASSIGN_BD_ADDR(PairedRemoteBD_ADDR, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
+            ASSIGN_BD_ADDR(SelectedBD_ADDR, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
          }
       }
    }
@@ -1268,35 +1025,6 @@ int ExitSniffMode(void)
   return(ret_val);
 }
 
-   /* The following function is responsible for reading data that was   */
-   /* received via an Open SPP port. The function reads "lenght" bytes  */
-   /* from the SPP Port. This function requires that a valid Bluetooth  */
-   /* Stack ID and Serial Port ID exist before running.                 */
-   /*   This function returns how many bytes were read if successful    */
-   /* and a negative value if an error occurred.                        */
-int ReadData(char* Buffer, uint16_t lenght)
-{
-  int ret_val = INVALID_STACK_ID_ERROR;
-
-  /* First check to see if the parameters required for the execution of*/
-  /* this function appear to be semi-valid.                            */
-  if((BluetoothStackID))
-  {
-    /* Only allow the Read Command if we are not in Loopback or       */
-    /* Display Raw Data Mode.                                         */
-    if((SerialPortID) && (!LoopbackActive) && (!DisplayRawData))
-    {
-      ret_val = SPP_Data_Read(BluetoothStackID, SerialPortID, lenght, (Byte_t*)Buffer);
-    }
-    else
-    {
-      ret_val = INVALID_PARAMETERS_ERROR;
-    }
-  }
-
-   return(ret_val);
-}
-
    /* The following function is responsible for sending a number of     */
    /* characters to a remote device to which a connection exists.  The  */
    /* function receives a parameter that indicates the number of byte to*/
@@ -1402,11 +1130,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
 {
   int                               Result;
   int                               Index;
-//  Boolean_t                         OOB_Data;
-//  Boolean_t                         MITM;
-//  GAP_IO_Capability_t               RemoteIOCapability;
   GAP_Inquiry_Event_Data_t         *GAP_Inquiry_Event_Data;
-//  GAP_Remote_Name_Event_Data_t     *GAP_Remote_Name_Event_Data;
   GAP_Authentication_Information_t  GAP_Authentication_Information;
 
   /* First, check to see if the required parameters appear to be       */
@@ -1617,6 +1341,155 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
 
 }
 
+   /* The following function is for an SPP Event Callback.  This        */
+   /* function will be called whenever a SPP Event occurs that is       */
+   /* associated with the Bluetooth Stack.  This function passes to the */
+   /* caller the SPP Event Data that occurred and the SPP Event Callback*/
+   /* Parameter that was specified when this Callback was installed.    */
+   /* The caller is free to use the contents of the SPP Event Data ONLY */
+   /* in the context of this callback.  If the caller requires the Data */
+   /* for a longer period of time, then the callback function MUST copy */
+   /* the data into another Data Buffer.  This function is guaranteed   */
+   /* NOT to be invoked more than once simultaneously for the specified */
+   /* installed callback (i.e.  this function DOES NOT have be          */
+   /* reentrant).  It Needs to be noted however, that if the same       */
+   /* Callback is installed more than once, then the callbacks will be  */
+   /* called serially.  Because of this, the processing in this function*/
+   /* should be as efficient as possible.  It should also be noted that */
+   /* this function is called in the Thread Context of a Thread that the*/
+   /* User does NOT own.  Therefore, processing in this function should */
+   /* be as efficient as possible (this argument holds anyway because   */
+   /* another SPP Event will not be processed while this function call  */
+   /* is outstanding).                                                  */
+   /* * NOTE * This function MUST NOT Block and wait for Events that can*/
+   /*          only be satisfied by Receiving SPP Event Packets.  A     */
+   /*          Deadlock WILL occur because NO SPP Event Callbacks will  */
+   /*          be issued while this function is currently outstanding.  */
+void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t *SPP_Event_Data, unsigned long CallbackParameter)
+{
+  int       Result;
+  bt_packet_t packet;
+  /* First, check to see if the required parameters appear to be       */
+  /* semi-valid.                                                       */
+  if((SPP_Event_Data) && (BluetoothStackID))
+  {
+    /* The parameters appear to be semi-valid, now check to see what  */
+    /* type the incoming event is.                                    */
+    switch(SPP_Event_Data->Event_Data_Type)
+    {
+      case etPort_Open_Indication:
+        /* Save the Serial Port ID for later use.                   */
+        SerialPortID = SPP_Event_Data->Event_Data.SPP_Open_Port_Indication_Data->SerialPortID;
+        /* Flag that we are now connected.                          */
+        Connected  = TRUE;
+        /* Query the connection handle.                             */
+        Result = GAP_Query_Connection_Handle(BluetoothStackID, 
+                        SPP_Event_Data->Event_Data.SPP_Open_Port_Indication_Data->BD_ADDR, 
+                        &Connection_Handle);
+        if(Result != 0)
+        {
+          /* Failed to Query the Connection Handle.                */
+          Result           = 0;
+          Connection_Handle = 0;
+        }else{
+          /* thik for some actions when we already connected */
+        }
+        break;
+      case etPort_Open_Confirmation:
+        /* A Client Port was opened.  The Status indicates the      */
+        /* Status of the Open.                                      */
+
+        /* Check the Status to make sure that an error did not      */
+        /* occur.                                                   */
+        if(SPP_Event_Data->Event_Data.SPP_Open_Port_Confirmation_Data->PortOpenStatus)
+        {
+          /* An error occurred while opening the Serial Port so    */
+          /* invalidate the Serial Port ID.                        */
+          SerialPortID      = 0;
+          Connection_Handle = 0;
+
+          /* Flag that we are no longer connected.                 */
+          Connected         = FALSE;
+        }
+        else
+        {
+          /* Flag that we are now connected.                       */
+          Connected  = TRUE;
+
+          /* Query the connection Handle.                          */
+          Result = GAP_Query_Connection_Handle(BluetoothStackID, SelectedBD_ADDR, &Connection_Handle);
+          if(Result)
+          {
+            /* Failed to Query the Connection Handle.             */
+            Result           = 0;
+            Connection_Handle = 0;
+          }
+        }
+        break;
+      case etPort_Close_Port_Indication:
+        /* The Remote Port was Disconnected.                        */
+        /* If we are the client side, close the Vserialport         */
+        if(UI_Mode == UI_MODE_IS_CLIENT)
+        {
+          SerialPortID = 0;
+        }
+        Connection_Handle = 0;
+        /* Flag that we are no longer connected.                    */
+        Connected         = FALSE;
+        break;
+      case etPort_Status_Indication:
+        /* Display Information about the new Port Status.           */
+        break;
+      case etPort_Data_Indication:
+        /* We recieve a packet and send it to bt_rx task */
+        SPP_Data_Read(BluetoothStackID, SerialPortID, PACKET_SIZE, (Byte_t *)packet.packet_content);
+        /* put into the queue */
+        osMailPut(queue_bt_packet_recievedHandle, (void *) &packet);
+        break;
+      case etPort_Transmit_Buffer_Empty_Indication:
+        /* The transmit buffer is now empty after being full. */
+        /* Signal the bt_tx_thread we can send again */
+
+        break;
+      case etPort_Line_Status_Indication:
+        break;
+      case etPort_Send_Port_Information_Indication:
+        /* This should be OUR INFO, consider redo it */
+        /* Simply Respond with the information that was sent to us. */
+        Result = SPP_Respond_Port_Information(BluetoothStackID, 
+                     SPP_Event_Data->Event_Data.SPP_Send_Port_Information_Indication_Data->SerialPortID, 
+                     &SPP_Event_Data->Event_Data.SPP_Send_Port_Information_Indication_Data->SPPPortInformation);
+        break;
+      case etPort_Send_Port_Information_Confirmation:
+        break;
+      case etPort_Query_Port_Information_Indication:
+        break;
+      case etPort_Query_Port_Information_Confirmation:
+        break;
+      case etPort_Open_Request_Indication:
+        /* A remote port is requesting a connection.                */
+        /* Accept the connection always.                            */
+        Result = SPP_Open_Port_Request_Response(BluetoothStackID, 
+                   SPP_Event_Data->Event_Data.SPP_Open_Port_Request_Indication_Data->SerialPortID,
+                   TRUE);
+        if( Result == 0)
+        {
+          SelectedBD_ADDR = SPP_Event_Data->Event_Data.SPP_Open_Port_Request_Indication_Data->BD_ADDR;
+        }
+        break;
+      default:
+        /* An unknown/unexpected SPP event was received.            */
+        HAL_GPIO_WritePin(GPIOC,UI_LED_G_Pin, GPIO_PIN_SET);
+        break;    
+    }
+  }
+  else
+  {
+    /* There was an error with one or more of the input parameters.   */
+    HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
+  }
+}
+
    /* The following function is responsible for processing HCI Mode     */
    /* change events.                                                    */
 void BTPSAPI HCI_Event_Callback(unsigned int BluetoothStackID, HCI_Event_Data_t *HCI_Event_Data, unsigned long CallbackParameter)
@@ -1655,655 +1528,6 @@ void BTPSAPI HCI_Event_Callback(unsigned int BluetoothStackID, HCI_Event_Data_t 
             break;
       }
    }
+   // Pa que se calle el compilador, hay que quitarlo en cuanto se pueda
+   UNUSED(Mode);
 }
-
-/* LEGACY CODE BY MARKUS FUNK */
-
-//   /* The following defines a data sequence that will be used to        */
-//   /* generate message data.                                            */
-//static char  DataStr[]  = "HOLA QUE TAL";
-//static int   DataStrLen = (sizeof(DataStr)-1);
-//
-//   /*********************************************************************/
-//   /*                         Event Callbacks                           */
-//   /*********************************************************************/
-//
-//   /* The following function is for the GAP Event Receive Data Callback.*/
-//   /* This function will be called whenever a Callback has been         */
-//   /* registered for the specified GAP Action that is associated with   */
-//   /* the Bluetooth Stack.  This function passes to the caller the GAP  */
-//   /* Event Data of the specified Event and the GAP Event Callback      */
-//   /* Parameter that was specified when this Callback was installed.    */
-//   /* The caller is free to use the contents of the GAP Event Data ONLY */
-//   /* in the context of this callback.  If the caller requires the Data */
-//   /* for a longer period of time, then the callback function MUST copy */
-//   /* the data into another Data Buffer.  This function is guaranteed   */
-//   /* NOT to be invoked more than once simultaneously for the specified */
-//   /* installed callback (i.e.  this function DOES NOT have be          */
-//   /* reentrant).  It Needs to be noted however, that if the same       */
-//   /* Callback is installed more than once, then the callbacks will be  */
-//   /* called serially.  Because of this, the processing in this function*/
-//   /* should be as efficient as possible.  It should also be noted that */
-//   /* this function is called in the Thread Context of a Thread that the*/
-//   /* User does NOT own.  Therefore, processing in this function should */
-//   /* be as efficient as possible (this argument holds anyway because   */
-//   /* other GAP Events will not be processed while this function call is*/
-//   /* outstanding).                                                     */
-//   /* * NOTE * This function MUST NOT Block and wait for events that    */
-//   /*          can only be satisfied by Receiving other GAP Events.  A  */
-//   /*          Deadlock WILL occur because NO GAP Event Callbacks will  */
-//   /*          be issued while this function is currently outstanding.  */
-//void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t *GAP_Event_Data, unsigned long CallbackParameter)
-//{
-//   int                               Result;
-//   int                               Index;
-//   BD_ADDR_t                         NULL_BD_ADDR;
-//   Boolean_t                         OOB_Data;
-//   Boolean_t                         MITM;
-//   GAP_IO_Capability_t               RemoteIOCapability;
-//   GAP_Inquiry_Event_Data_t         *GAP_Inquiry_Event_Data;
-//   GAP_Remote_Name_Event_Data_t     *GAP_Remote_Name_Event_Data;
-//   GAP_Authentication_Information_t  GAP_Authentication_Information;
-//
-//   /* First, check to see if the required parameters appear to be       */
-//   /* semi-valid.                                                       */
-//   if((BluetoothStackID) && (GAP_Event_Data))
-//   {
-//      /* The parameters appear to be semi-valid, now check to see what  */
-//      /* type the incoming event is.                                    */
-//      switch(GAP_Event_Data->Event_Data_Type)
-//      {
-//         case etInquiry_Result:
-//            /* The GAP event received was of type Inquiry_Result.       */
-//            GAP_Inquiry_Event_Data = GAP_Event_Data->Event_Data.GAP_Inquiry_Event_Data;
-//
-//            /* Next, Check to see if the inquiry event data received    */
-//            /* appears to be semi-valid.                                */
-//            if(GAP_Inquiry_Event_Data)
-//            {
-//               /* Now, check to see if the gap inquiry event data's     */
-//               /* inquiry data appears to be semi-valid.                */
-//               if(GAP_Inquiry_Event_Data->GAP_Inquiry_Data)
-//               {
-//
-//                  /* Display a list of all the devices found from       */
-//                  /* performing the inquiry.                            */
-//                  for(Index=0;(Index<GAP_Inquiry_Event_Data->Number_Devices) && (Index<MAX_INQUIRY_RESULTS);Index++)
-//                  {
-//                     InquiryResultList[Index] = GAP_Inquiry_Event_Data->GAP_Inquiry_Data[Index].BD_ADDR;
-//                     BD_ADDRToStr(GAP_Inquiry_Event_Data->GAP_Inquiry_Data[Index].BD_ADDR, Callback_BoardStr);
-//
-//                  }
-//
-//                  NumberofValidResponses = GAP_Inquiry_Event_Data->Number_Devices;
-//               }
-//            }
-//            break;
-//         case etInquiry_Entry_Result:
-//            /* Next convert the BD_ADDR to a string.                    */
-//            BD_ADDRToStr(GAP_Event_Data->Event_Data.GAP_Inquiry_Entry_Event_Data->BD_ADDR, Callback_BoardStr);
-//
-//            /* Display this GAP Inquiry Entry Result.                   */
-//            break;
-//         case etAuthentication:
-//            /* An authentication event occurred, determine which type of*/
-//            /* authentication event occurred.                           */
-//            switch(GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->GAP_Authentication_Event_Type)
-//            {
-//               case atLinkKeyRequest:
-//                  BD_ADDRToStr(GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, Callback_BoardStr);
-//
-//                  /* Setup the authentication information response      */
-//                  /* structure.                                         */
-//                  GAP_Authentication_Information.GAP_Authentication_Type    = atLinkKey;
-//                  GAP_Authentication_Information.Authentication_Data_Length = 0;
-//
-//                  /* See if we have stored a Link Key for the specified */
-//                  /* device.                                            */
-//                  for(Index=0;Index<(sizeof(LinkKeyInfo)/sizeof(LinkKeyInfo_t));Index++)
-//                  {
-//                     if(COMPARE_BD_ADDR(LinkKeyInfo[Index].BD_ADDR, GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device))
-//                     {
-//                        /* Link Key information stored, go ahead and    */
-//                        /* respond with the stored Link Key.            */
-//                        GAP_Authentication_Information.Authentication_Data_Length   = sizeof(Link_Key_t);
-//                        GAP_Authentication_Information.Authentication_Data.Link_Key = LinkKeyInfo[Index].LinkKey;
-//
-//                        break;
-//                     }
-//                  }
-//
-//                  /* Submit the authentication response.                */
-//                  Result = GAP_Authentication_Response(BluetoothStackID, GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, &GAP_Authentication_Information);
-//
-//                  /* Check the result of the submitted command.         */
-//
-//                  break;
-//               case atPINCodeRequest:
-//                  /* A pin code request event occurred, first display   */
-//                  /* the BD_ADD of the remote device requesting the pin.*/
-//                  BD_ADDRToStr(GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, Callback_BoardStr);
-//
-//                  /* Note the current Remote BD_ADDR that is requesting */
-//                  /* the PIN Code.                                      */
-//                  CurrentRemoteBD_ADDR = GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device;
-//
-//                  /* Inform the user that they will need to respond with*/
-//                  /* a PIN Code Response.                               */
-//
-//                  break;
-//               case atAuthenticationStatus:
-//                  /* An authentication status event occurred, display   */
-//                  /* all relevant information.                          */
-//                  BD_ADDRToStr(GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, Callback_BoardStr);
-//
-//                  /* Flag that there is no longer a current             */
-//                  /* Authentication procedure in progress.              */
-//                  ASSIGN_BD_ADDR(CurrentRemoteBD_ADDR, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
-//                  break;
-//               case atLinkKeyCreation:
-//                  /* A link key creation event occurred, first display  */
-//                  /* the remote device that caused this event.          */
-//                  BD_ADDRToStr(GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, Callback_BoardStr);
-//
-//                  /* Now store the link Key in either a free location OR*/
-//                  /* over the old key location.                         */
-//                  ASSIGN_BD_ADDR(NULL_BD_ADDR, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
-//
-//                  for(Index=0,Result=-1;Index<(sizeof(LinkKeyInfo)/sizeof(LinkKeyInfo_t));Index++)
-//                  {
-//                     if(COMPARE_BD_ADDR(LinkKeyInfo[Index].BD_ADDR, 
-//                                        GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device))
-//                        break;
-//                     else
-//                     {
-//                        if((Result == (-1)) && (COMPARE_BD_ADDR(LinkKeyInfo[Index].BD_ADDR, NULL_BD_ADDR)))
-//                           Result = Index;
-//                     }
-//                  }
-//
-//                  /* If we didn't find a match, see if we found an empty*/
-//                  /* location.                                          */
-//                  if(Index == (sizeof(LinkKeyInfo)/sizeof(LinkKeyInfo_t)))
-//                     Index = Result;
-//
-//                  /* Check to see if we found a location to store the   */
-//                  /* Link Key information into.                         */
-//                  if(Index != (-1))
-//                  {
-//                     LinkKeyInfo[Index].BD_ADDR = GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device;
-//                     LinkKeyInfo[Index].LinkKey = GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Authentication_Event_Data.Link_Key_Info.Link_Key;
-//
-//                  }else{
-//                    
-//                  }
-//
-//                  break;
-//               case atIOCapabilityRequest:
-//                  BD_ADDRToStr(GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, Callback_BoardStr);
-//
-//                  /* Setup the Authentication Information Response      */
-//                  /* structure.                                         */
-//                  GAP_Authentication_Information.GAP_Authentication_Type                                      = atIOCapabilities;
-//                  GAP_Authentication_Information.Authentication_Data_Length                                   = sizeof(GAP_IO_Capabilities_t);
-//                  GAP_Authentication_Information.Authentication_Data.IO_Capabilities.IO_Capability            = (GAP_IO_Capability_t)IOCapability;
-//                  GAP_Authentication_Information.Authentication_Data.IO_Capabilities.MITM_Protection_Required = MITMProtection;
-//                  GAP_Authentication_Information.Authentication_Data.IO_Capabilities.OOB_Data_Present         = OOBSupport;
-//
-//                  /* Submit the Authentication Response.                */
-//                  Result = GAP_Authentication_Response(BluetoothStackID, GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, &GAP_Authentication_Information);
-//
-//                  /* Check the result of the submitted command.         */
-//                  break;
-//               case atIOCapabilityResponse:
-//                  BD_ADDRToStr(GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, Callback_BoardStr);
-//
-//                  RemoteIOCapability = GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Authentication_Event_Data.IO_Capabilities.IO_Capability;
-//                  MITM               = (Boolean_t)GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Authentication_Event_Data.IO_Capabilities.MITM_Protection_Required;
-//                  OOB_Data           = (Boolean_t)GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Authentication_Event_Data.IO_Capabilities.OOB_Data_Present;
-//
-//                  break;
-//               case atUserConfirmationRequest:
-//                  BD_ADDRToStr(GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, Callback_BoardStr);
-//
-//                  CurrentRemoteBD_ADDR = GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device;
-//
-//                  if(IOCapability != icDisplayYesNo)
-//                  {
-//                     /* Invoke JUST Works Process...                    */
-//                     GAP_Authentication_Information.GAP_Authentication_Type          = atUserConfirmation;
-//                     GAP_Authentication_Information.Authentication_Data_Length       = (Byte_t)sizeof(Byte_t);
-//                     GAP_Authentication_Information.Authentication_Data.Confirmation = TRUE;
-//
-//                     /* Submit the Authentication Response.             */
-//
-//                     Result = GAP_Authentication_Response(BluetoothStackID, GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, &GAP_Authentication_Information);
-//
-//                     /* Flag that there is no longer a current          */
-//                     /* Authentication procedure in progress.           */
-//                     ASSIGN_BD_ADDR(CurrentRemoteBD_ADDR, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
-//                  }
-//                  else
-//                  {
-//
-//                     /* Inform the user that they will need to respond  */
-//                     /* with a PIN Code Response.                       */
-//                  }
-//                  break;
-//               case atPasskeyRequest:
-//                  BD_ADDRToStr(GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, Callback_BoardStr);
-//
-//                  /* Note the current Remote BD_ADDR that is requesting */
-//                  /* the Passkey.                                       */
-//                  CurrentRemoteBD_ADDR = GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device;
-//
-//                  /* Inform the user that they will need to respond with*/
-//                  /* a Passkey Response.                                */
-//                  break;
-//               case atRemoteOutOfBandDataRequest:
-//                  BD_ADDRToStr(GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, Callback_BoardStr);
-//
-//                  /* This application does not support OOB data so      */
-//                  /* respond with a data length of Zero to force a      */
-//                  /* negative reply.                                    */
-//                  GAP_Authentication_Information.GAP_Authentication_Type    = atOutOfBandData;
-//                  GAP_Authentication_Information.Authentication_Data_Length = 0;
-//
-//                  Result = GAP_Authentication_Response(BluetoothStackID, GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, &GAP_Authentication_Information);
-//
-//                  break;
-//               case atPasskeyNotification:
-//                  BD_ADDRToStr(GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, Callback_BoardStr);
-//
-//                  break;
-//               case atKeypressNotification:
-//                  BD_ADDRToStr(GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, Callback_BoardStr);
-//                  break;
-//               default:
-//                  break;
-//            }
-//            break;
-//         case etRemote_Name_Result:
-//            /* Bluetooth Stack has responded to a previously issued     */
-//            /* Remote Name Request that was issued.                     */
-//            GAP_Remote_Name_Event_Data = GAP_Event_Data->Event_Data.GAP_Remote_Name_Event_Data;
-//            if(GAP_Remote_Name_Event_Data)
-//            {
-//               /* Inform the user of the Result.                        */
-//               BD_ADDRToStr(GAP_Remote_Name_Event_Data->Remote_Device, Callback_BoardStr);
-//
-//            }
-//            break;
-//         case etEncryption_Change_Result:
-//            BD_ADDRToStr(GAP_Event_Data->Event_Data.GAP_Encryption_Mode_Event_Data->Remote_Device, Callback_BoardStr);
-//            break;
-//         default:
-//            /* An unknown/unexpected GAP event was received.            */
-//            break;
-//      }
-//   }
-//   else
-//   {
-//      /* There was an error with one or more of the input parameters.   */
-//   }
-//
-//}
-//
-//   /* The following function is for an SPP Event Callback.  This        */
-//   /* function will be called whenever a SPP Event occurs that is       */
-//   /* associated with the Bluetooth Stack.  This function passes to the */
-//   /* caller the SPP Event Data that occurred and the SPP Event Callback*/
-//   /* Parameter that was specified when this Callback was installed.    */
-//   /* The caller is free to use the contents of the SPP Event Data ONLY */
-//   /* in the context of this callback.  If the caller requires the Data */
-//   /* for a longer period of time, then the callback function MUST copy */
-//   /* the data into another Data Buffer.  This function is guaranteed   */
-//   /* NOT to be invoked more than once simultaneously for the specified */
-//   /* installed callback (i.e.  this function DOES NOT have be          */
-//   /* reentrant).  It Needs to be noted however, that if the same       */
-//   /* Callback is installed more than once, then the callbacks will be  */
-//   /* called serially.  Because of this, the processing in this function*/
-//   /* should be as efficient as possible.  It should also be noted that */
-//   /* this function is called in the Thread Context of a Thread that the*/
-//   /* User does NOT own.  Therefore, processing in this function should */
-//   /* be as efficient as possible (this argument holds anyway because   */
-//   /* another SPP Event will not be processed while this function call  */
-//   /* is outstanding).                                                  */
-//   /* * NOTE * This function MUST NOT Block and wait for Events that can*/
-//   /*          only be satisfied by Receiving SPP Event Packets.  A     */
-//   /*          Deadlock WILL occur because NO SPP Event Callbacks will  */
-//   /*          be issued while this function is currently outstanding.  */
-//void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t *SPP_Event_Data, unsigned long CallbackParameter)
-//{
-//   int       ret_val = 0;
-//   int       Index;
-//   int       Index1;
-//   int       TempLength;
-//   Boolean_t Done;
-//
-//   /* **** SEE SPPAPI.H for a list of all possible event types.  This   */
-//   /* program only services its required events.                   **** */
-//
-//   /* First, check to see if the required parameters appear to be       */
-//   /* semi-valid.                                                       */
-//   if((SPP_Event_Data) && (BluetoothStackID))
-//   {
-//      /* The parameters appear to be semi-valid, now check to see what  */
-//      /* type the incoming event is.                                    */
-//      switch(SPP_Event_Data->Event_Data_Type)
-//      {
-//         case etPort_Open_Request_Indication:
-//            /* A remote port is requesting a connection.                */
-//            BD_ADDRToStr(SPP_Event_Data->Event_Data.SPP_Open_Port_Request_Indication_Data->BD_ADDR, Callback_BoardStr);
-//
-//            /* Accept the connection always.                            */
-//            SPP_Open_Port_Request_Response(BluetoothStackID, SPP_Event_Data->Event_Data.SPP_Open_Port_Request_Indication_Data->SerialPortID, TRUE);
-//            break;
-//         case etPort_Open_Indication:
-//            /* A remote port is requesting a connection.                */
-//            BD_ADDRToStr(SPP_Event_Data->Event_Data.SPP_Open_Port_Indication_Data->BD_ADDR, Callback_BoardStr);
-//
-//            /* Save the Serial Port ID for later use.                   */
-//            SerialPortID = SPP_Event_Data->Event_Data.SPP_Open_Port_Indication_Data->SerialPortID;
-//
-//            /* Flag that we are now connected.                          */
-//            Connected  = TRUE;
-//
-//            /* Query the connection handle.                             */
-//            ret_val = GAP_Query_Connection_Handle(BluetoothStackID, SPP_Event_Data->Event_Data.SPP_Open_Port_Indication_Data->BD_ADDR, &Connection_Handle);
-//            if(ret_val)
-//            {
-//               /* Failed to Query the Connection Handle.                */
-//
-//               ret_val           = 0;
-//               Connection_Handle = 0;
-//            }else{
-//            }
-//
-//            break;
-//         case etPort_Open_Confirmation:
-//            /* A Client Port was opened.  The Status indicates the      */
-//            /* Status of the Open.                                      */
-//
-//            /* Check the Status to make sure that an error did not      */
-//            /* occur.                                                   */
-//            if(SPP_Event_Data->Event_Data.SPP_Open_Port_Confirmation_Data->PortOpenStatus)
-//            {
-//               /* An error occurred while opening the Serial Port so    */
-//               /* invalidate the Serial Port ID.                        */
-//               SerialPortID      = 0;
-//               Connection_Handle = 0;
-//
-//               /* Flag that we are no longer connected.                 */
-//               Connected         = FALSE;
-//            }
-//            else
-//            {
-//               /* Flag that we are now connected.                       */
-//               Connected  = TRUE;
-//
-//               /* Query the connection Handle.                          */
-//               ret_val = GAP_Query_Connection_Handle(BluetoothStackID, SelectedBD_ADDR, &Connection_Handle);
-//               if(ret_val)
-//               {
-//                  /* Failed to Query the Connection Handle.             */
-//
-//                  ret_val           = 0;
-//                  Connection_Handle = 0;
-//               }
-//            }
-//            break;
-//         case etPort_Close_Port_Indication:
-//            /* The Remote Port was Disconnected.                        */
-//
-//            /* Invalidate the Serial Port ID.                           */
-//            if(UI_Mode == UI_MODE_IS_CLIENT)
-//               SerialPortID = 0;
-//
-//            Connection_Handle = 0;
-//            SendInfo.BytesToSend = 0;
-//
-//            /* Flag that we are no longer connected.                    */
-//            Connected         = FALSE;
-//            break;
-//         case etPort_Status_Indication:
-//            /* Display Information about the new Port Status.           */
-//            break;
-//         case etPort_Data_Indication:
-//            /* Data was received.  Process it differently based upon the*/
-//            /* current state of the Loopback Mode.                      */
-//            if(LoopbackActive)
-//            {
-//               /* Initialize Done to false.                             */
-//               Done = FALSE;
-//
-//               /* Loop until the write buffer is full or there is not   */
-//               /* more data to read.                                    */
-//               while((Done == FALSE) && (BufferFull == FALSE))
-//               {
-//                  /* The application state is currently in the loop back*/
-//                  /* state.  Read as much data as we can read.          */
-//                  if((TempLength = SPP_Data_Read(BluetoothStackID, SerialPortID, (Word_t)sizeof(Buffer), (Byte_t *)Buffer)) > 0)
-//                  {
-//                     /* Adjust the Current Buffer Length by the number  */
-//                     /* of bytes which were successfully read.          */
-//                     BufferLength = TempLength;
-//
-//                     /* Next attempt to write all of the data which is  */
-//                     /* currently in the buffer.                        */
-//                     if((TempLength = SPP_Data_Write(BluetoothStackID, SerialPortID, (Word_t)BufferLength, (Byte_t *)Buffer)) < (int)BufferLength)
-//                     {
-//                        /* Not all of the data was successfully written */
-//                        /* or an error occurred, first check to see if  */
-//                        /* an error occurred.                           */
-//                        if(TempLength >= 0)
-//                        {
-//                           /* An error did not occur therefore the      */
-//                           /* Transmit Buffer must be full.  Adjust the */
-//                           /* Buffer and Buffer Length by the amount    */
-//                           /* which as successfully written.            */
-//                           if(TempLength)
-//                           {
-//                              for(Index=0,Index1=TempLength;Index1<BufferLength;Index++,Index1++)
-//                                 Buffer[Index] = Buffer[Index1];
-//
-//                              BufferLength -= TempLength;
-//                           }
-//
-//                           /* Set the flag indicating that the SPP Write*/
-//                           /* Buffer is full.                           */
-//                           BufferFull = TRUE;
-//                        }
-//                        else
-//                           Done = TRUE;
-//                     }
-//                  }
-//                  else
-//                     Done = TRUE;
-//               }
-//
-//            }
-//            else
-//            {
-//               /* If we are operating in Raw Data Display Mode then     */
-//               /* simply display the data that was give to use.         */
-//               if((DisplayRawData) || (AutomaticReadActive))
-//               {
-//                  /* Initialize Done to false.                          */
-//                  Done = FALSE;
-//
-//                  /* Loop through and read all data that is present in  */
-//                  /* the buffer.                                        */
-//                  while(!Done)
-//                  {
-//                     /* Read as much data as possible.                  */
-//                     if((TempLength = SPP_Data_Read(BluetoothStackID, SerialPortID, (Word_t)sizeof(Buffer)-1, (Byte_t *)Buffer)) > 0)
-//                     {
-//                        /* Now simply display each character that we    */
-//                        /* have just read.                              */
-//                        if(DisplayRawData)
-//                        {
-//                           Buffer[TempLength] = '\0';
-//                        }
-//                     }
-//                     else
-//                     {
-//                        /* Either an error occurred or there is no more */
-//                        /* data to be read.                             */
-//                        if(TempLength < 0)
-//                        {
-//                           /* Error occurred.                           */
-//                        }
-//
-//                        /* Regardless if an error occurred, we are      */
-//                        /* finished with the current loop.              */
-//                        Done = TRUE;
-//                     }
-//                  }
-//               }
-//               else
-//               {
-//                  /* Simply inform the user that data has arrived.      */
-//                  SPP_Data_Read(BluetoothStackID, SerialPortID, (Word_t)sizeof(Buffer)-1, (Byte_t *)Buffer);
-//               }
-//            }
-//            break;
-//         case etPort_Send_Port_Information_Indication:
-//            /* Simply Respond with the information that was sent to us. */
-//            ret_val = SPP_Respond_Port_Information(BluetoothStackID, 
-//                         SPP_Event_Data->Event_Data.SPP_Send_Port_Information_Indication_Data->SerialPortID, 
-//                         &SPP_Event_Data->Event_Data.SPP_Send_Port_Information_Indication_Data->SPPPortInformation);
-//            break;
-//         case etPort_Transmit_Buffer_Empty_Indication:
-//            /* The transmit buffer is now empty after being full.  Next */
-//            /* check the current application state.                     */
-//            if(SendInfo.BytesToSend)
-//            {
-//               /* Send the remainder of the last attempt.               */
-//               TempLength            = (DataStrLen-SendInfo.BytesSent);
-//               SendInfo.BytesSent    = SPP_Data_Write(BluetoothStackID, SerialPortID, TempLength, (unsigned char *)&(DataStr[SendInfo.BytesSent]));
-//               if((int)(SendInfo.BytesSent) >= 0)
-//               {
-//                  if(SendInfo.BytesSent <= SendInfo.BytesToSend)
-//                     SendInfo.BytesToSend -= SendInfo.BytesSent;
-//                  else
-//                     SendInfo.BytesToSend = 0;
-//
-//                  while(SendInfo.BytesToSend)
-//                  {
-//                     /* Set the Number of bytes to send in the next     */
-//                     /* packet.                                         */
-//                     if(SendInfo.BytesToSend > DataStrLen)
-//                        TempLength = DataStrLen;
-//                     else
-//                        TempLength = SendInfo.BytesToSend;
-//
-//                     SendInfo.BytesSent = SPP_Data_Write(BluetoothStackID, SerialPortID, TempLength, (unsigned char *)DataStr);
-//                     if((int)(SendInfo.BytesSent) >= 0)
-//                     {
-//                        SendInfo.BytesToSend -= SendInfo.BytesSent;
-//                        if(SendInfo.BytesSent < TempLength)
-//                           break;
-//                     }
-//                     else
-//                     {
-//                        SendInfo.BytesToSend = 0;
-//                     }
-//                  }
-//               }
-//               else
-//               {
-//                  SendInfo.BytesToSend = 0;
-//               }
-//            }
-//            else
-//            {
-//               if(LoopbackActive)
-//               {
-//               /* Initialize Done to false.                             */
-//               Done = FALSE;
-//
-//               /* Loop until the write buffer is full or there is not   */
-//               /* more data to read.                                    */
-//               while(Done == FALSE)
-//               {
-//                     /* The application state is currently in the loop  */
-//                     /* back state.  Read as much data as we can read.  */
-//                  if(((TempLength = SPP_Data_Read(BluetoothStackID, SerialPortID, (Word_t)(sizeof(Buffer)-BufferLength), (Byte_t *)&(Buffer[BufferLength]))) > 0) || (BufferLength > 0))
-//                  {
-//                        /* Adjust the Current Buffer Length by the      */
-//                        /* number of bytes which were successfully read.*/
-//                     if(TempLength > 0)
-//                        {
-//                        BufferLength += TempLength;
-//                        }
-//
-//                        /* Next attempt to write all of the data which  */
-//                        /* is currently in the buffer.                  */
-//                     if((TempLength = SPP_Data_Write(BluetoothStackID, SerialPortID, (Word_t)BufferLength, (Byte_t *)Buffer)) < (int)BufferLength)
-//                     {
-//                           /* Not all of the data was successfully      */
-//                           /* written or an error occurred, first check */
-//                           /* to see if an error occurred.              */
-//                        if(TempLength >= 0)
-//                        {
-//                           /* An error did not occur therefore the      */
-//                              /* Transmit Buffer must be full.  Adjust  */
-//                              /* the Buffer and Buffer Length by the    */
-//                              /* amount which was successfully written. */
-//                           if(TempLength)
-//                           {
-//                              for(Index=0,Index1=TempLength;Index1<BufferLength;Index++,Index1++)
-//                                 Buffer[Index] = Buffer[Index1];
-//
-//                              BufferLength -= TempLength;
-//                           }
-//                           else
-//                              Done = TRUE;
-//
-//                              /* Set the flag indicating that the SPP   */
-//                              /* Write Buffer is full.                  */
-//                           BufferFull = TRUE;
-//                        }
-//                        else
-//                           Done = TRUE;
-//                     }
-//                     else
-//                     {
-//                        BufferLength = 0;
-//
-//                        BufferFull   = FALSE;
-//                     }
-//                  }
-//                  else
-//                     Done = TRUE;
-//               }
-//               }
-//               else
-//               {
-//                  /* Only print the event indication to the user if we  */
-//                  /* are NOT operating in Raw Data Display Mode.        */
-//               }
-//            }
-//
-//            break;
-//         default:
-//            /* An unknown/unexpected SPP event was received.            */
-//            HAL_GPIO_WritePin(GPIOC, UI_LED_R_Pin, GPIO_PIN_SET);
-//            break;
-//      }
-//
-//      /* Check the return value of any function that might have been    */
-//      /* executed in the callback.                                      */
-//      if(ret_val)
-//      {
-//         /* An error occurred, so output an error message.              */
-//        HAL_GPIO_WritePin(GPIOC, UI_LED_R_Pin, GPIO_PIN_SET);
-//      }
-//   }
-//   else
-//   {
-//      /* There was an error with one or more of the input parameters.   */
-//     HAL_GPIO_WritePin(GPIOC, UI_LED_R_Pin, GPIO_PIN_SET);
-//   }
-//}

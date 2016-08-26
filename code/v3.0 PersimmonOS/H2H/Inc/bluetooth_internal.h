@@ -9,7 +9,7 @@
 #define BLUETOOTH_INTERNAL_H_
 
 #include "HCITRANS.h"
-#include "BTVSAPI.h"             /* Vendor Specific header.                   */
+#include "BTVSAPI.h"             /* Vendror Specific header.                  */
 #include "SS1BTPS.h"             /* Main SS1 Bluetooth Stack Header.          */
 #include "BTPSKRNL.h"            /* BTPS Kernel Header.                       */
 
@@ -19,13 +19,12 @@
 #define VENDOR_BAUD_RATE          2000000L
 #define PACKET_SIZE               16
 
-typedef struct bt_packet_t
-{
-  unsigned char packet_content[PACKET_SIZE];
-}
-bt_packet_t;
+typedef struct bt_packet_t{
+  unsigned char       packet_content[PACKET_SIZE];
+}bt_packet_t;
 
-/* Init/close function */
+/* Init/close function                           */
+
 void bluetooth_init(void);
 int CloseStack(void);
 
@@ -37,11 +36,9 @@ int OpenRemoteServer(BD_ADDR_t remote_address, uint16_t server_port);
 int CloseRemoteServer(void);
 
 /* Setter */
-int SetLoopback(Boolean_t state);
 int SetBaudRate(DWord_t baud_rate);
 int SetLocalName(char *device_name);
 int SetClassOfDevice(int class_device);
-int SetDisplayRawModeData(Boolean_t state);
 int SetPairabilityMode(GAP_Pairability_Mode_t  PairabilityMode);
 int SetConnectabilityMode(GAP_Connectability_Mode_t ConnectableMode);
 int SetDiscoverabilityMode(GAP_Discoverability_Mode_t DiscoverabilityMode);
@@ -66,11 +63,10 @@ int EndPairing(void);
 int PINCodeResponse(char *pin);
 int PassKeyResponse(char *Passkey);
 int UserConfirmationResponse(Boolean_t confirmation);
-int SniffMode( Word_t Sniff_Max_Interval, Word_t Sniff_Min_Interval,
+int SniffMode( Word_t Sniff_Max_Interval, Word_t Sniff_Min_Interval, 
               Word_t Sniff_Attempt, Word_t Sniff_Timeout);
 int ExitSniffMode(void);
 
-int ReadData(char* Buffer, uint16_t lenght);
 int SendData(uint16_t length, unsigned char *buff);
 
 int DeleteLinkKey(BD_ADDR_t BD_ADDR);

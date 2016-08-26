@@ -267,7 +267,9 @@ gui_status_t lcd_print_graph(lcd_t *lcd, item_t *item)
   text_color = item->graph.text_color;
   bg_legend_color = item->graph.bg_legend_color;
   border_color = item->graph.border_color;
-
+  // Esto lo pongo para que el compilador deje de joder
+  // se puede quitar a cholon
+  UNUSED(text_color);
   /* Check if area lies within lcd boundaries */
   if (item->graph.pos.x_pos + item->graph.width_legend + item->graph.width_graph > lcd->lcd_x_size)
   {

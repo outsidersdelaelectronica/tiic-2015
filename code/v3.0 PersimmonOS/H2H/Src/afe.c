@@ -156,13 +156,13 @@ void afe_start_read(afe_t *afe)
 void afe_format_data(afe_t *afe)
 {
   int32_t adc_raw_data_ch1, adc_raw_data_ch2;
-
+  //Change to actual enum, so the compiler will stfu
   /* 3 status bytes (1100 + LOFF_STAT[4:0] + GPIO[1:0] + 13 '0's) */
-  afe->last_data.rld_lead_off  = afe->last_data_buf[0] & 0x08;
-  afe->last_data.in2n_lead_off = afe->last_data_buf[0] & 0x04;
-  afe->last_data.in2p_lead_off = afe->last_data_buf[0] & 0x02;
-  afe->last_data.in1n_lead_off = afe->last_data_buf[0] & 0x01;
-  afe->last_data.in1p_lead_off = afe->last_data_buf[1] & 0x80;
+  afe->last_data.rld_lead_off  = ((afe->last_data_buf[0] & 0x08)?IS_NOT_CONNECTED:IS_CONNECTED);
+  afe->last_data.in2n_lead_off = ((afe->last_data_buf[0] & 0x04)?IS_NOT_CONNECTED:IS_CONNECTED);
+  afe->last_data.in2p_lead_off = ((afe->last_data_buf[0] & 0x02)?IS_NOT_CONNECTED:IS_CONNECTED);
+  afe->last_data.in1n_lead_off = ((afe->last_data_buf[0] & 0x01)?IS_NOT_CONNECTED:IS_CONNECTED);
+  afe->last_data.in1p_lead_off = ((afe->last_data_buf[1] & 0x80)?IS_NOT_CONNECTED:IS_CONNECTED);
 
   /* 3 data bytes per channel */
   adc_raw_data_ch1 = (((int32_t) ((int8_t) afe->last_data_buf[3])) << 16) |

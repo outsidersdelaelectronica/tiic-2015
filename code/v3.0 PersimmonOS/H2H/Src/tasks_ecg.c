@@ -286,8 +286,6 @@ void Start_ecg_keyGenTask(void const * argument)
   osEvent event;
 
   uint32_t bpm = 0;
-  char data[5];
-
   /* Infinite loop */
   for(;;)
   {
@@ -297,8 +295,9 @@ void Start_ecg_keyGenTask(void const * argument)
     {
       /* Retrieve value */
       bpm = (uint32_t) event.value.v;
-//      sprintf(data,"%d",bpm);
-//      SendData(5,(unsigned char*)data);
+      // Esto lo pongo para que el compilador deje de joder
+      // se puede quitar a cholon
+      UNUSED(bpm);
     }
 
     /* Security magic */

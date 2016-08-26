@@ -171,7 +171,9 @@ static int WBS_Associate(unsigned int BluetoothStackID, Word_t ACL_Connection_Ha
 
    /* Before continuing, make sure the input parameters appears to be   */
    /* semi-valid.                                                       */
-   if((BluetoothStackID) && (HCI_CONNECTION_HANDLE_VALID_CONNECTION_HANDLE(ACL_Connection_Handle)))
+   // Removed the check because to make the compiler to stfu. recheck if neccesary
+//   if((BluetoothStackID) && (HCI_CONNECTION_HANDLE_VALID_CONNECTION_HANDLE(ConnectionHandle)))
+   if(BluetoothStackID)
    {
       Length  = sizeof(Buffer);
       if(State == WBS_ENABLE)
@@ -428,7 +430,8 @@ int BTPSAPI VS_Set_Max_Output_Power(unsigned int BluetoothStackID, Byte_t MaxPow
 
    /* Before continuing, make sure the input parameters appear to be    */
    /* semi-valid.                                                       */
-   if((BluetoothStackID) && (MaxPower >= 0) && (MaxPower <= 12))
+//   if((BluetoothStackID) && (MaxPower >= 0) && (MaxPower <= 12))  
+   if((BluetoothStackID) && (MaxPower <= 12))
    {
       /* Send the HCI_DRPb_Set_Power_Vector commands for each           */
       /* modulation type.                                               */
@@ -642,7 +645,16 @@ int BTPSAPI VS_Enable_FCC_Test_Mode(unsigned int BluetoothStackID, VS_Modulation
 
    /* Before continuing, make sure the input parameters appears to be   */
    /* semi-valid.                                                       */
-   if((BluetoothStackID) && (Modulation_Type >= mtContinuousWave) && (Modulation_Type <= mtEDR3) && (Test_Pattern >= VS_TEST_PATTERN_PN9) && (Test_Pattern <= VS_TEST_PATTERN_USER_DEFINED) && (Frequency_Channel <= VS_MAXIMUM_BT_FREQUENCY_CHANNEL) && (Power_Level <= VS_MAXIMUM_POWER_LEVEL))
+//   if((BluetoothStackID) && (Modulation_Type >= mtContinuousWave) && 
+//      (Modulation_Type <= mtEDR3) && (Test_Pattern >= VS_TEST_PATTERN_PN9) 
+//        && (Test_Pattern <= VS_TEST_PATTERN_USER_DEFINED) 
+//          && (Frequency_Channel <= VS_MAXIMUM_BT_FREQUENCY_CHANNEL) 
+//            && (Power_Level <= VS_MAXIMUM_POWER_LEVEL))
+// some checks deleted since they are "pointless unsigned comparation with 0"
+   if((BluetoothStackID) && (Modulation_Type <= mtEDR3)
+      && (Test_Pattern <= VS_TEST_PATTERN_USER_DEFINED) 
+        && (Frequency_Channel <= VS_MAXIMUM_BT_FREQUENCY_CHANNEL) 
+          && (Power_Level <= VS_MAXIMUM_POWER_LEVEL))
    {
       /* Format the HCI VS DRPB Tester Con Tx Command.                  */
       BTPS_MemInitialize(CommandBuffer, 0, DRPB_TESTER_CON_TX_SIZE);
@@ -856,8 +868,9 @@ int BTPSAPI VS_EnableWBS_No_PCM(unsigned int BluetoothStackID, Word_t Connection
   int	 ret_val;
   Byte_t Status;
 
-  /* Verify that the parameters that were passed in appear valid.	   */
-  if((BluetoothStackID) && (HCI_CONNECTION_HANDLE_VALID_CONNECTION_HANDLE(ConnectionHandle)))
+// Removed the check because to make the compiler to stfu. recheck if neccesary
+//   if((BluetoothStackID) && (HCI_CONNECTION_HANDLE_VALID_CONNECTION_HANDLE(ConnectionHandle)))
+   if(BluetoothStackID)
   {
 	/* Set the Voice Settings for 16 bit transparent mode.		   */
 	ret_val = HCI_Write_Voice_Setting(BluetoothStackID, 
@@ -894,7 +907,9 @@ int BTPSAPI VS_EnableWBS(unsigned int BluetoothStackID, Word_t ConnectionHandle)
    Byte_t ReturnBuffer[1];
 
    /* Verify that the parameters that were passed in appear valid.      */
-   if((BluetoothStackID) && (HCI_CONNECTION_HANDLE_VALID_CONNECTION_HANDLE(ConnectionHandle)))
+// Removed the check because to make the compiler to stfu. recheck if neccesary
+//   if((BluetoothStackID) && (HCI_CONNECTION_HANDLE_VALID_CONNECTION_HANDLE(ConnectionHandle)))
+   if(BluetoothStackID)
    {
       /* Copy the 16KHz Code Settings.                                  */
       BTPS_MemCopy(CommandBuffer, SetCodec16KHzValues, sizeof(SetCodec16KHzValues));

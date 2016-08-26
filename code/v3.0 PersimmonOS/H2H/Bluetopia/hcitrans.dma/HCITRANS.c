@@ -11,6 +11,7 @@
 /*   mm/dd/yy  F. Lastname    Description of Modification                     */
 /*   --------  -----------    ------------------------------------------------*/
 /*   11/08/12  M. Funk        Initial creation.                               */
+/*   06/30/16  T. Valencia    Ported to STM32L1                               */
 /******************************************************************************/
 
 #include "HCITRANS.h"       /* HCI Transport Prototypes/Constants.            */
@@ -29,13 +30,17 @@ void Start_bt_transportTask(void const * argument)
   for(;;)
   {
     /* If the transport is open and we have a new data              */
-    if((HCITransportOpen)&&(osSemaphoreWait(sem_bt_data_receiveHandle , osWaitForever) == osOK))
+    if(osSemaphoreWait(sem_bt_data_receiveHandle , osWaitForever) == osOK)
     {
-      /* Call the upper layer back with the data.                    */
-      (*COMDataCallbackFunction)(TRANSPORT_ID, 1,RxBuffer, COMDataCallbackParameter);
-      /* We start a new reception */
-      HAL_UART_Receive_DMA(&huart1, RxBuffer, 1);
+      if(HCITransportOpen)
+      {
+        /* Call the upper layer back with the data.                    */
+        (*COMDataCallbackFunction)(TRANSPORT_ID, 1,RxBuffer, COMDataCallbackParameter);
+        /* We start a new reception */
+        HAL_UART_Receive_DMA(&huart1, RxBuffer, 1);
+      }
     }
+
   }
 }
    /* The following function is responsible for opening the HCI         */
@@ -68,43 +73,35 @@ int BTPSAPI HCITR_COMOpen(HCI_COMMDriverInformation_t *COMMDriverInformation,
       COMDataCallbackFunction  = COMDataCallback;
       COMDataCallbackParameter = CallbackParameter;
 
-      /* Flag that the HCI Transport is open.                           */
-      HCITransportOpen = 1;
-
-      /* Create the event that will be used to signal data has arrived. */
-      osSemaphoreDef(sem_BtRxDMA);
-      sem_bt_data_receiveHandle = osSemaphoreCreate(osSemaphore(sem_BtRxDMA), 1);
-      
-      if(sem_bt_data_receiveHandle)
+      /* If this is the first time opening the stack, create the task   */
+      /* and the semaphore                                              */
+      if(!sem_bt_data_receiveHandle)
       {
-         /* Make sure that the event is in the reset state.             */
-         osSemaphoreWait(sem_bt_data_receiveHandle , osWaitForever);
+        /* Create the event that will be used to signal data has arrived. */
+        osSemaphoreDef(sem_BtRxDMA);
+        sem_bt_data_receiveHandle = osSemaphoreCreate(osSemaphore(sem_BtRxDMA), 1);
+        osSemaphoreWait(sem_bt_data_receiveHandle , osWaitForever);
+      }  
 
-         /* Create a thread that will process the received data.        */
+      if(!bt_recieveTaskHandle)
+      {
          osThreadDef(BtRxDmaTask, Start_bt_transportTask, osPriorityRealtime, 0, 256);
          bt_recieveTaskHandle = osThreadCreate(osThread(BtRxDmaTask), NULL);
-         
-         if(!bt_recieveTaskHandle)
-         {
-            /* Failed to start the thread, delete the semaphore.        */
-            vQueueDelete(sem_bt_data_receiveHandle);
-            ret_val = HCITR_ERROR_UNABLE_TO_OPEN_TRANSPORT;
-         }
-      }else{
-         ret_val = HCITR_ERROR_UNABLE_TO_OPEN_TRANSPORT;
       }
-      /* If there was no error, then continue to setup the port.        */
-      if(ret_val != HCITR_ERROR_UNABLE_TO_OPEN_TRANSPORT)
+      if((sem_bt_data_receiveHandle)&&(bt_recieveTaskHandle))
       {
-        HAL_GPIO_WritePin(GPIOC,nSHUTD_Pin,GPIO_PIN_RESET);
-        MX_USART1_UART_Init();                                           
+        HAL_UART_Init(&huart1);                                           
         BTPS_Delay(10);
         HAL_GPIO_WritePin(GPIOC,nSHUTD_Pin,GPIO_PIN_SET);
         BTPS_Delay(250);
+        
+        /* Flag that the HCI Transport is open.                           */
+        HCITransportOpen = 1;
         /* Start the reception */ 
         HAL_UART_Receive_DMA(&huart1, RxBuffer, 1);
       }else{
          HCITransportOpen = 0;
+         ret_val = HCITR_ERROR_UNABLE_TO_OPEN_TRANSPORT;
       }
   }else{
       ret_val = HCITR_ERROR_UNABLE_TO_OPEN_TRANSPORT;
@@ -140,7 +137,7 @@ void BTPSAPI HCITR_COMClose(unsigned int HCITransportID)
    {
       /* Flag that the HCI Transport is no longer open.                 */
       HCITransportOpen = 0;
-      // We use the HAL de init function 
+      /* We use the HAL de init function                                */ 
       HAL_UART_MspDeInit(&huart1);
       /* Place the Bluetooth Device in Reset.                           */
       HAL_GPIO_WritePin(GPIOC,nSHUTD_Pin,GPIO_PIN_RESET);
@@ -149,11 +146,11 @@ void BTPSAPI HCITR_COMClose(unsigned int HCITransportID)
       /* close.                                                         */
       xSemaphoreGive(sem_bt_data_receiveHandle);
       
-      while( osThreadTerminate (bt_recieveTaskHandle) != osOK){
-        BTPS_Delay(1);
-      }
-      /* Close the semaphore.                                           */
-      osSemaphoreDelete(sem_bt_data_receiveHandle);
+//      while( osThreadTerminate (bt_recieveTaskHandle) != osOK){
+//        BTPS_Delay(1);
+//      }
+//      /* Close the semaphore.                                           */
+//      osSemaphoreDelete(sem_bt_data_receiveHandle);
       
       /* Note the Callback information.                                 */
       COMDataCallback   = COMDataCallbackFunction;
@@ -164,9 +161,10 @@ void BTPSAPI HCITR_COMClose(unsigned int HCITransportID)
       /* that this module will no longer issue data callbacks and is    */
       /* completely cleaned up.                                         */
       if(COMDataCallback)
-         (*COMDataCallback)(HCITransportID, 0, NULL, COMDataCallbackParameter);
+         (*COMDataCallback)(TRANSPORT_ID, 0, NULL, COMDataCallbackParameter);
 
       COMDataCallbackParameter = 0;
+
    }
 }
 
