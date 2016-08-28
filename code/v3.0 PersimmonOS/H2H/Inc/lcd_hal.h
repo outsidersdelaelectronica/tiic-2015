@@ -26,7 +26,7 @@ typedef struct lcd_t
   /* Physical size */
   uint16_t lcd_x_size;
   uint16_t lcd_y_size;
-  
+
   /* Config */
   uint8_t backlight_level;
 }

@@ -10,9 +10,6 @@
 void lcd_draw_pixel(lcd_t *lcd, uint16_t x_pos, uint16_t y_pos, color_t *color)
 {
   lcd_hal_set_drawing_address(lcd, x_pos, x_pos, y_pos, y_pos);
-
-  /* Send pixel color */
-  lcd_hal_write_command(lcd, LCD_WRITE_MEMORY_START);
   lcd_hal_write_data(lcd, color->color565);
 }
 
@@ -114,12 +111,11 @@ void lcd_draw_rectangle(lcd_t *lcd,
                                    y_pos, y_pos + height - 1);
 
   /* Write pixels */
-  lcd_hal_write_command(lcd, LCD_WRITE_MEMORY_START);
   for (int i = 0; i < height; i++)
   {
     for (int j = 0; j < width; j++)
     {
-      HAL_SRAM_Write_16b(&hsram1, lcd->lcd_data, &(color->color565), 1);
+      lcd_hal_write_data(lcd, color->color565);
     }
   }
 }
@@ -182,9 +178,6 @@ void lcd_draw_char(lcd_t *lcd,
                               *x_pos + character_width - 1,
                               *y_pos,
                               *y_pos + character_height - 1);
-
-  /* Send character pixels */
-  lcd_hal_write_command(lcd, LCD_WRITE_MEMORY_START);
 
   /* Iterate: for each line... */
   for (int i = 0; i < character_height; i++)
@@ -263,7 +256,6 @@ void lcd_draw_background(lcd_t *lcd, color_t *bg_color)
                               lcd->lcd_y_size - 1);
 
   /* Write pixels */
-  lcd_hal_write_command(lcd, LCD_WRITE_MEMORY_START);
   for (int i = 0; i < lcd->lcd_y_size; i++)
   {
     for (int j = 0; j < lcd->lcd_x_size; j++)

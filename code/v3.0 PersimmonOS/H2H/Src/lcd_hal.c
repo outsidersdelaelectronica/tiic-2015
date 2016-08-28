@@ -1,10 +1,5 @@
 #include "lcd_hal.h"
 
-/*
- * Lcd low level functions
- *
- */
-
 void lcd_hal_init(lcd_t *lcd,
                   SRAM_HandleTypeDef *hsram, uint32_t *lcd_reg, uint32_t *lcd_data)
 {
@@ -13,7 +8,7 @@ void lcd_hal_init(lcd_t *lcd,
   lcd->lcd_reg = lcd_reg;
   lcd->lcd_data = lcd_data;
 }
-   
+
 /**
   * @brief  Writes one command.
   * @param  reg: Command to send.
@@ -22,7 +17,7 @@ void lcd_hal_init(lcd_t *lcd,
 void lcd_hal_write_command(lcd_t *lcd, uint16_t command)
 {
   /* Send command */
-  while(HAL_SRAM_Write_16b(lcd->hsram, lcd->lcd_reg, &command, 1) != HAL_OK);
+  *(uint16_t *)lcd->lcd_reg = command;
 }
 
 /**
@@ -33,7 +28,7 @@ void lcd_hal_write_command(lcd_t *lcd, uint16_t command)
 void lcd_hal_write_data(lcd_t *lcd, uint16_t data)
 {
   /* Send data */
-  while(HAL_SRAM_Write_16b(lcd->hsram, lcd->lcd_data, &data, 1) != HAL_OK);
+  *(uint16_t *)lcd->lcd_data = data;
 }
 
 /**
@@ -47,11 +42,16 @@ void lcd_hal_read_reg(lcd_t *lcd,
                       uint16_t reg,
                       uint16_t *param_buffer, uint32_t param_buffer_size)
 {
+  uint32_t i;
+
   /* Send register */
-  while(HAL_SRAM_Write_16b(lcd->hsram, lcd->lcd_reg, &reg, 1) != HAL_OK);
-  
-  /* Send parameters */
-  while(HAL_SRAM_Read_16b(lcd->hsram, lcd->lcd_data, param_buffer, param_buffer_size) != HAL_OK);
+  *(uint16_t *)lcd->lcd_reg = reg;
+
+  /* Get parameters */
+  for (i = 0; i < param_buffer_size; i++)
+  {
+    param_buffer[i] = *(uint16_t *)lcd->lcd_data;
+  }
 }
 
 /**
@@ -65,11 +65,16 @@ void lcd_hal_write_reg(lcd_t *lcd,
                        uint16_t reg,
                        uint16_t *param_buffer, uint32_t param_buffer_size)
 {
+  uint32_t i;
+
   /* Send register */
-  while(HAL_SRAM_Write_16b(lcd->hsram, lcd->lcd_reg, &reg, 1) != HAL_OK);
-  
+  *(uint16_t *)lcd->lcd_reg = reg;
+
   /* Send parameters */
-  while(HAL_SRAM_Write_16b(lcd->hsram, lcd->lcd_data, param_buffer, param_buffer_size) != HAL_OK);
+  for (i = 0; i < param_buffer_size; i++)
+  {
+    *(uint16_t *)lcd->lcd_data = param_buffer[i];
+  }
 }
 
 /**
@@ -101,5 +106,8 @@ void lcd_hal_set_drawing_address(lcd_t *lcd,
   /* Send boundary addresses */
   lcd_hal_write_reg(lcd, LCD_SET_COLUMN_ADDRESS, pixel_column_address, 4);
   lcd_hal_write_reg(lcd, LCD_SET_PAGE_ADDRESS, pixel_page_address, 4);
+
+  /* Send ready to write command */
+  lcd_hal_write_command(lcd, LCD_WRITE_MEMORY_START);
 }
 
