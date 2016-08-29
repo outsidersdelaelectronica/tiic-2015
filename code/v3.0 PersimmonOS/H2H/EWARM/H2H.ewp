@@ -1095,34 +1095,40 @@
         <group>
           <name>menus</name>
           <group>
-            <name>ecg</name>
+            <name>running</name>
+            <group>
+              <name>ecg</name>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_ecg.c</name>
+              </file>
+            </group>
+            <group>
+              <name>h2h</name>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_h2h_connect.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_action.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_connecting.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_error.c</name>
+              </file>
+            </group>
+            <group>
+              <name>settings</name>
+            </group>
             <file>
-              <name>$PROJ_DIR$\..\Src\menu_ecg.c</name>
+              <name>$PROJ_DIR$\..\Src\menu_main.c</name>
             </file>
-          </group>
-          <group>
-            <name>h2h</name>
-            <file>
-              <name>$PROJ_DIR$\..\Src\menu_h2h_connect.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_action.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_connecting.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_error.c</name>
-            </file>
-          </group>
-          <group>
-            <name>settings</name>
           </group>
           <file>
             <name>$PROJ_DIR$\..\Src\menu.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$\..\Src\menu_main.c</name>
+            <name>$PROJ_DIR$\..\Src\menu_goodbye.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$\..\Src\menu_top_bar.c</name>

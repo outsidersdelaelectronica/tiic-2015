@@ -10,6 +10,9 @@
 extern osMailQId queue_input_menuHandle;
 extern osMailQId queue_lcdHandle;
 
+/* Objects */
+extern RTC_HandleTypeDef hrtc;
+
 /* State behaviour */
 void behaviour_goodbye(state_ptr state)
 {
@@ -26,10 +29,10 @@ void behaviour_goodbye(state_ptr state)
   {
     osMailPut(queue_lcdHandle, (void *) &menu_goodbye.items[i]);
   }
-  
+
   /* Do state actions */
   osDelay(1000);
-  
+
   // Sleep well little prince
   /* Turn off LED */
   HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin|UI_LED_B_Pin|UI_LED_G_Pin,GPIO_PIN_RESET);

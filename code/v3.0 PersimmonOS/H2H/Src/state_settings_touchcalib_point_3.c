@@ -6,6 +6,7 @@
 /* Parent states */
 #include "state_settings_touchcalib.h"
 #include "state_settings.h"
+#include "state_running.h"
 
 static void settings_touchcalib_point_3_to_settings_configtabs_touch(state_ptr state)
 {
@@ -35,6 +36,7 @@ void entry_to_settings_touchcalib_point_3(state_ptr state)
   behaviour_settings_touchcalib_point_3(state);
   behaviour_settings_touchcalib(state);
   behaviour_settings(state);
+  behaviour_running(state);
 
   /* Set state name */
   strcpy(state->name, "settings_touchcalib_point_3");

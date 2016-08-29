@@ -39,20 +39,22 @@
 
 extern void Error_Handler(void);
 
-extern buzzer_t buzzer;
-
+/* Semaphores */
 extern osSemaphoreId sem_bt_data_receiveHandle;
 
 extern osSemaphoreId sem_ecg_afe_dma_rxHandle;
 extern osSemaphoreId sem_ecg_afe_drdyHandle;
 
 extern osSemaphoreId sem_input_touch_penHandle;
+extern osSemaphoreId sem_input_button_short_pressHandle;
+extern osSemaphoreId sem_input_button_long_pressHandle;
 
-extern osSemaphoreId sem_periph_button_short_pressHandle;
-extern osSemaphoreId sem_periph_button_long_pressHandle;
 extern osSemaphoreId sem_periph_batteryHandle;
 extern osSemaphoreId sem_periph_gauge_dma_rxHandle;
 extern osSemaphoreId sem_periph_rtcHandle;
+
+/* Objects */
+extern buzzer_t buzzer;
 
 /**
   * Initializes the Global MSP.
@@ -185,17 +187,17 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     /* If rising edge */
     if ((EXTI->RTSR) & (SYS_WKUP_Pin))
     {
-      if(sem_periph_button_short_pressHandle != NULL)
+      if(sem_input_button_short_pressHandle != NULL)
       {
-        osSemaphoreRelease(sem_periph_button_short_pressHandle);
+        osSemaphoreRelease(sem_input_button_short_pressHandle);
       }
     }
     /* If falling edge */
     if ((EXTI->FTSR) & (SYS_WKUP_Pin))
     {
-      if(sem_periph_button_long_pressHandle != NULL)
+      if(sem_input_button_long_pressHandle != NULL)
       {
-        osSemaphoreRelease(sem_periph_button_long_pressHandle);
+        osSemaphoreRelease(sem_input_button_long_pressHandle);
       }
     }
   }

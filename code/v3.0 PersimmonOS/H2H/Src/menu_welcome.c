@@ -2,9 +2,28 @@
 
 menu_t menu_welcome =
 {
-  .item_num = 4,
+  .item_num = 5,
   .items =
   {
+    {
+      .item_print_function = lcd_print_area,
+      .item.area =
+      {
+        .width                = 800,
+        .height               = 480,
+        .pos                  = {.x_pos = 0, .y_pos = 0},
+        .border               = GUI_NO_BORDER,
+        .is_active            = GUI_INACTIVE,
+        .string               = L"",
+        .font                 = myriad_pro_semibold_24,
+        .string_h_align       = CENTER,
+        .string_v_align       = MID,
+        .text_color           = COLOR_BLACK,
+        .bg_color             = COLOR_BLACK,
+        .border_color         = COLOR_BLACK,
+        .event                = fsm_no_event
+      }
+    },
     {
       .item_print_function = lcd_print_area,
       .item.area =

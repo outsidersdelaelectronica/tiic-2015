@@ -20,10 +20,10 @@ void Start_periph_batteryTask(void const * argument);
 void Start_periph_rtcTask(void const * argument);
 
 /* Objects */
-extern RTC_HandleTypeDef hrtc;
 extern buzzer_t buzzer;
-extern gauge_t gauge;
 extern lcd_t lcd;
+extern gauge_t gauge;
+extern RTC_HandleTypeDef hrtc;
 
 void tasks_periph_init()
 {
@@ -64,7 +64,7 @@ void tasks_periph_start()
   /* periph_batteryTask */
   osThreadDef(periph_batteryTask, Start_periph_batteryTask, osPriorityLow, 0, 128);
   periph_batteryTaskHandle = osThreadCreate(osThread(periph_batteryTask), NULL);
-  
+
   /* periph_rtcTask */
   osThreadDef(periph_rtcTask, Start_periph_rtcTask, osPriorityLow, 0, 128);
   periph_rtcTaskHandle = osThreadCreate(osThread(periph_rtcTask), NULL);

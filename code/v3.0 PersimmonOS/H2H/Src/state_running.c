@@ -20,7 +20,7 @@ static void running_action_button_short(state_ptr state)
   /* Do transition actions */
 
   //TO-DO: Disable clicks and screen
-  
+
 //  /* If lcd is on */
 //  if (is_lcd_on)
 //  {
@@ -55,7 +55,7 @@ void behaviour_running(state_ptr state)
   /* Set events to react to */
   state->button_short = running_action_button_short;
   state->button_long = running_to_goodbye;
-  
+
   /* Do state actions */
 }
 

@@ -36,10 +36,6 @@
 #include "stm32l1xx_it.h"
 #include "cmsis_os.h"
 
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
 /* External variables --------------------------------------------------------*/
 extern RTC_HandleTypeDef hrtc;
 extern DMA_HandleTypeDef hdma_spi1_rx;
@@ -308,20 +304,6 @@ void DMA1_Channel7_IRQHandler(void)
   /* USER CODE END DMA1_Channel7_IRQn 1 */
 }
 
-///**
-//* @brief This function handles DMA2 channel1 global interrupt.
-//*/
-//void DMA2_Channel1_IRQHandler(void)
-//{
-//  /* USER CODE BEGIN DMA1_Channel7_IRQn 0 */
-//
-//  /* USER CODE END DMA1_Channel7_IRQn 0 */
-//  HAL_DMA_IRQHandler(&hdma_memtomem_dma2_channel1);
-//  /* USER CODE BEGIN DMA1_Channel7_IRQn 1 */
-//
-//  /* USER CODE END DMA1_Channel7_IRQn 1 */
-//}
-
 /**
 * @brief This function handles EXTI line[9:5] interrupts.
 */
@@ -393,7 +375,4 @@ void RTC_Alarm_IRQHandler(void)
   /* USER CODE END RTC_Alarm_IRQn 1 */
 }
 
-/* USER CODE BEGIN 1 */
-
-/* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
