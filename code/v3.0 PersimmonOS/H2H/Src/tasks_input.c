@@ -2,6 +2,8 @@
 
 /* Semaphores */
 osSemaphoreId sem_input_touch_penHandle;
+osSemaphoreId sem_input_button_short_pressHandle;
+osSemaphoreId sem_input_button_long_pressHandle;
 
 /* Queues */
 osMailQId queue_input_clickHandle;
@@ -12,8 +14,10 @@ extern osMailQId queue_fsm_eventsHandle;
 /* Tasks */
 osThreadId input_touchTaskHandle;
 osThreadId input_clickTaskHandle;
+osThreadId input_buttonTaskHandle;
 void Start_input_touchTask(void const * argument);
 void Start_input_clickTask(void const * argument);
+void Start_input_buttonTask(void const * argument);
 
 /* Objects */
 extern touch_t touch;
@@ -24,6 +28,14 @@ void tasks_input_init()
   /* sem_input_touch_pen */
   osSemaphoreDef(sem_input_touch_pen);
   sem_input_touch_penHandle = osSemaphoreCreate(osSemaphore(sem_input_touch_pen), 1);
+  
+  /* sem_input_button_short_press */
+  osSemaphoreDef(sem_input_button_short_press);
+  sem_input_button_short_pressHandle = osSemaphoreCreate(osSemaphore(sem_input_button_short_press), 1);
+
+  /* sem_input_button_long_press */
+  osSemaphoreDef(sem_input_button_long_press);
+  sem_input_button_long_pressHandle = osSemaphoreCreate(osSemaphore(sem_input_button_long_press), 1);
 
   /* Queues */
   /* queue_input_click */
@@ -45,6 +57,10 @@ void tasks_input_start()
   /* input_clickTask */
   osThreadDef(input_clickTask, Start_input_clickTask, osPriorityAboveNormal, 0, 128);
   input_clickTaskHandle = osThreadCreate(osThread(input_clickTask), NULL);
+  
+  /* input_buttonTask */
+  osThreadDef(input_buttonTask, Start_input_buttonTask, osPriorityHigh, 0, 128);
+  input_buttonTaskHandle = osThreadCreate(osThread(input_buttonTask), NULL);
 }
 
 void Start_input_touchTask(void const * argument)
@@ -185,6 +201,52 @@ void Start_input_clickTask(void const * argument)
         default:
           break;
       }
+    }
+  }
+}
+
+void Start_input_buttonTask(void const * argument)
+{
+  GPIO_InitTypeDef GPIO_InitStruct;
+  fsm_event_f button_fsm_event;
+  
+  /* Take both semaphores for the first time */
+  osSemaphoreWait(sem_periph_button_short_pressHandle, osWaitForever);
+  osSemaphoreWait(sem_periph_button_long_pressHandle, osWaitForever);
+
+  /* Infinite loop */
+  for(;;)
+  {
+    /* If I/O button is pressed */
+    if (osSemaphoreWait(sem_periph_button_short_pressHandle, osWaitForever) == osOK)
+    {
+      /* Make falling edge sensitive */
+      GPIO_InitStruct.Pin = SYS_WKUP_Pin;
+      GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+      GPIO_InitStruct.Pull = GPIO_NOPULL;
+      HAL_GPIO_Init(SYS_WKUP_GPIO_Port, &GPIO_InitStruct);
+
+      /* Wait for falling edge */
+      if (osSemaphoreWait(sem_periph_button_long_pressHandle, 2000) == osErrorOS)
+      {
+        /* If falling edge is NOT detected before timeout
+         * we have a long press
+         */
+        button_fsm_event = fsm_button_long;
+        osMailPut(queue_fsm_eventsHandle, (void *) &(button_fsm_event));
+      }
+
+      /* Make rising edge sensitive again */
+      GPIO_InitStruct.Pin = SYS_WKUP_Pin;
+      GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+      GPIO_InitStruct.Pull = GPIO_NOPULL;
+      HAL_GPIO_Init(SYS_WKUP_GPIO_Port, &GPIO_InitStruct);
+
+      /* If falling edge is detected before timeout
+       * we have a short press
+       */
+      button_fsm_event = fsm_button_short;
+      osMailPut(queue_fsm_eventsHandle, (void *) &(item.area.event));
     }
   }
 }

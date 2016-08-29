@@ -42,6 +42,9 @@ typedef struct state_t
 
   event_f settings_touch_calib;
   event_f click;
+  
+  event_f button_short;
+  event_f button_long;
 }
 state_t;
 

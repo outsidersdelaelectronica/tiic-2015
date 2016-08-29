@@ -7,6 +7,7 @@
 /* Parent states */
 #include "state_h2h_ongoing.h"
 #include "state_h2h.h"
+#include "state_running.h"
 
 /* State includes */
 #include "cmsis_os.h"
@@ -69,7 +70,8 @@ void entry_to_h2h_ongoing_connecting(state_ptr state)
   behaviour_h2h_ongoing_connecting(state);
   behaviour_h2h_ongoing(state);
   behaviour_h2h(state);
-
+  behaviour_running(state);
+  
   /* Set state name */
   strcpy(state->name, "h2h_ongoing_connecting");
 }

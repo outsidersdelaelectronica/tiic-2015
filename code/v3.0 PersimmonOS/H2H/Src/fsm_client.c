@@ -111,6 +111,18 @@ void fsm_click(fsm_client_ptr fsm)
   fsm->state.click(&fsm->state);
 }
 
+void fsm_button_short(fsm_client_ptr fsm)
+{
+  /* Trigger event function */
+  fsm->state.button_short(&fsm->state);
+}
+
+void fsm_button_long(fsm_client_ptr fsm)
+{
+  /* Trigger event function */
+  fsm->state.button_long(&fsm->state);
+}
+
 void fsm_no_event(fsm_client_ptr fsm)
 {
 }

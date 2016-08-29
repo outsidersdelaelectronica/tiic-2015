@@ -85,6 +85,16 @@ static void default_click(state_ptr state)
   /* Run if this state isn't supported in the state we are in */
 }
 
+static void default_button_short(state_ptr state)
+{
+  /* Run if this state isn't supported in the state we are in */
+}
+
+static void default_button_long(state_ptr state)
+{
+  /* Run if this state isn't supported in the state we are in */
+}
+
 void default_implementation(state_ptr state)
 {
   state->back                 = default_back;
@@ -104,4 +114,6 @@ void default_implementation(state_ptr state)
   state->settings_touch       = default_settings_touch;
   state->settings_touch_calib = default_settings_touch_calib;
   state->click                = default_click;
+  state->button_short         = default_button_short;
+  state->button_long          = default_button_long;
 }

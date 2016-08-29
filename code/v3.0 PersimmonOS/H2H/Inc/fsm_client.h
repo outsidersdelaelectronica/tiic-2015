@@ -49,6 +49,9 @@ void fsm_settings_touch(fsm_client_ptr fsm);
 void fsm_settings_touch_calib(fsm_client_ptr fsm);
 void fsm_click(fsm_client_ptr fsm);
 
+void fsm_button_short(fsm_client_ptr fsm);
+void fsm_button_long(fsm_client_ptr fsm);
+
 void fsm_no_event(fsm_client_ptr fsm);
 
 #endif /* FSM_CLIENT_H_ */

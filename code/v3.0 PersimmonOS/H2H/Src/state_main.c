@@ -5,6 +5,9 @@
 #include "state_h2h.h"
 #include "state_settings.h"
 
+/* Parent states */
+#include "state_running.h"
+
 /* State includes */
 #include "cmsis_os.h"
 #include "menu.h"
@@ -67,6 +70,7 @@ void entry_to_main(state_ptr state)
    */
   default_implementation(state);
   behaviour_main(state);
+  behaviour_running(state);
 
   /* Set state name */
   strcpy(state->name, "main");

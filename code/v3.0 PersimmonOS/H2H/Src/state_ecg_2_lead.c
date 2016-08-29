@@ -4,6 +4,7 @@
 
 /* Parent states */
 #include "state_ecg.h"
+#include "state_running.h"
 
 /* State behaviour */
 void behaviour_ecg_2_lead(state_ptr state)
@@ -23,7 +24,8 @@ void entry_to_ecg_2_lead(state_ptr state)
   default_implementation(state);
   behaviour_ecg_2_lead(state);
   behaviour_ecg(state);
-
+  behaviour_running(state);
+  
   /* Set state name */
   strcpy(state->name, "ecg_2_lead");
 }
