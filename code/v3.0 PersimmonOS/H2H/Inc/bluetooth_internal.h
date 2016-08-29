@@ -57,7 +57,7 @@ int GetConfigParams(SPP_Configuration_Params_t *SPPConfigurationParams);
 
 /* interative functions                        */
 
-int Inquiry(void);
+int Inquiry(uint32_t timeout);
 int Pair(GAP_Bonding_Type_t bondtype, uint16_t table_pos);
 int EndPairing(void);
 int PINCodeResponse(char *pin);
@@ -74,6 +74,10 @@ int DeleteLinkKey(BD_ADDR_t BD_ADDR);
 /* so called Parser */
 
 void BD_ADDRToStr(BD_ADDR_t Board_Address, BoardStr_t BoardStr);
+
+/* Getter */
+
+uint32_t bt_get_ADDR(BD_ADDR_t* inquired_addr);
 
 /* Callbacks for bt events                                   */
 void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t *GAP_Event_Data, unsigned long CallbackParameter);

@@ -10,6 +10,7 @@
 /* State includes */
 #include "cmsis_os.h"
 #include "menu.h"
+#include "bluetooth_internal.h"
 
 /* Queues */
 extern osMailQId queue_input_menuHandle;
@@ -39,6 +40,7 @@ void behaviour_h2h_connect(state_ptr state)
   state->h2h_connect = h2h_connect_to_h2h_ongoing;
 
   /* Do state actions */
+  bluetooth_init();
 
   /* Set menu */
   osMailPut(queue_input_menuHandle, (void *) &menu_h2h_connect);

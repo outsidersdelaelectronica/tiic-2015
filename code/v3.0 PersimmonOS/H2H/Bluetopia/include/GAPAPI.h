@@ -1828,7 +1828,13 @@ BTPSAPI_DECLARATION int BTPSAPI GAP_Authentication_Response(unsigned int Bluetoo
    /*                                                                   */
    /* * NOTE * All Inquiry Period Time parameters are specified in      */
    /*          seconds.                                                 */
-BTPSAPI_DECLARATION int BTPSAPI GAP_Perform_Inquiry(unsigned int BluetoothStackID, GAP_Inquiry_Type_t GAP_Inquiry_Type, unsigned long MinimumPeriodLength, unsigned long MaximumPeriodLength, unsigned int InquiryLength, unsigned int MaximumResponses, GAP_Event_Callback_t GAP_Event_Callback, unsigned long CallbackParameter);
+BTPSAPI_DECLARATION int BTPSAPI GAP_Perform_Inquiry(unsigned int BluetoothStackID, 
+                                                    GAP_Inquiry_Type_t GAP_Inquiry_Type, 
+                                                    unsigned long MinimumPeriodLength, 
+                                                    unsigned long MaximumPeriodLength, 
+                                                    unsigned int InquiryLength, 
+                                                    unsigned int MaximumResponses,
+                                                    GAP_Event_Callback_t GAP_Event_Callback, unsigned long CallbackParameter);
 
 #ifdef INCLUDE_BLUETOOTH_API_PROTOTYPES
    typedef int (BTPSAPI *PFN_GAP_Perform_Inquiry_t)(unsigned int BluetoothStackID, GAP_Inquiry_Type_t GAP_Inquiry_Type, unsigned long MinimumPeriodLength, unsigned long MaximumPeriodLength, unsigned int InquiryLength, unsigned int MaximumResponses, GAP_Event_Callback_t GAP_Event_Callback, unsigned long CallbackParameter);

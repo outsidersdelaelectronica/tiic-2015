@@ -6,13 +6,12 @@
  */
 
 #include "bluetooth_internal.h"
-#include "stm32l1xx_hal.h"
 
 extern osSemaphoreId sem_bt_conectedHandle;
 extern osMailQId queue_bt_packet_recievedHandle;
 extern osMailQId queue_bt_packet_sendHandle;
 
- /* Holds the Handle of the opened Bluetooth Protocol Stack                     */
+/* Holds the Handle of the opened Bluetooth Protocol Stack                      */
 unsigned int               BluetoothStackID;              
 /* Holds the UI Mode.                                                           */
 int                        UI_Mode;                 
@@ -772,34 +771,41 @@ int GetConfigParams(SPP_Configuration_Params_t *SPPConfigurationParams)
    /* that a valid Bluetooth Stack ID exists before running.  This      */
    /* function returns zero is successful or a negative value if there  */
    /* was an error.                                                     */
-int Inquiry(void)
+int Inquiry(uint32_t timeout)
 {
    int ret_val = INVALID_STACK_ID_ERROR;
 
    /* First, check that valid Bluetooth Stack ID exists.                */
    if(BluetoothStackID)
    {
-      /* Use the GAP_Perform_Inquiry() function to perform an Inquiry.  */
+      /* Use the GAP_Perform_ function to perform an Inquiry.  */
       /* The Inquiry will last 10 seconds or until MAX_INQUIRY_RESULTS  */
       /* Bluetooth Devices are found.  When the Inquiry Results become  */
       /* available the GAP_Event_Callback is called.                    */
-      ret_val = GAP_Perform_Inquiry(BluetoothStackID, itGeneralInquiry, 0, 0, 10,
+      ret_val = GAP_Perform_Inquiry(BluetoothStackID, itGeneralInquiry, 0, 0, timeout,
                                    MAX_INQUIRY_RESULTS, GAP_Event_Callback, (unsigned long)NULL);
       /* Next, check to see if the GAP_Perform_Inquiry() function was   */
       /* successful.                                                    */
       if(!ret_val)
       {
          /* The Inquiry appears to have been sent successfully.         */
-         /* Processing of the results returned from this command occurs */
-         /* within the GAP_Event_Callback() function.                   */
          NumberofValidResponses = 0;
-         ret_val                = 0;
       }
    }
-
+   
    return(ret_val);
 }
 
+uint32_t bt_get_ADDR(BD_ADDR_t* inquired_addr)
+{
+  uint32_t i;
+  
+  for( i = 0; i < NumberofValidResponses; i++ )
+  {
+    inquired_addr[i] = InquiryResultList[i];
+  }
+  return NumberofValidResponses;
+}
    /* The following function is responsible for initiating bonding with */
    /* a remote device.  This function returns zero on successful        */
    /* execution and a negative value on all errors.                     */
