@@ -13,14 +13,14 @@ osMailQId queue_lcdHandle;
 
 /* Tasks */
 osThreadId periph_buttonTaskHandle;
-osThreadId periph_batteryTaskHandle;
 osThreadId periph_buzzerTaskHandle;
 osThreadId periph_screenTaskHandle;
+osThreadId periph_batteryTaskHandle;
 osThreadId periph_rtcTaskHandle;
 void Start_periph_buttonTask(void const * argument);
-void Start_periph_batteryTask(void const * argument);
 void Start_periph_buzzerTask(void const * argument);
 void Start_periph_screenTask(void const * argument);
+void Start_periph_batteryTask(void const * argument);
 void Start_periph_rtcTask(void const * argument);
 
 /* Objects */
@@ -69,10 +69,6 @@ void tasks_periph_start()
   osThreadDef(periph_buttonTask, Start_periph_buttonTask, osPriorityHigh, 0, 128);
   periph_buttonTaskHandle = osThreadCreate(osThread(periph_buttonTask), NULL);
 
-  /* periph_batteryTask */
-  osThreadDef(periph_batteryTask, Start_periph_batteryTask, osPriorityLow, 0, 128);
-  periph_batteryTaskHandle = osThreadCreate(osThread(periph_batteryTask), NULL);
-
   /* periph_buzzerTask */
   osThreadDef(periph_buzzerTask, Start_periph_buzzerTask, osPriorityNormal, 0, 64);
   periph_buzzerTaskHandle = osThreadCreate(osThread(periph_buzzerTask), NULL);
@@ -81,6 +77,10 @@ void tasks_periph_start()
   osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityNormal, 0, 256);
   periph_screenTaskHandle = osThreadCreate(osThread(periph_screenTask), NULL);
 
+  /* periph_batteryTask */
+  osThreadDef(periph_batteryTask, Start_periph_batteryTask, osPriorityLow, 0, 128);
+  periph_batteryTaskHandle = osThreadCreate(osThread(periph_batteryTask), NULL);
+  
   /* periph_rtcTask */
   osThreadDef(periph_rtcTask, Start_periph_rtcTask, osPriorityLow, 0, 128);
   periph_rtcTaskHandle = osThreadCreate(osThread(periph_rtcTask), NULL);
@@ -167,6 +167,52 @@ void Start_periph_buttonTask(void const * argument)
   }
 }
 
+void Start_periph_buzzerTask(void const * argument)
+{
+  osEvent event;
+  buzzer_note_t *current_note;
+
+  /* HOW TO beep beep
+   *
+   *  buzzer_note_t beep;
+   *  beep.note = A5;
+   *  beep.ms = 50;
+   *  osMailPut(queue_periph_buzzerHandle, (void *) &beep);
+   *
+   * from any task
+   */
+  for(;;)
+  {
+    event = osMailGet(queue_periph_buzzerHandle, osWaitForever);
+    if (event.status == osEventMail)
+    {
+      /* Get note */
+      current_note = (buzzer_note_t *) event.value.p;
+      /* Play note */
+      buzzer_play(&buzzer, current_note);
+    }
+  }
+}
+
+void Start_periph_screenTask(void const * argument)
+{
+  osEvent event;
+
+  item_action_t *current_item;
+
+  for(;;)
+  {
+    event = osMailGet(queue_lcdHandle, osWaitForever);
+    if (event.status == osEventMail)
+    {
+      /* Get item information */
+      current_item = (item_action_t *) event.value.p;
+      /* Do item function */
+      (*(current_item->item_print_function))(&lcd, &current_item->item);
+    }
+  }
+}
+
 void Start_periph_batteryTask(void const * argument)
 {
   char batt_soc_string[5];
@@ -222,52 +268,6 @@ void Start_periph_batteryTask(void const * argument)
         /* Display screen items */
         osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[1]);
         osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[2]);
-    }
-  }
-}
-
-void Start_periph_buzzerTask(void const * argument)
-{
-  osEvent event;
-  buzzer_note_t *current_note;
-
-  /* HOW TO beep beep
-   *
-   *  buzzer_note_t beep;
-   *  beep.note = A5;
-   *  beep.ms = 50;
-   *  osMailPut(queue_periph_buzzerHandle, (void *) &beep);
-   *
-   * from any task
-   */
-  for(;;)
-  {
-    event = osMailGet(queue_periph_buzzerHandle, osWaitForever);
-    if (event.status == osEventMail)
-    {
-      /* Get note */
-      current_note = (buzzer_note_t *) event.value.p;
-      /* Play note */
-      buzzer_play(&buzzer, current_note);
-    }
-  }
-}
-
-void Start_periph_screenTask(void const * argument)
-{
-  osEvent event;
-
-  item_action_t *current_item;
-
-  for(;;)
-  {
-    event = osMailGet(queue_lcdHandle, osWaitForever);
-    if (event.status == osEventMail)
-    {
-      /* Get item information */
-      current_item = (item_action_t *) event.value.p;
-      /* Do item function */
-      (*(current_item->item_print_function))(&lcd, &current_item->item);
     }
   }
 }

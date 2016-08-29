@@ -1376,6 +1376,9 @@
           <name>$PROJ_DIR$\..\Src\tasks_fsm.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\..\Src\tasks_gui.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\..\Src\tasks_input.c</name>
         </file>
         <file>
