@@ -1,5 +1,7 @@
 #include "lcd_hal.h"
 
+extern DMA_HandleTypeDef hdma_memtomem_dma2_channel1;
+
 void lcd_hal_init(lcd_t *lcd,
                   SRAM_HandleTypeDef *hsram, uint32_t *lcd_reg, uint32_t *lcd_data)
 {

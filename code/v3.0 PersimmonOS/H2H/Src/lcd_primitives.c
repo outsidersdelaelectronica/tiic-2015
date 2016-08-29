@@ -1,5 +1,7 @@
 #include "lcd_primitives.h"
 
+extern DMA_HandleTypeDef hdma_memtomem_dma2_channel1;
+
 /**
   * @brief  Draws a pixel on a specific location.
   * @param  x_pos: Pixel horizontal position.
@@ -106,17 +108,36 @@ void lcd_draw_rectangle(lcd_t *lcd,
                         uint16_t y_pos, uint16_t height,
                         color_t *color)
 {
+  int32_t remaining_pixels = 0;
+  uint32_t chunk_size = 0;
+
   /* Send screen pixel limits */
   lcd_hal_set_drawing_address(lcd, x_pos, x_pos + width - 1,
                                    y_pos, y_pos + height - 1);
 
-  /* Write pixels */
-  for (int i = 0; i < height; i++)
+  /* Calculate number of pixels to be sent */
+  remaining_pixels = (int32_t) width * (int32_t) height;
+
+  /* DMA transfer */
+  while (remaining_pixels > 0)
   {
-    for (int j = 0; j < width; j++)
+    /* Calculate chunk size */
+    if (remaining_pixels > DMA_MAX_CHUNK_SIZE)
     {
-      lcd_hal_write_data(lcd, color->color565);
+      chunk_size = DMA_MAX_CHUNK_SIZE;
     }
+    else
+    {
+      chunk_size = remaining_pixels;
+    }
+
+    /* Start chunk transfer */
+    HAL_DMA_Start(&hdma_memtomem_dma2_channel1,
+                  (uint32_t) &color->color565, (uint32_t) lcd->lcd_data, chunk_size);
+    while (HAL_DMA_PollForTransfer(&hdma_memtomem_dma2_channel1, HAL_DMA_FULL_TRANSFER, HAL_MAX_DELAY) != HAL_OK);
+
+    /* Update remaining pixels */
+    remaining_pixels -= chunk_size;
   }
 }
 
@@ -191,7 +212,7 @@ void lcd_draw_char(lcd_t *lcd,
       bytes_per_line++;
     }
 
-    /* Read font array and send pixels of the line*/
+    /* Read font array and send line pixels */
     mask = 0x00000001;
     for (int j = 0; j < character_width; j++)
     {
@@ -248,19 +269,8 @@ void lcd_draw_string(lcd_t *lcd,
 */
 void lcd_draw_background(lcd_t *lcd, color_t *bg_color)
 {
-  /* Send screen pixel limits */
-  lcd_hal_set_drawing_address(lcd,
-                              0,
-                              lcd->lcd_x_size - 1,
-                              0,
-                              lcd->lcd_y_size - 1);
-
-  /* Write pixels */
-  for (int i = 0; i < lcd->lcd_y_size; i++)
-  {
-    for (int j = 0; j < lcd->lcd_x_size; j++)
-    {
-      HAL_SRAM_Write_16b(&hsram1, lcd->lcd_data, &(bg_color->color565), 1);
-    }
-  }
+  lcd_draw_rectangle(lcd,
+                     0, lcd->lcd_x_size,
+                     0, lcd->lcd_y_size,
+                     bg_color);
 }

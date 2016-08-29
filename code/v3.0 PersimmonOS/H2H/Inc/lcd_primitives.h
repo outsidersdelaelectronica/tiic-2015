@@ -12,6 +12,8 @@
 
 #include "lcd_hal.h"
 
+#define DMA_MAX_CHUNK_SIZE 50000
+
 void lcd_draw_pixel(lcd_t *lcd,
                     uint16_t x_pos, uint16_t y_pos,
                     color_t *color);

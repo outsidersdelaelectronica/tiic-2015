@@ -50,6 +50,7 @@ extern DMA_HandleTypeDef hdma_usart1_rx;
 extern UART_HandleTypeDef huart1;
 extern DMA_HandleTypeDef hdma_i2c1_rx;
 extern DMA_HandleTypeDef hdma_i2c1_tx;
+extern DMA_HandleTypeDef hdma_memtomem_dma2_channel1;
 
 /******************************************************************************/
 /*            Cortex-M3 Processor Interruption and Exception Handlers         */
@@ -306,6 +307,20 @@ void DMA1_Channel7_IRQHandler(void)
 
   /* USER CODE END DMA1_Channel7_IRQn 1 */
 }
+
+///**
+//* @brief This function handles DMA2 channel1 global interrupt.
+//*/
+//void DMA2_Channel1_IRQHandler(void)
+//{
+//  /* USER CODE BEGIN DMA1_Channel7_IRQn 0 */
+//
+//  /* USER CODE END DMA1_Channel7_IRQn 0 */
+//  HAL_DMA_IRQHandler(&hdma_memtomem_dma2_channel1);
+//  /* USER CODE BEGIN DMA1_Channel7_IRQn 1 */
+//
+//  /* USER CODE END DMA1_Channel7_IRQn 1 */
+//}
 
 /**
 * @brief This function handles EXTI line[9:5] interrupts.
