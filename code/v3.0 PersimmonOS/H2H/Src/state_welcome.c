@@ -27,9 +27,10 @@ void behaviour_welcome(state_ptr state)
   {
     osMailPut(queue_lcdHandle, (void *) &menu_welcome.items[i]);
   }
-  
+
   /* Do state actions */
   osDelay(2000);
+  osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[0]);
   entry_to_running(state);
 }
 

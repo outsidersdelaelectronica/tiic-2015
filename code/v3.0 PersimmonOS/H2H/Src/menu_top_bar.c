@@ -9,7 +9,7 @@ menu_t menu_top_bar =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 720,
+        .width                = 800,
         .height               = 30,
         .pos                  = {.x_pos = 0, .y_pos = 0},
         .border               = GUI_NO_BORDER,
