@@ -10,7 +10,7 @@
 
 /* State interface */
 #include "state.h"
-#include "state_main.h"
+#include "state_welcome.h"
 
 /* FSM client */
 typedef struct fsm_client_t* fsm_client_ptr;
