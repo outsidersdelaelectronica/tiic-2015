@@ -28,6 +28,9 @@ void behaviour_h2h_ongoing(state_ptr state)
 /* Entry point to the state */
 void entry_to_h2h_ongoing(state_ptr state)
 {
+  /* Set state name */
+  strcpy(state->name, "h2h_ongoing");
+  
   /* Go to child default state */
   entry_to_h2h_ongoing_connecting(state);
 }

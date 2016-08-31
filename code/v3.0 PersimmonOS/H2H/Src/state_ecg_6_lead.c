@@ -31,6 +31,9 @@ void behaviour_ecg_6_lead(state_ptr state)
 /* Entry point to the state */
 void entry_to_ecg_6_lead(state_ptr state)
 {
+  /* Set state name */
+  strcpy(state->name, "ecg_6_lead");
+
   /* - Initialize with default implementation
    * - Set event behaviour
    * - Set parent events behaviour (bottom-up)
@@ -39,7 +42,4 @@ void entry_to_ecg_6_lead(state_ptr state)
   behaviour_ecg_6_lead(state);
   behaviour_ecg(state);
   behaviour_running(state);
-  
-  /* Set state name */
-  strcpy(state->name, "ecg_6_lead");
 }

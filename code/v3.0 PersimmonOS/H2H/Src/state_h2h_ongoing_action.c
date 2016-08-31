@@ -36,6 +36,9 @@ void behaviour_h2h_ongoing_action(state_ptr state)
 /* Entry point to the state */
 void entry_to_h2h_ongoing_action(state_ptr state)
 {
+  /* Set state name */
+  strcpy(state->name, "h2h_ongoing_action");
+  
   /* - Initialize with default implementation
    * - Set event behaviour
    * - Set parent events behaviour (bottom-up)
@@ -45,7 +48,4 @@ void entry_to_h2h_ongoing_action(state_ptr state)
   behaviour_h2h_ongoing(state);
   behaviour_h2h(state);
   behaviour_running(state);
-  
-  /* Set state name */
-  strcpy(state->name, "h2h_ongoing_action");
 }

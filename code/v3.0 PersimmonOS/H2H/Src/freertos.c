@@ -98,8 +98,6 @@ void system_init(void)
   gauge_init(&gauge, &hi2c1);
   lcd_init(&lcd, &hsram1, LCD_REG, LCD_DATA, LCD_X_SIZE, LCD_Y_SIZE);
   touch_init(&touch, &hspi2, TOUCH_X_SIZE, TOUCH_Y_SIZE);
-
-  fsm_client_init(&fsm);
 }
 
 /* TEST Task */

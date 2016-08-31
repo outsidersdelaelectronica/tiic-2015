@@ -36,13 +36,13 @@ void behaviour_welcome(state_ptr state)
 /* Entry point to the state */
 void entry_to_welcome(state_ptr state)
 {
+  /* Set state name */
+  strcpy(state->name, "welcome");
+  
   /* - Initialize with default implementation
    * - Set event behaviour
    * - Set parent events behaviour (bottom-up)
    */
   default_implementation(state);
   behaviour_welcome(state);
-
-  /* Set state name */
-  strcpy(state->name, "welcome");
 }

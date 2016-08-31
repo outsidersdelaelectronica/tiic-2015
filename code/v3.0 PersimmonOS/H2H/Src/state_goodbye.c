@@ -50,13 +50,13 @@ void behaviour_goodbye(state_ptr state)
 /* Entry point to the state */
 void entry_to_goodbye(state_ptr state)
 {
+  /* Set state name */
+  strcpy(state->name, "goodbye");
+  
   /* - Initialize with default implementation
    * - Set event behaviour
    * - Set parent events behaviour (bottom-up)
    */
   default_implementation(state);
   behaviour_goodbye(state);
-
-  /* Set state name */
-  strcpy(state->name, "goodbye");
 }

@@ -17,6 +17,9 @@ void behaviour_settings(state_ptr state)
 /* Entry point to the state */
 void entry_to_settings(state_ptr state)
 {
+  /* Set state name */
+  strcpy(state->name, "settings");
+  
   /* Go to child default state */
   entry_to_settings_configtabs(state);
 }

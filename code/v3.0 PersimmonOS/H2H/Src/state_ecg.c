@@ -73,6 +73,9 @@ void behaviour_ecg(state_ptr state)
 /* Entry point to the state */
 void entry_to_ecg(state_ptr state)
 {
+  /* Set state name */
+  strcpy(state->name, "ecg");
+  
   /* Go to child default state */
   entry_to_ecg_1_lead(state);
 }

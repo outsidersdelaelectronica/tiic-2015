@@ -13,7 +13,7 @@
 #include "lcd.h"
 #include "click.h"
 
-#define MENU_MAX_ITEMS 8
+#define MENU_MAX_ITEMS 7
 
 typedef struct menu_t
 {
@@ -36,5 +36,12 @@ extern menu_t menu_h2h_connect;
 extern menu_t menu_h2h_ongoing_connecting;
 extern menu_t menu_h2h_ongoing_error;
 extern menu_t menu_h2h_ongoing_action;
+
+extern menu_t menu_settings_configtabs;
+extern menu_t menu_settings_configtabs_screen;
+extern menu_t menu_settings_configtabs_timedate;
+extern menu_t menu_settings_configtabs_bluetooth;
+extern menu_t menu_settings_configtabs_touch;
+extern menu_t menu_settings_configtabs_about;
 
 #endif /* MENU_H_ */

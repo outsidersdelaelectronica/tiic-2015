@@ -1,8 +1,8 @@
 #include "menu.h"
 
-menu_t menu_ecg =
+menu_t menu_settings_configtabs =
 {
-  .item_num = 6,
+  .item_num = 7,
   .items =
   {
     {
@@ -29,18 +29,94 @@ menu_t menu_ecg =
       .item.area =
       {
         .width                = 156,
-        .height               = 100,
-        .pos                  = {.x_pos = 0, .y_pos = 380},
+        .height               = 60,
+        .pos                  = {.x_pos = 0, .y_pos = 35},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
-        .string               = L"120",
-        .font                 = myriad_pro_semibold_24,
+        .string               = L"Screen",
+        .font                 = myriad_pro_semibold_16,
         .string_h_align       = CENTER,
         .string_v_align       = MID,
         .text_color           = COLOR_WHITE,
         .bg_color             = COLOR_BLUE,
         .border_color         = COLOR_BLACK,
-        .event                = fsm_no_event
+        .event                = fsm_settings_screen
+      }
+    },
+    {
+      .item_print_function = lcd_print_area,
+      .item.area =
+      {
+        .width                = 156,
+        .height               = 60,
+        .pos                  = {.x_pos = 161, .y_pos = 35},
+        .border               = GUI_NO_BORDER,
+        .is_active            = GUI_ACTIVE,
+        .string               = L"Time/Date",
+        .font                 = myriad_pro_semibold_16,
+        .string_h_align       = CENTER,
+        .string_v_align       = MID,
+        .text_color           = COLOR_WHITE,
+        .bg_color             = COLOR_BLUE,
+        .border_color         = COLOR_BLACK,
+        .event                = fsm_settings_timedate
+      }
+    },
+    {
+      .item_print_function = lcd_print_area,
+      .item.area =
+      {
+        .width                = 156,
+        .height               = 60,
+        .pos                  = {.x_pos = 322, .y_pos = 35},
+        .border               = GUI_NO_BORDER,
+        .is_active            = GUI_ACTIVE,
+        .string               = L"Bluetooth",
+        .font                 = myriad_pro_semibold_16,
+        .string_h_align       = CENTER,
+        .string_v_align       = MID,
+        .text_color           = COLOR_WHITE,
+        .bg_color             = COLOR_BLUE,
+        .border_color         = COLOR_BLACK,
+        .event                = fsm_settings_bt
+      }
+    },
+    {
+      .item_print_function = lcd_print_area,
+      .item.area =
+      {
+        .width                = 156,
+        .height               = 60,
+        .pos                  = {.x_pos = 483, .y_pos = 35},
+        .border               = GUI_NO_BORDER,
+        .is_active            = GUI_ACTIVE,
+        .string               = L"Touch",
+        .font                 = myriad_pro_semibold_16,
+        .string_h_align       = CENTER,
+        .string_v_align       = MID,
+        .text_color           = COLOR_WHITE,
+        .bg_color             = COLOR_BLUE,
+        .border_color         = COLOR_BLACK,
+        .event                = fsm_settings_touch
+      }
+    },
+    {
+      .item_print_function = lcd_print_area,
+      .item.area =
+      {
+        .width                = 156,
+        .height               = 60,
+        .pos                  = {.x_pos = 644, .y_pos = 35},
+        .border               = GUI_NO_BORDER,
+        .is_active            = GUI_ACTIVE,
+        .string               = L"About",
+        .font                 = myriad_pro_semibold_16,
+        .string_h_align       = CENTER,
+        .string_v_align       = MID,
+        .text_color           = COLOR_WHITE,
+        .bg_color             = COLOR_BLUE,
+        .border_color         = COLOR_BLACK,
+        .event                = fsm_settings_about
       }
     },
     {
@@ -61,63 +137,6 @@ menu_t menu_ecg =
         .border_color         = COLOR_BLACK,
         .event                = fsm_back
       }
-    },
-    {
-      .item_print_function = lcd_print_area,
-      .item.area =
-      {
-        .width                = 156,
-        .height               = 60,
-        .pos                  = {.x_pos = 161, .y_pos = 420},
-        .border               = GUI_NO_BORDER,
-        .is_active            = GUI_ACTIVE,
-        .string               = L"1 lead ECG",
-        .font                 = myriad_pro_semibold_16,
-        .string_h_align       = CENTER,
-        .string_v_align       = MID,
-        .text_color           = COLOR_WHITE,
-        .bg_color             = COLOR_BLUE,
-        .border_color         = COLOR_BLACK,
-        .event                = fsm_ecg_1_lead
-      }
-    },
-    {
-      .item_print_function = lcd_print_area,
-      .item.area =
-      {
-        .width                = 156,
-        .height               = 60,
-        .pos                  = {.x_pos = 322, .y_pos = 420},
-        .border               = GUI_NO_BORDER,
-        .is_active            = GUI_ACTIVE,
-        .string               = L"2 lead ECG",
-        .font                 = myriad_pro_semibold_16,
-        .string_h_align       = CENTER,
-        .string_v_align       = MID,
-        .text_color           = COLOR_WHITE,
-        .bg_color             = COLOR_BLUE,
-        .border_color         = COLOR_BLACK,
-        .event                = fsm_ecg_2_lead
-      }
-    },
-    {
-      .item_print_function = lcd_print_area,
-      .item.area =
-      {
-        .width                = 156,
-        .height               = 60,
-        .pos                  = {.x_pos = 483, .y_pos = 420},
-        .border               = GUI_NO_BORDER,
-        .is_active            = GUI_ACTIVE,
-        .string               = L"6 lead ECG",
-        .font                 = myriad_pro_semibold_16,
-        .string_h_align       = CENTER,
-        .string_v_align       = MID,
-        .text_color           = COLOR_WHITE,
-        .bg_color             = COLOR_BLUE,
-        .border_color         = COLOR_BLACK,
-        .event                = fsm_ecg_6_lead
-      }
-    },
+    }
   }
 };

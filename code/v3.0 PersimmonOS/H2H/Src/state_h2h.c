@@ -17,6 +17,9 @@ void behaviour_h2h(state_ptr state)
 /* Entry point to the state */
 void entry_to_h2h(state_ptr state)
 {
+  /* Set state name */
+  strcpy(state->name, "h2h");
+
   /* Go to child default state */
   entry_to_h2h_connect(state);
 }

@@ -28,6 +28,9 @@ void behaviour_settings_touchcalib_point_3(state_ptr state)
 /* Entry point to the state */
 void entry_to_settings_touchcalib_point_3(state_ptr state)
 {
+  /* Set state name */
+  strcpy(state->name, "settings_touchcalib_point_3");
+  
   /* - Initialize with default implementation
    * - Set event behaviour
    * - Set parent events behaviour (bottom-up)
@@ -37,7 +40,4 @@ void entry_to_settings_touchcalib_point_3(state_ptr state)
   behaviour_settings_touchcalib(state);
   behaviour_settings(state);
   behaviour_running(state);
-
-  /* Set state name */
-  strcpy(state->name, "settings_touchcalib_point_3");
 }

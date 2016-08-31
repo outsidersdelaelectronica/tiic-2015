@@ -10,6 +10,14 @@
 #include "state_settings_configtabs_about.h"
 #include "state_settings_configtabs_touch.h"
 
+/* State includes */
+#include "cmsis_os.h"
+#include "menu.h"
+
+/* Queues */
+extern osMailQId queue_input_menuHandle;
+extern osMailQId queue_lcdHandle;
+
 static void settings_configtabs_to_main(state_ptr state)
 {
   /* Do transition actions */
@@ -70,11 +78,24 @@ void behaviour_settings_configtabs(state_ptr state)
   state->settings_touch = settings_configtabs_to_settings_configtabs_touch;
 
   /* Do state actions */
+  
+  /* Set menu */
+  osMailPut(queue_input_menuHandle, (void *) &menu_settings_configtabs);
+
+  /* Display menu */
+  uint32_t i;
+  for (i = 0; i < menu_settings_configtabs.item_num; i++)
+  {
+    osMailPut(queue_lcdHandle, (void *) &menu_settings_configtabs.items[i]);
+  }
 }
 
 /* Entry point to the state */
 void entry_to_settings_configtabs(state_ptr state)
 {
+  /* Set state name */
+  strcpy(state->name, "settings_configtabs");
+  
   /* Go to child default state */
   entry_to_settings_configtabs_screen(state);
 }

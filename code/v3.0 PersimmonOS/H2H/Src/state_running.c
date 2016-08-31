@@ -62,6 +62,9 @@ void behaviour_running(state_ptr state)
 /* Entry point to the state */
 void entry_to_running(state_ptr state)
 {
+  /* Set state name */
+  strcpy(state->name, "running");
+  
   /* Go to child default state */
   entry_to_main(state);
 }

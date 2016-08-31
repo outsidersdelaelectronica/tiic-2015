@@ -64,6 +64,9 @@ void behaviour_main(state_ptr state)
 /* Entry point to the state */
 void entry_to_main(state_ptr state)
 {
+  /* Set state name */
+  strcpy(state->name, "main");
+  
   /* - Initialize with default implementation
    * - Set event behaviour
    * - Set parent events behaviour (bottom-up)
@@ -71,7 +74,4 @@ void entry_to_main(state_ptr state)
   default_implementation(state);
   behaviour_main(state);
   behaviour_running(state);
-
-  /* Set state name */
-  strcpy(state->name, "main");
 }

@@ -1119,6 +1119,24 @@
             </group>
             <group>
               <name>settings</name>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_about.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_bluetooth.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_screen.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_timedate.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_touch.c</name>
+              </file>
             </group>
             <file>
               <name>$PROJ_DIR$\..\Src\menu_main.c</name>
