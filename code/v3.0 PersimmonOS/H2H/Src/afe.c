@@ -174,9 +174,7 @@ void afe_format_data(afe_t *afe)
 
   /* Turn into microvolts */
   /* OH MY GOD, DATA IS EVOLVING */
-  /* We divide first to minimize overflow chance */
-
-  afe->last_data.ch1_data = (adc_raw_data_ch1  * AFE_V_PER_BIT ) / (10 * 1000 * afe->afe_gain_ch1) ;
+  afe->last_data.ch1_data = (adc_raw_data_ch1  * AFE_V_PER_BIT ) / (10 * 1000 * afe->afe_gain_ch1);
   afe->last_data.ch2_data = (adc_raw_data_ch2  * AFE_V_PER_BIT ) / (10 * 1000 * afe->afe_gain_ch2);
 
   /* CONGRATS, DATA EVOLVED INTO MICROVOLTS */
