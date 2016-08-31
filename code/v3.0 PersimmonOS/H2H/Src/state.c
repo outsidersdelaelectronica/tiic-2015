@@ -95,6 +95,11 @@ static void default_button_long(state_ptr state)
   /* Run if this state isn't supported in the state we are in */
 }
 
+static void default_gui_tick(state_ptr state)
+{
+  /* Run if this state isn't supported in the state we are in */
+}
+
 void default_implementation(state_ptr state)
 {
   state->back                 = default_back;
@@ -116,4 +121,5 @@ void default_implementation(state_ptr state)
   state->click                = default_click;
   state->button_short         = default_button_short;
   state->button_long          = default_button_long;
+  state->gui_tick             = default_gui_tick;
 }

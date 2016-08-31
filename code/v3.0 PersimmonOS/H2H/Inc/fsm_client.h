@@ -52,6 +52,8 @@ void fsm_click(fsm_client_ptr fsm);
 void fsm_button_short(fsm_client_ptr fsm);
 void fsm_button_long(fsm_client_ptr fsm);
 
+void fsm_gui_tick(fsm_client_ptr fsm);
+
 void fsm_no_event(fsm_client_ptr fsm);
 
 #endif /* FSM_CLIENT_H_ */

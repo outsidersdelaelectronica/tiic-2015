@@ -10,7 +10,7 @@ osThreadId fsm_managerTaskHandle;
 void Start_fsm_managerTask(void const * argument);
 
 /* Objects */
-extern fsm_client_t fsm;
+fsm_client_t fsm;
 
 void tasks_fsm_init()
 {

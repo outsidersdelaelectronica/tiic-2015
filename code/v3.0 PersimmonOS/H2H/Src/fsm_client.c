@@ -123,6 +123,12 @@ void fsm_button_long(fsm_client_ptr fsm)
   fsm->state.button_long(&fsm->state);
 }
 
+void fsm_gui_tick(fsm_client_ptr fsm)
+{
+  /* Trigger event function */
+  fsm->state.gui_tick(&fsm->state);  
+}
+
 void fsm_no_event(fsm_client_ptr fsm)
 {
 }

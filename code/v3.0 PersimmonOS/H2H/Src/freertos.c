@@ -40,13 +40,12 @@
 #include "lcd.h"
 #include "touch.h"
 
-#include "fsm_client.h"
-
 #include "tasks_ecg.h"
 #include "tasks_input.h"
 #include "tasks_bt.h"
 #include "tasks_periph.h"
 #include "tasks_fsm.h"
+#include "tasks_gui.h"
 
 /* Hardware */
 afe_t afe;
@@ -54,14 +53,6 @@ buzzer_t buzzer;
 gauge_t gauge;
 lcd_t lcd;
 touch_t touch;
-
-/* FSM */
-fsm_client_t fsm;
-
-/* Menus */
-extern menu_t menu_welcome;
-extern menu_t menu_main;
-extern menu_t menu_top_bar;
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 void system_init(void);
@@ -116,6 +107,7 @@ void MX_FREERTOS_Init(void)
   tasks_input_init();
   tasks_periph_init();
   tasks_fsm_init();
+  tasks_gui_init();
 
   /* Start tasks */
   tasks_ecg_start();
@@ -123,6 +115,7 @@ void MX_FREERTOS_Init(void)
   tasks_input_start();
   tasks_periph_start();
   tasks_fsm_start();
+  tasks_gui_start();
 
   /* TEST Task */
   osThreadDef(testTask, Start_testTask, osPriorityIdle, 0, 64);

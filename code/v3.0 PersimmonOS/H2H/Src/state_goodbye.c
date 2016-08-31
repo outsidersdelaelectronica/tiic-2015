@@ -25,6 +25,7 @@ void behaviour_goodbye(state_ptr state)
 
   /* Display menu */
   uint32_t i;
+  
   for (i = 0; i < menu_goodbye.item_num; i++)
   {
     osMailPut(queue_lcdHandle, (void *) &menu_goodbye.items[i]);

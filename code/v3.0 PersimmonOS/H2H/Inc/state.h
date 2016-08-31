@@ -45,6 +45,8 @@ typedef struct state_t
   
   event_f button_short;
   event_f button_long;
+  
+  event_f gui_tick;
 }
 state_t;
 
