@@ -235,18 +235,20 @@ void Start_input_buttonTask(void const * argument)
         button_fsm_event = fsm_button_long;
         osMailPut(queue_fsm_eventsHandle, (void *) &button_fsm_event);
       }
+      else
+      {
+        /* Make rising edge sensitive again */
+        GPIO_InitStruct.Pin = SYS_WKUP_Pin;
+        GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+        GPIO_InitStruct.Pull = GPIO_NOPULL;
+        HAL_GPIO_Init(SYS_WKUP_GPIO_Port, &GPIO_InitStruct);
 
-      /* Make rising edge sensitive again */
-      GPIO_InitStruct.Pin = SYS_WKUP_Pin;
-      GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-      GPIO_InitStruct.Pull = GPIO_NOPULL;
-      HAL_GPIO_Init(SYS_WKUP_GPIO_Port, &GPIO_InitStruct);
-
-      /* If falling edge is detected before timeout
-       * we have a short press
-       */
-      button_fsm_event = fsm_button_short;
-      osMailPut(queue_fsm_eventsHandle, (void *) &button_fsm_event);
+        /* If falling edge is detected before timeout
+         * we have a short press
+         */
+        button_fsm_event = fsm_button_short;
+        osMailPut(queue_fsm_eventsHandle, (void *) &button_fsm_event);
+      }
     }
   }
 }

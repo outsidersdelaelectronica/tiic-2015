@@ -31,7 +31,7 @@ void behaviour_goodbye(state_ptr state)
   }
 
   /* Do state actions */
-  osDelay(1000);
+  osDelay(2000);
 
   // Sleep well little prince
   /* Turn off LED */

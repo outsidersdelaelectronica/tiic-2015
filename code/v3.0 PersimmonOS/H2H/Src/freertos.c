@@ -129,6 +129,8 @@ void MX_FREERTOS_Init(void)
   /* TEST Task */
   osThreadDef(testTask, Start_testTask, osPriorityIdle, 0, 64);
   testTaskHandle = osThreadCreate(osThread(testTask), NULL);
+  
+  osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[0]);
 }
 
 void Start_testTask(void const * argument)

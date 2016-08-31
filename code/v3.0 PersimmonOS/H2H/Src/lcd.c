@@ -137,7 +137,7 @@ gui_status_t lcd_print_area(lcd_t *lcd, item_t *item)
   uint16_t y_pos, y_pos_height;
 
   uint16_t string_x_pos, string_y_pos;
-  uint32_t string_width, string_height;
+  uint32_t string_width = 0, string_height = 0;
 
   color_t text_color;
   color_t bg_color;

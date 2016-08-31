@@ -41,7 +41,6 @@ void behaviour_h2h_connect(state_ptr state)
   state->h2h_connect = h2h_connect_to_h2h_ongoing;
 
   /* Do state actions */
-  bluetooth_init();
 
   /* Set menu */
   osMailPut(queue_input_menuHandle, (void *) &menu_h2h_connect);
@@ -52,6 +51,9 @@ void behaviour_h2h_connect(state_ptr state)
   {
     osMailPut(queue_lcdHandle, (void *) &menu_h2h_connect.items[i]);
   }
+  
+  /* Do state actions */
+  bluetooth_init();
 }
 
 /* Entry point to the state */
