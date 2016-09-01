@@ -119,6 +119,8 @@
 #define NCC8_GPIO_Port GPIOC
 #define nSHUTD_Pin GPIO_PIN_9
 #define nSHUTD_GPIO_Port GPIOC
+#define BT_SLOW_CLK_Pin GPIO_PIN_8
+#define BT_SLOW_CLK_GPIO_Port GPIOA
 #define BT_UART_TX_Pin GPIO_PIN_9
 #define BT_UART_TX_GPIO_Port GPIOA
 #define BT_UART_RX_Pin GPIO_PIN_10
@@ -159,11 +161,11 @@
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-*/ 
+*/
 
 #endif /* __MXCONSTANT_H */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

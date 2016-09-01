@@ -75,7 +75,7 @@ void Start_input_touchTask(void const * argument)
       if (osSemaphoreWait(sem_input_touch_penHandle, osWaitForever) == osOK)
       {
         /* Mask PEN interrupts */
-        EXTI->IMR &= (~TP_PEN_Pin);
+        EXTI->IMR1 &= (~TP_PEN_Pin);
 
         /* A finger is touching the screen.
          * Keep reading values until finger is lifted
@@ -137,7 +137,7 @@ void Start_input_touchTask(void const * argument)
         is_first_click = 1;
 
         /* Unmask PEN interrupts */
-        EXTI->IMR |= TP_PEN_Pin;
+        EXTI->IMR1 |= TP_PEN_Pin;
       }
   }
 }

@@ -1153,6 +1153,45 @@
         </group>
         <group>
           <name>res</name>
+          <group>
+            <name>color</name>
+            <file>
+              <name>$PROJ_DIR$\..\Src\color.c</name>
+            </file>
+          </group>
+          <group>
+            <name>fonts</name>
+            <file>
+              <name>$PROJ_DIR$\..\Src\font_awesome.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Inc\fonts.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\myriad_pro.c</name>
+            </file>
+          </group>
+          <group>
+            <name>item</name>
+            <file>
+              <name>$PROJ_DIR$\..\Inc\item.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\item_area.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\item_graph.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Inc\item_gui.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\item_lcd_config.c</name>
+            </file>
+          </group>
+          <file>
+            <name>$PROJ_DIR$\..\Inc\click.h</name>
+          </file>
         </group>
       </group>
       <group>

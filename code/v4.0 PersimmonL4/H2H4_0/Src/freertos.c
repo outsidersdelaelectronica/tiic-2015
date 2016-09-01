@@ -57,61 +57,85 @@ touch_t touch;
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 void system_init(void);
-/* USER CODE BEGIN FunctionPrototypes */
 
-/* USER CODE END FunctionPrototypes */
+void PreSleepProcessing(uint32_t *ulExpectedIdleTime);
+void PostSleepProcessing(uint32_t *ulExpectedIdleTime);
+void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName);
 
-/* Hook prototypes */
-
-/* Init FreeRTOS */
-
-void MX_FREERTOS_Init(void) {
-  /* USER CODE BEGIN Init */
-       
-  /* USER CODE END Init */
-
-  /* USER CODE BEGIN RTOS_MUTEX */
-  /* add mutexes, ... */
-  /* USER CODE END RTOS_MUTEX */
-
-  /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
-  /* USER CODE END RTOS_SEMAPHORES */
-
-  /* USER CODE BEGIN RTOS_TIMERS */
-  /* start timers, add new ones, ... */
-  /* USER CODE END RTOS_TIMERS */
-
-  /* Create the thread(s) */
-  /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 64);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
-
-  /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
-  /* USER CODE END RTOS_THREADS */
-
-  /* USER CODE BEGIN RTOS_QUEUES */
-  /* add queues, ... */
-  /* USER CODE END RTOS_QUEUES */
-}
-
-/* StartDefaultTask function */
-void StartDefaultTask(void const * argument)
+void PreSleepProcessing(uint32_t *ulExpectedIdleTime)
 {
-
-  /* USER CODE BEGIN StartDefaultTask */
-  /* Infinite loop */
-  for(;;)
-  {
-    HAL_GPIO_TogglePin(GPIOC,UI_LED_B_Pin);
-    osDelay(500);
-  }
-  /* USER CODE END StartDefaultTask */
 }
 
-/* USER CODE BEGIN Application */
-     
-/* USER CODE END Application */
+void PostSleepProcessing(uint32_t *ulExpectedIdleTime)
+{
+}
+
+void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
+{
+   /*
+    * Run time stack overflow checking is performed if
+    * configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2. This hook function is
+    * called if a stack overflow is detected.
+    */
+}
+
+void system_init(void)
+{
+  /* Initialize everything */
+  afe_init(&afe, &hspi1);
+  afe_test_signal_on(&afe);
+
+  buzzer_init(&buzzer, &htim3, &htim4);
+  gauge_init(&gauge, &hi2c1);
+  lcd_init(&lcd, &hsram1, LCD_REG, LCD_DATA, LCD_X_SIZE, LCD_Y_SIZE);
+  touch_init(&touch, &hspi2, TOUCH_X_SIZE, TOUCH_Y_SIZE);
+}
+
+/* TEST Task */
+osThreadId testTaskHandle;
+void Start_testTask(void const * argument);
+extern osMailQId queue_lcdHandle;
+
+void MX_FREERTOS_Init(void)
+{
+  /* Initialize system */
+  system_init();
+
+  /* Init tasks */
+  tasks_ecg_init();
+  tasks_bt_init();
+  tasks_input_init();
+  tasks_periph_init();
+  tasks_fsm_init();
+  tasks_gui_init();
+
+  /* Start tasks */
+  tasks_ecg_start();
+  tasks_bt_start();
+  tasks_input_start();
+  tasks_periph_start();
+  tasks_fsm_start();
+  tasks_gui_start();
+
+  /* TEST Task */
+  osThreadDef(testTask, Start_testTask, osPriorityIdle, 0, 64);
+  testTaskHandle = osThreadCreate(osThread(testTask), NULL);
+
+  osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[0]);
+}
+
+void Start_testTask(void const * argument)
+{
+  item_action_t lcd_config;
+
+  item_lcd_config_init(&lcd_config.item.config, 200);
+  lcd_config.item_print_function = lcd_set_config;
+  osMailPut(queue_lcdHandle, (void *) &lcd_config);
+
+  for (;;)
+  {
+    osDelay(2000);
+  }
+}
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

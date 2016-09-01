@@ -6,17 +6,17 @@
  *  Created on: 11/05/2016
  *      Author: slopez
  */
- 
+
 #ifndef LCD_CONSTANTS_H_
 #define LCD_CONSTANTS_H_
 
 /* Lcd struct defines */
-#define LCD_REG        ((uint32_t *)(FSMC_BASE))
-#define LCD_DATA       ((uint32_t *)(FSMC_BASE + 0x00020000U))  //See p.620 of STM32L162VD ref. manual
+#define LCD_REG        ((uint32_t *)(FMC_BASE))
+#define LCD_DATA       ((uint32_t *)(FMC_BASE + 0x00020000U))  //See p.620 of STM32L162VD ref. manual
 
 #define LCD_X_SIZE     (uint16_t) 800
 #define LCD_Y_SIZE     (uint16_t) 480
-   
+
 /* Lcd commands */
 #define LCD_NOP                         0x0000
 #define LCD_SOFT_RESET                  0x0001

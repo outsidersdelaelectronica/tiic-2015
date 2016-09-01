@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * File Name          : stm32l4xx_hal_msp.c
-  * Description        : This file provides code for the MSP Initialization 
+  * Description        : This file provides code for the MSP Initialization
   *                      and de-Initialization codes.
   ******************************************************************************
   *
@@ -34,20 +34,34 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal.h"
 
-extern void Error_Handler(void);
-/* USER CODE BEGIN 0 */
+#include "buzzer.h"
+#include "cmsis_os.h"
+#include "HCITRANS.h"
 
-/* USER CODE END 0 */
+extern void Error_Handler(void);
+
+/* Semaphores */
+extern osSemaphoreId sem_bt_data_receiveHandle;
+
+extern osSemaphoreId sem_ecg_afe_dma_rxHandle;
+extern osSemaphoreId sem_ecg_afe_drdyHandle;
+
+extern osSemaphoreId sem_input_touch_penHandle;
+extern osSemaphoreId sem_input_button_short_pressHandle;
+extern osSemaphoreId sem_input_button_long_pressHandle;
+
+extern osSemaphoreId sem_periph_batteryHandle;
+extern osSemaphoreId sem_periph_gauge_dma_rxHandle;
+extern osSemaphoreId sem_periph_rtcHandle;
+
+/* Objects */
+extern buzzer_t buzzer;
 
 /**
   * Initializes the Global MSP.
   */
 void HAL_MspInit(void)
 {
-  /* USER CODE BEGIN MspInit 0 */
-
-  /* USER CODE END MspInit 0 */
-
   __HAL_RCC_SYSCFG_CLK_ENABLE();
 
   HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
@@ -67,22 +81,135 @@ void HAL_MspInit(void)
   HAL_NVIC_SetPriority(PendSV_IRQn, 15, 0);
   /* SysTick_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
-
-  /* USER CODE BEGIN MspInit 1 */
-
-  /* USER CODE END MspInit 1 */
 }
 
-/* USER CODE BEGIN 1 */
-
-/* USER CODE END 1 */
+/**
+  * @brief Tx and Rx Transfer completed callbacks
+  * @param  hspi: pointer to a SPI_HandleTypeDef structure that contains
+  *                the configuration information for SPI module.
+  * @retval None
+  */
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+  /* AFE Rx complete */
+  if(hspi->Instance == SPI1)
+  {
+    if(sem_ecg_afe_dma_rxHandle != NULL)
+    {
+      osSemaphoreRelease(sem_ecg_afe_dma_rxHandle);
+    }
+  }
+}
 
 /**
-  * @}
+  * @brief  Master Rx Transfer completed callback.
+  * @param  hi2c Pointer to a I2C_HandleTypeDef structure that contains
+  *                the configuration information for the specified I2C.
+  * @retval None
   */
+void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c)
+{
+  /* Gauge Rx complete */
+  if(hi2c->Instance == I2C1)
+  {
+    if(sem_periph_gauge_dma_rxHandle != NULL)
+    {
+      osSemaphoreRelease(sem_periph_gauge_dma_rxHandle);
+    }
+  }
+}
 
 /**
-  * @}
+  * @brief  Output Compare callback in non blocking mode
+  * @param  htim : TIM OC handle
+  * @retval None
   */
+void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  if (htim->Instance == TIM4)
+  {
+    buzzer_stop(&buzzer);
+  }
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  /* BT UART Rx complete */
+  if (huart->Instance == USART1)
+  {
+    if(sem_bt_data_receiveHandle != NULL){
+      osSemaphoreRelease(sem_bt_data_receiveHandle);
+    }
+  }
+}
+
+/**
+  * @brief  Alarm A callback.
+  * @param  hrtc: pointer to a RTC_HandleTypeDef structure that contains
+  *                the configuration information for RTC.
+  * @retval None
+  */
+void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
+{
+  /* A minute has passed */
+  if(hrtc->Instance == RTC)
+  {
+    if(sem_periph_rtcHandle != NULL)
+    {
+      osSemaphoreRelease(sem_periph_rtcHandle);
+    }
+  }
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  /* AFE DRDY handler */
+  if(GPIO_Pin == AFE_DRDY_Pin)
+  {
+    if(sem_ecg_afe_drdyHandle != NULL)
+    {
+      osSemaphoreRelease(sem_ecg_afe_drdyHandle);
+    }
+  }
+
+  /* I/O button interrupt handler */
+  if(GPIO_Pin == SYS_WKUP_Pin)
+  {
+    /* If rising edge */
+    if ((EXTI->RTSR1) & (SYS_WKUP_Pin))
+    {
+      if(sem_input_button_short_pressHandle != NULL)
+      {
+        osSemaphoreRelease(sem_input_button_short_pressHandle);
+      }
+    }
+    /* If falling edge */
+    if ((EXTI->FTSR1) & (SYS_WKUP_Pin))
+    {
+      if(sem_input_button_long_pressHandle != NULL)
+      {
+        osSemaphoreRelease(sem_input_button_long_pressHandle);
+      }
+    }
+  }
+
+  /* Battery interrupt handlers */
+  if((GPIO_Pin == FG_GPOUT_Pin) || (GPIO_Pin == CHRG_CHG_Pin))
+  {
+    if(sem_periph_batteryHandle != NULL)
+    {
+      osSemaphoreRelease(sem_periph_batteryHandle);
+    }
+  }
+
+  /* Touch interrupt handler */
+  if(GPIO_Pin == TP_PEN_Pin)
+  {
+    if(sem_input_touch_penHandle != NULL)
+    {
+      osSemaphoreRelease(sem_input_touch_penHandle);
+    }
+  }
+}
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

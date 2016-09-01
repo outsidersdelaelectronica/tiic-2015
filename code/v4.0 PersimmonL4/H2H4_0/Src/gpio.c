@@ -34,24 +34,18 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "gpio.h"
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
 
 /*----------------------------------------------------------------------------*/
 /* Configure GPIO                                                             */
 /*----------------------------------------------------------------------------*/
-/* USER CODE BEGIN 1 */
 
-/* USER CODE END 1 */
-
-/** Configure pins as 
-        * Analog 
-        * Input 
+/** Configure pins as
+        * Analog
+        * Input
         * Output
         * EVENT_OUT
         * EXTI
-        * Free pins are configured automatically as Analog (this feature is enabled through 
+        * Free pins are configured automatically as Analog (this feature is enabled through
         * the Code Generation settings)
      PA8   ------> RCC_MCO
 */
@@ -74,36 +68,48 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PEPin PEPin PEPin PEPin */
-  GPIO_InitStruct.Pin = FG_GPOUT_Pin|CHRG_PG_Pin|CHRG_CHG_Pin|CHRG_JACK_DET_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  /*Configure GPIO pin : PEPin */
+  GPIO_InitStruct.Pin = FG_GPOUT_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PCPin PCPin PCPin PCPin 
+  /*Configure GPIO pins : PEPin PEPin PEPin */
+  GPIO_InitStruct.Pin = CHRG_PG_Pin|CHRG_CHG_Pin|CHRG_JACK_DET_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PCPin PCPin PCPin PCPin
                            PCPin */
-  GPIO_InitStruct.Pin = NCC13_Pin|NCC0_Pin|NCC1_Pin|NCC4_Pin 
+  GPIO_InitStruct.Pin = NCC13_Pin|NCC0_Pin|NCC1_Pin|NCC4_Pin
                           |NCC8_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PCPin PCPin PCPin PCPin 
-                           PCPin PCPin PCPin PCPin 
+  /*Configure GPIO pins : PCPin PCPin PCPin PCPin
+                           PCPin PCPin PCPin PCPin
                            PCPin */
-  GPIO_InitStruct.Pin = VDD_AFE_D_EN_Pin|VDD_AFE_A_EN_Pin|VDD_SCREEN_EN_Pin|VDD_RF_PW_EN_Pin 
-                          |VDD_RF_IO_EN_Pin|nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin 
+  GPIO_InitStruct.Pin = VDD_AFE_D_EN_Pin|VDD_AFE_A_EN_Pin|VDD_SCREEN_EN_Pin|VDD_RF_PW_EN_Pin
+                          |VDD_RF_IO_EN_Pin|nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin
                           |UI_LED_B_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PAPin PAPin */
-  GPIO_InitStruct.Pin = SYS_WKUP_Pin|AFE_DRDY_Pin;
+  /*Configure GPIO pins : PAPin */
+  GPIO_InitStruct.Pin = SYS_WKUP_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PAPin */
+  GPIO_InitStruct.Pin = AFE_DRDY_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(AFE_DRDY_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PAPin PAPin PAPin */
   GPIO_InitStruct.Pin = AFE_RESET_Pin|AFE_START_Pin|AFE_CS_Pin;
@@ -112,8 +118,8 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PBPin PBPin PBPin PBPin */
-  GPIO_InitStruct.Pin = NCB1_Pin|NCB5_Pin|NCB8_Pin|NCB9_Pin;
+  /*Configure GPIO pins : PBPin PBPin PBPin PBPin PBPin */
+  GPIO_InitStruct.Pin = NCB1_Pin|NCB5_Pin|NCB8_Pin|NCB9_Pin|TP_BUSY_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -125,8 +131,8 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(BOOT1_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PBPin PBPin */
-  GPIO_InitStruct.Pin = TP_BUSY_Pin|TP_PEN_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pin = TP_PEN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
@@ -150,18 +156,22 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PA8 */
-  GPIO_InitStruct.Pin = GPIO_PIN_8;
+  /*Configure GPIO pin : PtPin */
+  GPIO_InitStruct.Pin = BT_SLOW_CLK_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.Alternate = GPIO_AF0_MCO;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(BT_SLOW_CLK_GPIO_Port, &GPIO_InitStruct);
+
+  /* Turn on screen, BT amd AFE */
+  HAL_GPIO_WritePin(GPIOC, VDD_SCREEN_EN_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOC, VDD_RF_PW_EN_Pin|VDD_RF_IO_EN_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOC, VDD_AFE_D_EN_Pin|VDD_AFE_A_EN_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, VDD_AFE_D_EN_Pin|VDD_AFE_A_EN_Pin|VDD_SCREEN_EN_Pin|VDD_RF_PW_EN_Pin 
-                          |VDD_RF_IO_EN_Pin|nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin 
-                          |UI_LED_B_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin,
+                    GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, AFE_RESET_Pin|AFE_CS_Pin, GPIO_PIN_SET);
@@ -193,19 +203,6 @@ void MX_GPIO_Init(void)
 
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 7, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
-
 }
-
-/* USER CODE BEGIN 2 */
-
-/* USER CODE END 2 */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

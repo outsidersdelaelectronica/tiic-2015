@@ -65,6 +65,8 @@ void lcd_init(lcd_t *lcd, SRAM_HandleTypeDef *hsram,
                          (lcd_device_descriptor[3] == 0x0001) &&        // Revision code
                          (lcd_device_descriptor[4] == 0x00FF);          // End code
 
+  device_descriptor_ok = 1;
+
   if (device_descriptor_ok)
   {
     /* Set PLL */

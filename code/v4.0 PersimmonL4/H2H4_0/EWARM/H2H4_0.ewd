@@ -1236,7 +1236,7 @@
         <debug>1</debug>
         <option>
           <name>CThirdPartyDriverDll</name>
-          <state>###Uninitialized###</state>
+          <state>Browse to your third-party driver</state>
         </option>
         <option>
           <name>CThirdPartyLogFileCheck</name>
@@ -1273,11 +1273,11 @@
         </option>
         <option>
           <name>TIPackage</name>
-          <state></state>
+          <state>C:\ti\ccs_base</state>
         </option>
         <option>
           <name>BoardFile</name>
-          <state></state>
+          <state>$TOOLKIT_DIR$\config\debugger\TexasInstruments\xds\UNKNOWN_XDS100v2_CJTAG.dat</state>
         </option>
         <option>
           <name>DoLogfile</name>
@@ -1365,7 +1365,7 @@
         </option>
         <option>
           <name>CCXds100CpuClockEdit</name>
-          <state>72.0</state>
+          <state>80.0</state>
         </option>
         <option>
           <name>CCXds100SwoClockAuto</name>
@@ -1483,7 +1483,7 @@
       </plugin>
       <plugin>
         <file>$EW_DIR$\common\plugins\uCProbe\uCProbePlugin.ENU.ewplugin</file>
-        <loadFlag>0</loadFlag>
+        <loadFlag>1</loadFlag>
       </plugin>
     </debuggerPlugins>
   </configuration>
