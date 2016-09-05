@@ -103,19 +103,19 @@ void MX_FREERTOS_Init(void)
 
   /* Init tasks */
   tasks_ecg_init();
-  tasks_bt_init();
-  tasks_input_init();
-  tasks_periph_init();
-  tasks_fsm_init();
-  tasks_gui_init();
+//  tasks_bt_init();
+//  tasks_input_init();
+//  tasks_periph_init();
+//  tasks_fsm_init();
+//  tasks_gui_init();
 
   /* Start tasks */
   tasks_ecg_start();
-  tasks_bt_start();
-  tasks_input_start();
-  tasks_periph_start();
-  tasks_fsm_start();
-  tasks_gui_start();
+//  tasks_bt_start();
+//  tasks_input_start();
+//  tasks_periph_start();
+//  tasks_fsm_start();
+//  tasks_gui_start();
 
   /* TEST Task */
   osThreadDef(testTask, Start_testTask, osPriorityIdle, 0, 64);

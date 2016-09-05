@@ -93,7 +93,7 @@ void tasks_ecg_start()
 {
   /* Tasks */
   /* ecg_afeTask */
-  osThreadDef(ecg_afeTask, Start_ecg_afeTask, osPriorityRealtime, 0, 64);
+  osThreadDef(ecg_afeTask, Start_ecg_afeTask, osPriorityNormal, 0, 64);
   ecg_afeTaskHandle = osThreadCreate(osThread(ecg_afeTask), NULL);
 
   /* ecg_filterTask */
