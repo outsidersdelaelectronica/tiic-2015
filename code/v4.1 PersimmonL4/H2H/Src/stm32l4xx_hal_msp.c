@@ -33,9 +33,14 @@
   */
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal.h"
+#include "cmsis_os.h"
 
 extern void Error_Handler(void);
 /* USER CODE BEGIN 0 */
+
+/* Semaphores */
+extern osSemaphoreId sem_ecg_afe_drdyHandle;
+extern osSemaphoreId sem_ecg_afe_dma_rxHandle;
 
 /* USER CODE END 0 */
 
@@ -75,14 +80,30 @@ void HAL_MspInit(void)
 
 /* USER CODE BEGIN 1 */
 
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+  /* AFE Rx complete */
+  if(hspi->Instance == SPI1)
+  {
+    if(sem_ecg_afe_dma_rxHandle != NULL)
+    {
+      osSemaphoreRelease(sem_ecg_afe_dma_rxHandle);
+    }
+  }
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  /* AFE DRDY handler */
+  if(GPIO_Pin == AFE_DRDY_Pin)
+  {
+    if(sem_ecg_afe_drdyHandle != NULL)
+    {
+      osSemaphoreRelease(sem_ecg_afe_drdyHandle);
+    }
+  }
+}
+
 /* USER CODE END 1 */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

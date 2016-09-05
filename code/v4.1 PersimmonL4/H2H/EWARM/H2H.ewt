@@ -1058,41 +1058,74 @@
     </group>
     <group>
       <name>User</name>
-      <file>
-        <name>$PROJ_DIR$\..\Src\dma.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\fmc.c</name>
-      </file>
+      <group>
+        <name>dsp</name>
+        <file>
+          <name>$PROJ_DIR$\..\Src\dsp.c</name>
+        </file>
+      </group>
+      <group>
+        <name>hardware</name>
+        <group>
+          <name>afe</name>
+          <group>
+            <name>hal</name>
+            <file>
+              <name>$PROJ_DIR$\..\Inc\afe_constants.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Src\afe_hal.c</name>
+            </file>
+          </group>
+          <file>
+            <name>$PROJ_DIR$\..\Src\afe.c</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>modules</name>
+        <file>
+          <name>$PROJ_DIR$\..\Src\dma.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\fmc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\gpio.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\i2c.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\rtc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\spi.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\tim.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Src\usart.c</name>
+        </file>
+      </group>
+      <group>
+        <name>tasks</name>
+        <file>
+          <name>$PROJ_DIR$\..\Src\tasks_ecg.c</name>
+        </file>
+      </group>
       <file>
         <name>$PROJ_DIR$\..\Src\freertos.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Src\gpio.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\i2c.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$\..\Src\main.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\rtc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\spi.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\Src\stm32l4xx_hal_msp.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\Src\stm32l4xx_it.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\tim.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\Src\usart.c</name>
       </file>
     </group>
   </group>

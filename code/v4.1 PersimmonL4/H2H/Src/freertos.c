@@ -36,14 +36,18 @@
 #include "task.h"
 #include "cmsis_os.h"
 
-/* USER CODE BEGIN Includes */     
+/* USER CODE BEGIN Includes */
+#include "tasks_ecg.h"
 
+#include "afe.h"
 /* USER CODE END Includes */
 
 /* Variables -----------------------------------------------------------------*/
 osThreadId defaultTaskHandle;
 
 /* USER CODE BEGIN Variables */
+/* Hardware */
+afe_t afe;
 
 /* USER CODE END Variables */
 
@@ -53,7 +57,7 @@ void StartDefaultTask(void const * argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* USER CODE BEGIN FunctionPrototypes */
-
+void system_init(void);
 /* USER CODE END FunctionPrototypes */
 
 /* Pre/Post sleep processing prototypes */
@@ -88,7 +92,15 @@ void PostSleepProcessing(uint32_t *ulExpectedIdleTime)
 
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
-       
+  /* Initialize system */
+  system_init();
+
+  /* Init tasks */
+  tasks_ecg_init();
+
+  /* Start tasks */
+  tasks_ecg_start();
+
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -131,7 +143,12 @@ void StartDefaultTask(void const * argument)
 }
 
 /* USER CODE BEGIN Application */
-     
+void system_init(void)
+{
+  afe_init(&afe, &hspi1);
+  afe_test_signal_on(&afe);
+}
+
 /* USER CODE END Application */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
