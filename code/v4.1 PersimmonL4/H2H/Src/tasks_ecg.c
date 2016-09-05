@@ -98,21 +98,21 @@ void tasks_ecg_start()
   osThreadDef(ecg_afeTask, Start_ecg_afeTask, osPriorityRealtime, 0, 64);
   ecg_afeTaskHandle = osThreadCreate(osThread(ecg_afeTask), NULL);
 
-  /* ecg_filterTask */
-  osThreadDef(ecg_filterTask, Start_ecg_filterTask, osPriorityNormal, 0, 128);
-  ecg_filterTaskHandle = osThreadCreate(osThread(ecg_filterTask), NULL);
-
-  /* leadGenTask */
-  osThreadDef(ecg_leadGenTask, Start_ecg_leadGenTask, osPriorityNormal, 0, 128);
-  ecg_leadGenTaskHandle = osThreadCreate(osThread(ecg_leadGenTask), NULL);
-
-  /* ecg_bpmDetTask */
-  osThreadDef(ecg_bpmDetTask, Start_ecg_bpmDetTask, osPriorityNormal, 0, 128);
-  ecg_bpmDetTaskHandle = osThreadCreate(osThread(ecg_bpmDetTask), NULL);
-
-  /* ecg_keyGenTask */
-  osThreadDef(ecg_keyGenTask, Start_ecg_keyGenTask, osPriorityNormal, 0, 64);
-  ecg_keyGenTaskHandle = osThreadCreate(osThread(ecg_keyGenTask), NULL);
+//  /* ecg_filterTask */
+//  osThreadDef(ecg_filterTask, Start_ecg_filterTask, osPriorityNormal, 0, 128);
+//  ecg_filterTaskHandle = osThreadCreate(osThread(ecg_filterTask), NULL);
+//
+//  /* leadGenTask */
+//  osThreadDef(ecg_leadGenTask, Start_ecg_leadGenTask, osPriorityNormal, 0, 128);
+//  ecg_leadGenTaskHandle = osThreadCreate(osThread(ecg_leadGenTask), NULL);
+//
+//  /* ecg_bpmDetTask */
+//  osThreadDef(ecg_bpmDetTask, Start_ecg_bpmDetTask, osPriorityNormal, 0, 128);
+//  ecg_bpmDetTaskHandle = osThreadCreate(osThread(ecg_bpmDetTask), NULL);
+//
+//  /* ecg_keyGenTask */
+//  osThreadDef(ecg_keyGenTask, Start_ecg_keyGenTask, osPriorityNormal, 0, 64);
+//  ecg_keyGenTaskHandle = osThreadCreate(osThread(ecg_keyGenTask), NULL);
 }
 
 void Start_ecg_afeTask(void const * argument)
@@ -134,7 +134,7 @@ void Start_ecg_afeTask(void const * argument)
       if (osSemaphoreWait(sem_ecg_afe_dma_rxHandle, osWaitForever) == osOK)
       {
         /* Format received bytes into usable data */
-        afe_format_data(&afe);
+//        afe_format_data(&afe);
 
         /* Output data to queues */
         osMessagePut(queue_ecg_afe_ch_1Handle, afe.last_data.ch1_data, 0);
