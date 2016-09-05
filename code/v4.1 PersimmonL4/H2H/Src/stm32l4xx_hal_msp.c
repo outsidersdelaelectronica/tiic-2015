@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * File Name          : stm32l4xx_hal_msp.c
-  * Description        : This file provides code for the MSP Initialization 
+  * Description        : This file provides code for the MSP Initialization
   *                      and de-Initialization codes.
   ******************************************************************************
   *
@@ -37,10 +37,18 @@
 extern void Error_Handler(void);
 /* USER CODE BEGIN 0 */
 #include "cmsis_os.h"
+#include "buzzer.h"
 
 /* Semaphores */
 extern osSemaphoreId sem_ecg_afe_drdyHandle;
 extern osSemaphoreId sem_ecg_afe_dma_rxHandle;
+
+extern osSemaphoreId sem_periph_batteryHandle;
+extern osSemaphoreId sem_periph_gauge_dma_rxHandle;
+extern osSemaphoreId sem_periph_rtcHandle;
+
+/* Objects */
+extern buzzer_t buzzer;
 
 /* USER CODE END 0 */
 
@@ -92,6 +100,38 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
   }
 }
 
+void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c)
+{
+  /* Gauge Rx complete */
+  if(hi2c->Instance == I2C1)
+  {
+    if(sem_periph_gauge_dma_rxHandle != NULL)
+    {
+      osSemaphoreRelease(sem_periph_gauge_dma_rxHandle);
+    }
+  }
+}
+
+void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  if (htim->Instance == TIM4)
+  {
+    buzzer_stop(&buzzer);
+  }
+}
+
+void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
+{
+  /* A minute has passed */
+  if(hrtc->Instance == RTC)
+  {
+    if(sem_periph_rtcHandle != NULL)
+    {
+      osSemaphoreRelease(sem_periph_rtcHandle);
+    }
+  }
+}
+
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   /* AFE DRDY handler */
@@ -102,16 +142,17 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
       osSemaphoreRelease(sem_ecg_afe_drdyHandle);
     }
   }
+
+  /* Battery interrupt handlers */
+  if((GPIO_Pin == FG_GPOUT_Pin) || (GPIO_Pin == CHRG_CHG_Pin))
+  {
+    if(sem_periph_batteryHandle != NULL)
+    {
+      osSemaphoreRelease(sem_periph_batteryHandle);
+    }
+  }
 }
 
 /* USER CODE END 1 */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

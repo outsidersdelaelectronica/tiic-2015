@@ -58,8 +58,8 @@ void tasks_periph_start()
   periph_buzzerTaskHandle = osThreadCreate(osThread(periph_buzzerTask), NULL);
 
   /* periph_screenTask */
-  osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityNormal, 0, 256);
-  periph_screenTaskHandle = osThreadCreate(osThread(periph_screenTask), NULL);
+//  osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityNormal, 0, 256);
+//  periph_screenTaskHandle = osThreadCreate(osThread(periph_screenTask), NULL);
 
   /* periph_batteryTask */
   osThreadDef(periph_batteryTask, Start_periph_batteryTask, osPriorityLow, 0, 128);
@@ -119,9 +119,6 @@ void Start_periph_screenTask(void const * argument)
 void Start_periph_batteryTask(void const * argument)
 {
   char batt_soc_string[5];
-
-  /* Reset semaphore */
-  osSemaphoreWait(sem_periph_gauge_dma_rxHandle, osWaitForever);
 
   /* Infinite loop */
   for(;;)

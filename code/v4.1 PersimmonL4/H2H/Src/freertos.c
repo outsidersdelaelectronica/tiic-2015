@@ -36,10 +36,14 @@
 #include "task.h"
 #include "cmsis_os.h"
 
-/* USER CODE BEGIN Includes */     
+/* USER CODE BEGIN Includes */
 #include "tasks_ecg.h"
+#include "tasks_periph.h"
 
 #include "afe.h"
+#include "buzzer.h"
+#include "gauge.h"
+
 /* USER CODE END Includes */
 
 /* Variables -----------------------------------------------------------------*/
@@ -48,6 +52,8 @@ osThreadId defaultTaskHandle;
 /* USER CODE BEGIN Variables */
 /* Hardware */
 afe_t afe;
+buzzer_t buzzer;
+gauge_t gauge;
 
 /* USER CODE END Variables */
 
@@ -79,7 +85,7 @@ void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
 /* USER CODE BEGIN PREPOSTSLEEP */
 void PreSleepProcessing(uint32_t *ulExpectedIdleTime)
 {
-/* place for user code */ 
+/* place for user code */
 }
 
 void PostSleepProcessing(uint32_t *ulExpectedIdleTime)
@@ -97,9 +103,11 @@ void MX_FREERTOS_Init(void) {
 
   /* Init tasks */
   tasks_ecg_init();
+  tasks_periph_init();
 
   /* Start tasks */
   tasks_ecg_start();
+  tasks_periph_start();
 
   /* USER CODE END Init */
 
@@ -117,7 +125,7 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityIdle, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -147,6 +155,8 @@ void system_init(void)
 {
   afe_init(&afe, &hspi1);
   afe_test_signal_on(&afe);
+
+  gauge_init(&gauge, &hi2c1);
 }
 
 /* USER CODE END Application */
