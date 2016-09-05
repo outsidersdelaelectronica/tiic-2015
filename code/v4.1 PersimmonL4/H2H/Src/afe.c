@@ -44,7 +44,7 @@ void afe_init(afe_t *afe, SPI_HandleTypeDef *hspi)
 
   /* Check AFE id */
   afe_hal_read_register(afe, AFE_REG_ID, &afe_id);
-  if (afe_id == 0x53)
+  if (1) //afe_id == 0x53)
   {
     /* Write configuration */
       /*

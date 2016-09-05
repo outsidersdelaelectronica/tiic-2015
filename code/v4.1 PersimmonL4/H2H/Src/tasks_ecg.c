@@ -134,7 +134,7 @@ void Start_ecg_afeTask(void const * argument)
       if (osSemaphoreWait(sem_ecg_afe_dma_rxHandle, osWaitForever) == osOK)
       {
         /* Format received bytes into usable data */
-//        afe_format_data(&afe);
+        afe_format_data(&afe);
 
         /* Output data to queues */
         osMessagePut(queue_ecg_afe_ch_1Handle, afe.last_data.ch1_data, 0);
