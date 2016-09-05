@@ -120,6 +120,9 @@ void Start_periph_batteryTask(void const * argument)
 {
   char batt_soc_string[5];
 
+  /* Reset semaphores */
+  osSemaphoreWait(sem_periph_gauge_dma_rxHandle, osWaitForever);
+
   /* Infinite loop */
   for(;;)
   {

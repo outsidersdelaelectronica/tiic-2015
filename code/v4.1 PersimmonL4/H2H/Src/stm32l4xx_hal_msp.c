@@ -137,6 +137,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   /* AFE DRDY handler */
   if(GPIO_Pin == AFE_DRDY_Pin)
   {
+    HAL_GPIO_TogglePin(GPIOC, UI_LED_G_Pin);
     if(sem_ecg_afe_drdyHandle != NULL)
     {
       osSemaphoreRelease(sem_ecg_afe_drdyHandle);
