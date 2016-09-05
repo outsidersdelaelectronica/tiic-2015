@@ -57,11 +57,10 @@
 void SystemClock_Config(void);
 void Error_Handler(void);
 void MX_FREERTOS_Init(void);
-void wakeup_check(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-
+void wakeup_check(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -86,7 +85,7 @@ int main(void)
   /* Enable wakeup debug and check */
   HAL_DBGMCU_EnableDBGStandbyMode();
   wakeup_check();
-
+  
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();

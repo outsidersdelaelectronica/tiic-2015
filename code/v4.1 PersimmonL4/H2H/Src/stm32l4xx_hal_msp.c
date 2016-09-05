@@ -33,10 +33,10 @@
   */
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal.h"
-#include "cmsis_os.h"
 
 extern void Error_Handler(void);
 /* USER CODE BEGIN 0 */
+#include "cmsis_os.h"
 
 /* Semaphores */
 extern osSemaphoreId sem_ecg_afe_drdyHandle;
@@ -105,5 +105,13 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 }
 
 /* USER CODE END 1 */
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
