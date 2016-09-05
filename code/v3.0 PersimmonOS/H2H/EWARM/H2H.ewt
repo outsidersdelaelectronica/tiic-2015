@@ -1011,7 +1011,7 @@
         </option>
         <option>
           <name>GenRtcIncUnsigned</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GenRtcIntConversion</name>
@@ -1023,11 +1023,11 @@
         </option>
         <option>
           <name>GenRtcIntShiftOverflow</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GenRtcInclUnsignedShiftOverflow</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GenRtcUnhandledCase</name>
