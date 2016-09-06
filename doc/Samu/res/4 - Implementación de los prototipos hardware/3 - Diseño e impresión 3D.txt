@@ -1,0 +1,113 @@
+Diseño e impresión 3D
+
+Se ha diseñado un conjunto de carcasas para los prototipos con el fin de alojar a las PCBs y protegerlas, impedir la manipulación accidental de las partes sensibles de los sistemas, dar un acceso cómodo a los conectores y botones de las placas, y dar a los prototipos un aspecto más cercano al de un producto final. Alrededor de los modelos 3D de las PCBs, generados con sus herramientas de diseño, se han diseñado las piezas de la carcasa de cada uno de los prototipos: Persimmon Access Device, Persimmon Pacemaker y Kiwi.  Estas piezas se han modelado en el programa de diseño 3D SketchUp Make 15.3 y se han fabricado mediante impresión 3D en plástico PLA.
+
+Consideraciones y restricciones de fabricación
+El diseño de las piezas destinadas a ser fabricadas en una impresora 3D debe tener en cuenta una serie de restricciones de fabricación, que implican ciertos detalles a la hora de modelar las piezas. Por ejemplo, hay que tener especial cuidado con los voladizos (partes de la pieza que sobresalen y carecen de apoyo en la base de la impresora) y es necesario añadir cierta tolerancia en la distancia horizontal entre piezas porque el plástico se expande ligeramente al ser extruido.
+
+	Tolerancia horizontal
+		En todas las piezas se ha dejado un margen mínimo de 0.75 mm de distancia horizontal entre las PCBs de los prototipos y las paredes laterales de sus carcasas.
+		Los agujeros de los tornillos se han hecho 1 mm más grandes que el diámetro nominal de los mismos, así como el del conector del cargador en los prototipos Persimmon.
+		En los agujeros de los conectores de los electrodos se ha dejado un margen de 1 mm para el hueco exterior y de 1.5 mm para el hueco interior.
+		Para la distancia entre las paredes laterales de la tapa y las de la base, se ha dejado un margen horizontal de 0.5 mm.
+
+	Voladizos
+		Existen voladizos en casi todas las piezas de los 3 prototipos. En la mayor parte de los casos, el ángulo que forman con la base de la impresora es lo suficientemente vertical como para que la mayor parte de impresoras sean capaces de imprimirlos sin añadir pilares de soporte. Por ejemplo, los bordes de las paredes exteriores de las carcasas están redondeados y eso provoca que parte de las paredes verticales no se apoyen directamente sobre la base. Sin embargo, el radio de curvatura es lo suficientemente pequeño como para que la impresora pueda ir imprimiendo sobre las capas inferiores sin problema.
+		En otros casos sí que es necesario añadir soportes, como es el caso del botón de encendido, el hueco del conector de programación, el hueco del LED de notificaciones y, aunque no es estrictamente necesario, los agujeros en los que van insertados los conectores de los electrodos. Estos soportes los añade automáticamente el programa 'slicer' que utilice el servicio de impresión, por lo que no es necesario preocuparse de ellos.
+
+	Uniones
+		Existen varias formas de unir diferentes piezas de plástico PLA, y todas se agrupan en dos categorías: uniones permanentes y no permanentes. Entre las uniones permanentes destacan la utilización de pegamentos como los cianocrilatos (Superglue) y el uso de acetona para disolver el plástico en la zona de la unión, que queda fija una vez se secan las dos piezas. Por otro lado, entre las uniones no permanentes se encuentran el uso de piezas con lenguetas o pestañas, y la unión con tuercas y tornillos.
+		En este caso, dado que se necesita ensamblar la carcasa de un prototipo que debe ser desmontable, se ha decidido utilizar tuercas y tornillos para el anclaje de las PCBs a la estructura y para la unión de las partes de cada carcasa. Las tuercas van incrustadas y adheridas en varios huecos del plástico mediante cianoacrilato.
+		La medida de todas las tuercas y tornillos utilizados es M3-0.5, y viene fijada por el diámetro de los agujeros de montaje de la pantalla LCD escogida. Sólo se utilizan 3 tornillos de longitud diferente para todas las piezas de los 3 prototipos: 5 mm  20 mm y 25 mm.
+
+Modelado 3D
+	Proceso de modelado
+		Importación de los modelos 3D de las PCBs
+			Se han exportado los modelos completos en 3D de todas las PCBs para poder utilizarlos en el programa de diseño 3D. De esta manera, se puede dibujar la carcasa alrededor de la placa y los conectores de forma mucho más cómoda, ya que se pueden comprobar tolerancias, medir distancias y depurar errores directamente a partir de la PCB. Los modelos de las placas y sus componentes se exportan en formato STEP y se pueden importar como un grupo de componentes 3D.
+		
+		Diseño 3D de los componentes
+			Conectores de electrodos
+				Los elementos a los que se conectan los cables de los electrodos son tres conectores de banana de 4 mm estándar. Constan de un cilindro metálico al que se une una pieza de plástico y una tuerca con arandela para anclar la pieza a la carcasa, y van alojados en tres agujeros en su parte delantera.
+			Batería
+				La batería tiene unas dimensiones de 34 mm x 50 mm x 6 mm. Se ha dibujado un modelo 3D rectangular sencillo para comprobar que encaja correctamente dentro del hueco de la carcasa preparado para alojarla.
+			Tuercas y tornillos
+				Se han diseñado tres modelos de tornillos M3-0.5 según las longitudes usadas y un modelo para las tuercas correspondientes.
+		
+		Diseño 3D de las carcasas
+			Se necesita una estructura que aloje en su interior una placa de circuito impreso y de acceso a sus conectores, y por tanto hay que diseñar algún tipo de caja que permita acceder a su interior de manera más o menos cómoda a la hora de montar las piezas de la carcasa, y que fije la PCB de forma rígida para evitar que se mueva una vez ensamblada. Para ello, lo más sencillo es diseñar una caja en dos piezas, inferior (base) y superior (tapa), que se unan mediante tuercas y tornillos. Como se ha mencionado anteriormente, las tuercas van incrustadas en el plástico para poder atornillar entre sí las diferentes partes de la carcasa.
+			Dado que tenemos diferente número de PCBs en cada una de las carcasas, se han seguido dos modelos de diseño:
+				1 PCB por carcasa (Persimmon Pacemaker y Kiwi):
+					La PCB se aloja en la base de la carcasa y se incrustan las tuercas en la tapa. A continuación, los tornillos se colocan desde la cara inferior de la base y unen las dos partes de la estructura a la vez que fijan la PCB mediante la presión que ejercen los topes de la parte superior de la carcasa hacia la base.
+				2 PCBs por carcasa (Persimmon Access Device):
+					La PCB del sistema se aloja en la base de la carcasa de la misma forma que en el modelo anterior, aunque en este caso hay varias tuercas incrustadas en la base para fijarla directamente con tornillos cortos. De la misma manera, la PCB de la pantalla se aloja en la tapa de la carcasa y se fija con varios tornillos. Una vez que las dos PCBs están ancladas a sendas piezas por separado, se unen ambas partes mediante tornillos, que se colocan desde la cara inferior de la base y atraviesan toda la estructura.
+			Se ha intentado reducir en la medida de lo posible el tamaño de todas las piezas para realizar prototipos compactos y portátiles, con el mínimo número de tornillos necesario, que permitan ser programados con facilidad y cuyas piezas puedan ser fácilmente imprimibles.
+
+	Prototipos
+		Persimmon Pacemaker
+			La carcasa del Persimmon Pacemaker consta de
+				3 piezas de plástico:
+					Base, donde se alojan la PCB, la batería y los conectores de los electrodos
+					Tapa, que va atornillada a la base
+					Enganche, que va pegado a la parte trasera de la base y permite llevar el dispositivo en un cinturón o en el borde de un bolsillo cómodamente
+				3 tuercas
+				3 tornillos M3-0.5 de 20 mm para anclar la PCB y unir las dos partes de la carcasa
+			Tiene un tamaño de 113.1 mm x 109.9 mm x 42.4 mm
+
+			Base
+				La base del Persimmon Pacemaker aloja la PCB, los conectores de los electrodos, la batería, que va colocada debajo de la PCB y en ella se encuentran todos los huecos de los conectores del prototipo, así como el botón de encendido y apagado y el LED de notificación.
+				Las paredes laterales de la carcasa tienen una anchura de 2.75 mm, y tienen los bordes exteriores redondeados con un radio de curvatura de 2 mm que hacen que el dispositivo sea más agradable al tacto. El contorno de las paredes laterales en las que descansa la pieza superior está diseñado dibujando líneas que forman ángulos de 60º respecto de la horizontal para evitar cortes verticales, permitiendo que la tapa encaje con más suavidad.
+				Los huecos de los conectores del cargador y de programación están redondeados para permitir que los conectores de los cables hagan buen contacto con los de la placa. También lo están los huecos del LED de notificaciones y el botón de encendido para que la sensación al tocar las piezas sea más agradable. El botón de encendido está formado por una pestaña de plástico de 1 mm de grosor, más fina que las paredes para hacer que sea un poco más elástica y sirva para pulsar el botón de encendido y apagado de la PCB.
+				Además, en la cara interna de la base se encuentran una serie de piezas en las que se apoya la PCB y la batería, y por las que se guían los tres tornillos hacia la tapa.
+			Tapa
+				La tapa del Persimmon Pacemaker lleva incrustadas y pegadas con cianoacrilato tres tuercas en las que se insertan los tornillos y que hacen presión contra la PCB para fijarla a la estructura y mantener unida la carcasa.
+			Enganche
+				Además, para que el dispositivo pueda ser llevado de forma cómoda por un usuario, se incluye una pieza con forma de 'U' que va pegada con cianoacrilato a la cara inferior de la base, de forma que pueda ser colocada con facilidad en un cinturón o bolsillo.
+
+			Versiones
+				En la versión v1.0 se definió la forma prácticamente definitiva de la carcasa. Destacan la tapa, que no fija la PCB a la estructura ya que no tiene apoyos que ejerzan presión sobre ella, la ausencia de cortes en las paredes verticales de la tapa y la base que sirvan de guía para encajar ambas piezas y un botón de encendido algo pequeño e incómodo. En la versión v1.1 se solucionan ambos problemas de la tapa, pero el botón sigue siendo demasiado pequeño. Además, después de la primera impresión de prueba aparece la necesidad de abrir un hueco en el conector de programación para programar el prototipo sin necesidad de desmontarlo. En la v1.2, se ha diseñado un botón de encendido más grande y fácil de acceder, se ha añadido el hueco para el conector de programación, se han corregido algunas dimensiones y se han incluido una serie de inscripciones en la carcasa. En la última versión, la v1.3, se ha corregido el grosor de la tapa.
+
+		Persimmon Access Device
+			La carcasa del Persimmon Access Device consta de
+				2 piezas de plástico:
+					Base, donde se alojan la PCB, la batería y los conectores de los electrodos
+					Tapa, donde se aloja la pantalla TFT, atornillada a la base
+				6 tuercas
+				4 tornillos M3-0.5 de 5 mm para anclar la PCB y la pantalla a sendas partes de la carcasa
+				2 tornillos M3-0.5 de 25 mm para unir las dos partes de la carcasa
+			Tiene un tamaño de 139.7 mm x 109.9 mm x 40.6 mm
+
+			Base
+				La base del Persimmon Access Device es básicamente la misma que la del Persimmon Pacemaker excepto por unas pocas variaciones. Es algo más larga, para hacer sitio a la pantalla LCD, lo cual permite colocar la batería a un lado en lugar de bajo la PCB, disminuyendo el grosor de la carcasa. Además, dado que en este prototipo hay dos placas y seguimos el segundo modelo de diseño 3D, en la base van incrustadas las dos tuercas en las que se fija con dos tornillos cortos la PCB del sistema.
+			Tapa
+				La tapa del dispositivo está diseñada para alojar y hacer de embellecedor de la pantalla. Por ello, se abre en la cara superior un hueco de 5" de diagonal a través del cual se muestra la zona útil del LCD. De la misma manera que en la base, en la tapa hay dos tuercas incrustadas para fijar la PCB de la pantalla con tornillos cortos. Además, hay otras dos tuercas incrustadas en las que se insertan dos tornillos colocados desde la parte inferior de la base para unir las dos partes de la carcasa.
+				
+			Versiones
+				De una forma similar a la del Persimmon Pacemaker, en la versión v1.0 se definió la forma de la carcasa. En este caso sí que se colocaron apoyos desde el principio para las dos PCBs, aunque tampoco se incluyeron cortes en las paredes verticales y el botón seguía siendo pequeño. En la versión v1.1 se añadieron los cortes en las paredes de la carcasa y en la v1.2 se cambió el botón de encendido, se corrigieron las dimensiones del hueco de la pantalla y se añadieron el hueco del conector de programación y las inscripciones en la carcasa.
+
+		Kiwi Charger
+			La carcasa del Persimmon Pacemaker consta de
+				2 piezas de plástico:
+					Base, donde se aloja la PCB
+					Tapa, que va atornillada a la base
+				4 tuercas
+				4 tornillos M3-0.5 de 20 mm para anclar la PCB y unir las dos partes de la carcasa
+			Tiene un tamaño de 82 mm x 47 mm x 47.5 mm
+
+			Base
+				La base del Kiwi Charger aloja la PCB y en ella se encuentra un hueco para el conector del cable a la red eléctrica y un agujero por el que sale el cable del cargador. En la cara interna de la base se encuentran cuatro piezas en las que se apoya la placa y por las que se guían los cuatro tornillos hacia la tapa.
+			Tapa
+				La tapa del Kiwi Charger lleva incrustadas y pegadas con cianoacrilato cuatro tuercas en las que se insertan los tornillos y que hacen presión contra la PCB para fijarla a la estructura y mantener unida la carcasa.
+
+			Versiones
+				En la versión v1.0 se definió, al igual que en los otros dos prototipos, la forma de la carcasa. En este caso, los bordes de la carcasa no estaban redondeados y la tapa y la base carecían de cortes en las paredes verticales para facilitar el alineamiento de ambas piezas. En la v1.1 se redondearon los bordes, en la v1.2 se añadieron los cortes en las paredes de las dos piezas y en la v1.3 se corrigieron algunas dimensiones y el diseño del agujero por el que sale el cable del cargador.
+
+Impresión 3D y resultado final
+	Las siete piezas de los tres prototipos se han imprimido en dos tandas con una impresora BQ Witbox 2. En la primera de ellas se imprimieron las versiones v1.2 del Kiwi Charger y v1.1 de ambos prototipos Persimmon. En la segunda, se imprimieron las versiones finales de todos los prototipos, que corresponden a las versiones v1.3 del Kiwi Charger, v1.3 del Persimmon Pacemaker y v1.2 del Persimmon Access Device. Los parámetros de impresión de las versiones finales son los siguientes, calculados con el programa slicer Cura 15.04 y el perfil de impresión "BQ Witbox 2 - PLA - Medium Quality" con un grosor de capa de 0.2 mm
+														Tiempo		Longitud	Peso		X			Y			Z
+		Kiwi Charger Print v1.3 - Bottom				1h 27m		5.99 m		18 g		82 mm		47 mm		22.5 mm
+		Kiwi Charger Print v1.3 - Top					1h 39m		7.06 m		21 g		82 mm		47 mm		25 mm
+		Persimmon Access Device Print v1.2 - Bottom		4h 25m		18.37 m		55 g		139.7 mm	109.9 mm	21 mm
+		Persimmon Access Device Print v1.2 - Top		1h 41m		6.83 m		20 g		139.7 mm	109.9 mm	19.6 mm
+		Persimmon Pacemaker Belt Holder v1.3			39m			2.57 m		8 g			50 mm		8 mm		50 mm
+		Persimmon Pacemaker Print v1.3 - Bottom			3h 37m		14.93 m		45 g		113.1 mm	109.9 mm	18.8 mm
+		Persimmon Pacemaker Print v1.3 - Top			2h 46m		12.01 m		36 g		113.1 mm	109.9 mm	15.6 mm

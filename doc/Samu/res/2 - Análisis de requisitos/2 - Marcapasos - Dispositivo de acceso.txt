@@ -1,0 +1,174 @@
+Marcapasos/dispositivo de acceso
+	Funciones comunes (Marcapasos/dispositivo de acceso)
+		Cifrado y control de acceso
+			Para que el dispositivo de acceso pueda leer y modificar la configuración de un dispositivo médico implantable necesita realizar dos pasos: abrir un canal de comunicación seguro con el IMD, representado por una clave, y ser autorizado por este último para manipular su configuración.
+
+			Comunicación segura
+				En primer lugar, y antes de intercambiar cualquier tipo de información entre los dos dispositivos, es necesario establecer un canal de comunicación seguro entre ambos. Cuando dos sistemas quieren establecer un canal de comunicación seguro lo que hacen es utilizar algún tipo de clave para cifrar los datos que se transmiten entre ambos. Existen varios mecanismos para realizar este cifrado:
+
+				Criptografía simétrica
+					Ambos dispositivos conocen de antemano una única clave que utilizan para cifrar y descifrar los datos. Este método tiene la desventaja de que los dos tienen que tener almacenada una copia de esa contraseña o bien compartirla previamente a través de un canal no seguro.
+
+				Criptografía asimétrica
+					Cada dispositivo dispone de un par de claves, una pública y otra privada. Cuando uno de ellos quiere enviar información confidencial al otro dispositivo, utiliza la clave pública del destinatario. El mensaje cifrado sólo puede ser leído por este último, ya que es el único que posee la clave privada capaz de descifrar el mensaje. De esta manera se elimina la necesidad de contar con claves precompartidas por los dispositivos o de enviar la información previamente por canales no seguros.
+
+					Sin embargo, este mecanismo tiene una vulnerabilidad en el proceso de intercambio de claves públicas. Si este proceso es interceptado, un tercer dispositivo atacante puede colocarse en medio de la comunicación y sustituir las claves públicas por las suyas propias, pudiendo así descifrar la comunicación en ambos sentidos sin que ninguno de los otros dos dispositivos se dé cuenta del ataque. Este tipo de ataques son conocidos como ataques "man-in-the-middle".
+
+				En el caso de un dispositivo médico implantable, almacenar una clave en cada uno de ellos no se considera una opción viable, ya que implicaría que el dispositivo de acceso debería tener almacenadas las claves de todos y cada uno de los IMDs existentes, o bien ser capaz de acceder de forma remota a algún tipo de base de datos que las tuviera. Esto último implicaría a su vez la existencia de un servicio de almacenamiento y distribución de claves que conlleva una serie de problemas de seguridad, necesitaría mantenimiento y dependería de la posibilidad de acceder a la red por parte del dispositivo de acceso.
+
+				Por otro lado, el uso de métodos de criptografía asimétrica tampoco es una buena opción ya que se abre la posibilidad de sufrir ataques de intercepción de claves públicas. Este tipo de ataques se evitan a través del uso de infraestructuras de clave pública, a través de las cuales una entidad certificadora se encarga de asegurar al remitente que la clave pública con la que va a cifrar el mensaje pertenece realmente al destinatario, por lo que si un tercero intenta sustituir la clave para interceptar la comunicación el remitente se dará cuenta de que está siendo atacada. De la misma manera, la existencia de esta infraestructura implica la existencia de un servicio de almacenamiento y distribución de certificados digitales con los mismos problemas que el anterior.
+
+				Touch-to-access
+					Existe una solución basada en criptografía simétrica que aprovecha la naturaleza de los dispositivos médicos a los que se quiere acceder. La gran mayoría de ellos tienen capacidad para medir determinadas constantes vitales ya que utilizan esas medidas para realizar su función. Por ejemplo, una bomba de insulina puede estar midiendo continuamente el nivel de glucosa de un paciente o, como en este caso, un marcapasos puede medir la señal eléctrica del corazón y la frecuencia cardíaca para enviarle las descargas eléctricas que necesita.
+
+					Si de alguna forma fuera posible generar una fuente de números aleatorios a partir de esas señales, se podría obtener una fuente de contraseñas utilizando esos números. Si el dispositivo de acceso quisiera establecer un canal seguro con el IMD, tan sólo tendría que ser capaz de medir la misma señal que él para generar la misma fuente de contraseñas y, por consiguiente, poder establecer un canal de comunicación seguro. 
+
+					Este mecanismo hace que la presencia de contacto físico con el paciente sea de alguna manera la contraseña que autoriza al dispositivo de acceso a acceder a la configuración del IMD a través de un canal previamente establecido. Se intenta seguir una regla de sentido común: la posibilidad de tener contacto físico con una persona implica la posibilidad de hacerle daño o curarle.
+
+					Heart-to-heart
+						En el caso del marcapasos, se ha demostrado que hay suficiente aleatoriedad en la variación de la frecuencia cardíaca como para generar una fuente de números aleatorios lo suficientemente buena como para generar contraseñas seguras sin requisitos muy elevados de capacidad de cálculo y gasto de energía, factores clave en el diseño de este tipo de dispositivos.
+
+		Adquisición de la señal cardíaca
+			Como hemos visto, necesitamos que tanto el marcapasos como el dispositivo de acceso sean capaces de medir la frecuencia cardíaca para generar un flujo de bits aleatorios y establecer la conexión. La arquitectura H2H puede funcionar en principio con cualquier constante vital, pero en este caso el desarrollo se centra específicamente en el uso de la señal eléctrica producida por el corazón, representada mediante un electrocardiograma (ECG). Dicha señal procesada de una determinada forma constituye un flujo de números aleatorios adecuado para realizar las tareas de autenticación.
+
+			Naturaleza de la señal cardíaca
+				Neuronas y potenciales de acción 
+					Todas las células animales están eléctricamente polarizadas, es decir, mantienen una diferencia de tensión a ambos lados de su membrana celular, conocido como el potencial de membrana. Un potencial típico de una membrana de una célula animal es de unos -65 mV o -70 mV en las neuronas, aunque suele llegar a los -90 mV en las células musculares. Esta tensión depende del equilibrio de varios tipos de iones que la atraviesan gracias a la existencia de canales y bombas iónicas, que son estructuras proteínicas incrustadas en la membrana.
+
+					En la mayor parte de células esta tensión permanece constante la mayor parte del tiempo. Sin embargo, existen células activas como las neuronas en el sentido de que sus tensiones fluctúan y se transmiten a lo largo de las mismas. Estas fluctuaciones reciben el nombre de potenciales de acción, y muestran normalmente una forma típica en la que se distinguen dos eventos: una despolarización y una repolarización de la membrana. Su duración suele estar en el orden de los milisegundos en las neuronas cerebrales aunque puede llegar a durar varios segundos en otro tipo de células.
+
+					Estos potenciales de acción son normalmente propagados a través de la célula hacia el resto de células vecinas. A través del intercambio de iones o neurotransmisores, la célula anterior provoca que la membrana celular de la siguiente célula se despolarice (es decir, alcance valores cada vez más positivos) mediante la activación de canales iónicos. Cuando se alcanza un umbral de despolarización, que suele estar en torno a los -55 mV en una neurona típica, se desencadena un potencial de acción en esa célula y continúa propagándose la señal.
+
+				Sistema de conducción eléctrica del corazón
+					La contracción muscular en todos los animales se realiza por medio de la propagación de potenciales de acción hacia los tejidos musculares. En el caso de los músculos esqueléticos, las señales se generan en la corteza motora del cerebro y se transmiten a través de una neurona motora hasta el conjunto de fibras musculares inervadas por dicha neurona, formando lo que se denomina una unidad motora.
+
+					En el caso del sistema cardíaco, existe un tipo de células que actúan como osciladores biológicos y que son capaces de generar potenciales de acción a una frecuencia determinada para controlar la contracción muscular. A través de dichos potenciales de acción estas células controlan la frecuencia cardíaca, actuando como marcapasos naturales.
+
+					El nódulo sinoauricular (SA), situado en la pared de la aurícula derecha cerca de la vena cava superior, constituye el marcapasos natural del corazón. Este se encuentra inervado por multitud de fibras nerviosas del sistema nervioso autónomo, tanto del sistema simpático como del sistema parasimpático.
+
+					En ausencia de estímulos externos, ya sean neuronales u hormonales, sus células generan señales a una velocidad de alrededor de 100 pulsos/min. Sin embargo, la acción de las anteriores fibras nerviosas y de determinadas hormonas modulan su frecuencia. La estimulación de las fibras parasimpáticas (nervio vago) causa una disminución de la frecuencia cardíaca, mientras que la estimulación por parte de las fibras simpáticas causan un aumento de la misma. Además, las fibras simpáticas pueden aumentar la fuerza de las contracciones ya que también irrigan parte del miocardio auricular y ventricular. A través de la influencia del sistema nervioso autónomo se modifica la frecuencia cardíaca en reposo generada por el nódulo sinoauricular, que permanece entre los 60 y 70 pulsos/min.
+
+					Cuando la frecuencia cardíaca está controlada por el nódulo sinoauricular se dice que un el corazón de un individuo está en ritmo sinusal.
+
+					De esta forma, el impulso se propaga por la aurícula derecha y a través del haz de Bachmann hacia la aurícula izquierda, estimulando las fibras nerviosas de ambas para contraerse. El haz de Bachmann es un tracto de células cardíacas que propaga el impulso eléctrico mucho más rápidamente que el miocardio que le rodea, de forma que permite al estímulo llegar a ambas aurículas al mismo tiempo y que su contracción esté sincronizada.
+
+					A la vez que la señal se propaga por las aurículas, viaja también por otra serie de vías llamadas tractos internodales hacia el nódulo atrioventricular (AV). Este se encuentra en la parte inferior del septo interauricular, la pared que separa ambas aurículas. Este nodo introduce un retraso en la señal de aproximadamente 120 ms, el cual es crítico ya que permite que las aurículas viertan la sangre en los ventrículos antes de los ventrículos finalmente se contraigan.
+
+					El nódulo atrioventricular tiene además capacidad de generar potenciales de acción en caso de no recibir estimulación por parte del nódulo sinoauricular por algún motivo, ya sea por un fallo en el mismo o por un bloqueo de la señal en los tractos internodales. Esto le permite tomar el control como marcapasos secundario del corazón cuando el nódulo sinoauricular no es capaz de controlar la frecuencia cardíaca. La frecuencia a la que genera pulsos es algo menor, y se encuentra entre los 40 y 60 pulsos/min.
+
+					Esta ligera diferencia es la que permite al nódulo sinoauricular, que genera mayor cantidad de pulsos por segundo, controlar la contracción cardíaca cuando funciona correctamente. Los potenciales de acción que llegan al nódulo atrioventricular reinician el ciclo de generación de sus potenciales de acción, y a este último no le da tiempo a generar los suyos propios antes de que el nódulo sinoauricular envíe el siguiente ya que es más lento.
+
+					A continuación, la señal se propaga a través de otro tracto especializado llamado haz de His. Este se divide en dos ramas a través del septo interventricular: la rama derecha, que activa al ventrículo derecho; y la rama izquierda, que se subdivide en los fascículos izquierdos anterior y posterior, los cuales activan al ventrículo izquierdo. Ambas siguen ramificándose a lo largo de las paredes ventriculares en las llamadas fibras de Purkinje, que estimulan grupos individuales de células del miocardio para contraerse.
+
+					Si ambos nódulos fallan a la hora de iniciar los impulsos eléctricos, las fibras de los ventrículos pueden activarse por sí mismas de la misma forma a una velocidad de entre 20 y 40 pulsos/min.
+
+				Ciclo de despolarización-repolarización y potenciales de superficie
+					Todos estos potenciales de acción que se van propagando a lo largo del miocardio son los responsables de activar la contracción de las fibras musculares. La actividad eléctrica provocada por la suma de todos estos potenciales de acción cardíacos generan corrientes que fluyen a través del tórax, que se puede modelar como un medio conductor pasivo uniforme. Las tensiones medidas en la superficie externa de este medio (es decir, en la superficie corporal de un individuo) son concidas como electrocardiogramas (ECGs). La forma de esos potenciales de acción cardíacos es ligeramente distinta en las diferentes zonas del corazón, y ocurren de forma no simultánea, lo que da a la señal su forma característica.
+
+			Electrocardiograma
+				En un electrocardiograma de superficie se realiza una medida de la tensión eléctrica entre dos puntos de la superficie corporal de un individuo. En función de la posición de los puntos de medida, establecidos mediante la aplicación de electrodos sobre el cuerpo del paciente, se obtienen diferentes electrocardiogramas que representan distintos puntos de vista del vector de campo eléctrico generado por la actividad cardíaca. A cada medida de tensión realizada entre dos puntos cualquiera se le denomina derivación.
+
+				Es necesario destacar la diferencia entre electrodo y derivación, ya que estos dos términos se suelen confundir: un electrodo es el elemento físico que está en contacto con el cuerpo y hace de interfaz entre el paciente y el sistema de medida. Una derivación es la medida de la tensión entre dos puntos de la superficie corporal del individuo, y constituye una señal. Un electrocardiograma de 12 derivaciones estándar (12 señales) utiliza 10 electrodos para realizar la medida.
+
+				En una ECG típica se pueden distinguir varios elementos característicos que se corresponden con eventos determinados que ocurren durante cada ciclo de despolarización y repolarización cardíaca.
+
+					Onda P: la conducción del impulso eléctrico a través de las aurículas aparece en el electrocardiograma como una pequeña elevación en la señal normalmente de entre 0.05 y 0.25 mV, y con una duración inferior a los 80 ms.
+					Intervalo PR: es el lapso de tiempo que va desde el comienzo de la onda P hasta el inicio del complejo QRS. Representa el tiempo que el impulso eléctrico tarda en viajar desde el nódulo sinoauricular a través del nódulo atrioventricular y suele durar entre 100 y 200 ms.
+					Complejo QRS: representa la despolarización de ambos ventrículos. Estos poseen una masa muscular significativamente grande comparada con las aurículas, por lo que el complejo QRS tiene una amplitud mucho mayor que la onda P. Suele durar normalmente entre 60 y 100 ms.
+					Segmento ST: conecta el complejo QRS con la onda T. Representa el tiempo durante el que los ventrículos permanecen despolarizados.
+					Onda T: representa la repolarización de los ventrículos y normalmente tiene una duración de unos 150 ms.
+
+				Se define la frecuencia cardíaca como la inversa del intervalo de tiempo entre los máximos de dos complejos QRS consecutivos.
+
+				Derivaciones periféricas y precordiales. Triángulo de Einthoven
+					Las derivaciones que se usan normalmente para realizar electrocardiogramas se pueden dividir en dos tipos: periféricas y precordiales.
+
+						Periféricas: son derivaciones que aportan información de las tensiones en el plano frontal. Los electrodos con los que se miden están localizados en las extremidades del paciente: uno en el brazo izquierdo (LA), otro en el derecho (RA) y otro en la pierna izquierda (LL). Estos puntos forman los vértices del denominado triángulo de Einthoven.
+
+							Derivaciones bipolares
+								Derivación I: mide la tensión entre el LA (positivo) y el RA (negativo).
+								Derivación II: mide la tensión entre el LL (positivo) y el RA (negativo).
+								Derivación III: mide la tensión entre el LL (positivo) y el LA (negativo).
+
+							Derivaciones unipolares aumentadas
+								Estas derivaciones se extraen de los mismos electrodos que las anteriores, pero utilizan el llamado terminal central de Wilson (WCT). Este es un electrodo virtual que representa el centro eléctrico del corazón, y cuyo potencial se calcula realizando la media de la tensión de los otros tres electrodos.
+
+								Derivación aVR: mide la tensión entre el RA (positivo) y el WCT.
+								Derviación aVL: mide la tensión entre el LA (positivo) y el WCT.
+								Derivación aVF: mide la tensión entre el LL (positivo) y el WCT.
+
+						Precordiales: son derivaciones que aportan información de las tensiones en el plano transversal, perpendicular a las anteriores. Seis electrodos actúan como polos positivos para las seis derivaciones correspondientes (V1, V2, V3, V4, V5 y V6), mientras que se usa el WCT como polo negativo.
+
+					En la mayoría de sistemas electrónicos de electrocardiografía se incluye también un electrodo adicional en la pierna derecha (RL) que se utiliza para conectar al paciente a masa o para realizar funciones especiales con el objetivo de mejorar la relación señal-ruido de las medidas.
+
+			Electrodos
+				Para ser capaces de medir las tensiones, y en consecuencia, las corrientes que atraviesan el cuerpo necesitamos proporcionar una interfaz entre el paciente y el aparato electrónico de medida. El elemento que se encarga de crear esa interfaz es el electrodo. Un electrodo realiza una función de transducción, ya que los portadores de la corriente en el cuerpo son iones, mientras que los del electrodo en sí, los cables y el dispositivo de medida son electrones. El electrodo debe servir por tanto como transductor para transformar una corriente iónica en una electrónica.
+
+				El intercambio de corriente del cuerpo al electrodo se realiza en la interfaz electrodo-electrolito. El electrolito es una solución que contiene iones en suspensión, y el electrodo es un elemento metálico. Para que la carga cruce la interfaz es necesario que ocurra alguna reacción química, ya que no hay electrones libres en el electrolito y no hay ni cationes ni aniones libres en el electrodo. Estas son reacciones de reducción-oxidación que pueden ser representadas en general por las siguientes fórmulas:
+
+				[Fórmulas]
+
+				El electrolito es una solución que contiene cationes del metal del electrodo y aniones de otro elemento. El material del electrodo en la interfaz tiene la capacidad de oxidarse y descargar un catión en el electrolito, dejando electrones libres en el metal. De la misma forma, los aniones del electrolito pueden oxidarse y liberar uno o varios electrones al metal. De esta forma se puede generar una corriente en el sentido electrolito-electrodo. Es necesario tener en cuenta que estas reacciones son reversibles y que las reacciones de reducción inversas (de derecha a izquierda en las ecuaciones) también pueden ocurrir, permitiendo circular una corriente en el sentido opuesto: electrodo-electrolito.
+
+				Una característica fundamental de los electrodos se pone de manifiesto si consideramos lo que ocurre al introducir un trozo de metal (el electrodo) en una solución que contiene cationes de ese metal (electrolito). Si se quiere mantener la neutralidad de carga en la solución, también debe contener un número igual de aniones. Cuando el metal entra en contacto con la solución, inmediatamente se produce la reacción de la primera ecuación. En función de las condiciones de concentración iniciales y de las condiciones de equilibrio de esa reacción la concentración local de iones en la interfaz cambia, y la neutralidad de carga ya no se mantiene en esa región. Por tanto el electrolito que rodea a la interfaz ya no está al mismo potencial que el resto del electrolito y aparece una tensión en continua denominada potencial normal de electrodo, que es necesario tener en cuenta a la hora de diseñar el sistema electrónico que se conecte al mismo.
+
+				Tipos de electrodos
+					Existen dos modelos teóricos de electrodo según su comportamiento cuando una corriente los atraviesa. En los electrodos perfectamente polarizables no hay una corriente real a través de la interfaz. Hay movimiento de cargas, pero esta corriente es una corriente de desplazamiento y el electrodo se comporta como si fuera un condensador. En los electrodos perfectamente no polarizables la carga pasa libremente a través de la interfaz electrodo-electrolito sin requerir energía para realizar la transición.
+
+					Ninguno de estos dos tipos de electrodos puede ser fabricado en la práctica, aunque algunos electrodos reales pueden aproximarse a poseer sus características. Uno de los electrodos más utilizados es el electrodo de plata/cloruro de plata (Ag/AgCl). Sus características se aproximan a las de un electrodo perfectamente no polarizable y se pueden encontrar con facilidad en el mercado. Comúnmente se fabrican en forma de parches, recubriendo un sustrato de plástico con una fina capa de plata cuya cara externa se convierte en cloruro de plata. Esta entra en contacto con el cuerpo a través de un electrolito en forma de gel.
+
+			Sistema electrónico
+				Señal ECG
+					Las señales recogidas por los electrodos son tensiones de pequeña amplitud, de alrededor de 1 mV, que aparecen sobre offsets y ruido elevados. Los electrodos de Ag/AgCl pueden presentar offsets de hasta 300 mV a causa de su potencial normal de electrodo. Además, los sistemas electrónicos se ven afectados por un ruido que puede ser de varios órdenes de magnitud que la señal a adquirir. Las principales fuentes de ruido en un ECG son:
+						Interferencia de la red eléctrica: ruido de 50 o 60 Hz que se acopla al sistema de medida desde la red eléctrica en forma de ruido en modo común
+						Interferencias electromagnéticas: emisiones de radio, televisión, instalaciones eléctricas, tubos fluorescentes, etc.
+						Baseline wandering: el nivel de continua de la señal fluctúa por diversos motivos. Entre ellos se encuentran la variación de la resistencia de la interfaz piel-electrodo, un posible mal contacto de los electrodos o la respiración del paciente
+						Ruido por movimiento: se genera ruido adicional por el movimiento del electrodo respecto de la piel, y por el movimiento de los cables que conectan los electrodos al sistema electrónico. Este ruido concentra la mayor parte de su energía entre los 0 y 20 Hz
+						Ruido muscular: siempre hay algo de músculo esquelético entre dos electrodos que forman una derivación del ECG. Cada vez que se contrae, genera su propia señal electromiográfica que puede aparecer como ruido en el ECG
+
+				Técnicas de adquisición
+					Es necesario maximizar la relación señal a ruido y mantener al mínimo la distorsión de la señal. Para ello en los diseños electrónicos se utilizan una serie de técnicas:
+						Amplificación diferencial: para eliminar el ruido de la red eléctrica que se acopla a la señal ECG se utilizan configuraciones diferenciales. Este método mide dos tensiones en dos electrodos diferentes y obtiene la diferencia entre ellas. De esa forma, cualquier señal común a los dos puntos (en este caso, la interferencia EM provocada por la red) se elimina y sólo se extrae la señal deseada. Uno de los parámetros más importantes que determina la calidad de esa medida es la relación de rechazo al modo común (CMRR), y suele estar cerca de los 90 o 100 dB en este tipo de dispositivos. Para tener una referencia de potencial, se coloca un tercer electrodo en otro lugar del cuerpo del individuo.
+						Impedancias de entrada elevadas: la impedancia de fuente del modelo eléctrico de la piel puede variar desde las decenas de kiloohmios hasta varios megaohmios para la piel muy seca. Con el fin de evitar efectos de carga se requiere que la impedancia de entrada del sistema electrónico sea muy elevada, llegando a alcanzar valores de gigaohmios o incluso teraohmios.
+						Filtrado: para minimizar el ruido se filtra la banda de paso de la señal. Según la espeficiación IEC, el ancho de banda requerido para una ECG va de 0.5 a 150 Hz. Además, se puede eliminar ruido de la red eléctrica añadiendo un filtro a 50 o 60 Hz después de la conversión analógico-digital.
+						Right Leg Drive: uno de los métodos que existen para aumentar la CMRR consiste en aplicar al paciente una tensión determinada a través de un electrodo extra con el objetivo de atenuar el ruido de la red eléctrica
+						Diseño electrónico de bajo ruido: es necesario realizar una buena distribución de los componentes electrónicos y pistas del circuito impreso para minimizar la presencia de ruido en el sistema de adquisición
+
+				Requisitos de diseño
+					Existen una serie de requisitos que debe cumplir un sistema electrónico de electrocardiografía. Impedancias de entrada a 10 Hz de mínimo 2.5 Mohm, corrientes máximas hacia el paciente de 1 uA o hasta 10 uA en caso de fallo del sistema, así como otras restricciones de diseño relativas a la precisión de la medida y la seguridad del paciente.
+
+			Conclusiones
+				Tanto el dispositivo de acceso como el marcapasos deben ser capaces de medir la frecuencia cardíaca con suficiente precisión. Para ello, es necesario adquirir el electrocardiograma del paciente, buscar los máximos de los complejos QRS (llamados picos R) y medir la duración entre los picos consecutivos.	Existen otros métodos para medir la frecuencia cardíaca, aunque este es el que proporciona la mejor precisión necesaria para realizar la autenticación.
+
+				Más concretamente, no existe una técnica de medición remota capaces de generar tasas de error de acceso tan buenas como el electrocardiograma. De hecho, hay evidencias de que el mejor método de medición remota, la fotopletismografía (PPG), que detecta ligeros cambios de color en la piel causados por la variación temporal de la concentración de sangre en su superficie, obtiene las mismas tasas de error que las que se obtienen probando al azar. Por ello se puede concluir que la medición remota de la frecuencia cardíaca no representa una amenaza al protocolo H2H.
+
+				Hay algunas consideraciones a la hora de realizar esta medida en relación con la implementación del protocolo:
+					La señal debe estar muestreada a una velocidad suficiente para que el error cometido en la medida del instante en el que se produce el máximo no sea significativo. Se considera que una tasa de muestreo de 1 kHz es suficiente para evitar este problema.
+					Como solamente se necesita la frecuencia cardíaca y no es necesaria información adicional acerca del campo eléctrico generado por el corazón, sólo es necesario utilizar una única derivación para obtenerla. Además, el sistema es independiende de la derivación que se utilice ya que la frecuencia cardíaca se puede extraer de cualquiera de ellas. Por comodidad, es más conveniente utilizar cualquiera de las derivaciones periféricas bipolares.
+
+				El dispositivo debe implementar un sistema de adquisición de la señal cardíaca que tenga en cuenta las técnicas descritas anteriormente para obtener el electrocardiograma de un paciente con la suficiente precisión y relación señal a ruido que permita extraer la información necesaria de su frecuencia cardíaca, así como las restricciones de seguridad eléctrica. Se utilizarán electrodos de parche desechables de Ag/AgCl, ya que son los más utilizados, son baratos y fáciles de encontrar.
+
+		Comunicación inalámbrica
+			Los marcapasos comerciales y otros tipos de dispositivos médicos implantables funcionan generalmente en dos bandas de frecuencia. La primera, pensada para comunicaciones de corta distancia, se encuentra alrededor de los 175 kHz. La segunda, llamada banda MICS (Medical Implant Communications) se extiende entre los 402 y los 405 MHz.
+
+			Las interfaces de comunicación que se diseñan en estos sistemas son de naturaleza cerrada y difíciles, si no imposibles de implementar. Además, utilizarlas podría ser peligroso si algún paciente con un IMD real se aproxima al lugar en el que se realicen las pruebas.
+
+			Dado que en este caso se va a fabricar un prototipo que va a hacer las veces de marcapasos y no hay que ceñirse a las restricciones que el diseño de un dispositivo implantable real impone, se puede elegir la banda de frecuencias y la interfaz de comunicación que sea más conveniente.
+
+			Por ello, se prefiere utilizar una tecnología radio que sea fácil de implementar, esté documentada y sea accesible, y utilice una de las bandas ISM en lugar de las bandas reservadas para dispositivos médicos reales. Por otra parte, sería conveniente que los dos dispositivos utilizaran una interfaz que esté incluida en otros dispositivos de consumo como teléfonos móviles o tablets para abrir la puerta a otros posibles usos.
+
+			De acuerdo con estos requisitos, los dispositivos deben incluir un módulo de comunicaciones Bluetooth, que constará del circuito de la interfaz radio y la antena.
+
+		Alimentación y batería
+			Ambos dispositivos necesitan una fuente de energía portátil recargable para llevar a cabo su funcionamiento. Existen varias clases de baterías, aunque la opción más viable son las baterías de polímero de litio (LiPo). Estas tienen la mayor densidad de energía, por lo que podemos reducir el tamaño del dispositivo, y son las más empleadas en electrónica de consumo. Uno de sus inconvenientes es que requieren que la carga y descarga se realice de manera controlada debido a su inestabilidad, sobre todo en caso de cortocircuitos o sobrecalentamiento. Sin embargo existen multitud de circuitos integrados que realizan estas tareas de forma automática, haciendo que la integración de este tipo de baterías en el diseño sea bastante sencilla.
+
+			El diseño de los dos dispositivos debe incluir por tanto una batería LiPo y un módulo cargador que se encargará de regular la tensión y corriente de carga entregadas por una fuente de alimentación externa.
+
+			Nivel de carga
+				El dispositivo debería ser capaz de conocer y mostrar al usuario cuánta carga restante hay en la batería en cualquier momento. En el caso de las baterías LiPo esta medición no es sencilla de realizar. No es posible, por ejemplo, deducir el nivel de carga a partir de la tensión de la batería, ya que esta varía en función de la corriente, de la temperatura, y otros parámetros.
+
+				Sin embargo, de igual forma que con los circuitos cargadores, existen una serie de circuitos integrados que realizan un perfil de la batería a lo largo del tiempo y son capaces de calcular el nivel de carga restante de la batería con bastante precisión. El diseño, por tanto, debe incluir también un circuito de medida del nivel de carga.
+
+	Funciones adicionales (Dispositivo de acceso)
+		Interfaz de usuario
+			Para controlar el dispositivo de acceso este debe disponer de una interfaz de usuario. Las funciones que se deben poder llevar a cabo son la visualización y manipulación de los controles de la aplicación y la visualización de la señal cardíaca y sus parámetros. Para ello, el dispositivo debe incluir una pantalla con algún mecanismo de entrada táctil. La pantalla deberá ser lo suficientemente grande para poder visualizar la señal de forma cómoda y poder manejar fácilmente con los dedos los controles de la aplicación. Además, debe contar con algún indicador acústico para reproducir sonidos cuando ocurran diferentes eventos.
