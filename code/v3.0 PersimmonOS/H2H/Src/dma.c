@@ -64,8 +64,8 @@ void MX_DMA_Init(void)
   hdma_memtomem_dma2_channel1.Init.Direction = DMA_MEMORY_TO_MEMORY;
   hdma_memtomem_dma2_channel1.Init.PeriphInc = DMA_PINC_DISABLE;
   hdma_memtomem_dma2_channel1.Init.MemInc = DMA_MINC_DISABLE;
-  hdma_memtomem_dma2_channel1.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-  hdma_memtomem_dma2_channel1.Init.MemDataAlignment = DMA_PDATAALIGN_BYTE;
+  hdma_memtomem_dma2_channel1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+  hdma_memtomem_dma2_channel1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
   hdma_memtomem_dma2_channel1.Init.Mode = DMA_NORMAL;
   hdma_memtomem_dma2_channel1.Init.Priority = DMA_PRIORITY_LOW;
   if (HAL_DMA_Init(&hdma_memtomem_dma2_channel1) != HAL_OK)
