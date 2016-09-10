@@ -1217,14 +1217,26 @@
         </group>
         <group>
           <name>bluetooth</name>
+          <group>
+            <name>Bluetopia</name>
+            <file>
+              <name>$PROJ_DIR$\..\Bluetopia\btpskrnl\BTPSKRNL.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Bluetopia\btpsvend\BTPSVEND.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Bluetopia\btvs\BTVS.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\Bluetopia\hcitrans.dma\HCITRANS.c</name>
+            </file>
+          </group>
           <file>
             <name>$PROJ_DIR$\..\Src\bluetooth_internal.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$\..\Inc\bt_const_and_struct.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\..\Src\command_interpreter.c</name>
           </file>
         </group>
         <group>
@@ -1358,21 +1370,6 @@
         <name>$PROJ_DIR$\..\Src\stm32l1xx_it.c</name>
       </file>
     </group>
-  </group>
-  <group>
-    <name>Bluetopia</name>
-    <file>
-      <name>$PROJ_DIR$\..\Bluetopia\btpskrnl\BTPSKRNL.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Bluetopia\btpsvend\BTPSVEND.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Bluetopia\btvs\BTVS.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Bluetopia\hcitrans.dma\HCITRANS.c</name>
-    </file>
   </group>
   <group>
     <name>Drivers</name>
