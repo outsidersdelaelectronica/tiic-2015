@@ -9,11 +9,11 @@ t = (0:(L-1))*T;   % Time vector
 
 f = Fs*(0:(L-1))/L;
 
-x = EKG1;
+x = show_filtering(EKG1);
 % x(1) = 1;
 
 % subplot(2,1,1);
-% hold on
+hold on
 % 
 % norm = max(x);
 % plot(t, x./norm,'black');
@@ -24,15 +24,11 @@ x = EKG1;
 
 %%%%%%%%%%%%%%%%%%%
 
-showing = show_filtering(x);
-% norm = max(showing);
-% plot(t, showing./norm,'green');
-
 % hold off
 
 preprocessed_clean = bpm_preprocessing(x);
-% norm = max(preprocessed_clean);
-% plot(t, preprocessed_clean./norm,'black');
+norm = max(preprocessed_clean);
+plot(t, preprocessed_clean./norm,'black');
 
 bpm_log_clean = bpm_decision_module(preprocessed_clean);
 

@@ -1,10 +1,28 @@
+clear
 load('ECG.mat');
 
+L = max(size(EKG2));
+Fs = 1000;         % Sampling frequency
+T = 1/Fs;          % Sampling period
+t = (0:(L-1))*T;   % Time vector
+
+f = Fs*(0:(L-1))/L;
+
 x = EKG2;
-Xw = fft(x);
+x = zeros( 1,L);
+x(1) = 1;
 
 hold on
-% plot(x, 'green');
+% plot(t, x, 'green');
+% plot(f,20*log(abs(fft(x))));
+xlabel('f (Hz)');
+
+sowh = show_filtering(x);
+% plot(t, sowh(:), 'BLUE');
+
+SOWH = fft(sowh);
+plot(f(1:L/2),10*log(abs(SOWH(1:L/2))));
+plot(f(1:L/2),unwrap(angle(SOWH(1:L/2))));
 
 [bhp,ahp] = ellip(3,0.1,30,0.5/500,'high');
 
@@ -51,7 +69,7 @@ Xlp = fft(xlp);
 xlps = filter(numlp,denlp,xlp);
 Xlps = fft(xlps);
 
-plot(xlps,'blue');
+% plot(xlps,'blue');
 
 
 xave = zeros(1,length(xlps));
@@ -64,7 +82,7 @@ for i = 4:length(xlps)
    xave(i - 3) = xave(i - 3)/4;
 end
 
-plot(xave,'black');
+% plot(xave,'black');
 
 hold off
 
