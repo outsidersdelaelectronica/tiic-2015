@@ -2,8 +2,8 @@ function bpm_log = bpm_decision_module( signal )
     Fs = 1000;  
     T = 1/Fs;          % Sampling period
     L = max(size(signal));
-    norm = max(signal);
-    norm_signal = 2*signal./norm;
+%     norm = max(signal);
+%     norm_signal = 2*signal./norm;
     t = (0:(L-1))*T;   % Time vector
 %     threshold = 0.3;
 %     threshold_log = zeros(1,L);
@@ -42,8 +42,8 @@ function bpm_log = bpm_decision_module( signal )
     % norm = max(threshold_log);
     % p5 = plot(t, threshold_log./norm,'red');
     
-    threshold_high = 0.8;
-    threshold_low = 0.4;
+    threshold_high = 1;
+    threshold_low = 1;
     threshold_high_log = zeros(1,L);
     threshold_low_log = zeros(1,L);
     bpm_detected = zeros(1,L);
@@ -67,7 +67,7 @@ function bpm_log = bpm_decision_module( signal )
                     bpm_log(bpm_log_counter) = bpm;
                     bpm_log_counter = bpm_log_counter + 1;
                     sample_counter =   0;
-                    bpm_detected(i) = 1;
+                    bpm_detected(i) = max(signal);
                 end
             end
         elseif threshold_high > threshold_low
@@ -85,5 +85,8 @@ function bpm_log = bpm_decision_module( signal )
 %     plot(t, threshold_high_log./norm,'red');
 %     plot(t, threshold_low_log./norm,'blue');
 %     plot(t, bpm_detected,'yellow');
+    plot(t, threshold_high_log,'red');
+    plot(t, threshold_low_log,'blue');
+    plot(t, bpm_detected,'yellow');
 end
 

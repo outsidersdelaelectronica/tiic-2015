@@ -10,14 +10,13 @@ t = (0:(L-1))*T;   % Time vector
 f = Fs*(0:(L-1))/L;
 
 x = show_filtering(EKG1);
-% x(1) = 1;
 
-% subplot(2,1,1);
 hold on
-% 
+
 % norm = max(x);
 % plot(t, x./norm,'black');
-% xlabel('t (s)');
+% plot(t, x,'black');
+xlabel('t (s)');
 
 % plot(f,20*log(abs(fft(x))));
 % xlabel('f (Hz)');
@@ -27,8 +26,9 @@ hold on
 % hold off
 
 preprocessed_clean = bpm_preprocessing(x);
-norm = max(preprocessed_clean);
-plot(t, preprocessed_clean./norm,'black');
+% norm = max(preprocessed_clean);
+% plot(t, preprocessed_clean./norm,'black');
+plot(t, preprocessed_clean,'green');
 
 bpm_log_clean = bpm_decision_module(preprocessed_clean);
 
