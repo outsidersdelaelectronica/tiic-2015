@@ -137,11 +137,11 @@ void Start_periph_batteryTask(void const * argument)
       {
         /* Format received bytes into usable data */
         gauge_format_data(&gauge);
-      }
+      
+        /* Read charger values */
 
-      /* Read charger values */
-
-      /* Display battery status */
+        /* Display battery status */
+        
         /* Create batt soc string */
         sprintf(batt_soc_string, "%u%%", gauge.last_data.soc);
         item_area_set_text(&menu_top_bar.items[2].item.area, batt_soc_string);
@@ -171,6 +171,7 @@ void Start_periph_batteryTask(void const * argument)
         /* Display screen items */
         osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[1]);
         osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[2]);
+      }
     }
   }
 }

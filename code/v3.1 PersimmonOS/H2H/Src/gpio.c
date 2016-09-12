@@ -149,8 +149,8 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(BT_SLOW_CLK_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, VDD_AFE_D_EN_Pin|VDD_AFE_A_EN_Pin|BT_nSHUTD_Pin|UI_LED_R_Pin 
-                          |UI_LED_G_Pin|UI_LED_B_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, VDD_AFE_D_EN_Pin|VDD_AFE_A_EN_Pin|BT_nSHUTD_Pin|
+                    UI_LED_R_Pin|UI_LED_G_Pin|UI_LED_B_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, AFE_RESET_Pin|AFE_START_Pin|AFE_CS_Pin, GPIO_PIN_RESET);
@@ -174,7 +174,7 @@ void MX_GPIO_Init(void)
   HAL_NVIC_SetPriority(EXTI2_IRQn, 8, 0);
   HAL_NVIC_EnableIRQ(EXTI2_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI4_IRQn, 8, 0);
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 9, 0);
   HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 
   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
