@@ -1059,6 +1059,12 @@
     <group>
       <name>User</name>
       <group>
+        <name>autentification</name>
+        <file>
+          <name>$PROJ_DIR$\..\Src\authentication.c</name>
+        </file>
+      </group>
+      <group>
         <name>dsp</name>
         <file>
           <name>$PROJ_DIR$\..\Src\dsp.c</name>
