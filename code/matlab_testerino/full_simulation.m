@@ -28,7 +28,7 @@ xlabel('t (s)');
 preprocessed_clean = bpm_preprocessing(x);
 % norm = max(preprocessed_clean);
 % plot(t, preprocessed_clean./norm,'black');
-plot(t, preprocessed_clean,'green');
+plot(t(1000:1750), preprocessed_clean(1000:1750),'black');
 
 bpm_log_clean = bpm_decision_module(preprocessed_clean);
 
