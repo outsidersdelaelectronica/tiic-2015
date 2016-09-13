@@ -13,12 +13,15 @@
 #define NUMBER_OF_IPI 16
 typedef enum {ACCEPTED, REJECTED} autentitication_t;
 typedef enum {READY, NOT_READY  } key_state_t;
+typedef enum {EXTERN, INTERN  } key_origin_t;
+
 
 typedef struct validation_key_t
 {
   uint64_t token;
   uint8_t index;
   key_state_t state;
+  key_origin_t origin;
 }validation_key_t;
 
 key_state_t write_key(uint32_t bpm, validation_key_t* key);

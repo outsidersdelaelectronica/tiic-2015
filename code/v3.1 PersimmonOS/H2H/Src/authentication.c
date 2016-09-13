@@ -7,6 +7,12 @@
 
 #include "authentication.h"
 
+#define MASK_X4 0x1111111111111111
+#define MASK_X3 0x2222222222222222
+#define MASK_X2 0x4444444444444444
+#define MASK_X1 0x8888888888888888
+
+#define N_P_THRESHOLD -5.0
 /* Tables with the log of the probabilty of each position x4,x3,x2,x1 and the */
 /* adversary probability( which is constant for every position)               */
 static const float log_P_x4[NUMBER_OF_IPI +1] = {
@@ -44,7 +50,15 @@ static const float log_Q_x4[NUMBER_OF_IPI +1] = {
   -1.55640854263862, -2.0682919036175, -2.73729868457607, -3.61235994796777, 
   -4.8164799306237};
 
-key_state_t write_key(uint32_t bpm, validation_key_t* key)
+void init_key(validation_key_t* key, key_origin_t origin)
+{
+  key->token = 0;
+  key->index = 0;
+  key->state = NOT_READY;
+  key->origin = origin;  
+}
+
+key_state_t write_bpm_key(validation_key_t* key, uint32_t bpm)
 {
   uint8_t IPI;
   
@@ -58,10 +72,69 @@ key_state_t write_key(uint32_t bpm, validation_key_t* key)
   return key->state;
 }
 
+void write_token_key(validation_key_t* key, uint64_t token)
+{
+  key->token = token;
+  key->index = 15;
+  key->token = READY;
+}
+
 void erase_key(validation_key_t* key)
 {
+  key->token = 0;
+  key->index = 0;
+  key->state = NOT_READY;
 }
+
 autentitication_t validate(validation_key_t* master_key, validation_key_t* received_key)
 {
-  return REJECTED;
+  uint64_t diff;
+  uint64_t diff_x4,diff_x3,diff_x2,diff_x1;
+  uint8_t dif_bits_x4,dif_bits_x3,dif_bits_x2,dif_bits_x1;
+  float hypothesis;
+  diff = (master_key->token) ^ (master_key->token);
+  
+  // we mask and align so the first posible one is the least significant bit */
+  diff_x4 = diff & MASK_X4;
+  diff_x3 = ((diff & MASK_X3)>>1);
+  diff_x2 = ((diff & MASK_X2)>>2);
+  diff_x1 = ((diff & MASK_X1)>>3);
+  
+  while(diff_x4 > 0)
+  {
+    dif_bits_x4++;
+    diff_x4 = diff_x4 >> 4;
+  }
+  
+  while(diff_x3 > 0)
+  {
+    dif_bits_x3++;
+    diff_x3 = diff_x3 >> 4;
+  }  
+  
+  while(diff_x2 > 0)
+  {
+    dif_bits_x2++;
+    diff_x2 = diff_x2 >> 4;
+  } 
+  while(diff_x1 > 0)
+  {
+    dif_bits_x1++;
+    diff_x1 = diff_x1 >> 4;
+  }  
+  
+  hypothesis = (log_P_x4[dif_bits_x4] + log_P_x3[dif_bits_x3] +
+               log_P_x2[dif_bits_x2] +log_P_x1[dif_bits_x1]) -
+               (log_Q_x4[dif_bits_x4] + log_Q_x4[dif_bits_x3] +
+               log_Q_x4[dif_bits_x2] +log_Q_x4[dif_bits_x1]);
+  
+  if(hypothesis > N_P_THRESHOLD)
+  {          
+    return ACCEPTED;
+    
+  }
+  else
+  {
+    return REJECTED;
+  }
 }
