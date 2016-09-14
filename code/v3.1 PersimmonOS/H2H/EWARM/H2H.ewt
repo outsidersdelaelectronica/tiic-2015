@@ -1320,9 +1320,6 @@
           <file>
             <name>$PROJ_DIR$\..\Inc\bt_const_and_struct.h</name>
           </file>
-          <file>
-            <name>$PROJ_DIR$\..\Src\command_interpreter.c</name>
-          </file>
         </group>
         <group>
           <name>buzzer</name>

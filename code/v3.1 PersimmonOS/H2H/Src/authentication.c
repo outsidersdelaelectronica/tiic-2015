@@ -12,7 +12,7 @@
 #define MASK_X2 0x4444444444444444
 #define MASK_X1 0x8888888888888888
 
-#define N_P_THRESHOLD -5.0
+#define N_P_THRESHOLD -37.54
 /* Tables with the log of the probabilty of each position x4,x3,x2,x1 and the */
 /* adversary probability( which is constant for every position)               */
 static const float log_Q_x4[NUMBER_OF_IPI +1] = {
