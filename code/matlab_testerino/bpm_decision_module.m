@@ -48,7 +48,6 @@ function bpm_log = bpm_decision_module( signal )
     threshold_low_log = zeros(1,L);
     bpm_detected = zeros(1,L);
     maxerino = 0;
-    prev_value = 0;
     sample_counter = 0;
     bpm_log_counter = 1;
     flag_qrs_zone = 0;
@@ -56,9 +55,8 @@ function bpm_log = bpm_decision_module( signal )
         ecg_lead = signal(i);
         if (ecg_lead > threshold_high)&&(flag_qrs_zone == 0)
             flag_qrs_zone = 1;
-            bpm_detected(i) = max(signal);
         elseif flag_qrs_zone == 1
-            if (ecg_lead <= 0) && (prev_value >= 0)
+            if (ecg_lead <= 0)
                 bpm =              (60 * Fs) / sample_counter;
                 threshold_high =        (threshold_high + maxerino*3) /4;
                 threshold_low =        (threshold_low + maxerino*3) *6/40;
@@ -78,7 +76,6 @@ function bpm_log = bpm_decision_module( signal )
             maxerino = ecg_lead;
         end
         sample_counter = sample_counter + 1;
-        prev_value = ecg_lead; 
         threshold_high_log(i) = threshold_high;
         threshold_low_log(i) = threshold_low;
     end
@@ -86,8 +83,8 @@ function bpm_log = bpm_decision_module( signal )
 %     plot(t, threshold_high_log./norm,'red');
 %     plot(t, threshold_low_log./norm,'blue');
 %     plot(t, bpm_detected,'yellow');
-    plot(t(1000:1750), threshold_high_log(1000:1750),'red');
-    plot(t(1000:1750), threshold_low_log(1000:1750),'blue');
+    plot(t, threshold_high_log,'red');
+    plot(t, threshold_low_log,'blue');
 %     plot(t, bpm_detected,'green');
 end
 
