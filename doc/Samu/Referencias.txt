@@ -29,3 +29,5 @@ SOUNDARAPANDIAN, K. Analog Signal Chain Considerations for Bio-Sensing Applicati
 CLIFFORD, G. D. Signal Processing Methods for Heart Rate Variability. 2002. <http://web.mit.edu/~gari/www/papers/GDCliffordThesis.pdf>
 
 ACHARYA, V. Improving Common-Mode Rejection Using the Right-Leg Drive Amplifier. Texas Instruments, 2011. Lit. no.: SBAA188
+
+ROSTAMI, M., JUELS, A., KOUSHANFAR, F. Heart-to-Heart (H2H): Authentication for Implanted Medical Devices. Proceedings of the 2013 ACM SIGSAC conference on Computer & communications security, Noviembre de 2013.
