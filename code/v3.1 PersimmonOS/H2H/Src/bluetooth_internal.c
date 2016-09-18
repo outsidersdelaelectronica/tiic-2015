@@ -73,6 +73,8 @@ int OpenStack(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_Initializatio
        if(Result > 0)
        {
           HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin,GPIO_PIN_SET);
+          osDelay(500);
+          HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin,GPIO_PIN_RESET);
           /* The Stack was initialized successfully, inform the user  */
           /* and set the return value of the initialization function  */
           /* to the Bluetooth Stack ID.                               */
