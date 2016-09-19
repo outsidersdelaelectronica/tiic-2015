@@ -1,26 +1,39 @@
 clear
-load('ECG.mat');
+load('ecg.mat');
 
 % %  RETRASO MEDIO ENTRE DC_BLOQUED Y INTEGRATED 97
-L = max(size(EKG1));     % Length of signal
+L = max(size(EKG3));     % Length of signal
 Fs = 1000;         % Sampling frequency
 T = 1/Fs;          % Sampling period
 t = (0:(L-1))*T;   % Time vector
 
 f = Fs*(0:(L-1))/L;
 
-x = show_filtering(EKG1);
+x = show_filtering(EKG3);
 
 hold on
 
 % norm = max(x);
 % plot(t, x./norm,'black');
 % plot(t, x,'black');
-xlabel('t (s)');
+% xlabel('t (s)');
 
+x_synz = zeros(1,L);
+for i = 1:L
+    if x(i) < 0.1*max(x)
+        x_synz(i) = 0;
+    else
+        x_synz(i) = x(i);
+    end
+end
+
+[pks,locs] = findpeaks(x_synz);
 % plot(f,20*log(abs(fft(x))));
 % xlabel('f (Hz)');
 
+for i = 2:max(size(locs))
+    bpm_log_synz(i-1) =  (60 * Fs) / (locs(i) - locs(i-1));
+end
 %%%%%%%%%%%%%%%%%%%
 
 % hold off
@@ -32,6 +45,16 @@ plot(t, preprocessed_clean,'black');
 
 bpm_log_clean = bpm_decision_module(preprocessed_clean);
 
+for i = 1:max(size(bpm_log_synz))
+    if( bpm_log_synz(i) == bpm_log_clean(2))
+        bpm_log_synz = bpm_log_synz(i-1:end);
+        break
+    end
+end
+            
+for i = 2:max(size(bpm_log_clean))
+    diff(i-1) = (bpm_log_synz(i) - bpm_log_clean(i));
+end
 x_30db = awgn(x,30,'measured');
 % norm = max(x_30db);
 % plot(t, x_30db./norm,'green');
