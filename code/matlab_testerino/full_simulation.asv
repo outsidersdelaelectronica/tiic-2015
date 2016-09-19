@@ -176,5 +176,5 @@ quality_measures_0dB = [average_diff_0db,max_diff_0db,std_diff_0db,average_rel_d
 for i = 1:6
     Q_matrix(6,i) = quality_measures_0dB(i);
 end
- disp('Diff media| diff max| sigma diff|diff rel|diff rel max|sigma diff rel')
+ disp('Diff media| diff max| sigma diff|diff rel|diff rel max|sigma dif')
  disp(Q_matrix)

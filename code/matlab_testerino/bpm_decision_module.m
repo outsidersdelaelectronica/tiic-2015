@@ -83,8 +83,8 @@ function bpm_log = bpm_decision_module( signal )
 %     plot(t, threshold_high_log./norm,'red');
 %     plot(t, threshold_low_log./norm,'blue');
 %     plot(t, bpm_detected,'yellow');
-    plot(t, threshold_high_log,'red');
-    plot(t, threshold_low_log,'blue');
+%     plot(t, threshold_high_log,'red');
+%     plot(t, threshold_low_log,'blue');
 %     plot(t, bpm_detected,'green');
 end
 
