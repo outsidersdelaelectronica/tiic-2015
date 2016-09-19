@@ -7,8 +7,7 @@ osSemaphoreId sem_ecg_afe_dma_rxHandle;
 /* Queues */
 osMessageQId queue_ecg_afe_ch_1Handle;
 osMessageQId queue_ecg_afe_ch_2Handle;
-osMessageQId queue_ecg_filter_ch_1Handle;
-osMessageQId queue_ecg_filter_ch_2Handle;
+osMessageQId queue_ecg_preprocessedHandle;
 osMessageQId queue_ecg_lead_IHandle;
 osMessageQId queue_ecg_lead_IIHandle;
 osMessageQId queue_ecg_lead_IIIHandle;
@@ -20,12 +19,10 @@ osMessageQId queue_ecg_bpmHandle;
 /* Tasks */
 osThreadId ecg_afeTaskHandle;
 osThreadId ecg_filterTaskHandle;
-osThreadId ecg_leadGenTaskHandle;
 osThreadId ecg_bpmDetTaskHandle;
 osThreadId ecg_keyGenTaskHandle;
 void Start_ecg_afeTask(void const * argument);
 void Start_ecg_filterTask(void const * argument);
-void Start_ecg_leadGenTask(void const * argument);
 void Start_ecg_bpmDetTask(void const * argument);
 void Start_ecg_keyGenTask(void const * argument);
 
@@ -53,12 +50,8 @@ void tasks_ecg_init()
   queue_ecg_afe_ch_2Handle = osMessageCreate(osMessageQ(queue_ecg_afe_ch_2), NULL);
 
   /* queue_ecg_filter_ch_1 */
-  osMessageQDef(queue_ecg_filter_ch_1, 4, int32_t);
-  queue_ecg_filter_ch_1Handle = osMessageCreate(osMessageQ(queue_ecg_filter_ch_1), NULL);
-
-  /* queue_ecg_filter_ch_2 */
-  osMessageQDef(queue_ecg_filter_ch_2, 4, int32_t);
-  queue_ecg_filter_ch_2Handle = osMessageCreate(osMessageQ(queue_ecg_filter_ch_2), NULL);
+  osMessageQDef(queue_ecg_preprocessed, 4, int32_t);
+  queue_ecg_preprocessedHandle = osMessageCreate(osMessageQ(queue_ecg_preprocessed), NULL);
 
   /* queue_ecg_lead_I */
   osMessageQDef(queue_ecg_lead_I, 4, int32_t);
@@ -97,12 +90,8 @@ void tasks_ecg_start()
   ecg_afeTaskHandle = osThreadCreate(osThread(ecg_afeTask), NULL);
 
   /* ecg_filterTask */
-  osThreadDef(ecg_filterTask, Start_ecg_filterTask, osPriorityNormal, 0, 128);
+  osThreadDef(ecg_filterTask, Start_ecg_filterTask, osPriorityNormal, 0, 256);
   ecg_filterTaskHandle = osThreadCreate(osThread(ecg_filterTask), NULL);
-
-  /* leadGenTask */
-  osThreadDef(ecg_leadGenTask, Start_ecg_leadGenTask, osPriorityNormal, 0, 128);
-  ecg_leadGenTaskHandle = osThreadCreate(osThread(ecg_leadGenTask), NULL);
 
   /* ecg_bpmDetTask */
   osThreadDef(ecg_bpmDetTask, Start_ecg_bpmDetTask, osPriorityNormal, 0, 128);
@@ -148,7 +137,8 @@ void Start_ecg_filterTask(void const * argument)
 
   int32_t ch1_data = 0, ch2_data = 0;
   int32_t filtered_ch1_data = 0, filtered_ch2_data = 0, bpm_preprocessed = 0;
-
+  int32_t lead_I = 0, lead_II = 0, lead_III = 0;
+  int32_t lead_aVR = 0, lead_aVL = 0, lead_aVF = 0;
   /* Infinite loop */
   for(;;)
   {
@@ -169,54 +159,27 @@ void Start_ecg_filterTask(void const * argument)
       bpm_preprocessed = bpm_preprocessing(ch1_data);
 
       /* Output data to queues */
-      osMessagePut(queue_ecg_filter_ch_1Handle, filtered_ch1_data, 0);
-      osMessagePut(queue_ecg_filter_ch_2Handle, filtered_ch2_data, 0);
-      osMessagePut(queue_ecg_bpmHandle, bpm_preprocessed, 0);
+      lead_I = filtered_ch1_data;
+      /* Generate lead I */
+      lead_II = filtered_ch2_data;
+      /* Generate lead III */
+      lead_III = lead_II - lead_I;
+      /* Generate lead aVR */
+      lead_aVR = (lead_I + lead_II)   >> 1;
+      /* Generate lead aVL */
+      lead_aVL = (lead_I - lead_III)  >> 1;
+      /* Generate lead aVF */
+      lead_aVF = (lead_II + lead_III) >> 1;
+
+      /* Output data to queues */
+//      osMessagePut(queue_ecg_lead_IHandle,   lead_I,   0);
+//      osMessagePut(queue_ecg_lead_IIHandle,  lead_II,  0);
+//      osMessagePut(queue_ecg_lead_IIIHandle, lead_III, 0);
+//      osMessagePut(queue_ecg_lead_aVRHandle, lead_aVR, 0);
+//      osMessagePut(queue_ecg_lead_aVLHandle, lead_aVL, 0);
+//      osMessagePut(queue_ecg_lead_aVFHandle, lead_aVF, 0);
+      osMessagePut(queue_ecg_preprocessed, bpm_preprocessed, 0);
     }
-  }
-}
-
-void Start_ecg_leadGenTask(void const * argument)
-{
-  osEvent event_ch1, event_ch2;
-
-  int32_t filtered_ch1_data = 0, filtered_ch2_data = 0;
-  int32_t lead_I = 0, lead_II = 0, lead_III = 0;
-  int32_t lead_aVR = 0, lead_aVL = 0, lead_aVF = 0;
-
-  /* Infinite loop */
-  for(;;)
-  {
-    /* Get filtered channel data */
-    event_ch1 = osMessageGet(queue_ecg_filter_ch_1Handle, osWaitForever);
-    event_ch2 = osMessageGet(queue_ecg_filter_ch_2Handle, osWaitForever);
-    if ((event_ch1.status == osEventMessage) && (event_ch2.status == osEventMessage))
-    {
-      /* Retrieve values */
-      filtered_ch1_data = (int32_t) event_ch1.value.v;
-      filtered_ch2_data = (int32_t) event_ch2.value.v;
-    }
-
-    /* Generate lead I */
-    lead_I = filtered_ch1_data;
-    /* Generate lead I */
-    lead_II = filtered_ch2_data;
-    /* Generate lead III */
-    lead_III = lead_II - lead_I;
-    /* Generate lead aVR */
-    lead_aVR = (lead_I + lead_II)   >> 1;
-    /* Generate lead aVL */
-    lead_aVL = (lead_I - lead_III)  >> 1;
-    /* Generate lead aVF */
-    lead_aVF = (lead_II + lead_III) >> 1;
-
-    /* Output data to queues */
-    osMessagePut(queue_ecg_lead_IHandle,   lead_I,   0);
-    osMessagePut(queue_ecg_lead_IIHandle,  lead_II,  0);
-    osMessagePut(queue_ecg_lead_IIIHandle, lead_III, 0);
-    osMessagePut(queue_ecg_lead_aVRHandle, lead_aVR, 0);
-    osMessagePut(queue_ecg_lead_aVLHandle, lead_aVL, 0);
-    osMessagePut(queue_ecg_lead_aVFHandle, lead_aVF, 0);
   }
 }
 
@@ -233,7 +196,7 @@ void Start_ecg_bpmDetTask(void const * argument)
   for(;;)
   {
     /* Get lead I data (or any other lead) */
-    event = osMessageGet(queue_ecg_bpmHandle, osWaitForever);
+    event = osMessageGet(queue_ecg_preprocessed, osWaitForever);
     if (event.status == osEventMessage)
     {
       /* Retrieve value */
