@@ -761,7 +761,7 @@ extern "C" {
 #endif
 
 #ifndef configUSE_PORT_OPTIMISED_TASK_SELECTION
-	#define configUSE_PORT_OPTIMISED_TASK_SELECTION 0
+	#define configUSE_PORT_OPTIMISED_TASK_SELECTION 1
 #endif
 
 #ifndef configAPPLICATION_ALLOCATED_HEAP

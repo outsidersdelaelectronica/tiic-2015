@@ -186,12 +186,13 @@ void Start_ecg_filterTask(void const * argument)
 void Start_ecg_bpmDetTask(void const * argument)
 {
   osEvent event;
-  int32_t ecg_lead = 0;
+  int32_t ecg_lead = 0,bpm = 0;
 
-  static int32_t threshold = 100, maxerino = 0, prev_value = 0;
-  static uint32_t maxerino_pos = 0, sample_counter = 0;
-  float bpm = 0;
-
+//  static int32_t threshold = 100, maxerino = 0, prev_value = 0;
+//  static uint32_t maxerino_pos = 0, sample_counter = 0;
+//  float bpm = 0;
+    static int32_t threshold_high = 1, threshold_low = 1, maxerino = 0;
+    static int32_t sample_counter = 0, flag_qrs_zone = 0;
   /* Infinite loop */
   for(;;)
   {
@@ -204,7 +205,7 @@ void Start_ecg_bpmDetTask(void const * argument)
     }
 
     /* If signal crosses certain threshold */
-    if (ecg_lead > threshold)
+    if (ecg_lead > threshold_high)
     {
       HAL_GPIO_WritePin(GPIOC, UI_LED_G_Pin, GPIO_PIN_SET);
     }
@@ -214,33 +215,34 @@ void Start_ecg_bpmDetTask(void const * argument)
     }
 
     /* BPM detection in progress */
-    if(ecg_lead > threshold)
+    if((ecg_lead > threshold_high)&&(flag_qrs_zone == 0))
     {
-      if (ecg_lead > maxerino)
+      flag_qrs_zone = 1;
+    }
+    else if(flag_qrs_zone == 1)
+    {
+      if (ecg_lead <= 0)
       {
-        maxerino =         ecg_lead;
-        maxerino_pos =     sample_counter;
+        bpm =              ((60 * FS * 1024) / sample_counter);
+        threshold_high =   ((threshold_high + maxerino*3) >> 2);
+        threshold_low =    ((threshold_low + maxerino*3) * 10)>>6;
+                maxerino = 0;
+                flag_qrs_zone = 0;
+                if( sample_counter > 200)
+                {
+                  osMessagePut(queue_ecg_bpmHandle, (uint32_t) bpm, 0);
+                } 
       }
-    }
-    else if (prev_value > threshold)
+    }        
+    else if (threshold_high > threshold_low)
     {
-      if( maxerino_pos > (FS >> 2)) /* this limits bpm <= 240*/
-      {
-        bpm =              ((60 * FS) << 10 ) / maxerino_pos;
-        sample_counter =   sample_counter - maxerino_pos - 1;
-        threshold =        (threshold + maxerino) >> 1;
-        /* Output data to queue */
-        osMessagePut(queue_ecg_bpmHandle, (uint32_t) bpm, 0);
-      }
-      maxerino =         0;
+      threshold_high = threshold_high *255/256;
     }
-    else if (threshold > 100) /* Minimum threshold */
+    if (ecg_lead > maxerino)
     {
-      threshold = ((threshold*511)>>9);
+      maxerino = ecg_lead;
     }
-
     sample_counter++;
-    prev_value = ecg_lead;
   }
 }
 
