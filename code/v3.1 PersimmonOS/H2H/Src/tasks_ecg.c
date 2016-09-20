@@ -178,7 +178,7 @@ void Start_ecg_filterTask(void const * argument)
 //      osMessagePut(queue_ecg_lead_aVRHandle, lead_aVR, 0);
 //      osMessagePut(queue_ecg_lead_aVLHandle, lead_aVL, 0);
 //      osMessagePut(queue_ecg_lead_aVFHandle, lead_aVF, 0);
-      osMessagePut(queue_ecg_preprocessed, bpm_preprocessed, 0);
+      osMessagePut(queue_ecg_preprocessedHandle, bpm_preprocessed, 0);
     }
   }
 }
@@ -196,7 +196,7 @@ void Start_ecg_bpmDetTask(void const * argument)
   for(;;)
   {
     /* Get lead I data (or any other lead) */
-    event = osMessageGet(queue_ecg_preprocessed, osWaitForever);
+    event = osMessageGet(queue_ecg_preprocessedHandle, osWaitForever);
     if (event.status == osEventMessage)
     {
       /* Retrieve value */
