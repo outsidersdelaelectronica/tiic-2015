@@ -137,11 +137,18 @@ void Start_periph_batteryTask(void const * argument)
       {
         /* Format received bytes into usable data */
         gauge_format_data(&gauge);
-      
-        /* Read charger values */
 
-        /* Display battery status */
-        
+        /* Read charger values */
+        if (HAL_GPIO_ReadPin(CHRG_CHG_GPIO_Port, CHRG_CHG_Pin))
+        {
+          /* If the batt is charging up, show a little lightning in the top bar */
+          item_area_set_text_16(&menu_top_bar.items[5].item.area, L"\xF0E7");
+        }
+        else
+        {
+          item_area_set_text_16(&menu_top_bar.items[5].item.area, L"");
+        }
+
         /* Create batt soc string */
         sprintf(batt_soc_string, "%u%%", gauge.last_data.soc);
         item_area_set_text(&menu_top_bar.items[2].item.area, batt_soc_string);
@@ -171,6 +178,7 @@ void Start_periph_batteryTask(void const * argument)
         /* Display screen items */
         osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[1]);
         osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[2]);
+        osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[5]);
       }
     }
   }

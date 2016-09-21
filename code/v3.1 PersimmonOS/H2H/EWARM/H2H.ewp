@@ -1096,6 +1096,69 @@
       <group>
         <name>gui</name>
         <group>
+          <name>menus</name>
+          <group>
+            <name>running</name>
+            <group>
+              <name>ecg</name>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_ecg.c</name>
+              </file>
+            </group>
+            <group>
+              <name>h2h</name>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_h2h_connect.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_action.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_connecting.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_error.c</name>
+              </file>
+            </group>
+            <group>
+              <name>settings</name>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_about.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_bluetooth.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_screen.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_timedate.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_touch.c</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$\..\Src\menu_main.c</name>
+            </file>
+          </group>
+          <file>
+            <name>$PROJ_DIR$\..\Src\menu.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\Src\menu_goodbye.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\Src\menu_top_bar.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\Src\menu_welcome.c</name>
+          </file>
+        </group>
+        <group>
           <name>res</name>
           <group>
             <name>color</name>
@@ -1117,69 +1180,6 @@
           </group>
           <group>
             <name>item</name>
-            <group>
-              <name>menus</name>
-              <group>
-                <name>running</name>
-                <group>
-                  <name>ecg</name>
-                  <file>
-                    <name>$PROJ_DIR$\..\Src\menu_ecg.c</name>
-                  </file>
-                </group>
-                <group>
-                  <name>h2h</name>
-                  <file>
-                    <name>$PROJ_DIR$\..\Src\menu_h2h_connect.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_action.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_connecting.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_error.c</name>
-                  </file>
-                </group>
-                <group>
-                  <name>settings</name>
-                  <file>
-                    <name>$PROJ_DIR$\..\Src\menu_settings_configtabs.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_about.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_bluetooth.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_screen.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_timedate.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_touch.c</name>
-                  </file>
-                </group>
-                <file>
-                  <name>$PROJ_DIR$\..\Src\menu_main.c</name>
-                </file>
-              </group>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu_goodbye.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu_top_bar.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu_welcome.c</name>
-              </file>
-            </group>
             <file>
               <name>$PROJ_DIR$\..\Inc\item.h</name>
             </file>

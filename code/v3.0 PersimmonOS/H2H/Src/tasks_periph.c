@@ -140,6 +140,15 @@ void Start_periph_batteryTask(void const * argument)
       }
 
       /* Read charger values */
+      if (HAL_GPIO_ReadPin(CHRG_CHG_GPIO_Port, CHRG_CHG_Pin))
+      {
+        /* If the batt is charging up, show a little lightning in the top bar */
+        item_area_set_text_16(&menu_top_bar.items[5].item.area, L"\xF0E7");
+      }
+      else
+      {
+        item_area_set_text_16(&menu_top_bar.items[5].item.area, L"");
+      }
 
       /* Display battery status */
         /* Create batt soc string */
@@ -171,6 +180,7 @@ void Start_periph_batteryTask(void const * argument)
         /* Display screen items */
         osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[1]);
         osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[2]);
+        osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[5]);
     }
   }
 }
