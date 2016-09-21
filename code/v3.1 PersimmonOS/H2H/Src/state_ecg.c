@@ -51,6 +51,8 @@ static void ecg_to_ecg_6_lead(state_ptr state)
 /* State behaviour */
 void behaviour_ecg(state_ptr state)
 {
+  uint32_t i;
+  
   /* Set events to react to */
   state->back = ecg_to_main;
   state->ecg_1_lead = ecg_to_ecg_1_lead;
@@ -63,7 +65,6 @@ void behaviour_ecg(state_ptr state)
   osMailPut(queue_input_menuHandle, (void *) &menu_ecg);
 
   /* Display menu */
-  uint32_t i;
   for (i = 0; i < menu_ecg.item_num; i++)
   {
     osMailPut(queue_lcdHandle, (void *) &menu_ecg.items[i]);

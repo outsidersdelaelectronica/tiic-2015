@@ -16,6 +16,7 @@ osMessageQId queue_ecg_lead_aVRHandle;
 osMessageQId queue_ecg_lead_aVLHandle;
 osMessageQId queue_ecg_lead_aVFHandle;
 osMessageQId queue_ecg_bpmHandle;
+osMessageQId queue_ecg_bpm_screenHandle;
 osMailQId queue_ecg_keyHandle;
 
 /* Tasks */
@@ -90,6 +91,10 @@ void tasks_ecg_init()
   osMessageQDef(queue_ecg_bpm, 2, uint32_t);
   queue_ecg_bpmHandle = osMessageCreate(osMessageQ(queue_ecg_bpm), NULL);
   
+  /* queue_ecg_bpm */
+  osMessageQDef(queue_ecg_bpm_screen, 2, uint32_t);
+  queue_ecg_bpm_screenHandle = osMessageCreate(osMessageQ(queue_ecg_bpm_screen), NULL);
+  
   /* queue_input_click */
   osMailQDef(queue_ecg_key, 2, validation_key_t);
   queue_ecg_keyHandle = osMailCreate(osMailQ(queue_ecg_key), NULL);
@@ -118,7 +123,7 @@ void tasks_ecg_start()
   osThreadDef(ecg_validationTask, Start_ecg_validationTask, osPriorityNormal, 0, 64);
   ecg_validationTaskHandle = osThreadCreate(osThread(ecg_validationTask), NULL);
 }
-
+size_t sizerino;
 void Start_ecg_afeTask(void const * argument)
 {
   /* Reset semaphores */
@@ -145,6 +150,7 @@ void Start_ecg_afeTask(void const * argument)
         osMessagePut(queue_ecg_afe_ch_2Handle, afe.last_data.ch2_data, 0);
       }
     }
+    sizerino = xPortGetMinimumEverFreeHeapSize();
   }
 }
 
@@ -189,7 +195,7 @@ void Start_ecg_filterTask(void const * argument)
       lead_aVF = (lead_II + lead_III) >> 1;
 
       /* Output data to queues */
-//      osMessagePut(queue_ecg_lead_IHandle,   lead_I,   0);
+      osMessagePut(queue_ecg_lead_IHandle,   lead_I,   0);
 //      osMessagePut(queue_ecg_lead_IIHandle,  lead_II,  0);
 //      osMessagePut(queue_ecg_lead_IIIHandle, lead_III, 0);
 //      osMessagePut(queue_ecg_lead_aVRHandle, lead_aVR, 0);
@@ -243,11 +249,13 @@ void Start_ecg_bpmDetTask(void const * argument)
 
         if( sample_counter > 100)
         {
-          bpm = ((60 * FS * 1024) / sample_counter);
+          /* 60 * 1024 * FS / SC */
+          bpm = ((61440 * FS ) / sample_counter);
           sample_counter = 0;
           maxerino = 0;
           flag_qrs_zone = 0;
           osMessagePut(queue_ecg_bpmHandle, (uint32_t) bpm, 0);
+          osMessagePut(queue_ecg_bpm_screenHandle, (uint32_t) bpm, 0);
         } 
       }
     }        

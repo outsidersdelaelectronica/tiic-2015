@@ -59,64 +59,60 @@ int OpenStack(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_Initializatio
    BD_ADDR_t                  BD_ADDR;
    L2CA_Link_Connect_Params_t L2CA_Link_Connect_Params;
 
-   /* First check to see if the Stack has already been opened.          */
-   if(!BluetoothStackID)
-   {
-       /* Initialize BTPSKNRl.                                        */
-       BTPS_Init(BTPS_Initialization);
+  /* Initialize BTPSKNRl.                                        */
+  BTPS_Init(BTPS_Initialization);
 
-       /* Initialize the Stack                                        */
-       Result = BSC_Initialize(HCI_DriverInformation, 0);
+  /* Initialize the Stack                                        */
+  Result = BSC_Initialize(HCI_DriverInformation, 0);
 
-       /* Next, check the return value of the initialization to see if*/
-       /* it was successful.                                          */
-       if(Result > 0)
-       {
-          HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin,GPIO_PIN_SET);
-          osDelay(500);
-          HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin,GPIO_PIN_RESET);
-          /* The Stack was initialized successfully, inform the user  */
-          /* and set the return value of the initialization function  */
-          /* to the Bluetooth Stack ID.                               */
-          BluetoothStackID = Result;
+  /* Next, check the return value of the initialization to see if*/
+  /* it was successful.                                          */
+  if(Result > 0)
+  {
+    HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin,GPIO_PIN_SET);
+    osDelay(500);
+    HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin,GPIO_PIN_RESET);
+    /* The Stack was initialized successfully, inform the user  */
+    /* and set the return value of the initialization function  */
+    /* to the Bluetooth Stack ID.                               */
+    BluetoothStackID = Result;
 
-          /* Initialize the default Secure Simple Pairing parameters. */
-          IOCapability     = DEFAULT_IO_CAPABILITY;
-          OOBSupport       = FALSE;
-          MITMProtection   = DEFAULT_MITM_PROTECTION;
+    /* Initialize the default Secure Simple Pairing parameters. */
+    IOCapability     = DEFAULT_IO_CAPABILITY;
+    OOBSupport       = FALSE;
+    MITMProtection   = DEFAULT_MITM_PROTECTION;
 
-          /* Set the Name for the initial use.              */
-          GAP_Set_Local_Device_Name (BluetoothStackID,APP_DEMO_NAME);
+    /* Set the Name for the initial use.              */
+    GAP_Set_Local_Device_Name (BluetoothStackID,APP_DEMO_NAME);
 
-          /* Go ahead and allow Master/Slave Role Switch.             */
-          L2CA_Link_Connect_Params.L2CA_Link_Connect_Request_Config  = cqAllowRoleSwitch;
-          L2CA_Link_Connect_Params.L2CA_Link_Connect_Response_Config = csMaintainCurrentRole;
+    /* Go ahead and allow Master/Slave Role Switch.             */
+    L2CA_Link_Connect_Params.L2CA_Link_Connect_Request_Config  = cqAllowRoleSwitch;
+    L2CA_Link_Connect_Params.L2CA_Link_Connect_Response_Config = csMaintainCurrentRole;
 
-          L2CA_Set_Link_Connection_Configuration(BluetoothStackID, &L2CA_Link_Connect_Params);
+    L2CA_Set_Link_Connection_Configuration(BluetoothStackID, &L2CA_Link_Connect_Params);
 
-          if(HCI_Command_Supported(BluetoothStackID, HCI_SUPPORTED_COMMAND_WRITE_DEFAULT_LINK_POLICY_BIT_NUMBER) > 0)
-          {
-             HCI_Write_Default_Link_Policy_Settings(BluetoothStackID,
-                                                    (HCI_LINK_POLICY_SETTINGS_ENABLE_MASTER_SLAVE_SWITCH|
-                                                     HCI_LINK_POLICY_SETTINGS_ENABLE_SNIFF_MODE), &Status);
-          }
-          /* Delete all Stored Link Keys.                             */
-          ASSIGN_BD_ADDR(BD_ADDR, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
+    if(HCI_Command_Supported(BluetoothStackID, HCI_SUPPORTED_COMMAND_WRITE_DEFAULT_LINK_POLICY_BIT_NUMBER) > 0)
+    {
+       HCI_Write_Default_Link_Policy_Settings(BluetoothStackID,
+                                              (HCI_LINK_POLICY_SETTINGS_ENABLE_MASTER_SLAVE_SWITCH|
+                                               HCI_LINK_POLICY_SETTINGS_ENABLE_SNIFF_MODE), &Status);
+    }
+    /* Delete all Stored Link Keys.                             */
+    ASSIGN_BD_ADDR(BD_ADDR, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
 
-          DeleteLinkKey(BD_ADDR);
-       }
-       else
-       {
-          /* The Stack was NOT initialized successfully, inform the   */
-          /* user and set the return value of the initialization      */
-          /* function to an error.                                    */
-          HAL_GPIO_WritePin(GPIOC, UI_LED_R_Pin,GPIO_PIN_SET);
-          BluetoothStackID = 0;
-          ret_val          = UNABLE_TO_INITIALIZE_STACK;
-       }
-   }
+    DeleteLinkKey(BD_ADDR);
+  }
+  else
+  {
+    /* The Stack was NOT initialized successfully, inform the   */
+    /* user and set the return value of the initialization      */
+    /* function to an error.                                    */
+    HAL_GPIO_WritePin(GPIOC, UI_LED_R_Pin,GPIO_PIN_SET);
+    BluetoothStackID = 0;
+    ret_val          = UNABLE_TO_INITIALIZE_STACK;
+  }
 
-   return(ret_val);
+  return(ret_val);
 }
 
  /* The following function is used to initialize the application      */
@@ -171,58 +167,62 @@ static int BTPSInitCallback(int Length, char *Message)
 
    /* The following function handles the sleep indication callbacks from*/
    /* the HCI transport.                                                */
-static void Sleep_Indication_Callback(Boolean_t SleepAllowed, unsigned long CallbackParameter)
-{
-   /* Verify parameters.                                                */
-   if(CallbackParameter)
-   {
-      if(SleepAllowed)
-      {
-         /* Attempt to suspend the transport.                           */
-         HCITR_COMSuspend(TRANSPORT_ID);
-      }
-   }
-}
+//static void Sleep_Indication_Callback(Boolean_t SleepAllowed, unsigned long CallbackParameter)
+//{
+//   /* Verify parameters.                                                */
+//   if(CallbackParameter)
+//   {
+//      if(SleepAllowed)
+//      {
+//         /* Attempt to suspend the transport.                           */
+//         HCITR_COMSuspend(TRANSPORT_ID);
+//      }
+//   }
+//}
 
 /* Initialize all BT stack related stuff */
 void bluetooth_init(void)
 {
-   int                           Result;
+//   int                           Result;
    BTPS_Initialization_t         BTPS_Initialization;
    HCI_DriverInformation_t       HCI_DriverInformation;
-   HCI_HCILLConfiguration_t      HCILLConfig;
-   HCI_Driver_Reconfigure_Data_t DriverReconfigureData;
-   
-   /* Configure the UART Parameters.                                    */
-   HCI_DRIVER_SET_COMM_INFORMATION(&HCI_DriverInformation, 1, VENDOR_BAUD_RATE, cpUART_RTS_CTS);
-   HCI_DriverInformation.DriverInformation.COMMDriverInformation.InitializationDelay = 100;
-
-   /* Set up the application callbacks.                                 */
-   BTPS_Initialization.MessageOutputCallback = BTPSInitCallback;
-
-   /* Initialize the application.                                       */
-   if((Result = InitializeApplication(&HCI_DriverInformation, &BTPS_Initialization)) > 0)
+//   HCI_HCILLConfiguration_t      HCILLConfig;
+//   HCI_Driver_Reconfigure_Data_t DriverReconfigureData;
+    /* First check to see if the Stack has already been opened.          */
+   if( !BluetoothStackID)
    {
-      /* Register a sleep mode callback if we are using HCILL Mode.     */
-      if((HCI_DriverInformation.DriverInformation.COMMDriverInformation.Protocol == cpHCILL)
-         || (HCI_DriverInformation.DriverInformation.COMMDriverInformation.Protocol == cpHCILL_RTS_CTS))
-      {
-         HCILLConfig.SleepCallbackFunction        = Sleep_Indication_Callback;
-         HCILLConfig.SleepCallbackParameter       = 0;
-         DriverReconfigureData.ReconfigureCommand = HCI_COMM_DRIVER_RECONFIGURE_DATA_COMMAND_CHANGE_HCILL_PARAMETERS;
-         DriverReconfigureData.ReconfigureData    = (void *)&HCILLConfig;
+     /* Configure the UART Parameters.                                    */
+     HCI_DRIVER_SET_COMM_INFORMATION(&HCI_DriverInformation, 1, VENDOR_BAUD_RATE, cpUART_RTS_CTS);
+     HCI_DriverInformation.DriverInformation.COMMDriverInformation.InitializationDelay = 100;
 
-         /* Register the sleep mode callback.  Note that if this        */
-         /* function returns greater than 0 then sleep is currently     */
-         /* enabled.                                                    */
-         Result = HCI_Reconfigure_Driver((unsigned int)Result, FALSE, &DriverReconfigureData);
-         if(Result > 0)
-         {
-            /* Flag that sleep mode is enabled.                         */
-           Result = 0;
-         }
-      }
-   }
+     /* Set up the application callbacks.                                 */
+     BTPS_Initialization.MessageOutputCallback = BTPSInitCallback;
+
+     /* Initialize the application.                                       */
+     InitializeApplication(&HCI_DriverInformation, &BTPS_Initialization);
+//     if((Result = InitializeApplication(&HCI_DriverInformation, &BTPS_Initialization)) > 0)
+//     {
+//        /* Register a sleep mode callback if we are using HCILL Mode.     */
+//        if((HCI_DriverInformation.DriverInformation.COMMDriverInformation.Protocol == cpHCILL)
+//           || (HCI_DriverInformation.DriverInformation.COMMDriverInformation.Protocol == cpHCILL_RTS_CTS))
+//        {
+//           HCILLConfig.SleepCallbackFunction        = Sleep_Indication_Callback;
+//           HCILLConfig.SleepCallbackParameter       = 0;
+//           DriverReconfigureData.ReconfigureCommand = HCI_COMM_DRIVER_RECONFIGURE_DATA_COMMAND_CHANGE_HCILL_PARAMETERS;
+//           DriverReconfigureData.ReconfigureData    = (void *)&HCILLConfig;
+//
+//           /* Register the sleep mode callback.  Note that if this        */
+//           /* function returns greater than 0 then sleep is currently     */
+//           /* enabled.                                                    */
+//           Result = HCI_Reconfigure_Driver((unsigned int)Result, FALSE, &DriverReconfigureData);
+//           if(Result > 0)
+//           {
+//              /* Flag that sleep mode is enabled.                         */
+//             Result = 0;
+//           }
+//        }
+//     }
+   }   
 }
 
    /* The following function is responsible for closing the SS1         */
@@ -1376,7 +1376,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
 void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t *SPP_Event_Data, unsigned long CallbackParameter)
 {
   int       Result;
-  bt_packet_t packet;
+  bt_packet_t packet = {.packet_content = {0}};
   /* First, check to see if the required parameters appear to be       */
   /* semi-valid.                                                       */
   if((SPP_Event_Data) && (BluetoothStackID))

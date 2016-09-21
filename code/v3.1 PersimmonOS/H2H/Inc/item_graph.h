@@ -27,7 +27,7 @@ typedef struct item_graph_t
   gui_active_t is_active;
 
   uint32_t x_axis_full_scale;        // In miliseconds
-  uint32_t y_axis_full_scale;        // In nanovolts
+  uint32_t y_axis_full_scale;        // In microvolts
 
   uint32_t value_index;
   int32_t second_to_last_value;
