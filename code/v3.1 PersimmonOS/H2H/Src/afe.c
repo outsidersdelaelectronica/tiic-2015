@@ -144,7 +144,7 @@ void afe_init(afe_t *afe, SPI_HandleTypeDef *hspi)
   afe_calibrate(afe);
 
   /* Enable DRDY interrupts */
-  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+//  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 }
 
 void afe_start_read(afe_t *afe)
@@ -223,7 +223,7 @@ void afe_calibrate(afe_t *afe)
   HAL_Delay(1);         // t > (4*tCLK = 7.8125 us)
 
   /* Enable DRDY interrupts */
-  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+//  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 
   /* End of calibration */
 }
@@ -234,7 +234,7 @@ void afe_test_signal_on(afe_t *afe)
   uint8_t reg_config2_ts,   reg_ch1set_ts,   reg_ch2set_ts;
 
   /* Disable DRDY interrupts */
-  HAL_NVIC_DisableIRQ(EXTI1_IRQn);
+//  HAL_NVIC_DisableIRQ(EXTI1_IRQn);
 
   /* Stop read data continuous: Send SDATAC so registers can be written */
   afe_hal_write_command(afe, AFE_SDATAC);
@@ -267,7 +267,7 @@ void afe_test_signal_on(afe_t *afe)
   HAL_Delay(1);         // t > (4*tCLK = 7.8125 us)
 
   /* Enable DRDY interrupts */
-  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+//  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 }
 
 void afe_test_signal_off(afe_t *afe)
@@ -276,7 +276,7 @@ void afe_test_signal_off(afe_t *afe)
   uint8_t reg_config2_ts,   reg_ch1set_ts,   reg_ch2set_ts;
 
   /* Disable DRDY interrupts */
-  HAL_NVIC_DisableIRQ(EXTI1_IRQn);
+//  HAL_NVIC_DisableIRQ(EXTI1_IRQn);
 
   /* Stop read data continuous: Send SDATAC so registers can be written */
   afe_hal_write_command(afe, AFE_SDATAC);
@@ -313,7 +313,7 @@ void afe_test_signal_off(afe_t *afe)
   HAL_Delay(1);         // t > (4*tCLK = 7.8125 us)
 
   /* Enable DRDY interrupts */
-  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+//  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 }
 
 void afe_set_gain(afe_t *afe, uint8_t channel, uint8_t gain)
@@ -352,7 +352,7 @@ void afe_set_gain(afe_t *afe, uint8_t channel, uint8_t gain)
   }
 
   /* Disable DRDY interrupts */
-  HAL_NVIC_DisableIRQ(EXTI1_IRQn);
+//  HAL_NVIC_DisableIRQ(EXTI1_IRQn);
 
   /* Stop read data continuous: Send SDATAC so registers can be written */
   afe_hal_write_command(afe, AFE_SDATAC);
@@ -386,5 +386,5 @@ void afe_set_gain(afe_t *afe, uint8_t channel, uint8_t gain)
   HAL_Delay(1);         // t > (4*tCLK = 7.8125 us)
 
   /* Enable DRDY interrupts */
-  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+//  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 }

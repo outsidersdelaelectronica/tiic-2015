@@ -4,6 +4,7 @@
 osSemaphoreId sem_input_touch_penHandle;
 osSemaphoreId sem_input_button_short_pressHandle;
 osSemaphoreId sem_input_button_long_pressHandle;
+extern osSemaphoreId sem_ecg_keygenHandle;
 
 /* Queues */
 osMailQId queue_input_clickHandle;
@@ -55,11 +56,11 @@ void tasks_input_start()
   input_touchTaskHandle = osThreadCreate(osThread(input_touchTask), NULL);
 
   /* input_clickTask */
-  osThreadDef(input_clickTask, Start_input_clickTask, osPriorityAboveNormal, 0, 128);
+  osThreadDef(input_clickTask, Start_input_clickTask, osPriorityAboveNormal, 0, 100);
   input_clickTaskHandle = osThreadCreate(osThread(input_clickTask), NULL);
 
   /* input_buttonTask */
-  osThreadDef(input_buttonTask, Start_input_buttonTask, osPriorityHigh, 0, 128);
+  osThreadDef(input_buttonTask, Start_input_buttonTask, osPriorityHigh, 0, 64);
   input_buttonTaskHandle = osThreadCreate(osThread(input_buttonTask), NULL);
 }
 
@@ -72,73 +73,73 @@ void Start_input_touchTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-      if (osSemaphoreWait(sem_input_touch_penHandle, osWaitForever) == osOK)
+    if (osSemaphoreWait(sem_input_touch_penHandle, osWaitForever) == osOK)
+    {
+      /* Mask PEN interrupts */
+      EXTI->IMR &= (~TP_PEN_Pin);
+
+      /* A finger is touching the screen.
+       * Keep reading values until finger is lifted
+       */
+      do
       {
-        /* Mask PEN interrupts */
-        EXTI->IMR &= (~TP_PEN_Pin);
+        /* Read value */
+        touch_read_position(&touch);
+        current_lcd_pos = touch_get_lcd_pos(&touch);
 
-        /* A finger is touching the screen.
-         * Keep reading values until finger is lifted
-         */
-        do
+        /* If we detect a touch with enough pressure */
+        if (touch.is_clicked == T_CLICKED)
         {
-          /* Read value */
-          touch_read_position(&touch);
-          current_lcd_pos = touch_get_lcd_pos(&touch);
+          /* Prepare click position */
+          click.pos.x_pos = current_lcd_pos.x_pos;
+          click.pos.y_pos = current_lcd_pos.y_pos;
 
-          /* If we detect a touch with enough pressure */
-          if (touch.is_clicked == T_CLICKED)
+          /* If it is the first one (the first click) */
+          if (is_first_click)
           {
-            /* Prepare click position */
-            click.pos.x_pos = current_lcd_pos.x_pos;
-            click.pos.y_pos = current_lcd_pos.y_pos;
+            /* A finger just pressed the screen
+             * with enough pressure!
+             */
+            click.click_type = CLICK_DOWN;
+            osMailPut(queue_input_clickHandle, (void *) &click);
 
-            /* If it is the first one (the first click) */
-            if (is_first_click)
-            {
-              /* A finger just pressed the screen
-               * with enough pressure!
-               */
-              click.click_type = CLICK_DOWN;
-              osMailPut(queue_input_clickHandle, (void *) &click);
-
-              /* No longer detecting the first click */
-              is_first_click = 0;
-            }
-            /* If it is not the first one (it keeps pressing the screen) */
-            else
-            {
-              /* Finger is still pressing the screen!
-               */
-              click.click_type = CLICK_HOLD;
-              osMailPut(queue_input_clickHandle, (void *) &click);
-            }
+            /* No longer detecting the first click */
+            is_first_click = 0;
           }
-          /* Finger detection sample interval */
-          osDelay(50);
+          /* If it is not the first one (it keeps pressing the screen) */
+          else
+          {
+            /* Finger is still pressing the screen!
+             */
+            click.click_type = CLICK_HOLD;
+            osMailPut(queue_input_clickHandle, (void *) &click);
+          }
         }
-        while (HAL_GPIO_ReadPin(TP_PEN_GPIO_Port, TP_PEN_Pin) == GPIO_PIN_RESET);
-        /* Keep polling until PEN signal goes high */
-
-        /* If we have detected at least one valid click */
-        if (!is_first_click)
-        {
-          /* Finger is lifted from the screen!
-           */
-          click.click_type = CLICK_UP;
-          osMailPut(queue_input_clickHandle, (void *) &click);
-
-          /* Set last position as not clicked */
-          touch.is_clicked = T_NOT_CLICKED;
-          touch.current_pos.pressure = 0;
-        }
-
-        /* Reset first click status */
-        is_first_click = 1;
-
-        /* Unmask PEN interrupts */
-        EXTI->IMR |= TP_PEN_Pin;
+        /* Finger detection sample interval */
+        osDelay(50);
       }
+      while (HAL_GPIO_ReadPin(TP_PEN_GPIO_Port, TP_PEN_Pin) == GPIO_PIN_RESET);
+      /* Keep polling until PEN signal goes high */
+
+      /* If we have detected at least one valid click */
+      if (!is_first_click)
+      {
+        /* Finger is lifted from the screen!
+         */
+        click.click_type = CLICK_UP;
+        osMailPut(queue_input_clickHandle, (void *) &click);
+
+        /* Set last position as not clicked */
+        touch.is_clicked = T_NOT_CLICKED;
+        touch.current_pos.pressure = 0;
+      }
+
+      /* Reset first click status */
+      is_first_click = 1;
+
+      /* Unmask PEN interrupts */
+      EXTI->IMR |= TP_PEN_Pin;
+    }
   }
 }
 
@@ -165,7 +166,7 @@ void Start_input_clickTask(void const * argument)
     /* Get click */
     event_click = osMailGet(queue_input_clickHandle, osWaitForever);
     if (event_click.status == osEventMail)
-  {
+    {
       /* Get click position */
       click = (click_t *) event_click.value.p;
 
@@ -225,7 +226,8 @@ void Start_input_buttonTask(void const * argument)
       GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
       GPIO_InitStruct.Pull = GPIO_NOPULL;
       HAL_GPIO_Init(WAKEUP_GPIO_Port, &GPIO_InitStruct);
-
+      
+      osSemaphoreRelease(sem_ecg_keygenHandle);
       /* Wait for falling edge */
       if (osSemaphoreWait(sem_input_button_long_pressHandle, 2000) == osErrorOS)
       {

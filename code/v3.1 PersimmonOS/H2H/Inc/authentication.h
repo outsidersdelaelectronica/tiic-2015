@@ -24,9 +24,10 @@ typedef struct validation_key_t
   key_origin_t origin;
 }validation_key_t;
 
-key_state_t write_key(uint32_t bpm, validation_key_t* key);
+void init_key(validation_key_t* key, key_origin_t origin);
 void erase_key(validation_key_t* key);
-autentitication_t bpm_preprocessing(int32_t value);
+key_state_t write_key(uint32_t bpm, validation_key_t* key);
+autentitication_t validate(validation_key_t* master_key, validation_key_t* received_key);
 
 
 #endif /* AUTENTICATION_H_ */

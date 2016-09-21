@@ -993,9 +993,6 @@
         <file>
           <name>$PROJ_DIR$\..\Src\dsp.c</name>
         </file>
-        <file>
-          <name>$PROJ_DIR$\..\Src\dsp_legacy.c</name>
-        </file>
       </group>
       <group>
         <name>fsm</name>

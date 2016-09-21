@@ -4,8 +4,9 @@
 
 #include "afe.h"
 #include "dsp.h"
+#include "authentication.h"
 
-#define FS 1000
+#define FS 500
 
 void tasks_ecg_init();
 void tasks_ecg_start();

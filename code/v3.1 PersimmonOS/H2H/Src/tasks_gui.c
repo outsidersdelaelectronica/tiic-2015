@@ -39,11 +39,11 @@ void Start_gui_tickTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-      if (osSemaphoreWait(sem_gui_tickHandle, GUI_TICK_INTERVAL) == osErrorOS)
-      {
-        /* GUI tick */
-        gui_fsm_event = fsm_gui_tick;
-        osMailPut(queue_fsm_eventsHandle, (void *) &gui_fsm_event);
-      }
+    if (osSemaphoreWait(sem_gui_tickHandle, GUI_TICK_INTERVAL) == osErrorOS)
+    {
+      /* GUI tick */
+      gui_fsm_event = fsm_gui_tick;
+      osMailPut(queue_fsm_eventsHandle, (void *) &gui_fsm_event);
+    }
   }
 }

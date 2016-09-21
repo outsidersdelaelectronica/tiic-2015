@@ -34,11 +34,11 @@ void tasks_bt_start()
 {
   /* Tasks */
   /* bt_txTask */
-  osThreadDef(bt_txTask, Start_bt_txTask, osPriorityHigh, 0, 256);
+  osThreadDef(bt_txTask, Start_bt_txTask, osPriorityHigh, 0, 240);
   bt_txTaskHandle = osThreadCreate(osThread(bt_txTask), NULL);
 
   /* bt_rxTask */
-  osThreadDef(bt_rxTask, Start_bt_rxTask, osPriorityHigh, 0, 128);
+  osThreadDef(bt_rxTask, Start_bt_rxTask, osPriorityHigh, 0, 80);
   bt_rxTaskHandle = osThreadCreate(osThread(bt_rxTask), NULL);
 }
 

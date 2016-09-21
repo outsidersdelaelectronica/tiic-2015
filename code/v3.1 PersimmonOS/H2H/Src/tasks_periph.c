@@ -58,18 +58,18 @@ void tasks_periph_start()
   periph_buzzerTaskHandle = osThreadCreate(osThread(periph_buzzerTask), NULL);
 
   /* periph_screenTask */
-  osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityNormal, 0, 256);
+  osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityNormal, 0, 125);
   periph_screenTaskHandle = osThreadCreate(osThread(periph_screenTask), NULL);
 
   /* periph_batteryTask */
-  osThreadDef(periph_batteryTask, Start_periph_batteryTask, osPriorityLow, 0, 128);
+  osThreadDef(periph_batteryTask, Start_periph_batteryTask, osPriorityLow, 0, 250);
   periph_batteryTaskHandle = osThreadCreate(osThread(periph_batteryTask), NULL);
 
   /* periph_rtcTask */
-  osThreadDef(periph_rtcTask, Start_periph_rtcTask, osPriorityLow, 0, 128);
+  osThreadDef(periph_rtcTask, Start_periph_rtcTask, osPriorityLow, 0, 100);
   periph_rtcTaskHandle = osThreadCreate(osThread(periph_rtcTask), NULL);
 }
-
+size_t sizerino[5];
 void Start_periph_buzzerTask(void const * argument)
 {
   osEvent event;
@@ -94,6 +94,7 @@ void Start_periph_buzzerTask(void const * argument)
       /* Play note */
       buzzer_play(&buzzer, current_note);
     }
+    sizerino[0] = uxTaskGetStackHighWaterMark(NULL);
   }
 }
 
@@ -113,6 +114,7 @@ void Start_periph_screenTask(void const * argument)
       /* Do item function */
       (*(current_item->item_print_function))(&lcd, &current_item->item);
     }
+    sizerino[1] = uxTaskGetStackHighWaterMark(NULL);
   }
 }
 
@@ -173,6 +175,7 @@ void Start_periph_batteryTask(void const * argument)
         osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[2]);
       }
     }
+    sizerino[2] = uxTaskGetStackHighWaterMark(NULL);
   }
 }
 
@@ -229,5 +232,6 @@ void Start_periph_rtcTask(void const * argument)
       osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[4]);
       osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[3]);
     }
+    sizerino[3] = uxTaskGetStackHighWaterMark(NULL);
   }
 }

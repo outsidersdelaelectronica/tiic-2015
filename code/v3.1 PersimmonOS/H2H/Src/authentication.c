@@ -58,16 +58,16 @@ void init_key(validation_key_t* key, key_origin_t origin)
   key->origin = origin;  
 }
 
-key_state_t write_bpm_key(validation_key_t* key, uint32_t bpm)
+key_state_t write_key(uint32_t bpm, validation_key_t* key)
 {
-  uint8_t IPI;
+  uint64_t IPI;
   
-  IPI = (uint8_t) ( bpm & 0x0000000F);
-  key->token |= (IPI << ( 4 * key->index));
+  IPI = (( bpm & 0x0000000F) << ( 4 * key->index));
+  key->token |= IPI;
   key->index++;
   if (key->index > 15 )
   {
-    key->token = READY;
+    key->state = READY;
   }
   return key->state;
 }

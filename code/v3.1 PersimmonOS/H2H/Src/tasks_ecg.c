@@ -3,6 +3,7 @@
 /* Semaphores */
 osSemaphoreId sem_ecg_afe_drdyHandle;
 osSemaphoreId sem_ecg_afe_dma_rxHandle;
+osSemaphoreId sem_ecg_keygenHandle;
 
 /* Queues */
 osMessageQId queue_ecg_afe_ch_1Handle;
@@ -15,16 +16,20 @@ osMessageQId queue_ecg_lead_aVRHandle;
 osMessageQId queue_ecg_lead_aVLHandle;
 osMessageQId queue_ecg_lead_aVFHandle;
 osMessageQId queue_ecg_bpmHandle;
+osMailQId queue_ecg_keyHandle;
 
 /* Tasks */
 osThreadId ecg_afeTaskHandle;
 osThreadId ecg_filterTaskHandle;
 osThreadId ecg_bpmDetTaskHandle;
 osThreadId ecg_keyGenTaskHandle;
+osThreadId ecg_validationTaskHandle;
+
 void Start_ecg_afeTask(void const * argument);
 void Start_ecg_filterTask(void const * argument);
 void Start_ecg_bpmDetTask(void const * argument);
 void Start_ecg_keyGenTask(void const * argument);
+void Start_ecg_validationTask(void const * argument);
 
 /* Objects */
 extern afe_t afe;
@@ -40,46 +45,54 @@ void tasks_ecg_init()
   osSemaphoreDef(sem_ecg_afe_dma_rx);
   sem_ecg_afe_dma_rxHandle = osSemaphoreCreate(osSemaphore(sem_ecg_afe_dma_rx), 1);
 
+  /* sem_ecg_afe_dma_rx */
+  osSemaphoreDef(sem_ecg_keygen);
+  sem_ecg_keygenHandle = osSemaphoreCreate(osSemaphore(sem_ecg_keygen), 1);
+  
   /* Queues */
   /* queue_ecg_afe_ch_1 */
-  osMessageQDef(queue_ecg_afe_ch_1, 4, int32_t);
+  osMessageQDef(queue_ecg_afe_ch_1, 2, int32_t);
   queue_ecg_afe_ch_1Handle = osMessageCreate(osMessageQ(queue_ecg_afe_ch_1), NULL);
 
   /* queue_ecg_afe_ch_2 */
-  osMessageQDef(queue_ecg_afe_ch_2, 4, int32_t);
+  osMessageQDef(queue_ecg_afe_ch_2, 2, int32_t);
   queue_ecg_afe_ch_2Handle = osMessageCreate(osMessageQ(queue_ecg_afe_ch_2), NULL);
 
   /* queue_ecg_filter_ch_1 */
-  osMessageQDef(queue_ecg_preprocessed, 4, int32_t);
+  osMessageQDef(queue_ecg_preprocessed, 2, int32_t);
   queue_ecg_preprocessedHandle = osMessageCreate(osMessageQ(queue_ecg_preprocessed), NULL);
 
   /* queue_ecg_lead_I */
-  osMessageQDef(queue_ecg_lead_I, 4, int32_t);
+  osMessageQDef(queue_ecg_lead_I, 2, int32_t);
   queue_ecg_lead_IHandle = osMessageCreate(osMessageQ(queue_ecg_lead_I), NULL);
 
   /* queue_ecg_lead_II */
-  osMessageQDef(queue_ecg_lead_II, 4, int32_t);
+  osMessageQDef(queue_ecg_lead_II, 2, int32_t);
   queue_ecg_lead_IIHandle = osMessageCreate(osMessageQ(queue_ecg_lead_II), NULL);
 
   /* queue_ecg_lead_III */
-  osMessageQDef(queue_ecg_lead_III, 4, int32_t);
+  osMessageQDef(queue_ecg_lead_III, 2, int32_t);
   queue_ecg_lead_IIIHandle = osMessageCreate(osMessageQ(queue_ecg_lead_III), NULL);
 
   /* queue_ecg_lead_aVR */
-  osMessageQDef(queue_ecg_lead_aVR, 4, int32_t);
+  osMessageQDef(queue_ecg_lead_aVR, 2, int32_t);
   queue_ecg_lead_aVRHandle = osMessageCreate(osMessageQ(queue_ecg_lead_aVR), NULL);
 
   /* queue_ecg_lead_aVL */
-  osMessageQDef(queue_ecg_lead_aVL, 4, int32_t);
+  osMessageQDef(queue_ecg_lead_aVL, 2, int32_t);
   queue_ecg_lead_aVLHandle = osMessageCreate(osMessageQ(queue_ecg_lead_aVL), NULL);
 
   /* queue_ecg_lead_aVF */
-  osMessageQDef(queue_ecg_lead_aVF, 4, int32_t);
+  osMessageQDef(queue_ecg_lead_aVF, 2, int32_t);
   queue_ecg_lead_aVFHandle = osMessageCreate(osMessageQ(queue_ecg_lead_aVF), NULL);
 
   /* queue_ecg_bpm */
-  osMessageQDef(queue_ecg_bpm, 4, uint32_t);
+  osMessageQDef(queue_ecg_bpm, 2, uint32_t);
   queue_ecg_bpmHandle = osMessageCreate(osMessageQ(queue_ecg_bpm), NULL);
+  
+  /* queue_input_click */
+  osMailQDef(queue_ecg_key, 2, validation_key_t);
+  queue_ecg_keyHandle = osMailCreate(osMailQ(queue_ecg_key), NULL);
 }
 
 void tasks_ecg_start()
@@ -90,16 +103,20 @@ void tasks_ecg_start()
   ecg_afeTaskHandle = osThreadCreate(osThread(ecg_afeTask), NULL);
 
   /* ecg_filterTask */
-  osThreadDef(ecg_filterTask, Start_ecg_filterTask, osPriorityNormal, 0, 256);
+  osThreadDef(ecg_filterTask, Start_ecg_filterTask, osPriorityNormal, 0, 100);
   ecg_filterTaskHandle = osThreadCreate(osThread(ecg_filterTask), NULL);
 
   /* ecg_bpmDetTask */
-  osThreadDef(ecg_bpmDetTask, Start_ecg_bpmDetTask, osPriorityNormal, 0, 128);
+  osThreadDef(ecg_bpmDetTask, Start_ecg_bpmDetTask, osPriorityNormal, 0, 80);
   ecg_bpmDetTaskHandle = osThreadCreate(osThread(ecg_bpmDetTask), NULL);
 
   /* ecg_keyGenTask */
-  osThreadDef(ecg_keyGenTask, Start_ecg_keyGenTask, osPriorityNormal, 0, 64);
+  osThreadDef(ecg_keyGenTask, Start_ecg_keyGenTask, osPriorityNormal, 0, 80);
   ecg_keyGenTaskHandle = osThreadCreate(osThread(ecg_keyGenTask), NULL);
+  
+  /* ecg_validationTask */
+  osThreadDef(ecg_validationTask, Start_ecg_validationTask, osPriorityNormal, 0, 64);
+  ecg_validationTaskHandle = osThreadCreate(osThread(ecg_validationTask), NULL);
 }
 
 void Start_ecg_afeTask(void const * argument)
@@ -107,7 +124,7 @@ void Start_ecg_afeTask(void const * argument)
   /* Reset semaphores */
   osSemaphoreWait(sem_ecg_afe_drdyHandle, osWaitForever);
   osSemaphoreWait(sem_ecg_afe_dma_rxHandle, osWaitForever);
-
+  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
   /* Infinite loop */
   for(;;)
   {
@@ -187,12 +204,10 @@ void Start_ecg_bpmDetTask(void const * argument)
 {
   osEvent event;
   int32_t ecg_lead = 0,bpm = 0;
-
-//  static int32_t threshold = 100, maxerino = 0, prev_value = 0;
-//  static uint32_t maxerino_pos = 0, sample_counter = 0;
-//  float bpm = 0;
-    static int32_t threshold_high = 1, threshold_low = 1, maxerino = 0;
-    static int32_t sample_counter = 0, flag_qrs_zone = 0;
+  int32_t threshold_high = 1, threshold_low = 1, maxerino = 0;
+  uint16_t sample_counter = 0;
+  uint8_t flag_qrs_zone = 0;
+  
   /* Infinite loop */
   for(;;)
   {
@@ -223,15 +238,17 @@ void Start_ecg_bpmDetTask(void const * argument)
     {
       if (ecg_lead <= 0)
       {
-        bpm =              ((60 * FS * 1024) / sample_counter);
         threshold_high =   ((threshold_high + maxerino*3) >> 2);
         threshold_low =    ((threshold_low + maxerino*3) * 10)>>6;
-                maxerino = 0;
-                flag_qrs_zone = 0;
-                if( sample_counter > 200)
-                {
-                  osMessagePut(queue_ecg_bpmHandle, (uint32_t) bpm, 0);
-                } 
+
+        if( sample_counter > 100)
+        {
+          bpm = ((60 * FS * 1024) / sample_counter);
+          sample_counter = 0;
+          maxerino = 0;
+          flag_qrs_zone = 0;
+          osMessagePut(queue_ecg_bpmHandle, (uint32_t) bpm, 0);
+        } 
       }
     }        
     else if (threshold_high > threshold_low)
@@ -249,8 +266,11 @@ void Start_ecg_bpmDetTask(void const * argument)
 void Start_ecg_keyGenTask(void const * argument)
 {
   osEvent event;
-
+  validation_key_t key;
   uint32_t bpm = 0;
+  
+  init_key(&key,INTERN);
+  osSemaphoreWait(sem_ecg_keygenHandle, osWaitForever);
   /* Infinite loop */
   for(;;)
   {
@@ -260,12 +280,29 @@ void Start_ecg_keyGenTask(void const * argument)
     {
       /* Retrieve value */
       bpm = (uint32_t) event.value.v;
-      // Esto lo pongo para que el compilador deje de joder
-      // se puede quitar a cholon
-      UNUSED(bpm);
+      if (osSemaphoreWait(sem_ecg_keygenHandle, 1) == osOK)
+      {
+        if(write_key(bpm, &key) != READY)
+        {
+          /* Activates itselft untill the key is ready */
+          osSemaphoreRelease(sem_ecg_keygenHandle);
+        }
+        else
+        {
+          osMailPut(queue_ecg_keyHandle, (void *) &key);
+        }
+      }
     }
+  }
+}
 
-    /* Security magic */
+void Start_ecg_validationTask(void const * argument)
+{
+  osEvent event;
 
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(100);
   }
 }
