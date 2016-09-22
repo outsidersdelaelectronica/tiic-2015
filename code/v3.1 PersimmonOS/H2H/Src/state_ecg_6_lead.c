@@ -10,14 +10,23 @@
 #include "cmsis_os.h"
 #include "menu.h"
 
+#include "leads.h"
+
+/* Mutexes */
+extern osMutexId mutex_ecg_leadsHandle;
+
 /* Queues */
 extern osMailQId queue_lcdHandle;
 extern osMessageQId queue_ecg_bpm_screenHandle;
 extern osMessageQId queue_ecg_lead_IHandle;
 
+/* Objects */
+extern leads_t leads;
+
 static void ecg_6_lead_gui_tick(state_ptr state)
 {
   osEvent event;
+  int32_t lead_I = 0, lead_II = 0, lead_III = 0;
   uint32_t bpm = 0;
   char str_bpm[4] = "-?-";
   
@@ -34,7 +43,15 @@ static void ecg_6_lead_gui_tick(state_ptr state)
     
     item_area_set_text(&current_menu.items[1].item.area, str_bpm);
     osMailPut(queue_lcdHandle, (void *) &current_menu.items[1]);
-  } 
+  }
+  
+  /* Graph display */
+  osMutexWait(mutex_ecg_leadsHandle, osWaitForever);
+  lead_I = leads.lead_I;
+  lead_II = leads.lead_II;
+  lead_III = leads.lead_III;
+  osMutexRelease(mutex_ecg_leadsHandle);
+  
 }
 
 /* State behaviour */

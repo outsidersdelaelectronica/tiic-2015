@@ -1341,6 +1341,12 @@
       </group>
       <group>
         <name>tasks</name>
+        <group>
+          <name>res</name>
+          <file>
+            <name>$PROJ_DIR$\..\Inc\leads.h</name>
+          </file>
+        </group>
         <file>
           <name>$PROJ_DIR$\..\Src\tasks_bt.c</name>
         </file>

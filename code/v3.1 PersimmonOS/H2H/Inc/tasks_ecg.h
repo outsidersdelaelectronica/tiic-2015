@@ -6,6 +6,8 @@
 #include "dsp.h"
 #include "authentication.h"
 
+#include "leads.h"
+
 #define FS 500
 
 void tasks_ecg_init();
