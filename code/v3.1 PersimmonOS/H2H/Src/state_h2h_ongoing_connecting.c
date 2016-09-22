@@ -45,7 +45,7 @@ void behaviour_h2h_ongoing_connecting(state_ptr state)
   state->h2h_ok = h2h_ongoing_connecting_to_h2h_ongoing_action;
 
   /* Do state actions */
-  Inquiry(timeout);
+  
   osDelay((timeout)<<10);
   number_of_btaddr = bt_get_ADDR(inquired_bt_addr);
   

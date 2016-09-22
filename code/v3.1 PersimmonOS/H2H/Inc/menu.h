@@ -23,25 +23,28 @@ typedef struct menu_t
 menu_t;
 
 int32_t menu_search_click(menu_t *menu, click_t *click, item_t *item);
+int32_t menu_copy(menu_t const *orig_menu, menu_t *dest_menu);
 
 /* Menus */
-extern menu_t menu_welcome;
-extern menu_t menu_goodbye;
-extern menu_t menu_top_bar;
+extern const menu_t menu_welcome;
+extern const menu_t menu_goodbye;
+extern const menu_t menu_top_bar;
 
-extern menu_t menu_main;
-extern menu_t menu_ecg;
+extern const menu_t menu_main;
+extern const menu_t menu_ecg;
 
-extern menu_t menu_h2h_connect;
-extern menu_t menu_h2h_ongoing_connecting;
-extern menu_t menu_h2h_ongoing_error;
-extern menu_t menu_h2h_ongoing_action;
+extern const menu_t menu_h2h_connect;
+extern const menu_t menu_h2h_ongoing_connecting;
+extern const menu_t menu_h2h_ongoing_error;
+extern const menu_t menu_h2h_ongoing_action;
 
-extern menu_t menu_settings_configtabs;
-extern menu_t menu_settings_configtabs_screen;
-extern menu_t menu_settings_configtabs_timedate;
-extern menu_t menu_settings_configtabs_bluetooth;
-extern menu_t menu_settings_configtabs_touch;
-extern menu_t menu_settings_configtabs_about;
+extern const menu_t menu_settings_configtabs;
+extern const menu_t menu_settings_configtabs_screen;
+extern const menu_t menu_settings_configtabs_timedate;
+extern const menu_t menu_settings_configtabs_bluetooth;
+extern const menu_t menu_settings_configtabs_touch;
+extern const menu_t menu_settings_configtabs_about;
+
+extern menu_t current_menu;
 
 #endif /* MENU_H_ */

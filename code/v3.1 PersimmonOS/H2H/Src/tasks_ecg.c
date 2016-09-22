@@ -95,7 +95,7 @@ void tasks_ecg_init()
   osMessageQDef(queue_ecg_bpm_screen, 2, uint32_t);
   queue_ecg_bpm_screenHandle = osMessageCreate(osMessageQ(queue_ecg_bpm_screen), NULL);
   
-  /* queue_input_click */
+  /* queue_ecg_key */
   osMailQDef(queue_ecg_key, 2, validation_key_t);
   queue_ecg_keyHandle = osMailCreate(osMailQ(queue_ecg_key), NULL);
 }
@@ -120,7 +120,7 @@ void tasks_ecg_start()
   ecg_keyGenTaskHandle = osThreadCreate(osThread(ecg_keyGenTask), NULL);
   
   /* ecg_validationTask */
-  osThreadDef(ecg_validationTask, Start_ecg_validationTask, osPriorityNormal, 0, 64);
+  osThreadDef(ecg_validationTask, Start_ecg_validationTask, osPriorityNormal, 0, 128);
   ecg_validationTaskHandle = osThreadCreate(osThread(ecg_validationTask), NULL);
 }
 size_t sizerino;
@@ -195,7 +195,7 @@ void Start_ecg_filterTask(void const * argument)
       lead_aVF = (lead_II + lead_III) >> 1;
 
       /* Output data to queues */
-      osMessagePut(queue_ecg_lead_IHandle,   lead_I,   0);
+//      osMessagePut(queue_ecg_lead_IHandle,   lead_I,   0);
 //      osMessagePut(queue_ecg_lead_IIHandle,  lead_II,  0);
 //      osMessagePut(queue_ecg_lead_IIIHandle, lead_III, 0);
 //      osMessagePut(queue_ecg_lead_aVRHandle, lead_aVR, 0);
@@ -211,7 +211,7 @@ void Start_ecg_bpmDetTask(void const * argument)
   osEvent event;
   int32_t ecg_lead = 0,bpm = 0;
   int32_t threshold_high = 1, threshold_low = 1, maxerino = 0;
-  uint16_t sample_counter = 0;
+  int sample_counter = 0;
   uint8_t flag_qrs_zone = 0;
   
   /* Infinite loop */
@@ -251,7 +251,7 @@ void Start_ecg_bpmDetTask(void const * argument)
         {
           /* 60 * 1024 * FS / SC */
           bpm = ((61440 * FS ) / sample_counter);
-          sample_counter = 0;
+          sample_counter = -1;
           maxerino = 0;
           flag_qrs_zone = 0;
           osMessagePut(queue_ecg_bpmHandle, (uint32_t) bpm, 0);
@@ -288,7 +288,7 @@ void Start_ecg_keyGenTask(void const * argument)
     {
       /* Retrieve value */
       bpm = (uint32_t) event.value.v;
-      if (osSemaphoreWait(sem_ecg_keygenHandle, 1) == osOK)
+      if (osSemaphoreWait(sem_ecg_keygenHandle, 0) == osOK)
       {
         if(write_key(bpm, &key) != READY)
         {
@@ -307,10 +307,39 @@ void Start_ecg_keyGenTask(void const * argument)
 void Start_ecg_validationTask(void const * argument)
 {
   osEvent event;
-
+  validation_key_t inter_key, extern_key, incomming_key;
+  autentitication_t auth_reponse;
+  
+  init_key(&inter_key,INTERN);
+  init_key(&extern_key,EXTERN);
+  init_key(&incomming_key,INTERN);
+  
   /* Infinite loop */
   for(;;)
   {
-    osDelay(100);
+    event = osMailGet(queue_ecg_keyHandle, osWaitForever);
+    if (event.status == osEventMail)
+    {
+      incomming_key = *((validation_key_t*) event.value.v);
+      if(incomming_key.origin == INTERN)
+      {
+        inter_key = incomming_key;
+        /* Esto esta mal, pero tempus fugit. Hay que fixearlo */
+        erase_key((validation_key_t*) event.value.v);
+      }
+      else
+      {
+        extern_key = incomming_key;
+        /* Esto esta mal, pero tempus fugit. Hay que fixearlo */
+        erase_key((validation_key_t*) event.value.v);
+      }   
+      
+      if((inter_key.state == READY)&&(extern_key.state == READY))
+      {
+        auth_reponse = validate(&inter_key,&extern_key);
+        erase_key(&inter_key);
+        erase_key(&extern_key);
+      }
+    }
   }
 }

@@ -47,6 +47,9 @@
 #include "tasks_fsm.h"
 #include "tasks_gui.h"
 
+#include "menu.h"
+extern menu_t current_menu;
+extern const menu_t menu_top_bar;
 /* Hardware */
 afe_t afe;
 buzzer_t buzzer;
@@ -117,6 +120,7 @@ void MX_FREERTOS_Init(void)
   tasks_fsm_start();
   tasks_gui_start();
 
+  
   /* TEST Task */
   osThreadDef(testTask, Start_testTask, osPriorityIdle, 0, 64);
   testTaskHandle = osThreadCreate(osThread(testTask), NULL);
@@ -132,7 +136,7 @@ void Start_testTask(void const * argument)
   lcd_config.item_print_function = lcd_set_config;
   osMailPut(queue_lcdHandle, (void *) &lcd_config);
 
-  for (;;)
+  while(1)
   {
     osDelay(2000);
   }

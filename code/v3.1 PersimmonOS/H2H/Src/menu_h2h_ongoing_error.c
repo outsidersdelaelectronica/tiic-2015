@@ -1,6 +1,6 @@
 #include "menu.h"
 
-menu_t menu_h2h_ongoing_error =
+const menu_t menu_h2h_ongoing_error =
 {
   .item_num = 3,
   .items =

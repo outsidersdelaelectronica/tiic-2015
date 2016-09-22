@@ -1,6 +1,6 @@
 #include "menu.h"
 
-menu_t menu_ecg =
+const menu_t menu_ecg =
 {
   .item_num = 7,
   .items =

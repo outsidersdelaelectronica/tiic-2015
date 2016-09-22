@@ -29,27 +29,29 @@ void behaviour_settings_configtabs_touch(state_ptr state)
 {
   /* Set events to react to */
   state->settings_touch_calib = settings_configtabs_touch_to_settings_touchcalib;
-
+  
   /* Do state actions */
-  menu_settings_configtabs.items[1].item.area.is_active = GUI_ACTIVE;
-  menu_settings_configtabs.items[1].item.area.text_color = (color_t) COLOR_WHITE;
-  menu_settings_configtabs.items[1].item.area.bg_color = (color_t) COLOR_BLUE;
+  menu_copy(&menu_settings_configtabs, &current_menu);
   
-  menu_settings_configtabs.items[2].item.area.is_active = GUI_ACTIVE;
-  menu_settings_configtabs.items[2].item.area.text_color = (color_t) COLOR_WHITE;
-  menu_settings_configtabs.items[2].item.area.bg_color = (color_t) COLOR_BLUE;
-
-  menu_settings_configtabs.items[3].item.area.is_active = GUI_ACTIVE;
-  menu_settings_configtabs.items[3].item.area.text_color = (color_t) COLOR_WHITE;
-  menu_settings_configtabs.items[3].item.area.bg_color = (color_t) COLOR_BLUE;
-
-  menu_settings_configtabs.items[4].item.area.is_active = GUI_INACTIVE;
-  menu_settings_configtabs.items[4].item.area.text_color = (color_t) COLOR_BLUE;
-  menu_settings_configtabs.items[4].item.area.bg_color = (color_t) COLOR_WHITE;
+  current_menu.items[1].item.area.is_active = GUI_ACTIVE;
+  current_menu.items[1].item.area.text_color = (color_t) COLOR_WHITE;
+  current_menu.items[1].item.area.bg_color = (color_t) COLOR_BLUE;
   
-  menu_settings_configtabs.items[5].item.area.is_active = GUI_ACTIVE;
-  menu_settings_configtabs.items[5].item.area.text_color = (color_t) COLOR_WHITE;
-  menu_settings_configtabs.items[5].item.area.bg_color = (color_t) COLOR_BLUE;
+  current_menu.items[2].item.area.is_active = GUI_ACTIVE;
+  current_menu.items[2].item.area.text_color = (color_t) COLOR_WHITE;
+  current_menu.items[2].item.area.bg_color = (color_t) COLOR_BLUE;
+
+  current_menu.items[3].item.area.is_active = GUI_ACTIVE;
+  current_menu.items[3].item.area.text_color = (color_t) COLOR_WHITE;
+  current_menu.items[3].item.area.bg_color = (color_t) COLOR_BLUE;
+
+  current_menu.items[4].item.area.is_active = GUI_INACTIVE;
+  current_menu.items[4].item.area.text_color = (color_t) COLOR_BLUE;
+  current_menu.items[4].item.area.bg_color = (color_t) COLOR_WHITE;
+  
+  current_menu.items[5].item.area.is_active = GUI_ACTIVE;
+  current_menu.items[5].item.area.text_color = (color_t) COLOR_WHITE;
+  current_menu.items[5].item.area.bg_color = (color_t) COLOR_BLUE;
   
 //  /* Set menu */
 //  osMailPut(queue_input_menuHandle, (void *) &menu_settings_configtabs_about);

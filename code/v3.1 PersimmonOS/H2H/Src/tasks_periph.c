@@ -137,48 +137,49 @@ void Start_periph_batteryTask(void const * argument)
       {
         /* Format received bytes into usable data */
         gauge_format_data(&gauge);
-
+        
+        menu_copy(&menu_top_bar, &current_menu);
         /* Read charger values */
         if (HAL_GPIO_ReadPin(CHRG_CHG_GPIO_Port, CHRG_CHG_Pin))
         {
           /* If the batt is charging up, show a little lightning in the top bar */
-          item_area_set_text_16(&menu_top_bar.items[5].item.area, L"\xF0E7");
+          item_area_set_text_16(&current_menu.items[5].item.area, L"\xF0E7");
         }
         else
         {
-          item_area_set_text_16(&menu_top_bar.items[5].item.area, L"");
+          item_area_set_text_16(&current_menu.items[5].item.area, L"");
         }
 
         /* Create batt soc string */
         sprintf(batt_soc_string, "%u%%", gauge.last_data.soc);
-        item_area_set_text(&menu_top_bar.items[2].item.area, batt_soc_string);
+        item_area_set_text(&current_menu.items[2].item.area, batt_soc_string);
 
         /* Create batt icon */
         if (gauge.last_data.soc < 5)
         {
-          item_area_set_text_16(&menu_top_bar.items[1].item.area, L"\xF244");
+          item_area_set_text_16(&current_menu.items[1].item.area, L"\xF244");
         }
         else if (gauge.last_data.soc < 25)
         {
-          item_area_set_text_16(&menu_top_bar.items[1].item.area, L"\xF243");
+          item_area_set_text_16(&current_menu.items[1].item.area, L"\xF243");
         }
         else if (gauge.last_data.soc < 50)
         {
-          item_area_set_text_16(&menu_top_bar.items[1].item.area, L"\xF242");
+          item_area_set_text_16(&current_menu.items[1].item.area, L"\xF242");
         }
         else if (gauge.last_data.soc < 75)
         {
-          item_area_set_text_16(&menu_top_bar.items[1].item.area, L"\xF241");
+          item_area_set_text_16(&current_menu.items[1].item.area, L"\xF241");
         }
         else if (gauge.last_data.soc <= 100)
         {
-          item_area_set_text_16(&menu_top_bar.items[1].item.area, L"\xF240");
+          item_area_set_text_16(&current_menu.items[1].item.area, L"\xF240");
         }
 
         /* Display screen items */
-        osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[1]);
-        osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[2]);
-        osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[5]);
+        osMailPut(queue_lcdHandle, (void *) &current_menu.items[1]);
+        osMailPut(queue_lcdHandle, (void *) &current_menu.items[2]);
+        osMailPut(queue_lcdHandle, (void *) &current_menu.items[5]);
       }
     }
   }
@@ -229,13 +230,15 @@ void Start_periph_rtcTask(void const * argument)
       }
       sprintf(date_string, "%u/%u/20%u", sDate.Date, sDate.Month, sDate.Year);
 
+      menu_copy(&menu_top_bar, &current_menu);
+      
       /* Update screen items */
-      item_area_set_text(&menu_top_bar.items[4].item.area, time_string);
-      item_area_set_text(&menu_top_bar.items[3].item.area, date_string);
+      item_area_set_text(&current_menu.items[4].item.area, time_string);
+      item_area_set_text(&current_menu.items[3].item.area, date_string);
 
       /* Draw time and date on screen */
-      osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[4]);
-      osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[3]);
+      osMailPut(queue_lcdHandle, (void *) &current_menu.items[4]);
+      osMailPut(queue_lcdHandle, (void *) &current_menu.items[3]);
     }
   }
 }

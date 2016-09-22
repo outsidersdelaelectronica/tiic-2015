@@ -1,6 +1,6 @@
 #include "menu.h"
 
-menu_t menu_settings_configtabs_about =
+const menu_t menu_settings_configtabs_about =
 {
   .item_num = 2,
   .items =

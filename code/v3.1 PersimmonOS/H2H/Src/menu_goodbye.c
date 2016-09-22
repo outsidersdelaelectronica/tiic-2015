@@ -1,6 +1,6 @@
 #include "menu.h"
 
-menu_t menu_goodbye =
+const menu_t menu_goodbye =
 {
   .item_num = 1,
   .items =

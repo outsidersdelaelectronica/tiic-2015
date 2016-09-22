@@ -12,43 +12,35 @@
 #define MASK_X2 0x4444444444444444
 #define MASK_X1 0x8888888888888888
 
-#define N_P_THRESHOLD -37.54
+#define N_P_THRESHOLD -24274098
+
 /* Tables with the log of the probabilty of each position x4,x3,x2,x1 and the */
 /* adversary probability( which is constant for every position)               */
-static const float log_Q_x4[NUMBER_OF_IPI +1] = {
-  -0.0628215282355947, -0.900532690625621, -2.06730257227987, -3.44012693636725, 
-  -4.97007472043432, -6.63169462376867, -8.41028433404004, -10.2972135191002, 
-  -12.2878921416988, -14.3808758091921, -16.5776089142238, -18.8826814940444, 
-  -21.3047238808019, -23.8584383868268, -26.5692763128313, -29.4861687212689, 
-  -32.7321198489708};
+
+static const int32_t log_Q_x4[NUMBER_OF_IPI +1] = {
+  -151679, -2174278, -4991369, -8305964, -11999925, -16011799, -20306089, 
+  -24861958, -29668323, -34721697, -40025567, -45591016, -51438881, -57604660, 
+  -64149803, -71192452, -79029591};
 
 static const float log_Q_x3[NUMBER_OF_IPI +1] = {
-  -0.126216195408805, -0.658935195436524, -1.52071291472847, -2.58854511645354, 
-  -3.81350073815831, -5.17012847913034, -6.64372602703941, -8.2256630497373, 
-  -9.91134950997357, -11.6993410151046, -13.591081957774, -15.5911623752322, 
-  -17.7082125996275, -19.95693494329, -22.3627807069322, -24.9746809530075, 
-  -27.9156399183471};
+  -304741, -1590957, -3671663, -6249875, -9207451, -12482942, -16040848, 
+  -19860333, -23930314, -28247304, -32814790, -37643855, -42755337, -48184732, 
+  -53993491, -60299755, -67400511};
 
 static const float log_Q_x2[NUMBER_OF_IPI +1] = {
-  -0.276425797303274, -0.463964595289396, -0.980562112539742, -1.70321411222321, 
-  -2.58298953188638, -3.59443707081682, -4.72285441668429, -5.95961123734059, 
-  -7.30011749553526, -8.74292879862468, -10.2894895392525, -11.9443897546691, 
-  -13.7162597770228, -15.6198019186437, -17.6804674802443, -19.947187524278, 
-  -22.542966287576};
+  -667412, -1120213, -2367504, -4112301, -6236462, -8678536, -11403027, 
+  -14389097, -17625663, -21109237, -24843308, -28838958, -33117024, -37713004, 
+  -42688348, -48161197, -54428537};
 
 static const float log_Q_x1[NUMBER_OF_IPI +1] = {
-  -0.579394762471116, -0.435972620168803, -0.621609197130714, -1.01330025652575, 
-  -1.56211473590049, -2.24260133454249, -3.04005774012152, -3.94585362048939, 
-  -4.95539893839562, -6.06724930119662, -7.28284910153597, -8.60678837666416, 
-  -10.0476974587294, -11.6202786600619, -13.3499832813741, -15.2857423851194, 
-  -17.5505602081289};
+  -1398911, -1052628, -1500835, -2446548, -3771625, -5414616, -7340023, 
+  -9527009, -11964491, -14648982, -17583969, -20780535, -24259517, -28056413, 
+  -32232673, -36906439, -42374695};
 
-static const float log_P_x4[NUMBER_OF_IPI +1] = {
-  -4.8164799306237, -3.61235994796777, -2.73729868457607, -2.0682919036175, 
-  -1.55640854263862, -1.17619730092702, -0.912955866152437, -0.758053906166694, 
-  -0.706901383719312, -0.758053906166694, -0.912955866152437, -1.17619730092702, 
-  -1.55640854263862, -2.0682919036175, -2.73729868457607, -3.61235994796777, 
-  -4.8164799306237};
+static const float log_P_x[NUMBER_OF_IPI +1] = {
+ -11629080, -8721810, -6609031, -4993757, -3757848, -2839852, -2204273, 
+ -1830272, -1706768, -1830272, -2204273, -2839852, -3757848, -4993757, 
+ -6609031, -8721810, -11629080};
 
 void init_key(validation_key_t* key, key_origin_t origin)
 {
@@ -60,9 +52,9 @@ void init_key(validation_key_t* key, key_origin_t origin)
 
 key_state_t write_key(uint32_t bpm, validation_key_t* key)
 {
-  uint64_t IPI;
+  uint64_t IPI = 0;
   
-  IPI = (( bpm & 0x0000000F) << ( 4 * key->index));
+  IPI = (( ((uint64_t)bpm) & 0xF) << ( 4 * key->index));
   key->token |= IPI;
   key->index++;
   if (key->index > 15 )
@@ -88,11 +80,11 @@ void erase_key(validation_key_t* key)
 
 autentitication_t validate(validation_key_t* master_key, validation_key_t* received_key)
 {
-  uint64_t diff;
-  uint64_t diff_x4,diff_x3,diff_x2,diff_x1;
-  uint8_t dif_bits_x4,dif_bits_x3,dif_bits_x2,dif_bits_x1;
-  float hypothesis;
-  diff = (master_key->token) ^ (master_key->token);
+  uint64_t diff = 0;
+  uint64_t diff_x4 = 0,diff_x3 = 0,diff_x2 = 0,diff_x1 = 0;
+  uint8_t dif_bits_x4 = 0,dif_bits_x3 = 0,dif_bits_x2 = 0,dif_bits_x1 = 0;
+  int32_t hypothesis = 0;
+  diff = (master_key->token) ^ (received_key->token);
   
   // we mask and align so the first posible one is the least significant bit */
   diff_x4 = diff & MASK_X4;
@@ -102,33 +94,45 @@ autentitication_t validate(validation_key_t* master_key, validation_key_t* recei
   
   while(diff_x4 > 0)
   {
-    dif_bits_x4++;
+    if( diff_x4 & 0xF)
+    { 
+      dif_bits_x4++;
+    }
     diff_x4 = diff_x4 >> 4;
   }
   
   while(diff_x3 > 0)
   {
-    dif_bits_x3++;
+    if( diff_x3 & 0xF)
+    { 
+      dif_bits_x3++;
+    }
     diff_x3 = diff_x3 >> 4;
   }  
   
   while(diff_x2 > 0)
   {
-    dif_bits_x2++;
+    if( diff_x2 & 0xF)
+    { 
+      dif_bits_x2++;
+    }
     diff_x2 = diff_x2 >> 4;
   } 
   while(diff_x1 > 0)
   {
-    dif_bits_x1++;
+    if( diff_x1 & 0xF)
+    { 
+      dif_bits_x1++;
+    }
     diff_x1 = diff_x1 >> 4;
   }  
   
-  hypothesis = (log_P_x4[dif_bits_x4] + log_P_x4[dif_bits_x3] +
-               log_P_x4[dif_bits_x2] +log_P_x4[dif_bits_x1]) -
+  hypothesis = (log_P_x[dif_bits_x4] + log_P_x[dif_bits_x3] +
+               log_P_x[dif_bits_x2] +log_P_x[dif_bits_x1]) -
                (log_Q_x4[dif_bits_x4] + log_Q_x3[dif_bits_x3] +
                log_Q_x2[dif_bits_x2] +log_Q_x1[dif_bits_x1]);
   
-  if(hypothesis > N_P_THRESHOLD)
+  if(hypothesis < N_P_THRESHOLD)
   {          
     return ACCEPTED;
     

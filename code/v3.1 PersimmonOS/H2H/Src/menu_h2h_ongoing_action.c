@@ -1,6 +1,6 @@
 #include "menu.h"
 
-menu_t menu_h2h_ongoing_action =
+const menu_t menu_h2h_ongoing_action =
 {
   .item_num = 4,
   .items =

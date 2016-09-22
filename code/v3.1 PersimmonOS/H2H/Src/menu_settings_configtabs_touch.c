@@ -1,6 +1,6 @@
 #include "menu.h"
 
-menu_t menu_settings_configtabs_touch =
+const menu_t menu_settings_configtabs_touch =
 {
   .item_num = 2,
   .items =

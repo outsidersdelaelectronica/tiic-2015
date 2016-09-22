@@ -1,5 +1,7 @@
 #include "menu.h"
 
+menu_t current_menu;
+
 int32_t menu_search_click(menu_t *menu, click_t *click, item_t *item)
 {
   int i;
@@ -34,4 +36,16 @@ int32_t menu_search_click(menu_t *menu, click_t *click, item_t *item)
 
   /* If no item has been found */
   return 0;
+}
+
+int32_t menu_copy(menu_t const *orig_menu, menu_t *dest_menu)
+{
+  uint16_t i;
+  dest_menu->item_num = orig_menu->item_num;
+  for( i = 0; i < orig_menu->item_num ; i++)
+  {
+    dest_menu->items[i] = orig_menu->items[i];
+  }
+  
+  return 1;
 }

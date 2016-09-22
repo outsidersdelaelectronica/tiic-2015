@@ -1,6 +1,6 @@
 #include "menu.h"
 
-menu_t menu_settings_configtabs_timedate =
+const menu_t menu_settings_configtabs_timedate =
 {
   .item_num = 2,
   .items =

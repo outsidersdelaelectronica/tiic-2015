@@ -29,8 +29,11 @@ static void ecg_6_lead_gui_tick(state_ptr state)
     /* Retrieve value */
     bpm = (((uint32_t) event.value.v) >> 10);
     sprintf(str_bpm, "%u", bpm);
-    item_area_set_text(&menu_ecg.items[1].item.area, str_bpm);
-    osMailPut(queue_lcdHandle, (void *) &menu_ecg.items[1]);
+    
+    menu_copy(&menu_ecg, &current_menu);
+    
+    item_area_set_text(&current_menu.items[1].item.area, str_bpm);
+    osMailPut(queue_lcdHandle, (void *) &current_menu.items[1]);
   } 
 }
 
@@ -41,17 +44,19 @@ void behaviour_ecg_6_lead(state_ptr state)
   state->gui_tick = ecg_6_lead_gui_tick;
 
   /* Do state actions */
-  menu_ecg.items[3].item.area.is_active = GUI_ACTIVE;
-  menu_ecg.items[3].item.area.text_color = (color_t) COLOR_WHITE;
-  menu_ecg.items[3].item.area.bg_color = (color_t) COLOR_BLUE;
-
-  menu_ecg.items[4].item.area.is_active = GUI_ACTIVE;
-  menu_ecg.items[4].item.area.text_color = (color_t) COLOR_WHITE;
-  menu_ecg.items[4].item.area.bg_color = (color_t) COLOR_BLUE;
+  menu_copy(&menu_ecg, &current_menu);
   
-  menu_ecg.items[5].item.area.is_active = GUI_INACTIVE;
-  menu_ecg.items[5].item.area.text_color = (color_t) COLOR_BLUE;
-  menu_ecg.items[5].item.area.bg_color = (color_t) COLOR_WHITE;
+  current_menu.items[3].item.area.is_active = GUI_ACTIVE;
+  current_menu.items[3].item.area.text_color = (color_t) COLOR_WHITE;
+  current_menu.items[3].item.area.bg_color = (color_t) COLOR_BLUE;
+
+  current_menu.items[4].item.area.is_active = GUI_ACTIVE;
+  current_menu.items[4].item.area.text_color = (color_t) COLOR_WHITE;
+  current_menu.items[4].item.area.bg_color = (color_t) COLOR_BLUE;
+  
+  current_menu.items[5].item.area.is_active = GUI_INACTIVE;
+  current_menu.items[5].item.area.text_color = (color_t) COLOR_BLUE;
+  current_menu.items[5].item.area.bg_color = (color_t) COLOR_WHITE;
 }
 
 /* Entry point to the state */

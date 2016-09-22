@@ -81,7 +81,7 @@ int main(void)
 
   /* We should never get here as control is now taken over by the scheduler */
   /* Infinite loop */
-  for (;;)
+  while(1)
   {
   }
 }

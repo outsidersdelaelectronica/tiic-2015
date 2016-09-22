@@ -1,6 +1,6 @@
 #include "menu.h"
 
-menu_t menu_welcome =
+const menu_t menu_welcome =
 {
   .item_num = 5,
   .items =

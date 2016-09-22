@@ -1,6 +1,6 @@
 #include "menu.h"
 
-menu_t menu_h2h_ongoing_connecting =
+const menu_t menu_h2h_ongoing_connecting =
 {
   .item_num = 3,
   .items =

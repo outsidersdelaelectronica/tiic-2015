@@ -149,7 +149,7 @@ void Start_input_clickTask(void const * argument)
   item_t item;
 
   click_t *click;
-  menu_t *current_menu;
+  menu_t *static_menu;
   buzzer_note_t beep;
 
   /* Block task until a concrete state is reached */
@@ -157,7 +157,8 @@ void Start_input_clickTask(void const * argument)
   if (event_menu.status == osEventMail)
   {
     /* Get menu */
-      current_menu = (menu_t *) event_menu.value.p;
+      static_menu = (menu_t *) event_menu.value.p;
+      menu_copy(static_menu, &current_menu);
   }
 
   /* Infinite loop */
@@ -182,12 +183,13 @@ void Start_input_clickTask(void const * argument)
           event_menu = osMailGet(queue_input_menuHandle, 0);
           if (event_menu.status == osEventMail)
           {
-            /* Get new menu */
-              current_menu = (menu_t *) event_menu.value.p;
+            /* Get menu */
+              static_menu = (menu_t *) event_menu.value.p;
+              menu_copy(static_menu, &current_menu);
           }
 
           /* Search item in menu on click position */
-          if (menu_search_click(current_menu, click, &item))
+          if (menu_search_click(&current_menu, click, &item))
           {
             /* Send item event */
             osMailPut(queue_fsm_eventsHandle, (void *) &(item.area.event));
@@ -210,7 +212,8 @@ void Start_input_buttonTask(void const * argument)
 {
   GPIO_InitTypeDef GPIO_InitStruct;
   fsm_event_f button_fsm_event;
-
+  buzzer_note_t beep;
+  
   /* Take both semaphores for the first time */
   osSemaphoreWait(sem_input_button_short_pressHandle, osWaitForever);
   osSemaphoreWait(sem_input_button_long_pressHandle, osWaitForever);
@@ -249,6 +252,9 @@ void Start_input_buttonTask(void const * argument)
          * we have a short press
          */
         button_fsm_event = fsm_button_short;
+        beep.note = A6;
+        beep.ms = 100;
+        osMailPut(queue_periph_buzzerHandle, (void *) &beep);
         osMailPut(queue_fsm_eventsHandle, (void *) &button_fsm_event);
       }
     }
