@@ -1172,6 +1172,12 @@
       <group>
         <name>gui</name>
         <group>
+          <name>graphs</name>
+          <file>
+            <name>$PROJ_DIR$\..\Inc\graph_ecg.c</name>
+          </file>
+        </group>
+        <group>
           <name>menus</name>
           <group>
             <name>running</name>
