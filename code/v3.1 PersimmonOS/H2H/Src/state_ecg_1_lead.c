@@ -62,17 +62,17 @@ void behaviour_ecg_1_lead(state_ptr state)
 
   /* Do state actions */
   /* Update menu */
-  current_menu.items[3].item.area.is_active = GUI_INACTIVE;
-  current_menu.items[3].item.area.text_color = (color_t) COLOR_BLUE;
-  current_menu.items[3].item.area.bg_color = (color_t) COLOR_WHITE;
-  
-  current_menu.items[4].item.area.is_active = GUI_ACTIVE;
-  current_menu.items[4].item.area.text_color = (color_t) COLOR_WHITE;
-  current_menu.items[4].item.area.bg_color = (color_t) COLOR_BLUE;
-
-  current_menu.items[5].item.area.is_active = GUI_ACTIVE;
-  current_menu.items[5].item.area.text_color = (color_t) COLOR_WHITE;
-  current_menu.items[5].item.area.bg_color = (color_t) COLOR_BLUE;
+//  current_menu.items[3].item.area.is_active = GUI_INACTIVE;
+//  current_menu.items[3].item.area.text_color = (color_t) COLOR_BLUE;
+//  current_menu.items[3].item.area.bg_color = (color_t) COLOR_WHITE;
+//  
+//  current_menu.items[4].item.area.is_active = GUI_ACTIVE;
+//  current_menu.items[4].item.area.text_color = (color_t) COLOR_WHITE;
+//  current_menu.items[4].item.area.bg_color = (color_t) COLOR_BLUE;
+//
+//  current_menu.items[5].item.area.is_active = GUI_ACTIVE;
+//  current_menu.items[5].item.area.text_color = (color_t) COLOR_WHITE;
+//  current_menu.items[5].item.area.bg_color = (color_t) COLOR_BLUE;
   
 //  graph_ecg.items[0].item_print_function = lcd_print_graph;
 //  osMailPut(queue_lcdHandle, (void *) &graph_ecg.items[0]);

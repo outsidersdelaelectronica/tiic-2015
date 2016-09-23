@@ -67,17 +67,17 @@ void behaviour_ecg_6_lead(state_ptr state)
   /* Do state actions */
   menu_copy(&menu_ecg, &current_menu);
   
-  current_menu.items[3].item.area.is_active = GUI_ACTIVE;
-  current_menu.items[3].item.area.text_color = (color_t) COLOR_WHITE;
-  current_menu.items[3].item.area.bg_color = (color_t) COLOR_BLUE;
-
-  current_menu.items[4].item.area.is_active = GUI_ACTIVE;
-  current_menu.items[4].item.area.text_color = (color_t) COLOR_WHITE;
-  current_menu.items[4].item.area.bg_color = (color_t) COLOR_BLUE;
-  
-  current_menu.items[5].item.area.is_active = GUI_INACTIVE;
-  current_menu.items[5].item.area.text_color = (color_t) COLOR_BLUE;
-  current_menu.items[5].item.area.bg_color = (color_t) COLOR_WHITE;
+//  current_menu.items[3].item.area.is_active = GUI_ACTIVE;
+//  current_menu.items[3].item.area.text_color = (color_t) COLOR_WHITE;
+//  current_menu.items[3].item.area.bg_color = (color_t) COLOR_BLUE;
+//
+//  current_menu.items[4].item.area.is_active = GUI_ACTIVE;
+//  current_menu.items[4].item.area.text_color = (color_t) COLOR_WHITE;
+//  current_menu.items[4].item.area.bg_color = (color_t) COLOR_BLUE;
+//  
+//  current_menu.items[5].item.area.is_active = GUI_INACTIVE;
+//  current_menu.items[5].item.area.text_color = (color_t) COLOR_BLUE;
+//  current_menu.items[5].item.area.bg_color = (color_t) COLOR_WHITE;
 }
 
 /* Entry point to the state */
