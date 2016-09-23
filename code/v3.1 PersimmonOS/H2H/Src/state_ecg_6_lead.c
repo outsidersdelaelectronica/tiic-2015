@@ -17,8 +17,8 @@ extern osMutexId mutex_ecg_leadsHandle;
 
 /* Queues */
 extern osMailQId queue_lcdHandle;
+extern osMailQId queue_input_menuHandle;
 extern osMessageQId queue_ecg_bpm_screenHandle;
-extern osMessageQId queue_ecg_lead_IHandle;
 
 /* Objects */
 extern leads_t leads;
@@ -27,6 +27,7 @@ static void ecg_6_lead_gui_tick(state_ptr state)
 {
   osEvent event;
   int32_t lead_I = 0, lead_II = 0, lead_III = 0;
+  int32_t lead_aVR = 0, lead_aVL = 0, lead_aVF = 0;
   uint32_t bpm = 0;
   char str_bpm[4] = "-?-";
   
@@ -50,6 +51,9 @@ static void ecg_6_lead_gui_tick(state_ptr state)
   lead_I = leads.lead_I;
   lead_II = leads.lead_II;
   lead_III = leads.lead_III;
+  lead_aVR = leads.lead_aVR;
+  lead_aVL = leads.lead_aVL;
+  lead_aVF = leads.lead_aVF;
   osMutexRelease(mutex_ecg_leadsHandle);
   
 }
@@ -87,7 +91,7 @@ void entry_to_ecg_6_lead(state_ptr state)
    * - Set parent events behaviour (bottom-up)
    */
   default_implementation(state);
-  behaviour_ecg_6_lead(state);
-  behaviour_ecg(state);
   behaviour_running(state);
+  behaviour_ecg(state);
+  behaviour_ecg_6_lead(state);
 }

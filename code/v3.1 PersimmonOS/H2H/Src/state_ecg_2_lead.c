@@ -17,8 +17,8 @@ extern osMutexId mutex_ecg_leadsHandle;
 
 /* Queues */
 extern osMailQId queue_lcdHandle;
+extern osMailQId queue_input_menuHandle;
 extern osMessageQId queue_ecg_bpm_screenHandle;
-extern osMessageQId queue_ecg_lead_IHandle;
 
 /* Objects */
 extern leads_t leads;
@@ -85,7 +85,7 @@ void entry_to_ecg_2_lead(state_ptr state)
    * - Set parent events behaviour (bottom-up)
    */
   default_implementation(state);
-  behaviour_ecg_2_lead(state);
-  behaviour_ecg(state);
   behaviour_running(state);
+  behaviour_ecg(state);
+  behaviour_ecg_2_lead(state);
 }
