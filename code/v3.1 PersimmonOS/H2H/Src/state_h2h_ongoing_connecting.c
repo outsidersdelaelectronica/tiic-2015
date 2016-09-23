@@ -37,17 +37,14 @@ static void h2h_ongoing_connecting_to_h2h_ongoing_action(state_ptr state)
 /* State behaviour */
 void behaviour_h2h_ongoing_connecting(state_ptr state)
 {
-  BD_ADDR_t inquired_bt_addr[MAX_INQUIRY_RESULTS];
-  uint32_t timeout = 5, number_of_btaddr = 0, i;
+
+  uint32_t i;
   
   /* Set events to react to */
   state->h2h_error = h2h_ongoing_connecting_to_h2h_ongoing_error;
   state->h2h_ok = h2h_ongoing_connecting_to_h2h_ongoing_action;
 
   /* Do state actions */
-  
-  osDelay((timeout)<<10);
-  number_of_btaddr = bt_get_ADDR(inquired_bt_addr);
   
   /* Set menu */
   osMailPut(queue_input_menuHandle, (void *) &menu_h2h_ongoing_connecting);

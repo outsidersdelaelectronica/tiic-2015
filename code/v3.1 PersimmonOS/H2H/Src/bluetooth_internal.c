@@ -7,9 +7,12 @@
 
 #include "bluetooth_internal.h"
 
+#include "fsm_client.h"
+
 extern osSemaphoreId sem_bt_conectedHandle;
 extern osMailQId queue_bt_packet_recievedHandle;
 extern osMailQId queue_bt_packet_sendHandle;
+extern osMailQId queue_fsm_eventsHandle;
 
 /* Holds the Handle of the opened Bluetooth Protocol Stack                      */
 unsigned int               BluetoothStackID;              
@@ -1140,7 +1143,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
   int                               Index;
   GAP_Inquiry_Event_Data_t         *GAP_Inquiry_Event_Data;
   GAP_Authentication_Information_t  GAP_Authentication_Information;
-
+  fsm_event_f gap_event = fsm_no_event;
   /* First, check to see if the required parameters appear to be       */
   /* semi-valid.                                                       */
   if((BluetoothStackID) && (GAP_Event_Data))
@@ -1168,6 +1171,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
           InquiryResultList[Index] = GAP_Inquiry_Event_Data->GAP_Inquiry_Data[Index].BD_ADDR;
         }
         NumberofValidResponses = GAP_Inquiry_Event_Data->Number_Devices;
+        gap_event = fsm_h2h_connect;
         break;
       case etEncryption_Change_Result:   
         /* Yet to study if it's neccesary */
@@ -1340,6 +1344,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
         HAL_GPIO_WritePin(GPIOC,UI_LED_G_Pin, GPIO_PIN_SET);
         break;    
     }
+    osMailPut(queue_fsm_eventsHandle, (void *) &gap_event);
   }
   else
   {

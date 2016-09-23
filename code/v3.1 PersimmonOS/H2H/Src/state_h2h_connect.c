@@ -13,7 +13,7 @@
 #include "menu.h"
 #include "bluetooth_internal.h"
 
-#define TIMEOUT 10
+#define TIMEOUT 3
 /* Queues */
 extern osMailQId queue_input_menuHandle;
 extern osMailQId queue_lcdHandle;
@@ -55,7 +55,7 @@ void behaviour_h2h_connect(state_ptr state)
   
   /* Do state actions */
   bluetooth_init();
-  Inquiry(TIMEOUT);
+  while(Inquiry(TIMEOUT) != 0);
 }
 
 /* Entry point to the state */

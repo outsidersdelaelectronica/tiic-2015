@@ -1,8 +1,5 @@
 #include "tasks_ecg.h"
 
-/* Mutexes */
-osMutexId mutex_ecg_leadsHandle;
-
 /* Semaphores */
 osSemaphoreId sem_ecg_afe_drdyHandle;
 osSemaphoreId sem_ecg_afe_dma_rxHandle;
@@ -37,14 +34,9 @@ void Start_ecg_validationTask(void const * argument);
 
 /* Objects */
 extern afe_t afe;
-leads_t leads;
 
 void tasks_ecg_init()
 {
-  /* Mutexes */
-  osMutexDef(mutex_ecg_leads);
-  mutex_ecg_leadsHandle = osMutexCreate(osMutex(mutex_ecg_leads));
-  
   /* Semaphores */
   /* sem_ecg_afe_drdy */
   osSemaphoreDef(sem_ecg_afe_drdy);
@@ -201,18 +193,14 @@ void Start_ecg_filterTask(void const * argument)
       lead_aVL = (lead_I - lead_III)  >> 1;
       /* Generate lead aVF */
       lead_aVF = (lead_II + lead_III) >> 1;
-      
-      /* Output data to UI */
-      osMutexWait(mutex_ecg_leadsHandle, osWaitForever);
-      leads.lead_I = lead_I;
-      leads.lead_II = lead_II;
-      leads.lead_III = lead_III;
-      leads.lead_aVR = lead_aVR;
-      leads.lead_aVL = lead_aVL;
-      leads.lead_aVF = lead_aVF;
-      osMutexRelease(mutex_ecg_leadsHandle);
 
-      /* Output data to bpm detection */
+      /* Output data to queues */
+//      osMessagePut(queue_ecg_lead_IHandle,   lead_I,   0);
+//      osMessagePut(queue_ecg_lead_IIHandle,  lead_II,  0);
+//      osMessagePut(queue_ecg_lead_IIIHandle, lead_III, 0);
+//      osMessagePut(queue_ecg_lead_aVRHandle, lead_aVR, 0);
+//      osMessagePut(queue_ecg_lead_aVLHandle, lead_aVL, 0);
+//      osMessagePut(queue_ecg_lead_aVFHandle, lead_aVF, 0);
       osMessagePut(queue_ecg_preprocessedHandle, bpm_preprocessed, 0);
     }
   }

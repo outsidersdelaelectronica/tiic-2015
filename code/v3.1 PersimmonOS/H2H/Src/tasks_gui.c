@@ -26,7 +26,7 @@ void tasks_gui_start()
 {
   /* Tasks */
   /* guiTask */
-  osThreadDef(gui_tickTask, Start_gui_tickTask, osPriorityAboveNormal, 0, 64);
+  osThreadDef(gui_tickTask, Start_gui_tickTask, osPriorityLow, 0, 80);
   gui_tickTaskHandle = osThreadCreate(osThread(gui_tickTask), NULL);
 }
 
