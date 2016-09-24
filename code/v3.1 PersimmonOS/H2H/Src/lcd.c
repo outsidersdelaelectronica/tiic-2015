@@ -325,6 +325,8 @@ gui_status_t lcd_print_graph(lcd_t *lcd, item_t *item)
   return GUI_OK;
 }
 
+#define ERASE_AHEAD 60
+
 gui_status_t lcd_update_graph(lcd_t *lcd, item_t *item)
 {
   int32_t x_pos_second_to_last, y_pos_second_to_last;
@@ -333,33 +335,48 @@ gui_status_t lcd_update_graph(lcd_t *lcd, item_t *item)
   int32_t x_pos_line_start, y_pos_line_start;
   int32_t x_pos_line_end, y_pos_line_end;
 
-  /* Skip line drawing between last and first position in the graph */
-  if (item->graph.value_index == 0)
+  int32_t x_erase;
+
+  /* Line coordinates */
+    /* Calculate points inside the graph */
+    x_pos_second_to_last = item->graph.width_legend + item->graph.value_index - 1;
+    x_pos_last           = item->graph.width_legend + item->graph.value_index;
+    y_pos_second_to_last = (item->graph.second_to_last_value * ((int32_t) item->graph.height / 2)) /
+                           ((int32_t) item->graph.y_axis_full_scale);
+    y_pos_last           = (item->graph.last_value * ((int32_t) item->graph.height / 2)) /
+                           ((int32_t) item->graph.y_axis_full_scale);
+
+    /* Translate to absolute points */
+    x_pos_line_start = item->graph.pos.x_pos                            + x_pos_second_to_last;
+    y_pos_line_start = item->graph.pos.y_pos + (item->graph.height / 2) - y_pos_second_to_last;
+    x_pos_line_end   = item->graph.pos.x_pos                            + x_pos_last;
+    y_pos_line_end   = item->graph.pos.y_pos + (item->graph.height / 2) - y_pos_last;
+
+  /* Erasing line x coordinate */
+    x_erase = item->graph.value_index + ERASE_AHEAD;
+    /* If erasing coordinate is out of bounds, wrap around */
+    if (x_erase >= item->graph.width_graph)
+    {
+      x_erase -= item->graph.width_graph;
+    }
+    x_erase += item->graph.width_legend + item->graph.pos.x_pos;
+
+  /* Draw line */
+  if (item->graph.value_index != 0)
   {
-    return GUI_OK;
+    lcd_draw_line(lcd, x_pos_line_start, y_pos_line_start,
+                       x_pos_line_end, y_pos_line_end,
+                       &(item->graph.line_color));
   }
 
-  /* Calculate points inside the graph */
-  x_pos_second_to_last = item->graph.width_legend + item->graph.value_index - 1;
-
-  x_pos_last           = item->graph.width_legend + item->graph.value_index;
-
-  y_pos_second_to_last = (item->graph.second_to_last_value * ((int32_t) item->graph.height / 2)) /
-                         ((int32_t) item->graph.y_axis_full_scale);
-
-  y_pos_last           = (item->graph.last_value * ((int32_t) item->graph.height / 2)) /
-                         ((int32_t) item->graph.y_axis_full_scale);
-
-  /* Translate to absolute points */
-  x_pos_line_start = item->graph.pos.x_pos                            + x_pos_second_to_last;
-  y_pos_line_start = item->graph.pos.y_pos + (item->graph.height / 2) - y_pos_second_to_last;
-  x_pos_line_end   = item->graph.pos.x_pos                            + x_pos_last;
-  y_pos_line_end   = item->graph.pos.y_pos + (item->graph.height / 2) - y_pos_last;
-
-  lcd_draw_line(lcd, x_pos_line_start, y_pos_line_start, x_pos_line_end, y_pos_line_end, &(item->graph.line_color));
+  /* Erase ahead */
+  lcd_draw_rectangle(lcd, x_erase, 1,
+                          item->graph.pos.y_pos, item->graph.height,
+                          &(item->graph.bg_graph_color));
 
   return GUI_OK;
 }
+
 /**
   * @brief  Sets the backlight brightness level.
   * @param  level: Backlight PWM duty cycle (0 - 255).

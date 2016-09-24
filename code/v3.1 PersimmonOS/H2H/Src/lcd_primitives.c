@@ -29,6 +29,8 @@ void lcd_draw_line(lcd_t *lcd, uint16_t origin_x, uint16_t origin_y,
 {
   int32_t dist_x, dist_y, step, step_y, current_x, current_y, i, j;
 
+  // WARNING: Can't draw vertical lines, use draw_rectangle instead
+
   if(origin_x < end_x)
   {
     current_x = origin_x;
