@@ -4,7 +4,8 @@
  * GLCD FontName : myriad_pro_semibold_12
  * GLCD FontSize : 13 x 18
  */
-const uint8_t myriad_pro_semibold_12[] = {
+const uint8_t myriad_pro_semibold_12[] =
+{
    0x00,
    0x00,
    0x20,0x00,
@@ -465,7 +466,8 @@ const uint8_t myriad_pro_semibold_12[] = {
  * GLCD FontName : myriad_pro_semibold_16
  * GLCD FontSize : 18 x 24
  */
-const uint8_t myriad_pro_semibold_16[] = {
+const uint8_t myriad_pro_semibold_16[] =
+{
    0x00,
    0x00,
    0x20,0x00,
@@ -926,7 +928,8 @@ const uint8_t myriad_pro_semibold_16[] = {
  * GLCD FontName : myriad_pro_semibold_24
  * GLCD FontSize : 27 x 36
  */
-const uint8_t myriad_pro_semibold_24[] = {
+const uint8_t myriad_pro_semibold_24[] =
+{
    0x00,
    0x00,
    0x20,0x00,

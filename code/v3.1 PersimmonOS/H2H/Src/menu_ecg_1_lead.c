@@ -1,8 +1,8 @@
 #include "menu.h"
 
-const menu_t menu_ecg =
+const menu_t tags_ecg_1_lead =
 {
-  .item_num = 6,
+  .item_num = 1,
   .items =
   {
     {
@@ -15,7 +15,7 @@ const menu_t menu_ecg =
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_INACTIVE,
         .string               = L"",
-        .font                 = myriad_pro_semibold_16,
+        .font                 = myriad_pro_semibold_12,
         .string_h_align       = CENTER,
         .string_v_align       = MID,
         .text_color           = COLOR_BLACK,
@@ -52,8 +52,8 @@ const menu_t menu_ecg =
         .pos                  = {.x_pos = 644, .y_pos = 380},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
-        .string               = L"\xF064",
-        .font                 = fontawesome_back,
+        .string               = L"Back",
+        .font                 = myriad_pro_semibold_16,
         .string_h_align       = CENTER,
         .string_v_align       = MID,
         .text_color           = COLOR_WHITE,

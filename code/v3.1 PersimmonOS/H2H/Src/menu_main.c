@@ -2,7 +2,7 @@
 
 const menu_t menu_main =
 {
-  .item_num = 4,
+  .item_num = 7,
   .items =
   {
     {
@@ -24,17 +24,18 @@ const menu_t menu_main =
         .event                = fsm_no_event
       }
     },
+    /* ECG */
     {
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 240,
-        .height               = 290,
-        .pos                  = {.x_pos = 20, .y_pos = 110},
+        .width                = 260,
+        .height               = 80,
+        .pos                  = {.x_pos = 0, .y_pos = 40},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
-        .string               = L"ECG",
-        .font                 = myriad_pro_semibold_24,
+        .string               = L"\xF21E",
+        .font                 = fontawesome_ecg,
         .string_h_align       = CENTER,
         .string_v_align       = MID,
         .text_color           = COLOR_WHITE,
@@ -47,13 +48,33 @@ const menu_t menu_main =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 240,
-        .height               = 290,
-        .pos                  = {.x_pos = 280, .y_pos = 110},
+        .width                = 260,
+        .height               = 360,
+        .pos                  = {.x_pos = 0, .y_pos = 120},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
-        .string               = L"H2H",
+        .string               = L"ECG",
         .font                 = myriad_pro_semibold_24,
+        .string_h_align       = CENTER,
+        .string_v_align       = MID,
+        .text_color           = COLOR_BLACK,
+        .bg_color             = COLOR_CYAN,
+        .border_color         = COLOR_BLUE,
+        .event                = fsm_ecg
+      }
+    },
+    /* H2H */
+    {
+      .item_print_function = lcd_print_area,
+      .item.area =
+      {
+        .width                = 260,
+        .height               = 80,
+        .pos                  = {.x_pos = 270, .y_pos = 40},
+        .border               = GUI_NO_BORDER,
+        .is_active            = GUI_ACTIVE,
+        .string               = L"\xF0FA",
+        .font                 = fontawesome_h2h,
         .string_h_align       = CENTER,
         .string_v_align       = MID,
         .text_color           = COLOR_WHITE,
@@ -66,18 +87,57 @@ const menu_t menu_main =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 240,
-        .height               = 290,
-        .pos                  = {.x_pos = 540, .y_pos = 110},
+        .width                = 260,
+        .height               = 360,
+        .pos                  = {.x_pos = 270, .y_pos = 120},
+        .border               = GUI_NO_BORDER,
+        .is_active            = GUI_ACTIVE,
+        .string               = L"H2H",
+        .font                 = myriad_pro_semibold_24,
+        .string_h_align       = CENTER,
+        .string_v_align       = MID,
+        .text_color           = COLOR_BLACK,
+        .bg_color             = COLOR_CYAN,
+        .border_color         = COLOR_BLUE,
+        .event                = fsm_h2h
+      }
+    },
+    /* Settings */
+    {
+      .item_print_function = lcd_print_area,
+      .item.area =
+      {
+        .width                = 260,
+        .height               = 80,
+        .pos                  = {.x_pos = 540, .y_pos = 40},
+        .border               = GUI_NO_BORDER,
+        .is_active            = GUI_ACTIVE,
+        .string               = L"\xF085",
+        .font                 = fontawesome_settings,
+        .string_h_align       = CENTER,
+        .string_v_align       = MID,
+        .text_color           = COLOR_WHITE,
+        .bg_color             = COLOR_BLUE,
+        .border_color         = COLOR_BLACK,
+        .event                = fsm_settings
+      }
+    },
+    {
+      .item_print_function = lcd_print_area,
+      .item.area =
+      {
+        .width                = 260,
+        .height               = 360,
+        .pos                  = {.x_pos = 540, .y_pos = 120},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
         .string               = L"Settings",
         .font                 = myriad_pro_semibold_24,
         .string_h_align       = CENTER,
         .string_v_align       = MID,
-        .text_color           = COLOR_WHITE,
-        .bg_color             = COLOR_BLUE,
-        .border_color         = COLOR_BLACK,
+        .text_color           = COLOR_BLACK,
+        .bg_color             = COLOR_CYAN,
+        .border_color         = COLOR_BLUE,
         .event                = fsm_settings
       }
     }

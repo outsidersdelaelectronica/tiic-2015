@@ -178,31 +178,31 @@ gui_status_t lcd_print_area(lcd_t *lcd, item_t *item)
   /* Draw border if present */
   if (item->area.border == GUI_RECTANGLE)
   {
-    x_pos = item->area.pos.x_pos;
-    y_pos = item->area.pos.y_pos;
-    x_pos_width = item->area.pos.x_pos + item->area.width - 1;
-    y_pos_height = item->area.pos.y_pos + item->area.height - 1;
+    x_pos        = item->area.pos.x_pos;
+    y_pos        = item->area.pos.y_pos;
+    x_pos_width  = item->area.width - 1;
+    y_pos_height = item->area.height - 1;
 
     /* Top line */
-    lcd_draw_line(lcd,
-                  x_pos, y_pos,
-                  x_pos_width, y_pos,
-                  &border_color);
+    lcd_draw_rectangle(lcd,
+                       x_pos, x_pos_width,
+                       y_pos, 1,
+                       &border_color);
     /* Bottom line */
-    lcd_draw_line(lcd,
-                  x_pos, y_pos_height,
-                  x_pos_width, y_pos_height,
-                  &border_color);
+    lcd_draw_rectangle(lcd,
+                       x_pos, x_pos_width,
+                       y_pos + y_pos_height, 1,
+                       &border_color);
     /* Left line */
-    lcd_draw_line(lcd,
-                  x_pos, y_pos,
-                  x_pos, y_pos_height,
-                  &border_color);
+    lcd_draw_rectangle(lcd,
+                       x_pos, 1,
+                       y_pos, y_pos_height,
+                       &border_color);
     /* Right line */
-    lcd_draw_line(lcd,
-                  x_pos_width, y_pos,
-                  x_pos_width, y_pos_height,
-                  &border_color);
+    lcd_draw_rectangle(lcd,
+                       x_pos + x_pos_width, 1,
+                       y_pos, y_pos_height,
+                       &border_color);
   }
 
   /* Draw text */
@@ -297,29 +297,29 @@ gui_status_t lcd_print_graph(lcd_t *lcd, item_t *item)
   {
     x_pos = item->graph.pos.x_pos;
     y_pos = item->graph.pos.y_pos;
-    x_pos_width = item->graph.pos.x_pos + item->graph.width_legend + item->graph.width_graph - 1;
-    y_pos_height = item->graph.pos.y_pos + item->graph.height - 1;
+    x_pos_width  = item->graph.width_legend + item->graph.width_graph - 1;
+    y_pos_height = item->graph.height - 1;
 
     /* Top line */
-    lcd_draw_line(lcd,
-                  x_pos, y_pos,
-                  x_pos_width, y_pos,
-                  &border_color);
+    lcd_draw_rectangle(lcd,
+                       x_pos, x_pos_width,
+                       y_pos, 1,
+                       &border_color);
     /* Bottom line */
-    lcd_draw_line(lcd,
-                  x_pos, y_pos_height,
-                  x_pos_width, y_pos_height,
-                  &border_color);
+    lcd_draw_rectangle(lcd,
+                       x_pos, x_pos_width,
+                       y_pos + y_pos_height, 1,
+                       &border_color);
     /* Left line */
-    lcd_draw_line(lcd,
-                  x_pos, y_pos,
-                  x_pos, y_pos_height,
-                  &border_color);
+    lcd_draw_rectangle(lcd,
+                       x_pos, 1,
+                       y_pos, y_pos_height,
+                       &border_color);
     /* Right line */
-    lcd_draw_line(lcd,
-                  x_pos_width, y_pos,
-                  x_pos_width, y_pos_height,
-                  &border_color);
+    lcd_draw_rectangle(lcd,
+                       x_pos + x_pos_width, 1,
+                       y_pos, y_pos_height,
+                       &border_color);
   }
 
   return GUI_OK;

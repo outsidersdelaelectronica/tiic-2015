@@ -15,5 +15,9 @@ extern const uint8_t myriad_pro_semibold_16[];
 extern const uint8_t myriad_pro_semibold_24[];
 
 extern const uint8_t fontawesome_16[];
+extern const uint8_t fontawesome_ecg[];
+extern const uint8_t fontawesome_h2h[];
+extern const uint8_t fontawesome_settings[];
+extern const uint8_t fontawesome_back[];
 
 #endif /* FONTS_H_ */
