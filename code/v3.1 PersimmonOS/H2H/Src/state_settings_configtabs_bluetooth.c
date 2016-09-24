@@ -43,15 +43,6 @@ void behaviour_settings_configtabs_bluetooth(state_ptr state)
   current_menu.items[5].item.area.text_color = (color_t) COLOR_WHITE;
   current_menu.items[5].item.area.bg_color = (color_t) COLOR_BLUE;
   
-//  /* Set menu */
-//  osMailPut(queue_input_menuHandle, (void *) &menu_settings_configtabs_bluetooth);
-//
-//  /* Display menu */
-//  uint32_t i;
-//  for (i = 0; i < menu_settings_configtabs_bluetooth.item_num; i++)
-//  {
-//    osMailPut(queue_lcdHandle, (void *) &menu_settings_configtabs_bluetooth.items[i]);
-//  }
 }
 
 /* Entry point to the state */

@@ -42,11 +42,11 @@ void tasks_periph_init()
 
   /* Queues */
   /* queue_periph_buzzer */
-  osMailQDef(queue_periph_buzzer, 4, buzzer_note_t);
+  osMailQDef(queue_periph_buzzer, 1, buzzer_note_t);
   queue_periph_buzzerHandle = osMailCreate(osMailQ(queue_periph_buzzer), NULL);
 
   /* queue_lcd */
-  osMailQDef(queue_lcd, 20, item_action_t);
+  osMailQDef(queue_lcd, 2, item_action_t);
   queue_lcdHandle = osMailCreate(osMailQ(queue_lcd), NULL);
 }
 
@@ -177,9 +177,18 @@ void Start_periph_batteryTask(void const * argument)
         }
 
         /* Display screen items */
-        osMailPut(queue_lcdHandle, (void *) &current_menu.items[1]);
-        osMailPut(queue_lcdHandle, (void *) &current_menu.items[2]);
-        osMailPut(queue_lcdHandle, (void *) &current_menu.items[5]);
+        while(osMailPut(queue_lcdHandle, (void *) &current_menu.items[1]) != osOK)
+        {
+          osDelay(1);
+        }
+        while(osMailPut(queue_lcdHandle, (void *) &current_menu.items[2]) != osOK)
+        {
+          osDelay(1);
+        }
+        while(osMailPut(queue_lcdHandle, (void *) &current_menu.items[5]) != osOK)
+        {
+          osDelay(1);
+        }
       }
     }
   }
@@ -237,8 +246,14 @@ void Start_periph_rtcTask(void const * argument)
       item_area_set_text(&current_menu.items[3].item.area, date_string);
 
       /* Draw time and date on screen */
-      osMailPut(queue_lcdHandle, (void *) &current_menu.items[4]);
-      osMailPut(queue_lcdHandle, (void *) &current_menu.items[3]);
+      while(osMailPut(queue_lcdHandle, (void *) &current_menu.items[4]) != osOK)
+      {
+        osDelay(1);
+      }
+      while(osMailPut(queue_lcdHandle, (void *) &current_menu.items[3]) != osOK)
+      {
+        osDelay(1);
+      }
     }
   }
 }

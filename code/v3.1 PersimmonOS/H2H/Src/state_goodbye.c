@@ -21,14 +21,20 @@ void behaviour_goodbye(state_ptr state)
   /* Do state actions */
 
   /* Set menu */
-  osMailPut(queue_input_menuHandle, (void *) &menu_goodbye);
+  while(osMailPut(queue_input_menuHandle, (void *) &menu_goodbye) != osOK)
+  {
+    osDelay(1);
+  }
 
   /* Display menu */
   uint32_t i;
   
   for (i = 0; i < menu_goodbye.item_num; i++)
   {
-    osMailPut(queue_lcdHandle, (void *) &menu_goodbye.items[i]);
+    while(osMailPut(queue_lcdHandle, (void *) &menu_goodbye.items[i]) != osOK)
+    {
+      osDelay(1);
+    }
   }
 
   /* Do state actions */

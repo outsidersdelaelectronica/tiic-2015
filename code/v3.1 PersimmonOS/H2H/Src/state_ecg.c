@@ -63,12 +63,17 @@ void behaviour_ecg(state_ptr state)
 
   /* Set menu */
   menu_copy(&menu_ecg, &current_menu);
-  osMailPut(queue_input_menuHandle, (void *) &current_menu);
-
+  while(osMailPut(queue_input_menuHandle, (void *) &current_menu) != osOK)
+  {
+    osDelay(1);
+  }
   /* Display menu */
   for (i = 0; i < menu_ecg.item_num; i++)
   {
-    osMailPut(queue_lcdHandle, (void *) &current_menu.items[i]);
+    while(osMailPut(queue_lcdHandle, (void *) &current_menu.items[i]) != osOK)
+    {
+      osDelay(1);
+    }
   }
 }
 

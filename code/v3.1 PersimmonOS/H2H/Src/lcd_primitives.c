@@ -54,9 +54,15 @@ void lcd_draw_line(lcd_t *lcd, uint16_t origin_x, uint16_t origin_y,
     step_y = -1;
     dist_y = origin_y - end_y + 1;
   }
-
-  step = dist_y/dist_x;
-
+  
+  if( dist_x !=0)
+  {
+    step = dist_y/dist_x;
+  }
+  else
+  {
+    step = dist_y;
+  }
   for(i = dist_x; i > 0; i--)
   {
     for(j = step; j > 0;j--)

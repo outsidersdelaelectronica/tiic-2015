@@ -51,13 +51,19 @@ void behaviour_main(state_ptr state)
   /* Do state actions */
 
   /* Set menu */
-  osMailPut(queue_input_menuHandle, (void *) &menu_main);
+  while(osMailPut(queue_input_menuHandle, (void *) &menu_main) != osOK)
+  {
+    osDelay(1);
+  }
 
   /* Display menu */
   uint32_t i;
   for (i = 0; i < menu_main.item_num; i++)
   {
-    osMailPut(queue_lcdHandle, (void *) &menu_main.items[i]);
+    while(osMailPut(queue_lcdHandle, (void *) &menu_main.items[i]) != osOK)
+    {
+      osDelay(1);
+    }
   }
 }
 

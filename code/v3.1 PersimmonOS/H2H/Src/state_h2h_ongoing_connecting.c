@@ -37,22 +37,20 @@ static void h2h_ongoing_connecting_to_h2h_ongoing_action(state_ptr state)
 /* State behaviour */
 void behaviour_h2h_ongoing_connecting(state_ptr state)
 {
-
-  uint32_t i;
+  device_info_t inquired_bt_devices[MAX_INQUIRY_RESULTS];
+  uint32_t number_of_btaddr = 0,i;
   
   /* Set events to react to */
   state->h2h_error = h2h_ongoing_connecting_to_h2h_ongoing_error;
-  state->h2h_ok = h2h_ongoing_connecting_to_h2h_ongoing_action;
+  state->h2h_selectdevice = h2h_ongoing_connecting_to_h2h_ongoing_action;
 
   /* Do state actions */
   
-  /* Set menu */
-  osMailPut(queue_input_menuHandle, (void *) &menu_h2h_ongoing_connecting);
-
-  /* Display menu */
-  for (i = 0; i < menu_h2h_ongoing_connecting.item_num; i++)
+  number_of_btaddr = bt_get_remote_devices(inquired_bt_devices);
+  for( i = 0; i < number_of_btaddr; i++)
   {
-    osMailPut(queue_lcdHandle, (void *) &menu_h2h_ongoing_connecting.items[i]);
+    GetRemoteName(inquired_bt_devices[i].physical_address);
+    osDelay(5);
   }
 }
 

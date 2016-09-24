@@ -80,13 +80,18 @@ void behaviour_settings_configtabs(state_ptr state)
   /* Do state actions */
   
   /* Set menu */
-  osMailPut(queue_input_menuHandle, (void *) &menu_settings_configtabs);
-
+  while(osMailPut(queue_input_menuHandle, (void *) &menu_settings_configtabs) != osOK)
+  {
+    osDelay(1);
+  }
   /* Display menu */
   uint32_t i;
   for (i = 0; i < menu_settings_configtabs.item_num; i++)
   {
-    osMailPut(queue_lcdHandle, (void *) &menu_settings_configtabs.items[i]);
+    while(osMailPut(queue_lcdHandle, (void *) &menu_settings_configtabs.items[i]) != osOK)
+    {
+      osDelay(1);
+    }
   }
 }
 

@@ -24,13 +24,19 @@ void behaviour_h2h_ongoing_error(state_ptr state)
   /* Do state actions */
 
   /* Set menu */
-  osMailPut(queue_input_menuHandle, (void *) &menu_h2h_ongoing_error);
+  while(osMailPut(queue_input_menuHandle, (void *) &menu_h2h_ongoing_error) != osOK)
+  {
+    osDelay(1);
+  }
 
   /* Display menu */
   uint32_t i;
   for (i = 0; i < menu_h2h_ongoing_error.item_num; i++)
   {
-    osMailPut(queue_lcdHandle, (void *) &menu_h2h_ongoing_error.items[i]);
+    while(osMailPut(queue_lcdHandle, (void *) &menu_h2h_ongoing_error.items[i]) != osOK)
+    {
+      osDelay(1);
+    }
   }
 }
 

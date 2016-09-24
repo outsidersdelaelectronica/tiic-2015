@@ -31,7 +31,6 @@ extern const menu_t menu_goodbye;
 extern const menu_t menu_top_bar;
 
 extern const menu_t menu_main;
-
 extern const menu_t menu_ecg;
 extern menu_t graph_ecg_1_lead;
 extern menu_t graph_ecg_2_lead;
@@ -53,5 +52,6 @@ extern const menu_t menu_settings_configtabs_touch;
 extern const menu_t menu_settings_configtabs_about;
 
 extern menu_t current_menu;
+extern menu_t menu_h2h_devices;
 
 #endif /* MENU_H_ */

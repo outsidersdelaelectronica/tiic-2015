@@ -57,6 +57,12 @@ void fsm_h2h_connect(fsm_client_ptr fsm)
   fsm->state.h2h_connect(&fsm->state);
 }
 
+void fsm_h2h_selectdevice(fsm_client_ptr fsm)
+{
+  /* Trigger event function */
+  fsm->state.h2h_selectdevice(&fsm->state);
+}
+
 void fsm_h2h_ok(fsm_client_ptr fsm)
 {
   /* Trigger event function */

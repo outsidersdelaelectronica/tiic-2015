@@ -29,7 +29,7 @@ static Boolean_t           Connected;
 /* Hold the Serial Port Service Record of SDP Service Record.                   */
 static DWord_t             SPPServerSDPHandle;
 /* Contains the inquiry result received from the last performed inquiry.        */
-static BD_ADDR_t           InquiryResultList[MAX_INQUIRY_RESULTS]; 
+static device_info_t       InquiryResultList[MAX_INQUIRY_RESULTS]; 
 /* Holds the number of valid inquiry results within the inquiry results array.  */
 static unsigned int        NumberofValidResponses;  
 /* Holds BD_ADDR <-> Link Keys for pairing.                                     */
@@ -801,7 +801,7 @@ int Inquiry(uint32_t timeout)
    return(ret_val);
 }
 
-uint32_t bt_get_ADDR(BD_ADDR_t* inquired_addr)
+uint32_t bt_get_remote_devices(device_info_t* inquired_addr)
 {
   uint32_t i;
   
@@ -825,10 +825,10 @@ int Pair(GAP_Bonding_Type_t bondtype, uint16_t table_pos)
   {
     ret_val = FUNCTION_ERROR;
     /* Next, make sure that we are not already connected.             */
-    if((!Connected) && (!COMPARE_BD_ADDR(InquiryResultList[table_pos], NullADDR)))
+    if((!Connected) && (!COMPARE_BD_ADDR(InquiryResultList[table_pos].physical_address, NullADDR)))
     {
       BondingType = bondtype;
-      CurrentRemoteBD_ADDR = InquiryResultList[table_pos];
+      CurrentRemoteBD_ADDR = InquiryResultList[table_pos].physical_address;
 
       /* Before we submit the command to the stack, we need to    */
       /* make sure that we clear out any Link Key we have stored  */
@@ -1140,10 +1140,12 @@ void BD_ADDRToStr(BD_ADDR_t Board_Address, BoardStr_t BoardStr)
 void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t *GAP_Event_Data, unsigned long CallbackParameter)
 {
   int                               Result;
-  int                               Index;
+  int                               Index,character_index = 0;
   GAP_Inquiry_Event_Data_t         *GAP_Inquiry_Event_Data;
+  GAP_Remote_Name_Event_Data_t     *GAP_Remote_Name_Event_Data;   
   GAP_Authentication_Information_t  GAP_Authentication_Information;
   fsm_event_f gap_event = fsm_no_event;
+  wchar_t character = 0;    
   /* First, check to see if the required parameters appear to be       */
   /* semi-valid.                                                       */
   if((BluetoothStackID) && (GAP_Event_Data))
@@ -1164,11 +1166,10 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
       case etInquiry_Result:   
         /* The GAP event received was of type Inquiry_Result.       */
         GAP_Inquiry_Event_Data = GAP_Event_Data->Event_Data.GAP_Inquiry_Event_Data;
-
         /* Store a list of all the devices found performing the inquiry.  */
         for(Index=0;(Index<GAP_Inquiry_Event_Data->Number_Devices) && (Index<MAX_INQUIRY_RESULTS);Index++)
         {
-          InquiryResultList[Index] = GAP_Inquiry_Event_Data->GAP_Inquiry_Data[Index].BD_ADDR;
+          InquiryResultList[Index].physical_address = GAP_Inquiry_Event_Data->GAP_Inquiry_Data[Index].BD_ADDR;
         }
         NumberofValidResponses = GAP_Inquiry_Event_Data->Number_Devices;
         gap_event = fsm_h2h_connect;
@@ -1187,6 +1188,37 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
         break;  
       case etRemote_Name_Result:   
         /* Yet to study if it's neccesary */
+        GAP_Remote_Name_Event_Data = GAP_Event_Data->Event_Data.GAP_Remote_Name_Event_Data;
+        for( Index = 0; Index < NumberofValidResponses; Index++)
+        {
+          if(COMPARE_BD_ADDR(InquiryResultList[Index].physical_address, GAP_Remote_Name_Event_Data->Remote_Device))
+          {
+              while ((character = GAP_Remote_Name_Event_Data->Remote_Name[character_index]) != 0)
+              {
+                /* If string still fits into area
+                 * store character in area->string
+                 */
+                if (character_index < MAX_STRING_LENGTH - 1)
+                {
+                  /* If there is enough space to keep copying the string */
+                  InquiryResultList[Index].Name[character_index] = character;
+                }
+                else
+                {
+                    /* Close string */
+                    InquiryResultList[Index].Name[character_index] = 0;
+                    break;
+                }
+                /* Next character */
+                character_index++;
+              }
+              break;
+          }
+        }
+        if( Index == NumberofValidResponses - 1)
+        {
+          gap_event = fsm_h2h_selectdevice;
+        }
         break;  
       case etAuthentication:   
         /* An authentication event occurred, determine which type of*/
@@ -1344,14 +1376,16 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
         HAL_GPIO_WritePin(GPIOC,UI_LED_G_Pin, GPIO_PIN_SET);
         break;    
     }
-    osMailPut(queue_fsm_eventsHandle, (void *) &gap_event);
+    while(osMailPut(queue_fsm_eventsHandle, (void *) &gap_event) != osOK)
+    {
+      osDelay(1);
+    }
   }
   else
   {
     /* There was an error with one or more of the input parameters.   */
     HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
   }
-
 }
 
    /* The following function is for an SPP Event Callback.  This        */
@@ -1457,7 +1491,10 @@ void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t 
         /* We recieve a packet and send it to bt_rx task */
         SPP_Data_Read(BluetoothStackID, SerialPortID, PACKET_SIZE, (Byte_t *)packet.packet_content);
         /* put into the queue */
-        osMailPut(queue_bt_packet_recievedHandle, (void *) &packet);
+        while(osMailPut(queue_bt_packet_recievedHandle, (void *) &packet) != osOK)
+        {
+          osDelay(1);
+        }
         break;
       case etPort_Transmit_Buffer_Empty_Indication:
         /* The transmit buffer is now empty after being full. */

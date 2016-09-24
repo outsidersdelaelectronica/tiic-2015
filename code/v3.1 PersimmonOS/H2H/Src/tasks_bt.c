@@ -72,7 +72,10 @@ void Start_bt_rxTask(void const * argument)
     if (event_pk_rec.status == osEventMail)
     {
       rec_packet = *((bt_packet_t *) event_pk_rec.value.p);
-      osMailPut(queue_bt_packet_sendHandle, (void *) &rec_packet);
+      while(osMailPut(queue_bt_packet_sendHandle, (void *) &rec_packet) != osOK)
+      {
+        osDelay(1);
+      }
       osDelay(1);
     }
   }

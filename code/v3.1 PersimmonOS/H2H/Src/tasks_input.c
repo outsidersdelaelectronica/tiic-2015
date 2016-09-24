@@ -101,7 +101,10 @@ void Start_input_touchTask(void const * argument)
              * with enough pressure!
              */
             click.click_type = CLICK_DOWN;
-            osMailPut(queue_input_clickHandle, (void *) &click);
+            while(osMailPut(queue_input_clickHandle, (void *) &click) != osOK)
+            {
+              osDelay(1);
+            }
 
             /* No longer detecting the first click */
             is_first_click = 0;
@@ -112,7 +115,10 @@ void Start_input_touchTask(void const * argument)
             /* Finger is still pressing the screen!
              */
             click.click_type = CLICK_HOLD;
-            osMailPut(queue_input_clickHandle, (void *) &click);
+            while(osMailPut(queue_input_clickHandle, (void *) &click) != osOK)
+            {
+              osDelay(1);
+            }
           }
         }
         /* Finger detection sample interval */
@@ -127,8 +133,10 @@ void Start_input_touchTask(void const * argument)
         /* Finger is lifted from the screen!
          */
         click.click_type = CLICK_UP;
-        osMailPut(queue_input_clickHandle, (void *) &click);
-
+        while(osMailPut(queue_input_clickHandle, (void *) &click) != osOK)
+        {
+          osDelay(1);
+        }
         /* Set last position as not clicked */
         touch.is_clicked = T_NOT_CLICKED;
         touch.current_pos.pressure = 0;
@@ -192,12 +200,17 @@ void Start_input_clickTask(void const * argument)
           if (menu_search_click(&current_menu, click, &item))
           {
             /* Send item event */
-            osMailPut(queue_fsm_eventsHandle, (void *) &(item.area.event));
-
+            while(osMailPut(queue_fsm_eventsHandle, (void *) &(item.area.event)) != osOK)
+            {
+              osDelay(1);
+            }
             /* Beep */
             beep.note = A5;
             beep.ms = 50;
-            osMailPut(queue_periph_buzzerHandle, (void *) &beep);
+            while(osMailPut(queue_periph_buzzerHandle, (void *) &beep) != osOK)
+            {
+              osDelay(1);
+            }
           }
 
           break;
@@ -238,7 +251,10 @@ void Start_input_buttonTask(void const * argument)
          * we have a long press
          */
         button_fsm_event = fsm_button_long;
-        osMailPut(queue_fsm_eventsHandle, (void *) &button_fsm_event);
+        while(osMailPut(queue_fsm_eventsHandle, (void *) &button_fsm_event) != osOK)
+        {
+          osDelay(1);
+        }
       }
       else
       {
@@ -254,8 +270,14 @@ void Start_input_buttonTask(void const * argument)
         button_fsm_event = fsm_button_short;
         beep.note = A6;
         beep.ms = 100;
-        osMailPut(queue_periph_buzzerHandle, (void *) &beep);
-        osMailPut(queue_fsm_eventsHandle, (void *) &button_fsm_event);
+        while(osMailPut(queue_periph_buzzerHandle, (void *) &beep) != osOK)
+        {
+          osDelay(1);
+        }
+        while(osMailPut(queue_fsm_eventsHandle, (void *) &button_fsm_event) != osOK)
+        {
+          osDelay(1);
+        }
       }
     }
   }

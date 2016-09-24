@@ -30,7 +30,7 @@ void tasks_gui_start()
   gui_tickTaskHandle = osThreadCreate(osThread(gui_tickTask), NULL);
 }
 
-#define GUI_TICK_INTERVAL 100
+#define GUI_TICK_INTERVAL 50
 
 void Start_gui_tickTask(void const * argument)
 {
@@ -43,7 +43,10 @@ void Start_gui_tickTask(void const * argument)
     {
       /* GUI tick */
       gui_fsm_event = fsm_gui_tick;
-      osMailPut(queue_fsm_eventsHandle, (void *) &gui_fsm_event);
+      while(osMailPut(queue_fsm_eventsHandle, (void *) &gui_fsm_event) != osOK)
+      {
+        osDelay(1);
+      }
     }
   }
 }

@@ -24,13 +24,13 @@ static void h2h_ongoing_to_h2h_connect(state_ptr state)
 /* State behaviour */
 void behaviour_h2h_ongoing(state_ptr state)
 {
-  BD_ADDR_t inquired_bt_addr[MAX_INQUIRY_RESULTS];
-  uint32_t number_of_btaddr = 0;
-  /* Set events to react to */
-  state->back = h2h_ongoing_to_h2h_connect;
 
+  /* Set events to react to */
+  
+  state->back = h2h_ongoing_to_h2h_connect;
+  
   /* Do state actions */
-  number_of_btaddr = bt_get_ADDR(inquired_bt_addr);
+
 }
 
 /* Entry point to the state */

@@ -120,10 +120,8 @@ void MX_FREERTOS_Init(void)
 
 
   /* TEST Task */
-  osThreadDef(testTask, Start_testTask, osPriorityIdle, 0, 64);
+  osThreadDef(testTask, Start_testTask, osPriorityRealtime, 0, 64);
   testTaskHandle = osThreadCreate(osThread(testTask), NULL);
-
-  osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[0]);
 }
 
 void Start_testTask(void const * argument)
@@ -132,12 +130,17 @@ void Start_testTask(void const * argument)
 
   item_lcd_config_init(&lcd_config.item.config, 200);
   lcd_config.item_print_function = lcd_set_config;
-  osMailPut(queue_lcdHandle, (void *) &lcd_config);
-
-  while(1)
+  while(osMailPut(queue_lcdHandle, (void *) &lcd_config) != osOK)
   {
-    osDelay(2000);
+    osDelay(1);
   }
+  while(osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[0]) != osOK)
+  {
+    osDelay(1);
+  }
+  
+  while(osThreadTerminate (testTaskHandle) != osOK);
+
 }
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

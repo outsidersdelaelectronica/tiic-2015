@@ -77,7 +77,7 @@ void BD_ADDRToStr(BD_ADDR_t Board_Address, BoardStr_t BoardStr);
 
 /* Getter */
 
-uint32_t bt_get_ADDR(BD_ADDR_t* inquired_addr);
+uint32_t bt_get_remote_devices(device_info_t* inquired_addr);
 
 /* Callbacks for bt events                                   */
 void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t *GAP_Event_Data, unsigned long CallbackParameter);
