@@ -86,8 +86,6 @@ void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
 void system_init(void)
 {
   afe_init(&afe, &hspi1);
-  afe_test_signal_on(&afe);
-
   buzzer_init(&buzzer, &htim3, &htim4);
   gauge_init(&gauge, &hi2c1);
   lcd_init(&lcd, &hsram1, LCD_REG, LCD_DATA, LCD_X_SIZE, LCD_Y_SIZE);
@@ -120,11 +118,11 @@ void MX_FREERTOS_Init(void)
   tasks_fsm_start();
   tasks_gui_start();
 
-  
+
   /* TEST Task */
   osThreadDef(testTask, Start_testTask, osPriorityIdle, 0, 64);
   testTaskHandle = osThreadCreate(osThread(testTask), NULL);
-  
+
   osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[0]);
 }
 

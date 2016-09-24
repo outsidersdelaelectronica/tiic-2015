@@ -41,8 +41,8 @@ typedef struct afe_t
   SPI_HandleTypeDef *hspi;
 
   /* Gains */
-  uint8_t afe_gain_ch1;
-  uint8_t afe_gain_ch2;
+  int32_t afe_gain_ch1;
+  int32_t afe_gain_ch2;
 
   /* Last data received */
   uint8_t last_data_buf[9];

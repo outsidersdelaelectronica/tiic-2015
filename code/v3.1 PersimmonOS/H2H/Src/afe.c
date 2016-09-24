@@ -144,7 +144,7 @@ void afe_init(afe_t *afe, SPI_HandleTypeDef *hspi)
   afe_calibrate(afe);
 
   /* Enable DRDY interrupts */
-//  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 }
 
 void afe_start_read(afe_t *afe)
@@ -156,7 +156,9 @@ void afe_start_read(afe_t *afe)
 void afe_format_data(afe_t *afe)
 {
   int32_t adc_raw_data_ch1, adc_raw_data_ch2;
-  //Change to actual enum, so the compiler will stfu
+
+  int32_t test1, test2, test3;
+
   /* 3 status bytes (1100 + LOFF_STAT[4:0] + GPIO[1:0] + 13 '0's) */
   afe->last_data.rld_lead_off  = ((afe->last_data_buf[0] & 0x08)?IS_NOT_CONNECTED:IS_CONNECTED);
   afe->last_data.in2n_lead_off = ((afe->last_data_buf[0] & 0x04)?IS_NOT_CONNECTED:IS_CONNECTED);
@@ -172,11 +174,29 @@ void afe_format_data(afe_t *afe)
                      (((int32_t) afe->last_data_buf[7]) << 8)             |
                       ((int32_t) afe->last_data_buf[8]);
 
+  /* Limit AFE data to avoid overflow */
+  if (adc_raw_data_ch1 > 350000)
+  {
+    adc_raw_data_ch1 = 350000;
+  }
+  else if (adc_raw_data_ch1 < -350000)
+  {
+    adc_raw_data_ch1 = -350000;
+  }
+
+  if (adc_raw_data_ch2 > 350000)
+  {
+    adc_raw_data_ch2 = 350000;
+  }
+  else if (adc_raw_data_ch2 < -350000)
+  {
+    adc_raw_data_ch2 = -350000;
+  }
+
   /* Turn into microvolts */
   /* OH MY GOD, DATA IS EVOLVING */
-  afe->last_data.ch1_data = (adc_raw_data_ch1  * AFE_V_PER_BIT ) / (10 * 1000 * afe->afe_gain_ch1);
-  afe->last_data.ch2_data = (adc_raw_data_ch2  * AFE_V_PER_BIT ) / (10 * 1000 * afe->afe_gain_ch2);
-
+  afe->last_data.ch1_data = (adc_raw_data_ch1  * AFE_NV_PER_BIT ) / (1000 * afe->afe_gain_ch1);
+  afe->last_data.ch2_data = (adc_raw_data_ch2  * AFE_NV_PER_BIT ) / (1000 * afe->afe_gain_ch2);
   /* CONGRATS, DATA EVOLVED INTO MICROVOLTS */
 }
 

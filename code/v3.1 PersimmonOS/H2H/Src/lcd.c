@@ -352,14 +352,40 @@ gui_status_t lcd_update_graph(lcd_t *lcd, item_t *item)
     x_pos_line_end   = item->graph.pos.x_pos                            + x_pos_last;
     y_pos_line_end   = item->graph.pos.y_pos + (item->graph.height / 2) - y_pos_last;
 
+    /* Limit points inside the graph */
+    if (y_pos_line_start < item->graph.pos.y_pos)
+    {
+      y_pos_line_start = item->graph.pos.y_pos;
+    }
+    else if (y_pos_line_start > item->graph.pos.y_pos + item->graph.height)
+    {
+      y_pos_line_start = item->graph.pos.y_pos + item->graph.height;
+    }
+
+    if (y_pos_line_end < item->graph.pos.y_pos)
+    {
+      y_pos_line_end = item->graph.pos.y_pos;
+    }
+    else if (y_pos_line_end > item->graph.pos.y_pos + item->graph.height)
+    {
+      y_pos_line_end = item->graph.pos.y_pos + item->graph.height;
+    }
+
   /* Erasing line x coordinate */
     x_erase = item->graph.value_index + ERASE_AHEAD;
+
     /* If erasing coordinate is out of bounds, wrap around */
     if (x_erase >= item->graph.width_graph)
     {
       x_erase -= item->graph.width_graph;
     }
+
     x_erase += item->graph.width_legend + item->graph.pos.x_pos;
+
+    /* Erase ahead */
+    lcd_draw_rectangle(lcd, x_erase, 1,
+                            item->graph.pos.y_pos, item->graph.height,
+                            &(item->graph.bg_graph_color));
 
   /* Draw line */
   if (item->graph.value_index != 0)
@@ -368,11 +394,6 @@ gui_status_t lcd_update_graph(lcd_t *lcd, item_t *item)
                        x_pos_line_end, y_pos_line_end,
                        &(item->graph.line_color));
   }
-
-  /* Erase ahead */
-  lcd_draw_rectangle(lcd, x_erase, 1,
-                          item->graph.pos.y_pos, item->graph.height,
-                          &(item->graph.bg_graph_color));
 
   return GUI_OK;
 }

@@ -73,6 +73,6 @@
 #define AFE_IN1P_OFF            0x01
 
 ///// AFE voltages
-#define AFE_V_PER_BIT           2885    // 0.1 nV per bit => 288.5 nV/bit
+#define AFE_NV_PER_BIT          289     // 289 nV/bit
 
 #endif /* AFE_AFE_CONSTANTS_H_ */

@@ -140,9 +140,6 @@ void Start_ecg_afeTask(void const * argument)
   osSemaphoreWait(sem_ecg_afe_drdyHandle, osWaitForever);
   osSemaphoreWait(sem_ecg_afe_dma_rxHandle, osWaitForever);
 
-  /* Enable AFE interrupts */
-  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
-
   /* Infinite loop */
   for(;;)
   {
