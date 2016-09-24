@@ -1,5 +1,8 @@
 #include "tasks_ecg.h"
 
+/* Mutexes */
+osMutexId mutex_ecg_leadsHandle;
+
 /* Semaphores */
 osSemaphoreId sem_ecg_afe_drdyHandle;
 osSemaphoreId sem_ecg_afe_dma_rxHandle;
@@ -34,9 +37,14 @@ void Start_ecg_validationTask(void const * argument);
 
 /* Objects */
 extern afe_t afe;
+leads_t leads;
 
 void tasks_ecg_init()
 {
+  /* Mutexes */
+  osMutexDef(mutex_ecg_leads);
+  mutex_ecg_leadsHandle = osMutexCreate(osMutex(mutex_ecg_leads));
+
   /* Semaphores */
   /* sem_ecg_afe_drdy */
   osSemaphoreDef(sem_ecg_afe_drdy);
@@ -49,7 +57,7 @@ void tasks_ecg_init()
   /* sem_ecg_afe_dma_rx */
   osSemaphoreDef(sem_ecg_keygen);
   sem_ecg_keygenHandle = osSemaphoreCreate(osSemaphore(sem_ecg_keygen), 1);
-  
+
   /* Queues */
   /* queue_ecg_afe_ch_1 */
   osMessageQDef(queue_ecg_afe_ch_1, 2, int32_t);
@@ -90,11 +98,11 @@ void tasks_ecg_init()
   /* queue_ecg_bpm */
   osMessageQDef(queue_ecg_bpm, 2, uint32_t);
   queue_ecg_bpmHandle = osMessageCreate(osMessageQ(queue_ecg_bpm), NULL);
-  
+
   /* queue_ecg_bpm */
   osMessageQDef(queue_ecg_bpm_screen, 2, uint32_t);
   queue_ecg_bpm_screenHandle = osMessageCreate(osMessageQ(queue_ecg_bpm_screen), NULL);
-  
+
   /* queue_ecg_key */
   osMailQDef(queue_ecg_key, 2, validation_key_t);
   queue_ecg_keyHandle = osMailCreate(osMailQ(queue_ecg_key), NULL);
@@ -118,18 +126,23 @@ void tasks_ecg_start()
   /* ecg_keyGenTask */
   osThreadDef(ecg_keyGenTask, Start_ecg_keyGenTask, osPriorityNormal, 0, 80);
   ecg_keyGenTaskHandle = osThreadCreate(osThread(ecg_keyGenTask), NULL);
-  
+
   /* ecg_validationTask */
   osThreadDef(ecg_validationTask, Start_ecg_validationTask, osPriorityNormal, 0, 128);
   ecg_validationTaskHandle = osThreadCreate(osThread(ecg_validationTask), NULL);
 }
+
 size_t sizerino;
+
 void Start_ecg_afeTask(void const * argument)
 {
   /* Reset semaphores */
   osSemaphoreWait(sem_ecg_afe_drdyHandle, osWaitForever);
   osSemaphoreWait(sem_ecg_afe_dma_rxHandle, osWaitForever);
+
+  /* Enable AFE interrupts */
   HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+
   /* Infinite loop */
   for(;;)
   {
@@ -150,6 +163,8 @@ void Start_ecg_afeTask(void const * argument)
         osMessagePut(queue_ecg_afe_ch_2Handle, afe.last_data.ch2_data, 0);
       }
     }
+
+    /* Check RAM */
     sizerino = xPortGetMinimumEverFreeHeapSize();
   }
 }
@@ -159,9 +174,9 @@ void Start_ecg_filterTask(void const * argument)
   osEvent event_ch1, event_ch2;
 
   int32_t ch1_data = 0, ch2_data = 0;
-  int32_t filtered_ch1_data = 0, filtered_ch2_data = 0, bpm_preprocessed = 0;
   int32_t lead_I = 0, lead_II = 0, lead_III = 0;
-  int32_t lead_aVR = 0, lead_aVL = 0, lead_aVF = 0;
+  int32_t bpm_preprocessed = 0;
+
   /* Infinite loop */
   for(;;)
   {
@@ -175,32 +190,25 @@ void Start_ecg_filterTask(void const * argument)
       ch2_data = (int32_t) event_ch2.value.v;
 
       /* Filter channel 1 */
-      filtered_ch1_data = show_filter(ch1_data);
+      lead_I = show_filter(ch1_data);
       /* Filter channel 2 */
-      filtered_ch2_data = show_filter(ch2_data);
+      lead_II = show_filter(ch2_data);
+      /* Generate lead III */
+      lead_III = lead_II - lead_I;
       /* Filter channel 1 for bpm detection */
       bpm_preprocessed = bpm_preprocessing(ch1_data);
 
-      /* Output data to queues */
-      lead_I = filtered_ch1_data;
-      /* Generate lead I */
-      lead_II = filtered_ch2_data;
-      /* Generate lead III */
-      lead_III = lead_II - lead_I;
-      /* Generate lead aVR */
-      lead_aVR = (lead_I + lead_II)   >> 1;
-      /* Generate lead aVL */
-      lead_aVL = (lead_I - lead_III)  >> 1;
-      /* Generate lead aVF */
-      lead_aVF = (lead_II + lead_III) >> 1;
+      /* Generate leads */
+      osMutexWait(mutex_ecg_leadsHandle, osWaitForever);
+      leads.lead_I   = lead_I;
+      leads.lead_II  = lead_II;
+      leads.lead_III = lead_III;
+      leads.lead_aVR = (lead_I + lead_II)   >> 1;
+      leads.lead_aVL = (lead_I - lead_III)  >> 1;
+      leads.lead_aVF = (lead_II + lead_III) >> 1;
+      osMutexRelease(mutex_ecg_leadsHandle);
 
       /* Output data to queues */
-//      osMessagePut(queue_ecg_lead_IHandle,   lead_I,   0);
-//      osMessagePut(queue_ecg_lead_IIHandle,  lead_II,  0);
-//      osMessagePut(queue_ecg_lead_IIIHandle, lead_III, 0);
-//      osMessagePut(queue_ecg_lead_aVRHandle, lead_aVR, 0);
-//      osMessagePut(queue_ecg_lead_aVLHandle, lead_aVL, 0);
-//      osMessagePut(queue_ecg_lead_aVFHandle, lead_aVF, 0);
       osMessagePut(queue_ecg_preprocessedHandle, bpm_preprocessed, 0);
     }
   }
@@ -213,7 +221,7 @@ void Start_ecg_bpmDetTask(void const * argument)
   int32_t threshold_high = 1, threshold_low = 1, maxerino = 0;
   int sample_counter = 0;
   uint8_t flag_qrs_zone = 0;
-  
+
   /* Infinite loop */
   for(;;)
   {
@@ -256,9 +264,9 @@ void Start_ecg_bpmDetTask(void const * argument)
           flag_qrs_zone = 0;
           osMessagePut(queue_ecg_bpmHandle, (uint32_t) bpm, 0);
           osMessagePut(queue_ecg_bpm_screenHandle, (uint32_t) bpm, 0);
-        } 
+        }
       }
-    }        
+    }
     else if (threshold_high > threshold_low)
     {
       threshold_high = threshold_high *255/256;
@@ -276,7 +284,7 @@ void Start_ecg_keyGenTask(void const * argument)
   osEvent event;
   validation_key_t key;
   uint32_t bpm = 0;
-  
+
   init_key(&key,INTERN);
   osSemaphoreWait(sem_ecg_keygenHandle, osWaitForever);
   /* Infinite loop */
@@ -309,11 +317,11 @@ void Start_ecg_validationTask(void const * argument)
   osEvent event;
   validation_key_t inter_key, extern_key, incomming_key;
   autentitication_t auth_reponse;
-  
+
   init_key(&inter_key,INTERN);
   init_key(&extern_key,EXTERN);
   init_key(&incomming_key,INTERN);
-  
+
   /* Infinite loop */
   for(;;)
   {
@@ -332,8 +340,8 @@ void Start_ecg_validationTask(void const * argument)
         extern_key = incomming_key;
         /* Esto esta mal, pero tempus fugit. Hay que fixearlo */
         erase_key((validation_key_t*) event.value.v);
-      }   
-      
+      }
+
       if((inter_key.state == READY)&&(extern_key.state == READY))
       {
         auth_reponse = validate(&inter_key,&extern_key);

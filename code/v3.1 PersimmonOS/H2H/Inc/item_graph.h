@@ -42,14 +42,14 @@ typedef struct item_graph_t
 item_graph_t;
 
 gui_status_t item_graph_init(item_graph_t *graph,
-                            uint16_t width_legend, uint16_t width_graph, uint16_t height,
-                            uint16_t x_pos, uint16_t y_pos,
-                            gui_h_align_t legend_position,
-                            gui_border_t border,
-                            gui_active_t is_active,
-                            uint32_t x_axis_full_scale, uint32_t y_axis_full_scale,
-                            color_t text_color, color_t bg_legend_color, color_t bg_graph_color,
-                            color_t line_color, color_t border_color);
+                             uint16_t width_legend, uint16_t width_graph, uint16_t height,
+                             uint16_t x_pos, uint16_t y_pos,
+                             gui_h_align_t legend_position,
+                             gui_border_t border,
+                             gui_active_t is_active,
+                             uint32_t x_axis_full_scale, uint32_t y_axis_full_scale,
+                             color_t text_color, color_t bg_legend_color, color_t bg_graph_color,
+                             color_t line_color, color_t border_color);
 
 /*
  * Getters

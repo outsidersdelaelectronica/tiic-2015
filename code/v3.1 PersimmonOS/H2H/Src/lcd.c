@@ -327,28 +327,27 @@ gui_status_t lcd_print_graph(lcd_t *lcd, item_t *item)
 
 gui_status_t lcd_update_graph(lcd_t *lcd, item_t *item)
 {
-  uint32_t y_pos_second_to_last, y_pos_last;
+  int32_t y_pos_second_to_last, y_pos_last;
+
+  /* Skip line drawing between last and first position in the graph */
+  if (item->graph.value_index == 0)
+  {
+    return GUI_OK;
+  }
 
   /* Calculate graph points */
-  y_pos_second_to_last = (item->graph.second_to_last_value * (item->graph.height >> 1)) /
-                         (item->graph.y_axis_full_scale);
-  y_pos_last           = (item->graph.last_value * (item->graph.height >> 1)) /
-                         (item->graph.y_axis_full_scale);
+  y_pos_second_to_last = (item->graph.second_to_last_value * ((int32_t) item->graph.height / 2)) /
+                         ((int32_t) item->graph.y_axis_full_scale);
 
-  if (item->graph.value_index < item->graph.width_graph - 1)
-  {
-    lcd_draw_line(lcd,
-                  item->graph.pos.x_pos + item->graph.width_legend + item->graph.value_index,
-                  item->graph.pos.y_pos + (item->graph.height >> 1) + y_pos_second_to_last,
-                  item->graph.pos.x_pos + item->graph.width_legend + item->graph.value_index + 1,
-                  item->graph.pos.y_pos + (item->graph.height >> 1) + y_pos_last,
-                  &(item->graph.line_color));
-    item->graph.value_index++;
-  }
-  else
-  {
-    item->graph.value_index = 0;
-  }
+  y_pos_last           = (item->graph.last_value * ((int32_t) item->graph.height / 2)) /
+                         ((int32_t) item->graph.y_axis_full_scale);
+
+  lcd_draw_line(lcd,
+                item->graph.pos.x_pos + item->graph.width_legend + item->graph.value_index - 1,
+                item->graph.pos.y_pos + (item->graph.height >> 1) + y_pos_second_to_last,
+                item->graph.pos.x_pos + item->graph.width_legend + item->graph.value_index,
+                item->graph.pos.y_pos + (item->graph.height >> 1) + y_pos_last,
+                &(item->graph.line_color));
 
   return GUI_OK;
 }

@@ -10,8 +10,8 @@ menu_t graph_ecg_1_lead =
       .item_print_function = lcd_print_graph,
       .item.graph =
       {
-        .width_legend         = 80,
-        .width_graph          = 640,
+        .width_legend         = 90,
+        .width_graph          = 630,
         .height               = 290,
         .pos                  = {.x_pos = 40, .y_pos = 60},
         .legend_position      = LEFT,
@@ -25,7 +25,7 @@ menu_t graph_ecg_1_lead =
         .text_color           = COLOR_WHITE,
         .bg_legend_color      = COLOR_BLUE,
         .bg_graph_color       = COLOR_CYAN,
-        .line_color           = COLOR_WHITE,
+        .line_color           = COLOR_BLACK,
         .border_color         = COLOR_WHITE,
       }
     }
@@ -42,8 +42,8 @@ menu_t graph_ecg_2_lead =
       .item_print_function = lcd_print_graph,
       .item.graph =
       {
-        .width_legend         = 60,
-        .width_graph          = 660,
+        .width_legend         = 80,
+        .width_graph          = 640,
         .height               = 140,
         .pos                  = {.x_pos = 40, .y_pos = 60},
         .legend_position      = LEFT,
@@ -57,7 +57,7 @@ menu_t graph_ecg_2_lead =
         .text_color           = COLOR_WHITE,
         .bg_legend_color      = COLOR_BLUE,
         .bg_graph_color       = COLOR_CYAN,
-        .line_color           = COLOR_WHITE,
+        .line_color           = COLOR_BLACK,
         .border_color         = COLOR_WHITE,
       }
     },
@@ -65,8 +65,8 @@ menu_t graph_ecg_2_lead =
       .item_print_function = lcd_print_graph,
       .item.graph =
       {
-        .width_legend         = 60,
-        .width_graph          = 660,
+        .width_legend         = 80,
+        .width_graph          = 640,
         .height               = 140,
         .pos                  = {.x_pos = 40, .y_pos = 210},
         .legend_position      = LEFT,
@@ -80,7 +80,7 @@ menu_t graph_ecg_2_lead =
         .text_color           = COLOR_WHITE,
         .bg_legend_color      = COLOR_BLUE,
         .bg_graph_color       = COLOR_CYAN,
-        .line_color           = COLOR_WHITE,
+        .line_color           = COLOR_BLACK,
         .border_color         = COLOR_WHITE,
       }
     }
@@ -112,7 +112,7 @@ menu_t graph_ecg_6_lead =
         .text_color           = COLOR_WHITE,
         .bg_legend_color      = COLOR_BLUE,
         .bg_graph_color       = COLOR_CYAN,
-        .line_color           = COLOR_WHITE,
+        .line_color           = COLOR_BLACK,
         .border_color         = COLOR_WHITE,
       }
     },
@@ -135,7 +135,7 @@ menu_t graph_ecg_6_lead =
         .text_color           = COLOR_WHITE,
         .bg_legend_color      = COLOR_BLUE,
         .bg_graph_color       = COLOR_CYAN,
-        .line_color           = COLOR_WHITE,
+        .line_color           = COLOR_BLACK,
         .border_color         = COLOR_WHITE,
       }
     },
@@ -158,7 +158,7 @@ menu_t graph_ecg_6_lead =
         .text_color           = COLOR_WHITE,
         .bg_legend_color      = COLOR_BLUE,
         .bg_graph_color       = COLOR_CYAN,
-        .line_color           = COLOR_WHITE,
+        .line_color           = COLOR_BLACK,
         .border_color         = COLOR_WHITE,
       }
     },
@@ -181,7 +181,7 @@ menu_t graph_ecg_6_lead =
         .text_color           = COLOR_WHITE,
         .bg_legend_color      = COLOR_BLUE,
         .bg_graph_color       = COLOR_CYAN,
-        .line_color           = COLOR_WHITE,
+        .line_color           = COLOR_BLACK,
         .border_color         = COLOR_WHITE,
       }
     },
@@ -204,7 +204,7 @@ menu_t graph_ecg_6_lead =
         .text_color           = COLOR_WHITE,
         .bg_legend_color      = COLOR_BLUE,
         .bg_graph_color       = COLOR_CYAN,
-        .line_color           = COLOR_WHITE,
+        .line_color           = COLOR_BLACK,
         .border_color         = COLOR_WHITE,
       }
     },
@@ -227,7 +227,7 @@ menu_t graph_ecg_6_lead =
         .text_color           = COLOR_WHITE,
         .bg_legend_color      = COLOR_BLUE,
         .bg_graph_color       = COLOR_CYAN,
-        .line_color           = COLOR_WHITE,
+        .line_color           = COLOR_BLACK,
         .border_color         = COLOR_WHITE,
       }
     }

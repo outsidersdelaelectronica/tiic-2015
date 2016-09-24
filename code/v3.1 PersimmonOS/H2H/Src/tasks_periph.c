@@ -46,7 +46,7 @@ void tasks_periph_init()
   queue_periph_buzzerHandle = osMailCreate(osMailQ(queue_periph_buzzer), NULL);
 
   /* queue_lcd */
-  osMailQDef(queue_lcd, 12, item_action_t);
+  osMailQDef(queue_lcd, 16, item_action_t);
   queue_lcdHandle = osMailCreate(osMailQ(queue_lcd), NULL);
 }
 
@@ -58,7 +58,7 @@ void tasks_periph_start()
   periph_buzzerTaskHandle = osThreadCreate(osThread(periph_buzzerTask), NULL);
 
   /* periph_screenTask */
-  osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityNormal, 0, 125);
+  osThreadDef(periph_screenTask, Start_periph_screenTask, osPriorityNormal, 0, 512);
   periph_screenTaskHandle = osThreadCreate(osThread(periph_screenTask), NULL);
 
   /* periph_batteryTask */
@@ -66,7 +66,7 @@ void tasks_periph_start()
   periph_batteryTaskHandle = osThreadCreate(osThread(periph_batteryTask), NULL);
 
   /* periph_rtcTask */
-  osThreadDef(periph_rtcTask, Start_periph_rtcTask, osPriorityLow, 0, 100);
+  osThreadDef(periph_rtcTask, Start_periph_rtcTask, osPriorityLow, 0, 80);
   periph_rtcTaskHandle = osThreadCreate(osThread(periph_rtcTask), NULL);
 }
 
@@ -137,7 +137,7 @@ void Start_periph_batteryTask(void const * argument)
       {
         /* Format received bytes into usable data */
         gauge_format_data(&gauge);
-        
+
         menu_copy(&menu_top_bar, &current_menu);
         /* Read charger values */
         if (HAL_GPIO_ReadPin(CHRG_CHG_GPIO_Port, CHRG_CHG_Pin))
@@ -231,7 +231,7 @@ void Start_periph_rtcTask(void const * argument)
       sprintf(date_string, "%u/%u/20%u", sDate.Date, sDate.Month, sDate.Year);
 
       menu_copy(&menu_top_bar, &current_menu);
-      
+
       /* Update screen items */
       item_area_set_text(&current_menu.items[4].item.area, time_string);
       item_area_set_text(&current_menu.items[3].item.area, date_string);
