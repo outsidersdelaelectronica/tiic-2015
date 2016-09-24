@@ -327,7 +327,11 @@ gui_status_t lcd_print_graph(lcd_t *lcd, item_t *item)
 
 gui_status_t lcd_update_graph(lcd_t *lcd, item_t *item)
 {
-  int32_t y_pos_second_to_last, y_pos_last;
+  int32_t x_pos_second_to_last, y_pos_second_to_last;
+  int32_t x_pos_last, y_pos_last;
+
+  int32_t x_pos_line_start, y_pos_line_start;
+  int32_t x_pos_line_end, y_pos_line_end;
 
   /* Skip line drawing between last and first position in the graph */
   if (item->graph.value_index == 0)
@@ -335,19 +339,24 @@ gui_status_t lcd_update_graph(lcd_t *lcd, item_t *item)
     return GUI_OK;
   }
 
-  /* Calculate graph points */
+  /* Calculate points inside the graph */
+  x_pos_second_to_last = item->graph.width_legend + item->graph.value_index - 1;
+
+  x_pos_last           = item->graph.width_legend + item->graph.value_index;
+
   y_pos_second_to_last = (item->graph.second_to_last_value * ((int32_t) item->graph.height / 2)) /
                          ((int32_t) item->graph.y_axis_full_scale);
 
   y_pos_last           = (item->graph.last_value * ((int32_t) item->graph.height / 2)) /
                          ((int32_t) item->graph.y_axis_full_scale);
 
-  lcd_draw_line(lcd,
-                item->graph.pos.x_pos + item->graph.width_legend + item->graph.value_index - 1,
-                item->graph.pos.y_pos + (item->graph.height >> 1) + y_pos_second_to_last,
-                item->graph.pos.x_pos + item->graph.width_legend + item->graph.value_index,
-                item->graph.pos.y_pos + (item->graph.height >> 1) + y_pos_last,
-                &(item->graph.line_color));
+  /* Translate to absolute points */
+  x_pos_line_start = item->graph.pos.x_pos                            + x_pos_second_to_last;
+  y_pos_line_start = item->graph.pos.y_pos + (item->graph.height / 2) + y_pos_second_to_last;
+  x_pos_line_end   = item->graph.pos.x_pos                            + x_pos_last;
+  y_pos_line_end   = item->graph.pos.y_pos + (item->graph.height / 2) + y_pos_last;
+
+  lcd_draw_line(lcd, x_pos_line_start, y_pos_line_start, x_pos_line_end, y_pos_line_end, &(item->graph.line_color));
 
   return GUI_OK;
 }

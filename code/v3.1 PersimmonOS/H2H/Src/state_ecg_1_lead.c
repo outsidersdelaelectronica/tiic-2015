@@ -55,7 +55,7 @@ static void ecg_1_lead_gui_tick(state_ptr state)
   item_graph_add_value(&graph_ecg_1_lead.items[0].item.graph, lead_I);
 
   graph_ecg_1_lead.items[0].item_print_function = lcd_update_graph;
-//  osMailPut(queue_lcdHandle, (void *) &graph_ecg_1_lead.items[0]);
+  osMailPut(queue_lcdHandle, (void *) &graph_ecg_1_lead.items[0]);
 }
 
 /* State behaviour */
