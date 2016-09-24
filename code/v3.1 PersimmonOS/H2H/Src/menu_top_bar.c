@@ -99,13 +99,13 @@ const menu_t menu_top_bar =
         .font                 = myriad_pro_semibold_16,
         .string_h_align       = CENTER,
         .string_v_align       = MID,
-        .text_color           = COLOR_BLACK,
-        .bg_color             = COLOR_CYAN,
+        .text_color           = COLOR_WHITE,
+        .bg_color             = COLOR_BLUE,
         .border_color         = COLOR_BLACK,
         .event                = fsm_no_event
       }
     },
-        /* Charging bolt */
+    /* Charging bolt */
     {
       .item_print_function = lcd_print_area,
       .item.area =
