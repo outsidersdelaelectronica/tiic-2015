@@ -352,9 +352,9 @@ gui_status_t lcd_update_graph(lcd_t *lcd, item_t *item)
 
   /* Translate to absolute points */
   x_pos_line_start = item->graph.pos.x_pos                            + x_pos_second_to_last;
-  y_pos_line_start = item->graph.pos.y_pos + (item->graph.height / 2) + y_pos_second_to_last;
+  y_pos_line_start = item->graph.pos.y_pos + (item->graph.height / 2) - y_pos_second_to_last;
   x_pos_line_end   = item->graph.pos.x_pos                            + x_pos_last;
-  y_pos_line_end   = item->graph.pos.y_pos + (item->graph.height / 2) + y_pos_last;
+  y_pos_line_end   = item->graph.pos.y_pos + (item->graph.height / 2) - y_pos_last;
 
   lcd_draw_line(lcd, x_pos_line_start, y_pos_line_start, x_pos_line_end, y_pos_line_end, &(item->graph.line_color));
 

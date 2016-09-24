@@ -77,3 +77,10 @@ void item_graph_add_value(item_graph_t *graph, int32_t value)
   graph->second_to_last_value = graph->last_value;
   graph->last_value = value;
 }
+
+void item_graph_reset_value(item_graph_t *graph)
+{
+  graph->value_index = 0;
+  graph->second_to_last_value = 0;
+  graph->last_value = 0;
+}

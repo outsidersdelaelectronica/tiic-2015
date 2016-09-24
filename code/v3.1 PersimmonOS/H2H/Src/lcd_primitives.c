@@ -15,10 +15,6 @@ void lcd_draw_pixel(lcd_t *lcd, uint16_t x_pos, uint16_t y_pos, color_t *color)
   lcd_hal_write_data(lcd, color->color565);
 }
 
-/* Function that returns -1,0,1 depending on whether x */
-/* is <0, =0, >0 respectively */
-#define sign(x) ((x>0)?1:((x<0)?-1:0))
-
 /**
   * @brief  Draws a line from two points.
   * @param  x0: Starting point horizontal position.
@@ -28,78 +24,45 @@ void lcd_draw_pixel(lcd_t *lcd, uint16_t x_pos, uint16_t y_pos, color_t *color)
   * @param  color: Color of pixel.
   * @retval None
 */
-void lcd_draw_line(lcd_t *lcd, uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, color_t *color)
+void lcd_draw_line(lcd_t *lcd, uint16_t origin_x, uint16_t origin_y,
+                               uint16_t end_x, uint16_t end_y, color_t *color)
 {
-  // Source: http://code-blocks.blogspot.com.es/2014/12/generalized-bresenhams-line-drawing.html
+  int32_t dist_x, dist_y, step, step_y, current_x, current_y, i, j;
 
-  int32_t dx, dy;
-  int32_t d, sx, sy, temp;
-  uint16_t x, y;
-  uint8_t swap = 0;
-
-  /* Calculate abs value of dx and dy */
-  if ((x1 - x0) >= 0)
+  if(origin_x < end_x)
   {
-    dx = x1 - x0;
+    current_x = origin_x;
+    dist_x = end_x - origin_x;
   }
   else
   {
-    dx = x0 - x1;
+    current_x = end_x;
+    dist_x = origin_x - end_x;
   }
 
-  if ((y1 - y0) >= 0)
+  current_y = origin_y;
+
+  if(origin_y < end_y)
   {
-    dy = y1 - y0;
+    step_y = 1;
+    dist_y = end_y - origin_y + 1;
   }
   else
   {
-    dy = y0 - y1;
+    step_y = -1;
+    dist_y = origin_y - end_y + 1;
   }
 
-  /* Calculate signs */
-  sx = sign(x1-x0);
-  sy = sign(y1-y0);
+  step = dist_y/dist_x;
 
-  /* Check if dx or dy has a greater range */
-  /* if dy has a greater range than dx swap dx and dy */
-  if (dy > dx)
+  for(i = dist_x; i > 0; i--)
   {
-    temp = dx;
-    dx = dy;
-    dy = temp;
-
-    swap = 1;
-  }
-
-  /* Set the initial decision parameter and the initial point */
-  d = (2 * dy) - dx;
-  x = x0;
-  y = y0;
-
-  for(uint32_t i = 1; i <= dx; i++)
-  {
-    lcd_draw_pixel(lcd, x, y, color);
-    while (d >= 0)
+    for(j = step; j > 0;j--)
     {
-      if (swap)
-      {
-        x = x + sx;
-      }
-      else
-      {
-        y = y + sy;
-        d = d - 2* dx;
-      }
+      lcd_draw_pixel(lcd, current_x, current_y, color);
+      current_y = current_y + step_y;
     }
-    if (swap)
-    {
-      y = y + sy;
-    }
-    else
-    {
-      x = x + sx;
-    }
-    d = d + (2 * dy);
+    current_x++;
   }
 }
 

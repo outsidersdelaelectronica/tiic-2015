@@ -65,5 +65,6 @@ void item_graph_set_is_active(item_graph_t *graph, gui_active_t is_active);
  * Handlers
  */
 void item_graph_add_value(item_graph_t *graph, int32_t value);
+void item_graph_reset_value(item_graph_t *graph);
 
 #endif /* ITEM_GRAPH_H_ */

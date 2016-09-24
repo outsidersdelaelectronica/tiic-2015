@@ -24,9 +24,13 @@ extern leads_t leads;
 
 static void ecg_2_lead_gui_tick(state_ptr state)
 {
+  uint32_t i = 0;
   osEvent event;
+
   uint32_t bpm = 0;
   char str_bpm[4] = "-?-";
+
+  int32_t lead_I = 0, lead_II = 0;
 
   /* Do transition actions */
   /* Get bpm data */
@@ -41,6 +45,21 @@ static void ecg_2_lead_gui_tick(state_ptr state)
 
     item_area_set_text(&current_menu.items[1].item.area, str_bpm);
     osMailPut(queue_lcdHandle, (void *) &current_menu.items[1]);
+  }
+
+  /* Get data and update graphs */
+  osMutexWait(mutex_ecg_leadsHandle, osWaitForever);
+  lead_I  = leads.lead_I;
+  lead_II = leads.lead_II;
+  osMutexRelease(mutex_ecg_leadsHandle);
+
+  item_graph_add_value(&graph_ecg_2_lead.items[0].item.graph, lead_I);
+  item_graph_add_value(&graph_ecg_2_lead.items[1].item.graph, lead_II);
+
+  for (i = 0; i < graph_ecg_2_lead.item_num; i++)
+  {
+    graph_ecg_2_lead.items[i].item_print_function = lcd_update_graph;
+    osMailPut(queue_lcdHandle, (void *) &graph_ecg_2_lead.items[i]);
   }
 }
 
@@ -70,6 +89,7 @@ void behaviour_ecg_2_lead(state_ptr state)
   /* Print graphs */
   for (i = 0; i < graph_ecg_2_lead.item_num; i++)
   {
+    item_graph_reset_value(&graph_ecg_2_lead.items[i].item.graph);
     graph_ecg_2_lead.items[i].item_print_function = lcd_print_graph;
     osMailPut(queue_lcdHandle, (void *) &graph_ecg_2_lead.items[i]);
   }

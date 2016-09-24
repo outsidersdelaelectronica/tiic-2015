@@ -18,8 +18,8 @@ void lcd_draw_pixel(lcd_t *lcd,
                     uint16_t x_pos, uint16_t y_pos,
                     color_t *color);
 void lcd_draw_line(lcd_t *lcd,
-                   uint16_t x0, uint16_t y0,
-                   uint16_t x1, uint16_t y1,
+                   uint16_t origin_x, uint16_t origin_y,
+                   uint16_t end_x, uint16_t end_y,
                    color_t *color);
 void lcd_draw_rectangle(lcd_t *lcd_t,
                         uint16_t x_pos, uint16_t width,

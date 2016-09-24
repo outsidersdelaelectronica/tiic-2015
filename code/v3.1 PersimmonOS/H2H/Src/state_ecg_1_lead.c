@@ -43,7 +43,6 @@ static void ecg_1_lead_gui_tick(state_ptr state)
     menu_copy(&menu_ecg, &current_menu);
 
     item_area_set_text(&current_menu.items[1].item.area, str_bpm);
-
     osMailPut(queue_lcdHandle, (void *) &current_menu.items[1]);
   }
 
@@ -80,6 +79,7 @@ void behaviour_ecg_1_lead(state_ptr state)
   current_menu.items[5].item.area.bg_color = (color_t) COLOR_BLUE;
 
   /* Print graphs */
+  item_graph_reset_value(&graph_ecg_1_lead.items[0].item.graph);
   graph_ecg_1_lead.items[0].item_print_function = lcd_print_graph;
   osMailPut(queue_lcdHandle, (void *) &graph_ecg_1_lead.items[0]);
 }
