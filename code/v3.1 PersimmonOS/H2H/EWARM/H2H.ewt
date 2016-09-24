@@ -1196,6 +1196,9 @@
                 <name>$PROJ_DIR$\..\Src\menu_h2h_connect.c</name>
               </file>
               <file>
+                <name>$PROJ_DIR$\..\Src\menu_h2h_devices.c</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_action.c</name>
               </file>
               <file>
