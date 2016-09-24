@@ -29,9 +29,9 @@ const menu_t menu_main =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 260,
-        .height               = 80,
-        .pos                  = {.x_pos = 0, .y_pos = 40},
+        .width                = 145,
+        .height               = 145,
+        .pos                  = {.x_pos = 0, .y_pos = 35},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
         .string               = L"\xF21E",
@@ -48,13 +48,13 @@ const menu_t menu_main =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 260,
-        .height               = 360,
-        .pos                  = {.x_pos = 0, .y_pos = 120},
+        .width                = 655,
+        .height               = 145,
+        .pos                  = {.x_pos = 145, .y_pos = 35},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
         .string               = L"ECG",
-        .font                 = myriad_pro_semibold_24,
+        .font                 = myriad_pro_bold_20,
         .string_h_align       = CENTER,
         .string_v_align       = MID,
         .text_color           = COLOR_BLACK,
@@ -68,9 +68,9 @@ const menu_t menu_main =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 260,
-        .height               = 80,
-        .pos                  = {.x_pos = 270, .y_pos = 40},
+        .width                = 145,
+        .height               = 145,
+        .pos                  = {.x_pos = 0, .y_pos = 185},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
         .string               = L"\xF0FA",
@@ -87,13 +87,13 @@ const menu_t menu_main =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 260,
-        .height               = 360,
-        .pos                  = {.x_pos = 270, .y_pos = 120},
+        .width                = 655,
+        .height               = 145,
+        .pos                  = {.x_pos = 145, .y_pos = 185},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
         .string               = L"H2H",
-        .font                 = myriad_pro_semibold_24,
+        .font                 = myriad_pro_bold_20,
         .string_h_align       = CENTER,
         .string_v_align       = MID,
         .text_color           = COLOR_BLACK,
@@ -107,9 +107,9 @@ const menu_t menu_main =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 260,
-        .height               = 80,
-        .pos                  = {.x_pos = 540, .y_pos = 40},
+        .width                = 145,
+        .height               = 145,
+        .pos                  = {.x_pos = 0, .y_pos = 335},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
         .string               = L"\xF085",
@@ -126,13 +126,13 @@ const menu_t menu_main =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 260,
-        .height               = 360,
-        .pos                  = {.x_pos = 540, .y_pos = 120},
+        .width                = 655,
+        .height               = 145,
+        .pos                  = {.x_pos = 145, .y_pos = 335},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
         .string               = L"Settings",
-        .font                 = myriad_pro_semibold_24,
+        .font                 = myriad_pro_bold_20,
         .string_h_align       = CENTER,
         .string_v_align       = MID,
         .text_color           = COLOR_BLACK,

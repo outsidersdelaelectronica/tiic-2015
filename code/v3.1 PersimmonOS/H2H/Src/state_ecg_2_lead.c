@@ -93,6 +93,12 @@ void behaviour_ecg_2_lead(state_ptr state)
     graph_ecg_2_lead.items[i].item_print_function = lcd_print_graph;
     osMailPut(queue_lcdHandle, (void *) &graph_ecg_2_lead.items[i]);
   }
+
+  /* Print tags */
+  for (i = 0; i < tags_ecg_2_lead.item_num; i++)
+  {
+    osMailPut(queue_lcdHandle, (void *) &tags_ecg_2_lead.items[i]);
+  }
 }
 
 /* Entry point to the state */

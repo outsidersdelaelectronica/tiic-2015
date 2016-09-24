@@ -2,7 +2,7 @@
 
 const menu_t menu_ecg =
 {
-  .item_num = 6,
+  .item_num = 7,
   .items =
   {
     {
@@ -28,14 +28,14 @@ const menu_t menu_ecg =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 156,
+        .width                = 90,
         .height               = 100,
         .pos                  = {.x_pos = 0, .y_pos = 380},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
         .string               = L"-?-",
         .font                 = myriad_pro_semibold_24,
-        .string_h_align       = CENTER,
+        .string_h_align       = RIGHT,
         .string_v_align       = MID,
         .text_color           = COLOR_WHITE,
         .bg_color             = COLOR_BLUE,
@@ -117,6 +117,25 @@ const menu_t menu_ecg =
         .bg_color             = COLOR_BLUE,
         .border_color         = COLOR_BLACK,
         .event                = fsm_ecg_6_lead
+      }
+    },
+    {
+      .item_print_function = lcd_print_area,
+      .item.area =
+      {
+        .width                = 66,
+        .height               = 100,
+        .pos                  = {.x_pos = 90, .y_pos = 380},
+        .border               = GUI_NO_BORDER,
+        .is_active            = GUI_ACTIVE,
+        .string               = L"bpm",
+        .font                 = myriad_pro_semibold_16,
+        .string_h_align       = CENTER,
+        .string_v_align       = MID,
+        .text_color           = COLOR_CYAN,
+        .bg_color             = COLOR_BLUE,
+        .border_color         = COLOR_BLACK,
+        .event                = fsm_no_event
       }
     },
   }

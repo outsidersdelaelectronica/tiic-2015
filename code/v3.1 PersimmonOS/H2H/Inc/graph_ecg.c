@@ -97,8 +97,8 @@ menu_t graph_ecg_6_lead =
       .item_print_function = lcd_print_graph,
       .item.graph =
       {
-        .width_legend         = 60,
-        .width_graph          = 295,
+        .width_legend         = 70,
+        .width_graph          = 285,
         .height               = 90,
         .pos                  = {.x_pos = 40, .y_pos = 60},
         .legend_position      = LEFT,
@@ -120,8 +120,8 @@ menu_t graph_ecg_6_lead =
       .item_print_function = lcd_print_graph,
       .item.graph =
       {
-        .width_legend         = 60,
-        .width_graph          = 295,
+        .width_legend         = 70,
+        .width_graph          = 285,
         .height               = 90,
         .pos                  = {.x_pos = 40, .y_pos = 160},
         .legend_position      = LEFT,
@@ -143,8 +143,8 @@ menu_t graph_ecg_6_lead =
       .item_print_function = lcd_print_graph,
       .item.graph =
       {
-        .width_legend         = 60,
-        .width_graph          = 295,
+        .width_legend         = 70,
+        .width_graph          = 285,
         .height               = 90,
         .pos                  = {.x_pos = 40, .y_pos = 260},
         .legend_position      = LEFT,
@@ -166,8 +166,8 @@ menu_t graph_ecg_6_lead =
       .item_print_function = lcd_print_graph,
       .item.graph =
       {
-        .width_legend         = 60,
-        .width_graph          = 295,
+        .width_legend         = 70,
+        .width_graph          = 285,
         .height               = 90,
         .pos                  = {.x_pos = 405, .y_pos = 60},
         .legend_position      = LEFT,
@@ -189,8 +189,8 @@ menu_t graph_ecg_6_lead =
       .item_print_function = lcd_print_graph,
       .item.graph =
       {
-        .width_legend         = 60,
-        .width_graph          = 295,
+        .width_legend         = 70,
+        .width_graph          = 285,
         .height               = 90,
         .pos                  = {.x_pos = 405, .y_pos = 160},
         .legend_position      = LEFT,
@@ -212,8 +212,8 @@ menu_t graph_ecg_6_lead =
       .item_print_function = lcd_print_graph,
       .item.graph =
       {
-        .width_legend         = 60,
-        .width_graph          = 295,
+        .width_legend         = 70,
+        .width_graph          = 285,
         .height               = 90,
         .pos                  = {.x_pos = 405, .y_pos = 260},
         .legend_position      = LEFT,

@@ -14,6 +14,8 @@ extern const uint8_t myriad_pro_semibold_12[];
 extern const uint8_t myriad_pro_semibold_16[];
 extern const uint8_t myriad_pro_semibold_24[];
 
+extern const uint8_t myriad_pro_bold_20[];
+
 extern const uint8_t fontawesome_16[];
 extern const uint8_t fontawesome_ecg[];
 extern const uint8_t fontawesome_h2h[];

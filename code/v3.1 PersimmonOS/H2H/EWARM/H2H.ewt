@@ -1176,6 +1176,9 @@
           <file>
             <name>$PROJ_DIR$\..\Inc\graph_ecg.c</name>
           </file>
+          <file>
+            <name>$PROJ_DIR$\..\Src\tags_ecg.c</name>
+          </file>
         </group>
         <group>
           <name>menus</name>

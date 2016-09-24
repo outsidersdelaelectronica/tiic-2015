@@ -46,7 +46,7 @@ void tasks_periph_init()
   queue_periph_buzzerHandle = osMailCreate(osMailQ(queue_periph_buzzer), NULL);
 
   /* queue_lcd */
-  osMailQDef(queue_lcd, 16, item_action_t);
+  osMailQDef(queue_lcd, 20, item_action_t);
   queue_lcdHandle = osMailCreate(osMailQ(queue_lcd), NULL);
 }
 

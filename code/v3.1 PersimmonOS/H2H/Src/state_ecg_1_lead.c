@@ -82,6 +82,9 @@ void behaviour_ecg_1_lead(state_ptr state)
   item_graph_reset_value(&graph_ecg_1_lead.items[0].item.graph);
   graph_ecg_1_lead.items[0].item_print_function = lcd_print_graph;
   osMailPut(queue_lcdHandle, (void *) &graph_ecg_1_lead.items[0]);
+
+  /* Print tags */
+  osMailPut(queue_lcdHandle, (void *) &tags_ecg_1_lead.items[0]);
 }
 
 /* Entry point to the state */

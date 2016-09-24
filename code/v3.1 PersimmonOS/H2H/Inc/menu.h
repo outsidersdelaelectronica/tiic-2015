@@ -31,10 +31,14 @@ extern const menu_t menu_goodbye;
 extern const menu_t menu_top_bar;
 
 extern const menu_t menu_main;
+
 extern const menu_t menu_ecg;
 extern menu_t graph_ecg_1_lead;
 extern menu_t graph_ecg_2_lead;
 extern menu_t graph_ecg_6_lead;
+extern const menu_t tags_ecg_1_lead;
+extern const menu_t tags_ecg_2_lead;
+extern const menu_t tags_ecg_6_lead;
 
 extern const menu_t menu_h2h_connect;
 extern const menu_t menu_h2h_ongoing_connecting;
