@@ -30,8 +30,8 @@ typedef struct state_t
   event_f ecg_2_lead;
   event_f ecg_6_lead;
 
-  event_f h2h_connect;
-  event_f h2h_selectdevice;
+  event_f h2h_start_connect;
+  event_f h2h_connect_1;
   event_f h2h_ok;
   event_f h2h_error;
 

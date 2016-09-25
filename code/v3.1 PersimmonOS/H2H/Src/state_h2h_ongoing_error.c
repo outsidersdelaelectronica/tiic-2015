@@ -1,7 +1,7 @@
 #include "state_h2h_ongoing_error.h"
 
 /* Possible transition to the following states */
-#include "state_h2h_connect.h"
+#include "state_h2h_start_connect.h"
 
 /* Parent states */
 #include "state_h2h_ongoing.h"

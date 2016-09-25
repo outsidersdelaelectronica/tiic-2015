@@ -1,6 +1,6 @@
 function show_signal = show_filtering(signal)
 
-    L = max(size(signal));
+    L = size(signal,1);
 
     prev_x = 0;
     prev_y = 0;
@@ -11,35 +11,11 @@ function show_signal = show_filtering(signal)
     for i = 1:L
        dife = signal(i) - prev_x;
        prev_x = signal(i);
-       inte = (1018/1024)*prev_y + dife;
+       inte = (1010/1024)*prev_y + dife;
        prev_y = inte;  
        dc_bloqued(i) = inte;
     end
-    
-    num_sintonizer = [610, -2442, 4038, -3230, 1024];
-    dem_sintonizer = [1024, -3230, 4038, -2442, 610];
-    order = 4;
-    factor = 2^10;
-    buffer_x = zeros(1,order +1);
-    buffer_y = zeros(1,order +1);
-    y_n = 0;
-    sintonized = zeros(1,L);
 
-    for i = 1:L
-        for j =order + 1:-1:2
-            buffer_x(j)= buffer_x(j-1);
-            buffer_y(j)= buffer_y(j-1);
-        end
-        buffer_x(1) = dc_bloqued(i);
-        y_n = num_sintonizer(1) * buffer_x(1)/factor;
-        for j = 2:order +1
-             y_n = y_n + (num_sintonizer(j) * buffer_x(j))/factor - (dem_sintonizer(j) * buffer_y(j))/factor;
-        end
-        buffer_y(1) = y_n * dem_sintonizer(1)/factor; 
-        sintonized(i) = buffer_y(1);
-    end
-    show_signal = sintonized;
-    
     % plot(f,20*log(abs(fft(dc_bloqued))));
     % norm = max(dc_bloqued);
     % plot(t, dc_bloqued./norm,'black');

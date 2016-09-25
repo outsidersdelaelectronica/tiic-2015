@@ -1,6 +1,7 @@
 #include "state_h2h_ongoing_connecting.h"
 
 /* Possible transition to the following states */
+#include "state_main.h"
 #include "state_h2h_ongoing_error.h"
 #include "state_h2h_ongoing_action.h"
 
@@ -17,6 +18,14 @@
 /* Queues */
 extern osMailQId queue_input_menuHandle;
 extern osMailQId queue_lcdHandle;
+
+static void h2h_ongoing_connect_to_main(state_ptr state)
+{
+  /* Do transition actions */
+
+  /* Change state */
+  entry_to_main(state);
+}
 
 static void h2h_ongoing_connecting_to_h2h_ongoing_error(state_ptr state)
 {
@@ -42,8 +51,8 @@ void behaviour_h2h_ongoing_connecting(state_ptr state)
   
   /* Set events to react to */
   state->h2h_error = h2h_ongoing_connecting_to_h2h_ongoing_error;
-  state->h2h_selectdevice = h2h_ongoing_connecting_to_h2h_ongoing_action;
-
+  state->h2h_ok = h2h_ongoing_connecting_to_h2h_ongoing_action;
+  state->back = h2h_ongoing_connect_to_main;
   /* Do state actions */
   
   number_of_btaddr = bt_get_remote_devices(inquired_bt_devices);

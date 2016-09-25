@@ -35,12 +35,12 @@ static void default_ecg_6_lead(state_ptr state)
   /* Run if this state isn't supported in the state we are in */
 }
 
-static void default_h2h_connect(state_ptr state)
+static void default_h2h_start_connect(state_ptr state)
 {
   /* Run if this state isn't supported in the state we are in */
 }
 
-static void default_h2h_selectdevice(state_ptr state)
+static void default_h2h_connect_1(state_ptr state)
 {
   /* Run if this state isn't supported in the state we are in */
 }
@@ -114,8 +114,8 @@ void default_implementation(state_ptr state)
   state->ecg_1_lead           = default_ecg_1_lead;
   state->ecg_2_lead           = default_ecg_2_lead;
   state->ecg_6_lead           = default_ecg_6_lead;
-  state->h2h_connect          = default_h2h_connect;
-  state->h2h_selectdevice     = default_h2h_selectdevice;
+  state->h2h_start_connect    = default_h2h_start_connect;
+  state->h2h_connect_1        = default_h2h_connect_1;
   state->h2h_ok               = default_h2h_ok;
   state->h2h_error            = default_h2h_error;
   state->settings_screen      = default_settings_screen;

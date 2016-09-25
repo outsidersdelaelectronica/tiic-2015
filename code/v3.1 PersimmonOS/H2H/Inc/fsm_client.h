@@ -37,8 +37,8 @@ void fsm_ecg_1_lead(fsm_client_ptr fsm);
 void fsm_ecg_2_lead(fsm_client_ptr fsm);
 void fsm_ecg_6_lead(fsm_client_ptr fsm);
 
-void fsm_h2h_connect(fsm_client_ptr fsm);
-void fsm_h2h_selectdevice(fsm_client_ptr fsm);
+void fsm_h2h_start_connect(fsm_client_ptr fsm);
+void fsm_h2h_connect_1(fsm_client_ptr fsm);
 void fsm_h2h_ok(fsm_client_ptr fsm);
 void fsm_h2h_error(fsm_client_ptr fsm);
 

@@ -51,16 +51,16 @@ void fsm_ecg_6_lead(fsm_client_ptr fsm)
   fsm->state.ecg_6_lead(&fsm->state);
 }
 
-void fsm_h2h_connect(fsm_client_ptr fsm)
+void fsm_h2h_connect_1(fsm_client_ptr fsm)
 {
   /* Trigger event function */
-  fsm->state.h2h_connect(&fsm->state);
+  fsm->state.h2h_connect_1(&fsm->state);
 }
 
-void fsm_h2h_selectdevice(fsm_client_ptr fsm)
+void fsm_h2h_start_connect(fsm_client_ptr fsm)
 {
   /* Trigger event function */
-  fsm->state.h2h_selectdevice(&fsm->state);
+  fsm->state.h2h_start_connect(&fsm->state);
 }
 
 void fsm_h2h_ok(fsm_client_ptr fsm)

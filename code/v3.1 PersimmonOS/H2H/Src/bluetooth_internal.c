@@ -1171,7 +1171,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
           InquiryResultList[Index].physical_address = GAP_Inquiry_Event_Data->GAP_Inquiry_Data[Index].BD_ADDR;
         }
         NumberofValidResponses = GAP_Inquiry_Event_Data->Number_Devices;
-        gap_event = fsm_h2h_connect;
+        gap_event = fsm_h2h_start_connect;
         break;
       case etEncryption_Change_Result:   
         /* Yet to study if it's neccesary */
@@ -1216,7 +1216,10 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
         }
         if( Index == NumberofValidResponses - 1)
         {
-          gap_event = fsm_h2h_selectdevice;
+//          gap_event = fsm_h2h_ok;
+          HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin, GPIO_PIN_SET);
+          osDelay(500);
+          HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin, GPIO_PIN_RESET);
         }
         break;  
       case etAuthentication:   

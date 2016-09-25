@@ -59,7 +59,7 @@ const menu_t menu_h2h_ongoing_action =
         .text_color           = COLOR_WHITE,
         .bg_color             = COLOR_BLUE,
         .border_color         = COLOR_BLACK,
-        .event                = fsm_h2h_connect
+        .event                = fsm_h2h_start_connect
       }
     },
     {

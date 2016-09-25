@@ -52,14 +52,14 @@ const menu_t menu_h2h_connect =
         .pos                  = {.x_pos = 20, .y_pos = 380},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
-        .string               = L"Connect",
+        .string               = L"Show Devices",
         .font                 = myriad_pro_semibold_16,
         .string_h_align       = CENTER,
         .string_v_align       = MID,
         .text_color           = COLOR_WHITE,
         .bg_color             = COLOR_BLUE,
         .border_color         = COLOR_BLACK,
-        .event                = fsm_h2h_connect
+        .event                = fsm_h2h_ok
       }
     },
     {

@@ -29,7 +29,7 @@
 
    /* Denotes the priority of the thread being created using the thread */
    /* create function.                                                  */
-#define DEFAULT_THREAD_PRIORITY        (3)
+#define DEFAULT_THREAD_PRIORITY        (0)
 
    /* The following type declaration represents the entire state        */
    /* information for an Event_t.  This structure is used with all of   */

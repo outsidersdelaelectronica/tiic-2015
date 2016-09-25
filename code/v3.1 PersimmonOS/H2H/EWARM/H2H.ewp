@@ -132,7 +132,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -1021,7 +1021,7 @@
                 <name>$PROJ_DIR$\..\Src\state_h2h.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$\..\Src\state_h2h_connect.c</name>
+                <name>$PROJ_DIR$\..\Src\state_h2h_connect_1.c</name>
               </file>
               <file>
                 <name>$PROJ_DIR$\..\Src\state_h2h_ongoing.c</name>
@@ -1034,6 +1034,9 @@
               </file>
               <file>
                 <name>$PROJ_DIR$\..\Src\state_h2h_ongoing_error.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\state_h2h_start_connect.c</name>
               </file>
             </group>
             <group>

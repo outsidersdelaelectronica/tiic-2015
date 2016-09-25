@@ -3,7 +3,7 @@
 /* Possible transition to the following states */
 
 /* Child states */
-#include "state_h2h_connect.h"
+#include "state_h2h_start_connect.h"
 #include "state_h2h_ongoing.h"
 
 /* State behaviour */
@@ -21,5 +21,5 @@ void entry_to_h2h(state_ptr state)
   strcpy(state->name, "h2h");
 
   /* Go to child default state */
-  entry_to_h2h_connect(state);
+  entry_to_h2h_start_connect(state);
 }

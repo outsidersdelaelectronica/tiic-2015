@@ -1,7 +1,7 @@
 #include "state_h2h_ongoing.h"
 
 /* Possible transition to the following states */
-#include "state_h2h_connect.h"
+#include "state_h2h_start_connect.h"
 
 /* Child states */
 #include "state_h2h_ongoing_connecting.h"
@@ -18,7 +18,7 @@ static void h2h_ongoing_to_h2h_connect(state_ptr state)
   /* Do transition actions */
 
   /* Change state */
-  entry_to_h2h_connect(state);
+  entry_to_h2h_start_connect(state);
 }
 
 /* State behaviour */
