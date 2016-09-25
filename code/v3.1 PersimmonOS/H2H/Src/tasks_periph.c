@@ -62,11 +62,11 @@ void tasks_periph_start()
   periph_screenTaskHandle = osThreadCreate(osThread(periph_screenTask), NULL);
 
   /* periph_batteryTask */
-  osThreadDef(periph_batteryTask, Start_periph_batteryTask, osPriorityLow, 0, 80);
+  osThreadDef(periph_batteryTask, Start_periph_batteryTask, osPriorityLow, 0, 100);
   periph_batteryTaskHandle = osThreadCreate(osThread(periph_batteryTask), NULL);
 
   /* periph_rtcTask */
-  osThreadDef(periph_rtcTask, Start_periph_rtcTask, osPriorityLow, 0, 80);
+  osThreadDef(periph_rtcTask, Start_periph_rtcTask, osPriorityLow, 0, 100);
   periph_rtcTaskHandle = osThreadCreate(osThread(periph_rtcTask), NULL);
 }
 

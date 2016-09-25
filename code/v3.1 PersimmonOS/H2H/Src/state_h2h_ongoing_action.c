@@ -25,19 +25,19 @@ void behaviour_h2h_ongoing_action(state_ptr state)
   /* Set events to react to */
 
   /* Do state actions */
-//  number_of_btaddr = bt_get_remote_devices(inquired_bt_devices);
+  number_of_btaddr = bt_get_remote_devices(inquired_bt_devices);
   
-//  for( i = 0; i < (( number_of_btaddr < menu_h2h_devices.item_num)? number_of_btaddr:menu_h2h_devices.item_num);i++)
-//  {
-//    sprintf(full_string, "%s(%X:%X:%X:%X:%X:%X)", inquired_bt_devices[i].Name
-//           ,inquired_bt_devices[i].physical_address.BD_ADDR0
-//            , inquired_bt_devices[i].physical_address.BD_ADDR1
-//              , inquired_bt_devices[i].physical_address.BD_ADDR2
-//                , inquired_bt_devices[i].physical_address.BD_ADDR3
-//                  , inquired_bt_devices[i].physical_address.BD_ADDR4
-//                    , inquired_bt_devices[i].physical_address.BD_ADDR5);
-//    item_area_set_text(&menu_h2h_devices.items[i].item.area,full_string);
-//    }
+  for( i = 0; i < (( number_of_btaddr < menu_h2h_devices.item_num)? number_of_btaddr:menu_h2h_devices.item_num);i++)
+  {
+    sprintf(full_string, "%s(%X:%X:%X:%X:%X:%X)", inquired_bt_devices[i].Name
+           ,inquired_bt_devices[i].physical_address.BD_ADDR0
+            , inquired_bt_devices[i].physical_address.BD_ADDR1
+              , inquired_bt_devices[i].physical_address.BD_ADDR2
+                , inquired_bt_devices[i].physical_address.BD_ADDR3
+                  , inquired_bt_devices[i].physical_address.BD_ADDR4
+                    , inquired_bt_devices[i].physical_address.BD_ADDR5);
+    item_area_set_text(&menu_h2h_devices.items[i].item.area,full_string);
+    }
 
   /* Set menu */
   while(osMailPut(queue_input_menuHandle, (void *) &menu_h2h_devices) != osOK)

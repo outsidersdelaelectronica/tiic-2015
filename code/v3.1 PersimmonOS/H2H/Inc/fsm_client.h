@@ -26,6 +26,7 @@ void fsm_client_init(fsm_client_ptr fsm);
 typedef void (*fsm_event_f)(fsm_client_ptr);
 
 /* Events */
+
 void fsm_back(fsm_client_ptr fsm);
 
 void fsm_ecg(fsm_client_ptr fsm);

@@ -1019,7 +1019,7 @@
         </option>
         <option>
           <name>GenRtcInclExplicit</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GenRtcIntShiftOverflow</name>
@@ -1027,7 +1027,7 @@
         </option>
         <option>
           <name>GenRtcInclUnsignedShiftOverflow</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GenRtcUnhandledCase</name>

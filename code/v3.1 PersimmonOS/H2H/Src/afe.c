@@ -157,7 +157,7 @@ void afe_format_data(afe_t *afe)
 {
   int32_t adc_raw_data_ch1, adc_raw_data_ch2;
 
-  int32_t test1, test2, test3;
+//  int32_t test1, test2, test3;
 
   /* 3 status bytes (1100 + LOFF_STAT[4:0] + GPIO[1:0] + 13 '0's) */
   afe->last_data.rld_lead_off  = ((afe->last_data_buf[0] & 0x08)?IS_NOT_CONNECTED:IS_CONNECTED);

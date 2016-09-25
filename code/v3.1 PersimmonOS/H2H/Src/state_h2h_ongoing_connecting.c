@@ -50,7 +50,7 @@ void behaviour_h2h_ongoing_connecting(state_ptr state)
   for( i = 0; i < number_of_btaddr; i++)
   {
     GetRemoteName(inquired_bt_devices[i].physical_address);
-    osDelay(5);
+    osDelay(50);
   }
 }
 
