@@ -1,6 +1,8 @@
 {Apertura}
 Muchas gracias a todos por venir. [Voy a realizar la presentación de mi Proyecto Fin de Carrera titulado "Diseño e implementación de una plataforma hardware para un sistema de acceso inalámbrico a dispositivos médicos mediante Heart-To-Heart"].
 
+{Introducción y objetivos}
+
 {Esquema}
 Voy a comenzar la presentación realizando una breve introducción del proyecto y comentando los objetivos principales del mismo. Este proyecto ha sido realizado en conjunto con el Proyecto Fin de Carrera "Diseño e implementación de un servicio de acceso inalámbrico a dispositivos médicos mediante Heart-to-Heart" realizado por Tomás Valencia Noheda, por lo que comentaré también los objetivos globales de ambos proyectos. Explicaré de forma esquemática la arquitectura del sistema y el desarrollo de sus tres versiones, así como el desarrollo de la capa de abstracción hardware de la última versión. A continuación mostraré los prototipos fabricados de la última versión y realizaré una demostración de su funcionamiento. Por último, expondré las conclusiones y una serie de posibles líneas futuras del proyecto.
 
