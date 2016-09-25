@@ -9,6 +9,8 @@
 
 #include "fsm_client.h"
 
+#define PROTOCOL_DESCRIPTOR_LIST_ATTR  0x0004
+
 extern osSemaphoreId sem_bt_conectedHandle;
 extern osMailQId queue_bt_packet_recievedHandle;
 extern osMailQId queue_bt_packet_sendHandle;
@@ -151,7 +153,7 @@ int InitializeApplication(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_I
          SetPairabilityMode(pmPairableMode_EnableSecureSimplePairing);
          HCI_Register_Event_Callback(BluetoothStackID, HCI_Event_Callback, (unsigned long)NULL);
          ASSIGN_BD_ADDR(NullADDR, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
-         OpenServer();
+//         OpenServer();
 
          ret_val = (int)BluetoothStackID;
       }
@@ -373,7 +375,7 @@ int OpenRemoteServer(BD_ADDR_t remote_address, uint16_t server_port)
   {
     /* Next, check that we are in client mode and there is not an  */
     /* Serial Port Client already open.                            */
-    if((UI_Mode == UI_MODE_IS_CLIENT) && (!SerialPortID))
+    if(!SerialPortID)
     {
       /* Now let's attempt to open the Remote Serial Port      */
       /* Server.                                               */
@@ -1583,3 +1585,213 @@ void BTPSAPI HCI_Event_Callback(unsigned int BluetoothStackID, HCI_Event_Data_t 
    // Pa que se calle el compilador, hay que quitarlo en cuanto se pueda
    UNUSED(Mode);
 }
+
+static int ExtractRFCOMMPortNumber(SDP_Service_Search_Attribute_Response_Data_t *SDPServiceSearchAttributeResponse, int *RFCOMMPortList)
+{
+  int NumberOfAttributes;
+  int NumberOfRecords;
+  int RFCOMMChannel;
+  int RetVal=-1;
+  int Index;
+  int RecordIndex;
+  int NumberElements;
+  int PortCount=0;
+  UUID_128_t UUID_128;
+  UUID_128_t RFCOMM_UUID;
+  SDP_Data_Element_t *SDP_Data_Element;
+  SDP_Data_Element_t *SDP_Data_Element1;
+
+  SDP_ASSIGN_RFCOMM_UUID_128(RFCOMM_UUID);
+
+  /* This is a response received when we queried Attribute ID 0x04 */
+  NumberOfRecords = SDPServiceSearchAttributeResponse->Number_Service_Records;
+
+  for(RecordIndex = 0; RecordIndex < NumberOfRecords; RecordIndex++)
+  {
+    NumberOfAttributes = SDPServiceSearchAttributeResponse->SDP_Service_Attribute_Response_Data[RecordIndex].Number_Attribute_Values;
+        
+    if(NumberOfAttributes)
+    {
+      SDP_Data_Element = SDPServiceSearchAttributeResponse->SDP_Service_Attribute_Response_Data[RecordIndex].SDP_Service_Attribute_Value_Data[0].SDP_Data_Element;
+
+      if((SDP_Data_Element->SDP_Data_Element_Type == deSequence) && (SDP_Data_Element->SDP_Data_Element_Length))
+      {
+        /* Data Element Sequence Exists, now */
+        /* let's loop through the Data Element */
+        /* Sequence. */
+        for(Index=0; Index < SDP_Data_Element->SDP_Data_Element_Length;Index++)
+        {
+          if(((SDP_Data_Element1 = &(SDP_Data_Element->SDP_Data_Element.SDP_Data_Element_Sequence[Index])) != NULL) 
+             && (SDP_Data_Element1->SDP_Data_Element_Type == deSequence)
+               && ((NumberElements = SDP_Data_Element1->SDP_Data_Element_Length) > 0) 
+                 && ((SDP_Data_Element1 = SDP_Data_Element1->SDP_Data_Element.SDP_Data_Element_Sequence) != NULL))
+          {
+            if((SDP_Data_Element1->SDP_Data_Element_Type == deUUID_16) || 
+               (SDP_Data_Element1->SDP_Data_Element_Type == deUUID_32) || 
+                 (SDP_Data_Element1->SDP_Data_Element_Type == deUUID_128))
+              {
+                /* Initialize the BASE UUID. */
+                SDP_ASSIGN_BASE_UUID(UUID_128);
+
+                switch(SDP_Data_Element1->SDP_Data_Element_Type)
+                {
+                  case deUUID_16:
+                  /* First normal-lize the*/
+                  /* 16 Bit UUID to 128 */
+                  /* Bits. */
+                  ASSIGN_SDP_UUID_16_TO_SDP_UUID_128(UUID_128, SDP_Data_Element1->SDP_Data_Element.UUID_16);
+                  break;
+                  case deUUID_32:
+                  /* First normal-lize the*/
+                  /* 32 Bit UUID to 128 */
+                  /* Bits. */
+                  ASSIGN_SDP_UUID_32_TO_SDP_UUID_128(UUID_128, SDP_Data_Element1->SDP_Data_Element.UUID_32);
+                  break;
+                  case deUUID_128:
+                  /* Simply assign the */
+                  /* 128 Bit UUID to the */
+                  /* UUID value. */
+                  UUID_128 = SDP_Data_Element1->SDP_Data_Element.UUID_128;
+                  break;
+                }
+
+                /* Now let's check to see if */
+                /* there is a match to RFCOMM */
+                if((COMPARE_UUID_128(RFCOMM_UUID, UUID_128)) && (NumberElements > 1))
+                {
+                if(SDP_Data_Element1[1].SDP_Data_Element_Type == deUnsignedInteger1Byte)
+                {
+                  RFCOMMChannel = SDP_Data_Element1[1].SDP_Data_Element.UnsignedInteger1Byte;
+
+                  /* Add server port to return data */
+                  RFCOMMPortList[PortCount] = RFCOMMChannel;
+                  PortCount++;
+                  RetVal = 0;
+                }
+              }
+            }
+            else
+            {
+            /* Some unknown Protocol */
+            /* Descriptor, so just ignore */
+            /* it. */
+            }
+          }
+        }
+      }
+    }
+
+  }
+   
+  return(RetVal);
+}
+
+void BTPSAPI SDP_EventCallback(unsigned int BluetoothStackID, unsigned int SDPRequestID, 
+                SDP_Response_Data_t *SDP_Response_Data, unsigned long CallbackParameter)
+{
+  int Index;
+//  int ServerPort;
+  int RFCOMMPortList[30];
+
+  /* First, check to see if the required parameters appear to be */
+  /* semi-valid. */
+  if((SDP_Response_Data != NULL) && (BluetoothStackID))
+  {
+    /* The parameters appear to be semi-valid, now check to see what */
+    /* type the incoming Event is. */
+    switch(SDP_Response_Data->SDP_Response_Data_Type)
+    {
+      case rdTimeout:
+        /* Yet to study if it's neccesary */
+        break;
+      case rdConnectionError:
+        /* Yet to study if it's neccesary */
+        break;
+      case rdErrorResponse:
+        /* Yet to study if it's neccesary */
+        break;
+      case rdServiceSearchResponse:
+        /* A SDP Service Search Response was received */
+        /* First, check to see if any SDP Service Records were */
+        /* found. */
+        if(SDP_Response_Data->SDP_Response_Data.SDP_Service_Search_Response_Data.Total_Service_Record_Count)
+        {
+//          Display(("Record Handles:\r\n"));
+        
+          for(Index = 0; (Word_t)Index < SDP_Response_Data->SDP_Response_Data.SDP_Service_Search_Response_Data.Total_Service_Record_Count; Index++)
+          {
+//            Display(("Record %u: 0x%08X\r\n", (Index + 1), (unsigned int)SDP_Response_Data->SDP_Response_Data.SDP_Service_Search_Response_Data.Service_Record_List[Index]));
+          }
+        }
+        break;
+      case rdServiceAttributeResponse:
+        /* Yet to study if it's neccesary */
+        break;
+      case rdServiceSearchAttributeResponse:
+        /* A SDP Service Search Attribute Response was received, */   
+        BTPS_MemInitialize(RFCOMMPortList, 0, sizeof(RFCOMMPortList));
+      
+        /* Call only when you queried for Attribute ID PROTOCOL DESCRIPTOR LIST (0x0004) */
+        if(ExtractRFCOMMPortNumber(&SDP_Response_Data->SDP_Response_Data.SDP_Service_Search_Attribute_Response_Data, RFCOMMPortList) == 0)
+        {
+          OpenRemoteServer(InquiryResultList[0].physical_address, RFCOMMPortList[0]);
+        }
+        break;
+      case rdServiceAttributeResponse_Raw:
+        /* Yet to study if it's neccesary */
+        break;
+      case rdServiceSearchAttributeResponse_Raw: 
+        /* Yet to study if it's neccesary */
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+/* The following function is responsible for issuing a Service Search*/
+/* Attribute Request to a Remote SDP Server. This function returns */
+/* zero if successful and a negative value if an error occurred. */
+int SPPServiceDiscovery(BD_ADDR_t RemoteBDAddr)
+{
+  int Result;
+  int ret_val;
+  SDP_UUID_Entry_t SDPUUIDEntry;
+  SDP_Attribute_ID_List_Entry_t AttributeID;
+
+  /* First, check that valid Bluetooth Stack ID exists. */
+  if(BluetoothStackID)
+  {
+    /* First let's build the UUID 32 value(s). */
+    SDPUUIDEntry.SDP_Data_Element_Type = deUUID_16;
+    ASSIGN_SDP_UUID_16(SDPUUIDEntry.UUID_Value.UUID_16, 0x11, 0x01);
+
+    AttributeID.Attribute_Range = (Boolean_t)FALSE;
+    AttributeID.Start_Attribute_ID = PROTOCOL_DESCRIPTOR_LIST_ATTR;
+    AttributeID.End_Attribute_ID = 0;
+
+    /* Finally submit the SDP Request. */
+    Result = SDP_Service_Search_Attribute_Request(BluetoothStackID, RemoteBDAddr, 
+                      1, &SDPUUIDEntry, 1, &AttributeID, SDP_EventCallback,(unsigned long)0);
+
+    if(Result > 0)
+    {
+      /* Flag success to the caller. */
+      ret_val = 0;
+    }
+    else
+    {
+      /* Flag success to the caller. */
+      ret_val = 0;
+    }
+
+  }
+  else
+  {
+    /* No valid Bluetooth Stack ID exists. */
+    ret_val = -1;
+  }
+
+  return(ret_val);
+}
+

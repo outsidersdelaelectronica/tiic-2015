@@ -28,12 +28,19 @@ static void h2h_connect_1_to_main(state_ptr state)
 /* State behaviour */
 void behaviour_h2h_connect_1(state_ptr state)
 {
+  device_info_t inquired_bt_devices[MAX_INQUIRY_RESULTS];
+  uint32_t number_of_btaddr = 0;
   /* Set events to react to */
   state->back = h2h_connect_1_to_main;
 
   /* Do state actions */
+  number_of_btaddr = bt_get_remote_devices(inquired_bt_devices);
+  SPPServiceDiscovery(inquired_bt_devices[0].physical_address);
   
-  
+  while(osMailPut(queue_input_menuHandle, (void *) &menu_h2h_devices) != osOK)
+  {
+    osDelay(500);
+  }
 }
 
 /* Entry point to the state */

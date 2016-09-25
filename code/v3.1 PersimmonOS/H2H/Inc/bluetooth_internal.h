@@ -45,6 +45,7 @@ int SetDiscoverabilityMode(GAP_Discoverability_Mode_t DiscoverabilityMode);
 int SetSimplePairingParameters(GAP_IO_Capability_t iocap, Boolean_t mim_proct);
 int SetQueueParams(unsigned int maximum_number_data_packets,unsigned int queue_threshold);
 int SetConfigParams(uint16_t MaximumFrameSize, uint16_t TransmitBufferSize, uint16_t ReceiveBufferSize);
+int SPPServiceDiscovery(BD_ADDR_t RemoteBDAddr);
 
 /* Getters */
 
