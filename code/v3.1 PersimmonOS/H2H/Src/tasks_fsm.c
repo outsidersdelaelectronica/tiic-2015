@@ -46,10 +46,25 @@ void Start_fsm_managerTask(void const * argument)
     if (event.status == osEventMail)
     {
       /* Retrieve event function */
-      fsm_event = *(fsm_event_f *) event.value.v;
+      fsm_event = *((fsm_event_f *) event.value.v);
 
       /* Trigger event */
-      fsm_event(&fsm);
+      if ((fsm_event == fsm_back)||(fsm_event ==fsm_ecg)||(fsm_event ==fsm_h2h)||
+        (fsm_event ==fsm_settings)||(fsm_event ==fsm_ecg_1_lead)||(fsm_event ==fsm_ecg_2_lead)||
+        (fsm_event ==fsm_ecg_6_lead)||(fsm_event ==fsm_h2h_connect)||(fsm_event ==fsm_h2h_selectdevice)||
+        (fsm_event ==fsm_h2h_ok)||(fsm_event ==fsm_h2h_error)||(fsm_event ==fsm_settings_screen)||
+        (fsm_event ==fsm_settings_timedate)||(fsm_event ==fsm_settings_bt)||(fsm_event ==fsm_settings_about)||
+        (fsm_event ==fsm_settings_touch)||(fsm_event ==fsm_settings_touch_calib)||(fsm_event ==fsm_click)||
+        (fsm_event ==fsm_button_short)||(fsm_event ==fsm_button_long)||(fsm_event ==fsm_gui_tick)||
+        (fsm_event ==fsm_no_event))
+      {
+        fsm_event(&fsm);
+      }
+      else
+      {
+        fsm_event(&fsm);
+      }
+      
     }
   }
 }

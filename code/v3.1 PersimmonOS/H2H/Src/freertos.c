@@ -48,8 +48,6 @@
 #include "tasks_gui.h"
 
 #include "menu.h"
-extern menu_t current_menu;
-extern const menu_t menu_top_bar;
 /* Hardware */
 afe_t afe;
 buzzer_t buzzer;
@@ -92,11 +90,6 @@ void system_init(void)
   touch_init(&touch, &hspi2, TOUCH_X_SIZE, TOUCH_Y_SIZE);
 }
 
-/* TEST Task */
-osThreadId testTaskHandle;
-void Start_testTask(void const * argument);
-extern osMailQId queue_lcdHandle;
-
 void MX_FREERTOS_Init(void)
 {
   /* Initialize system */
@@ -117,29 +110,6 @@ void MX_FREERTOS_Init(void)
   tasks_periph_start();
   tasks_fsm_start();
   tasks_gui_start();
-
-
-  /* TEST Task */
-  osThreadDef(testTask, Start_testTask, osPriorityRealtime, 0, 64);
-  testTaskHandle = osThreadCreate(osThread(testTask), NULL);
-}
-
-void Start_testTask(void const * argument)
-{
-  item_action_t lcd_config;
-
-  item_lcd_config_init(&lcd_config.item.config, 200);
-  lcd_config.item_print_function = lcd_set_config;
-  while(osMailPut(queue_lcdHandle, (void *) &lcd_config) != osOK)
-  {
-    osDelay(1);
-  }
-  while(osMailPut(queue_lcdHandle, (void *) &menu_top_bar.items[0]) != osOK)
-  {
-    osDelay(1);
-  }
-  
-  while(osThreadTerminate (testTaskHandle) != osOK);
 
 }
 

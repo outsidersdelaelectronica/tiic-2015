@@ -61,7 +61,7 @@ void behaviour_h2h_connect(state_ptr state)
   
   /* Do state actions */
   bluetooth_init();
-  while(Inquiry(TIMEOUT) != 0);
+  Inquiry(TIMEOUT);
 }
 
 /* Entry point to the state */

@@ -100,8 +100,17 @@ void Start_periph_buzzerTask(void const * argument)
 void Start_periph_screenTask(void const * argument)
 {
   osEvent event;
-
   item_action_t *current_item;
+  item_action_t lcd_config;
+
+  item_lcd_config_init(&lcd_config.item.config, 200);
+  lcd_config.item_print_function = lcd_set_config;
+  
+  current_item = (item_action_t *) &lcd_config;
+  (*(current_item->item_print_function))(&lcd, &current_item->item);
+
+  current_item = (item_action_t *) &menu_top_bar.items[0];
+  (*(current_item->item_print_function))(&lcd, &current_item->item);
 
   for(;;)
   {
