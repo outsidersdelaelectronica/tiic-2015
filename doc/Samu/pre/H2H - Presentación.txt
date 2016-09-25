@@ -1,0 +1,40 @@
+Muchas gracias a todos por venir. [Voy a realizar la presentación de mi Proyecto Fin de Carrera titulado "Diseño e implementación de una plataforma hardware para un sistema de acceso inalámbrico a dispositivos médicos mediante Heart-To-Heart"].
+
+Voy a comenzar la presentación realizando una breve introducción del proyecto y comentando los objetivos principales del mismo. Este proyecto ha sido realizado en conjunto con el Proyecto Fin de Carrera "Diseño e implementación de un servicio de acceso inalámbrico a dispositivos médicos mediante Heart-to-Heart" realizado por Tomás Valencia Noheda, por lo que comentaré también los objetivos globales de ambos proyectos. Explicaré de forma esquemática la arquitectura del sistema y el desarrollo de sus tres versiones. A continuación mostraré los prototipos fabricados de la última versión y realizaré una demostración de su funcionamiento. Por último, expondré las conclusiones y una serie de posibles líneas futuras del proyecto.
+
+
+
+Tanto el dispositivo de acceso como el marcapasos realizan las mismas funciones: extraen datos del paciente, establecen conexiones inalámbricas, necesitan energía para funcionar y muestran información al operador.
+
+Por ello, se ha desarrollado una única plataforma hardware para ambos dispositivos. Ésta se divide en cinco módulos:
+Un front-end analógico, que hace de interfaz con el paciente y extrae su electrocardiograma para calcular la frecuencia cardíaca.
+Una interfaz radio compuesta por un transceptor Bluetooth y su antena, para que el dispositivo de acceso pueda conectarse al marcapasos.
+Un módulo de alimentación, que incluye una batería LiPo junto con un medidor de batería y un circuito cargador, así como una serie de reguladores de tensión.
+Un microcontrolador, que realiza los cálculos necesarios y gestiona el comportamiento de todos los periféricos.
+Y, por último, una interfaz de usuario, que cuenta con un indicador acústico, un LED y un pulsador de encendido y apagado. En el caso del dispositivo de acceso, incluye además una pantalla LCD con panel táctil.
+
+
+{Desarrollo de la plataforma}
+A lo largo del proyecto se han realizado tres versiones de la plataforma hardware.
+
+En la primera versión se realizó la primera aproximación a los requisitos de la plataforma. Este diseño implementa todos los módulos de la arquitectura necesarios, pero presenta varios problemas como la falta de memoria RAM para alojar la pila de protocolos de Bluetooth o la carencia de un periférico dedicado para comunicarse con la interfaz paralelo de la pantalla LCD.
+La segunda versión, denominada "Persimmon", corrige estos problemas con un microcontrolador diferente con suficiente memoria volátil, un puerto paralelo dedicado y mayor velocidad de procesamiento. También incluye un nuevo front-end analógico que permite realizar electrocardiogramas de hasta seis derivaciones y un conector para una pantalla LCD más grande.
+La última versión, evolución del anterior "Persimmon", corrige algunos fallos en la etapa de entrada del front-end analógico e incluye los conectores para los cables de los electrodos en la misma placa.
+
+Esta última versión de la plataforma, "Persimmon 1.1", cuenta con un microcontrolador STM32L162VD de ST Microelectronics. Este cuenta con una CPU ARM Cortex-M3 y todos los periféricos necesarios para conectarse a los periféricos de la placa. Dispone de varios modos de bajo consumo con los que se ha implementado el apagado y encendido por software del sistema. 
+El front-end analógico se basa en el ADS1292 de Texas Instruments, que integra un ADC sigma-delta de 24 bits y dos amplificadores de instrumentación específicos para la adquisición de biopotenciales. Incluye también resistencias de protección para limitar la corriente que circula por el cuerpo del paciente y tubos de descarga y diodos Zener para proteger al circuito de la posible descarga de un desfibrilador.
+La interfaz radio está compuesta por un transceptor de Bluetooth Classic CC2560B de Texas Instruments y una antena a 2.45 GHz impresa en la PCB.
+El módulo de alimentación incluye un medidor de batería BQ27441 y un cargador de baterías LiPo BQ24090 de Texas Instruments, así como un conjunto de reguladores lineales de tensión activables por software desde el microcontrolador para cada módulo de la plataforma.
+
+La interfaz de usuario incluye un indicador acústico controlado por PWM, un LED RGB y un pulsador conectado al microcontrolador que activa y desactiva el encendido y apagado por software. En el caso del dispositivo de acceso, la plataforma se conecta a una pantalla LCD de cinco pulgadas que cuenta con un controlador de display SSD1963 y un controlador de panel táctil resistivo XPT2046.
+
+De la misma forma, se han realizado tres versiones de la fuente de alimentación para recargar la batería de los dos dispositivos. Las tres se basan en una fuente conmutada aislada de tipo Flyback, de 5 voltios y 4 watios de salida. Su diseño es compatible con tensiones de entrada de red eléctrica de 110 o 220 V.
+
+La última versión de la fuente, denominada "Kiwi 1.1", cuenta con un controlador UCC28910 de Texas Instruments con transistor integrado para realizar la conmutación. Este circuito utiliza una técnica de regulación en primario que controla la tensión de salida a través de un devanado auxiliar del transformador. Para conectar la fuente a la red eléctrica se utiliza un cable estándar IEC C7 al conector C8 de la placa, y para conectarla a los dispositivos se utiliza un jack cilíndrico. Se ha evitado utilizar conectores USB para evitar el uso de fuentes potencialmente inseguras. En esta placa se han seguido una serie de directrices de seguridad en cuanto a las distancias mínimas entre el primario y el secundario y el aislamiento del transformador.
+
+{Prototipos}
+Terminadas las placas de la plataforma y la fuente de alimentación, se han fabricado varios prototipos.
+
+Se han diseñado carcasas de plástico tanto para el dispositivo de acceso como para el marcapasos y 
+
+Por último, se ha montado un kit con los prototipos diseñados, que se compone de un marcapasos, un dispositivo de acceso, una fuente de alimentación con su cable de red eléctrica, ocho cables y un pack de electrodos. Este kit constituye un sistema completo en el que se pueden implementar servicios de acceso a dispositivos médicos implantables mediante Heart-to-Heart.
