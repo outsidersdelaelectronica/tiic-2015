@@ -1,0 +1,137 @@
+Maletín cerrado
+Maletín abierto frente
+Maletín 2 fila frente
+
+Cables
+Electrodos juntos
+Electrodos clip
+Electrodos snap
+
+Placas
+	TIIC Main Board
+		Cenital
+		45
+		Cara inferior
+	TIIC Docking Station
+		Cenital
+		45
+		Cara inferior
+
+	Persimmon v1.0
+		Cenital
+		45
+		Detalle AFE
+		Detalle BT
+		Detalle Batería
+		Detalle Micro
+		Cara inferior
+	Kiwi v1.0
+		Cenital
+		45
+		Detalle Transformador
+		Detalle Secundario
+		Cara inferior
+
+	Persimmon v1.1
+		Cenital
+		45
+		Detalle Electrodos
+		Detalle AFE
+		Cara inferior
+	Kiwi v1.1
+		Cenital
+		45
+		Detalle snubber
+		Detalle secundario
+
+	Stencils
+
+Cajas
+	TIIC Main Board
+		Pieza superior
+			45
+		Pieza inferior
+			45
+
+	Persimmon v1.0
+		Tapa
+			45 Electrodos
+			45 Trasera
+		Base
+			45 Electrodos
+			45 Trasera
+	Kiwi v1.0
+		Tapa
+			45
+		Base
+			45
+
+	Persimmon v1.1
+		Tapa
+			45 Electrodos
+			45 Trasera
+			Detalle con pantalla incluída
+		Base
+			45 Electrodos
+			45 Trasera
+	Kiwi v1.1
+		Tapa
+			45
+		Base
+			45
+
+Prototipos
+	TIIC Main Board
+		Pantalla
+		Prototipo montado
+			Cenital
+			45
+			Cara inferior
+
+	Persimmon v1.0
+		Cenital
+		45 Electrodos
+		45 Trasera
+		Detalle pulsador
+		Detalle conector cargador
+		Detalle JTAG
+	Kiwi v1.0
+		45
+
+	Persimmon v1.1
+		Cenital
+		45 Electrodos
+		45 Trasera
+		Detalle pulsador
+		Detalle pulsador roto
+		Detalle electrodos
+	Kiwi v1.0
+		45
+
+Elementos
+	Pantalla TIIC
+		45
+	Pantalla Persimmon
+		45
+		Detalle cable
+	Batería
+		Cenital
+		45
+
+Herramientas
+	Discovery
+		Cenital
+		45
+	MSP430FET
+		45
+	Horno
+		Frontal
+	Estación soldadura
+		Frontal
+
+Regalos
+	Montón plástico
+	Montón placas sin soldar
+	Montón v1.1 montadas de China
+	Montón pantallas
+	Montón componentes

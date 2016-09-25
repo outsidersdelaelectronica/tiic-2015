@@ -1,0 +1,6 @@
+Cargador
+	Para recargar las baterías de los dos dispositivos necesitamos disponer de una fuente de alimentación que transforme la tensión de la red eléctrica a un nivel de tensión continua determinado para que el circuito cargador de los prototipos funcione adecuadamente.
+
+	Se prefiere no utilizar cargadores USB de teléfono móvil o tablet y optar por un diseño con conectores específicos. De esta manera se evita el uso de fuentes de alimentación potencialmente peligrosas en términos de seguridad eléctrica y aislamiento entre la red eléctrica y el cuerpo del paciente.
+
+	La fuente debe generar un nivel de tensión continua a su salida y asegurar que todos los terminales que se conectan a cualquier dispositivo que toque el cuerpo de un paciente están debidamente aislados de la parte de la fuente conectada a la red eléctrica, tanto a través de la PCB como de los transformadores que utilice.
