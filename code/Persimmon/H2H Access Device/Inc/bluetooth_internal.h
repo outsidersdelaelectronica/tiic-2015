@@ -17,10 +17,10 @@
 #include "command_interpreter.h"
 
 #define VENDOR_BAUD_RATE          2000000L
-#define PACKET_SIZE               16
+#define PACKET_SIZE               32
 
 typedef struct bt_packet_t{
-  unsigned char       packet_content[PACKET_SIZE];
+  char       packet_content[PACKET_SIZE];
 }bt_packet_t;
 
 /* Init/close function                           */
@@ -68,7 +68,7 @@ int SniffMode( Word_t Sniff_Max_Interval, Word_t Sniff_Min_Interval,
               Word_t Sniff_Attempt, Word_t Sniff_Timeout);
 int ExitSniffMode(void);
 
-int SendData(uint16_t length, unsigned char *buff);
+int SendData(uint16_t length, char *buff);
 
 int DeleteLinkKey(BD_ADDR_t BD_ADDR);
 

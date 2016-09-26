@@ -1,12 +1,11 @@
 #include "tasks_bt.h"
 
-/* This will be probably moved to hacitrans */
-/* Semaphores */
-osSemaphoreId sem_bt_conectedHandle;
+#include "fsm_client.h"
 
 /* Queues */
 osMailQId queue_bt_packet_recievedHandle;
 osMailQId queue_bt_packet_sendHandle;
+extern osMailQId queue_fsm_eventsHandle;
 
 /* Tasks */
 osThreadId bt_txTaskHandle;
@@ -18,10 +17,6 @@ void Start_bt_rxTask(void const * argument);
 
 void tasks_bt_init()
 {
-  /* Semaphores */
-  osSemaphoreDef(sem_bt_conected);
-  sem_bt_conectedHandle = osSemaphoreCreate(osSemaphore(sem_bt_conected), 1);
-
   /* Queues */
   osMailQDef(queue_bt_packet_recieve, 4, bt_packet_t);
   queue_bt_packet_recievedHandle = osMailCreate(osMailQ(queue_bt_packet_recieve), NULL);
@@ -38,14 +33,14 @@ void tasks_bt_start()
   bt_txTaskHandle = osThreadCreate(osThread(bt_txTask), NULL);
 
   /* bt_rxTask */
-  osThreadDef(bt_rxTask, Start_bt_rxTask, osPriorityHigh, 0, 80);
+  osThreadDef(bt_rxTask, Start_bt_rxTask, osPriorityLow, 0, 80);
   bt_rxTaskHandle = osThreadCreate(osThread(bt_rxTask), NULL);
 }
 
 void Start_bt_txTask(void const * argument)
 {
   osEvent event_pk_to_send;
-  bt_packet_t* send_packet;
+  bt_packet_t send_packet = {.packet_content = {0}};;
 
   /* Infinite loop */
   for(;;)
@@ -53,8 +48,8 @@ void Start_bt_txTask(void const * argument)
     event_pk_to_send = osMailGet(queue_bt_packet_sendHandle, osWaitForever);
     if (event_pk_to_send.status == osEventMail)
     {
-      send_packet = (bt_packet_t *) event_pk_to_send.value.p;
-      SendData(PACKET_SIZE, send_packet->packet_content);
+      send_packet = *((bt_packet_t *) event_pk_to_send.value.p);
+      SendData(PACKET_SIZE, send_packet.packet_content);
       osDelay(1);
     }
   }
@@ -64,7 +59,8 @@ void Start_bt_rxTask(void const * argument)
 {
   osEvent event_pk_rec;
   bt_packet_t rec_packet;
-
+  char command_str[24] = "";
+  fsm_event_f bt_event;
   /* Infinite loop */
   for(;;)
   {
@@ -72,11 +68,27 @@ void Start_bt_rxTask(void const * argument)
     if (event_pk_rec.status == osEventMail)
     {
       rec_packet = *((bt_packet_t *) event_pk_rec.value.p);
-      while (osMailPut(queue_bt_packet_sendHandle, (void *) &rec_packet) != osOK)
+      /* Command */
+      if(!rec_packet.packet_content[0])
+      {
+        sprintf(command_str, "%s", &rec_packet.packet_content[8]);
+        bt_event =fsm_no_event;
+        if(!strcmp(command_str,gen_init))
+        {
+          bt_event = fsm_h2h_start_gen;
+        }else if(!strcmp(command_str,key_ready))
+        {
+          bt_event = fsm_h2h_pass_ready;
+        }
+        
+      }
+      else if(rec_packet.packet_content[0]) /* Key */
+      {}
+      
+      while(osMailPut(queue_fsm_eventsHandle, (void *) &bt_event) != osOK)
       {
         osDelay(1);
       }
-      osDelay(1);
     }
   }
 }

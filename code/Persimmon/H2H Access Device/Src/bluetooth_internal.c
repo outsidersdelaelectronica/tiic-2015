@@ -1042,7 +1042,7 @@ int ExitSniffMode(void)
    /* function receives a parameter that indicates the number of byte to*/
    /* be transferred.  This function will return zero on successful     */
    /* execution and a negative value on errors.                         */
-int SendData(uint16_t length, unsigned char *buff)
+int SendData(uint16_t length, char *buff)
 {
   int ret_val = -1; /* -1 means the transmision couldn't be done */
 
@@ -1223,9 +1223,6 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
         if( Index == NumberofValidResponses - 1)
         {
           /* Signal that all the names have been retrieved */
-//          HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin, GPIO_PIN_SET);
-//          osDelay(500);
-//          HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin, GPIO_PIN_RESET);
           gap_event = fsm_h2h_ok;
           while(osMailPut(queue_fsm_eventsHandle, (void *) &gap_event) != osOK)
           {
@@ -1425,7 +1422,7 @@ void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t 
 {
   int       Result;
   bt_packet_t packet = {.packet_content = {0}};
-  fsm_event_f spp_event;
+  fsm_event_f spp_event = fsm_no_event;
   /* First, check to see if the required parameters appear to be       */
   /* semi-valid.                                                       */
   if((SPP_Event_Data) && (BluetoothStackID))
@@ -1484,7 +1481,9 @@ void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t 
           }
           else
           {
-            spp_event = fsm_no_event;
+//            spp_event = fsm_no_event;
+            spp_event = fsm_h2h_start_gen;
+            /* TEST */
           }
         }
         while(osMailPut(queue_fsm_eventsHandle, (void *) &spp_event) != osOK)

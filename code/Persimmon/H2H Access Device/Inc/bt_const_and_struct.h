@@ -105,6 +105,13 @@
 #define APPLICATION_ERROR_UNABLE_TO_OPEN_STACK     (-1001)
 
 #define MAX_STRING_LENGTH 50
+
+#define gen_init "INICIO GENERACION"
+#define gen_ack  "ACK GENERACION"
+#define key_ready "CONTRASEÑA LISTA"
+#define access_ok "ACCESO RECHAZADO"
+#define access_denied "ACCESO ACEPTADO"
+
    /* The following type definition represents the container type which */
    /* holds the mapping between Bluetooth devices (based on the BD_ADDR)*/
    /* and the Link Key (BD_ADDR <-> Link Key Mapping).                  */
@@ -144,6 +151,8 @@ typedef struct device_info_t
   BD_ADDR_t physical_address;
   char Name[MAX_STRING_LENGTH];
 } device_info_t;
+
+
    /* Internal Variables to this Module (Remember that all variables    */
    /* declared static are initialized to 0 automatically by the         */
    /* compiler as part of standard C/C++).                              */

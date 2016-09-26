@@ -3,7 +3,7 @@
 /* Possible transition to the following states */
 #include "state_main.h"
 #include "state_h2h_ongoing_error.h"
-#include "state_h2h_start_gen.h"
+#include "state_h2h_wait_key.h"
 
 /* Parent states */
 #include "state_h2h.h"
@@ -31,7 +31,7 @@ static void h2h_connect_1_to_start_gen(state_ptr state)
   /* Do transition actions */
 
   /* Change state */
-  entry_to_h2h_start_gen(state);
+  entry_to_h2h_wait_key(state);
 }
 
 static void h2h_connect_1_to_ongoing_error(state_ptr state)
@@ -54,7 +54,6 @@ void behaviour_h2h_connect_1(state_ptr state)
   /* Do state actions */
   bt_get_remote_devices(inquired_bt_devices);
   SPPServiceDiscovery(inquired_bt_devices[0].physical_address);
-
 }
 
 /* Entry point to the state */

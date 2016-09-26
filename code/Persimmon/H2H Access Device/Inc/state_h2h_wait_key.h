@@ -10,7 +10,7 @@
 
 #include "state.h"
 
-void behaviour_h2h_start_gen(state_ptr state);
-void entry_to_h2h_start_gen(state_ptr state);
+void behaviour_h2h_wait_key(state_ptr state);
+void entry_to_h2h_wait_key(state_ptr state);
 
 #endif /* STATE_H2H_START_GEN_H_ */

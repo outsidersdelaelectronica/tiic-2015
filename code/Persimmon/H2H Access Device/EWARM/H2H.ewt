@@ -1124,7 +1124,7 @@
                 <name>$PROJ_DIR$\..\Src\state_h2h_start_connect.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$\..\Src\state_h2h_start_gen.c</name>
+                <name>$PROJ_DIR$\..\Src\state_h2h_wait_key.c</name>
               </file>
             </group>
             <group>

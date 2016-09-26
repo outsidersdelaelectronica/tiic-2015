@@ -13,7 +13,7 @@
 #include "menu.h"
 #include "bluetooth_internal.h"
 
-#define TIMEOUT 10
+#define TIMEOUT 3
 
 /* Mutexes */
 extern osMutexId mutex_menuHandle;
