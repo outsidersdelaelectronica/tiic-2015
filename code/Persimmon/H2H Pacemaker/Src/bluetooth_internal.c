@@ -1484,7 +1484,7 @@ void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t 
           }
           else
           {
-            HAL_GPIO_WritePin(GPIOC,UI_LED_G_Pin, GPIO_PIN_SET);
+            spp_event = fsm_no_event;
           }
         }
         while(osMailPut(queue_fsm_eventsHandle, (void *) &spp_event) != osOK)
