@@ -47,7 +47,7 @@ void behaviour_h2h_start_connect(state_ptr state)
   uint8_t i;
   /* Set events to react to */
   state->back = h2h_start_connect_to_main;
-//  state->h2h_start_connect = h2h_start_connect_to_h2h_ongoing;
+  state->h2h_start_connect = h2h_start_connect_to_h2h_ongoing;
 
   /* Do state actions */
 
@@ -73,7 +73,7 @@ void behaviour_h2h_start_connect(state_ptr state)
 
   /* Do state actions */
   bluetooth_init();
-//  Inquiry(TIMEOUT);
+  Inquiry(TIMEOUT);
 }
 
 /* Entry point to the state */

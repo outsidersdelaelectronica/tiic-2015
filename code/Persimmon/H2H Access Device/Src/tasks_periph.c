@@ -245,8 +245,15 @@ void Start_periph_rtcTask(void const * argument)
           sprintf(time_string, "%u:%u", sTime.Hours, sTime.Minutes);
         }
       }
-      sprintf(date_string, "%u/%u/20%u", sDate.Date, sDate.Month, sDate.Year);
-
+      
+      if (sDate.Year < 10)
+      {
+        sprintf(date_string, "%u/%u/200%u", sDate.Date, sDate.Month, sDate.Year);
+      }
+      else
+      {
+        sprintf(date_string, "%u/%u/20%u", sDate.Date, sDate.Month, sDate.Year);
+      }
       /* Update screen items */
       item_area_set_text(&menu_top_bar.items[4].item.area, time_string);
       item_area_set_text(&menu_top_bar.items[3].item.area, date_string);
