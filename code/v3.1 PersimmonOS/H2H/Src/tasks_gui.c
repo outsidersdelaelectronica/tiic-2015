@@ -30,7 +30,7 @@ void tasks_gui_start()
   gui_tickTaskHandle = osThreadCreate(osThread(gui_tickTask), NULL);
 }
 
-#define GUI_TICK_INTERVAL 50
+#define GUI_TICK_INTERVAL 10
 
 void Start_gui_tickTask(void const * argument)
 {

@@ -185,16 +185,6 @@ void Start_input_clickTask(void const * argument)
         case CLICK_HOLD:
           break;
         case CLICK_UP:
-//
-//          /* Check if a new state put a new menu in the queue */
-//          event_menu = osMailGet(queue_input_menuHandle, 0);
-//          if (event_menu.status == osEventMail)
-//          {
-//              /* Get menu */
-//              current_menu_ptr = (menu_t *) event_menu.value.p;
-//              menu_copy(current_menu_ptr, &current_menu);
-//          }
-
           /* Search item in menu on click position */
           osMutexWait(mutex_menuHandle, osWaitForever);
           if (menu_search_click(&current_menu, click, &item))
