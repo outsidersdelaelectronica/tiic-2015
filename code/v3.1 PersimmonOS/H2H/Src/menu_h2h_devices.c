@@ -9,11 +9,11 @@ menu_t menu_h2h_devices =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 730,
-        .height               = 50,
-        .pos                  = {.x_pos = 30, .y_pos = 80},
+        .width                = 800,
+        .height               = 75,
+        .pos                  = {.x_pos = 0, .y_pos = 48},
         .border               = GUI_NO_BORDER,
-        .is_active            = GUI_ACTIVE,
+        .is_active            = GUI_INACTIVE,
         .string               = L"",
         .font                 = myriad_pro_semibold_16,
         .string_h_align       = CENTER,
@@ -28,11 +28,11 @@ menu_t menu_h2h_devices =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 730,
-        .height               = 50,
-        .pos                  = {.x_pos = 30, .y_pos = 140},
+        .width                = 800,
+        .height               = 75,
+        .pos                  = {.x_pos = 0, .y_pos = 128},
         .border               = GUI_NO_BORDER,
-        .is_active            = GUI_ACTIVE,
+        .is_active            = GUI_INACTIVE,
         .string               = L"",
         .font                 = myriad_pro_semibold_16,
         .string_h_align       = CENTER,
@@ -47,11 +47,11 @@ menu_t menu_h2h_devices =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 730,
-        .height               = 50,
-        .pos                  = {.x_pos = 30, .y_pos = 200},
+        .width                = 800,
+        .height               = 75,
+        .pos                  = {.x_pos = 0, .y_pos = 208},
         .border               = GUI_NO_BORDER,
-        .is_active            = GUI_ACTIVE,
+        .is_active            = GUI_INACTIVE,
         .string               = L"",
         .font                 = myriad_pro_semibold_16,
         .string_h_align       = CENTER,
@@ -66,11 +66,11 @@ menu_t menu_h2h_devices =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 730,
-        .height               = 50,
-        .pos                  = {.x_pos = 30, .y_pos = 260},
+        .width                = 800,
+        .height               = 75,
+        .pos                  = {.x_pos = 0, .y_pos = 288},
         .border               = GUI_NO_BORDER,
-        .is_active            = GUI_ACTIVE,
+        .is_active            = GUI_INACTIVE,
         .string               = L"",
         .font                 = myriad_pro_semibold_16,
         .string_h_align       = CENTER,
@@ -81,13 +81,13 @@ menu_t menu_h2h_devices =
         .event                = fsm_h2h_connect_4
       }
     },
-        {
+    {
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 150,
+        .width                = 156,
         .height               = 100,
-        .pos                  = {.x_pos = 650, .y_pos = 380},
+        .pos                  = {.x_pos = 644, .y_pos = 380},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
         .string               = L"\xF064",
@@ -104,19 +104,19 @@ menu_t menu_h2h_devices =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 610,
+        .width                = 639,
         .height               = 100,
-        .pos                  = {.x_pos = 20, .y_pos = 380},
+        .pos                  = {.x_pos = 0, .y_pos = 380},
         .border               = GUI_NO_BORDER,
-        .is_active            = GUI_ACTIVE,
-        .string               = L"Connect",
+        .is_active            = GUI_INACTIVE,
+        .string               = L"",
         .font                 = myriad_pro_semibold_16,
         .string_h_align       = CENTER,
         .string_v_align       = MID,
         .text_color           = COLOR_WHITE,
         .bg_color             = COLOR_BLUE,
         .border_color         = COLOR_BLACK,
-        .event                = fsm_h2h_start_connect
+        .event                = fsm_no_event
       }
     }
   }

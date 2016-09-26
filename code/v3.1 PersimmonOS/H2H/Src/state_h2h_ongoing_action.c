@@ -73,24 +73,24 @@ void behaviour_h2h_ongoing_action(state_ptr state)
   device_info_t inquired_bt_devices[MAX_INQUIRY_RESULTS];
   uint32_t number_of_btaddr = 0,i;
   char full_string[50] = {0};
-  
+
   /* Set events to react to */
   state->back = h2h_ongoing_action_to_main;
   state->h2h_connect_1 = h2h_ongoing_connecting_to_h2h_connect_1;
   state->h2h_connect_2 = h2h_ongoing_connecting_to_h2h_connect_2;
   state->h2h_connect_3 = h2h_ongoing_connecting_to_h2h_connect_3;
   state->h2h_connect_4 = h2h_ongoing_connecting_to_h2h_connect_4;
-  
+
   /* Do state actions */
   number_of_btaddr = bt_get_remote_devices(inquired_bt_devices);
-  
+
   /*Clean devices names */
   for( i = 0; i < 4;i++)
   {
     item_area_set_text(&menu_h2h_devices.items[i].item.area," ");
   }
-  
-  /* Set new devices */ 
+
+  /* Set new devices */
   for( i = 0; i < (( number_of_btaddr < 4)? number_of_btaddr:4);i++)
   {
     sprintf(full_string, "%s(%X:%X:%X:%X:%X:%X)", inquired_bt_devices[i].Name
@@ -101,6 +101,7 @@ void behaviour_h2h_ongoing_action(state_ptr state)
                   , inquired_bt_devices[i].physical_address.BD_ADDR4
                     , inquired_bt_devices[i].physical_address.BD_ADDR5);
     item_area_set_text(&menu_h2h_devices.items[i].item.area,full_string);
+    menu_h2h_devices.items[i].item.area.is_active = IS_ACTIVE;
     }
 
   /* Set menu */
@@ -123,7 +124,7 @@ void entry_to_h2h_ongoing_action(state_ptr state)
 {
   /* Set state name */
   strcpy(state->name, "h2h_ongoing_action");
-  
+
   /* - Initialize with default implementation
    * - Set event behaviour
    * - Set parent events behaviour (bottom-up)
