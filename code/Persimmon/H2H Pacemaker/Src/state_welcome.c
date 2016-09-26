@@ -7,40 +7,27 @@
 #include "cmsis_os.h"
 #include "menu.h"
 
-/* Mutexes */
-extern osMutexId mutex_menuHandle;
-
-/* Queues */
-extern osMailQId queue_input_menuHandle;
-extern osMailQId queue_lcdHandle;
-
-/* Objects */
-extern menu_t current_menu;
-
 /* State behaviour */
 void behaviour_welcome(state_ptr state)
 {
+  uint32_t i;
+
   /* Set events to react to */
 
   /* Do state actions */
 
-  /* Set menu */
-  osMutexWait(mutex_menuHandle, osWaitForever);
-  menu_copy(&menu_welcome, &current_menu);
-  osMutexRelease(mutex_menuHandle);
-
-  /* Display menu */
-  uint32_t i;
-  for (i = 0; i < menu_welcome.item_num; i++)
+  /* Blink green pin */
+  HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin|UI_LED_B_Pin|UI_LED_G_Pin,GPIO_PIN_RESET);
+  for (i = 0; i < 4; i++)
   {
-    while (osMailPut(queue_lcdHandle, (void *) &menu_welcome.items[i]) != osOK)
-    {
-      osDelay(1);
-    }
+    HAL_GPIO_TogglePin(GPIOC,UI_LED_G_Pin);
+    osDelay(200);
   }
 
-  /* Do state actions */
-  osDelay(2500);
+  /* Turn on green LED */
+  HAL_GPIO_WritePin(GPIOC,UI_LED_G_Pin,GPIO_PIN_SET);
+  osDelay(100);
+
   entry_to_running(state);
 }
 

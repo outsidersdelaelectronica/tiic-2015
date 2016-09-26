@@ -4,18 +4,16 @@
 #include "state_goodbye.h"
 
 /* Child states */
-#include "state_main.h"
-#include "state_ecg.h"
-#include "state_h2h.h"
-#include "state_settings.h"
+#include "state_h2h_wait.h"
+#include "state_h2h_connected.h"
+#include "state_h2h_keygen.h"
+#include "state_h2h_waitkey.h"
+#include "state_h2h_auth.h"
 
 /* State includes */
 #include "cmsis_os.h"
 #include "menu.h"
 #include "buzzer.h"
-
-/* Mutexes */
-extern osMutexId mutex_menuHandle;
 
 /* Queues */
 extern osMailQId queue_periph_buzzerHandle;
@@ -33,27 +31,6 @@ static void running_action_button_short(state_ptr state)
   {
     osDelay(1);
   }
-
-  //TO-DO: Disable clicks and screen
-
-//  /* If lcd is on */
-//  if (is_lcd_on)
-//  {
-//    /* Turn it off */
-//    lcd_config.item.config.backlight_level = 0;
-//    osMailPut(queue_lcdHandle, (void *) &lcd_config);
-//
-//    is_lcd_on = 0;
-//  }
-//  /* If it is off */
-//  else
-//  {
-//    /* Turn it on, turn it on again */
-//    lcd_config.item.config.backlight_level = lcd.backlight_level;
-//    osMailPut(queue_lcdHandle, (void *) &lcd_config);
-//
-//    is_lcd_on = 1;
-//  }
 }
 
 static void running_to_goodbye(state_ptr state)
@@ -81,5 +58,5 @@ void entry_to_running(state_ptr state)
   strcpy(state->name, "running");
 
   /* Go to child default state */
-  entry_to_main(state);
+  entry_to_h2h_wait(state);
 }
