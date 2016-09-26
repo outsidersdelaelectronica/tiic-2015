@@ -101,7 +101,7 @@ void behaviour_h2h_ongoing_action(state_ptr state)
                   , inquired_bt_devices[i].physical_address.BD_ADDR4
                     , inquired_bt_devices[i].physical_address.BD_ADDR5);
     item_area_set_text(&menu_h2h_devices.items[i].item.area,full_string);
-    menu_h2h_devices.items[i].item.area.is_active = IS_ACTIVE;
+    menu_h2h_devices.items[i].item.area.is_active = GUI_ACTIVE;
     }
 
   /* Set menu */
