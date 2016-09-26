@@ -48,13 +48,13 @@ void behaviour_h2h_ongoing_connecting(state_ptr state)
 {
   device_info_t inquired_bt_devices[MAX_INQUIRY_RESULTS];
   uint32_t number_of_btaddr = 0,i;
-  
+
   /* Set events to react to */
   state->h2h_error = h2h_ongoing_connecting_to_h2h_ongoing_error;
   state->h2h_ok = h2h_ongoing_connecting_to_h2h_ongoing_action;
   state->back = h2h_ongoing_connect_to_main;
+
   /* Do state actions */
-  
   number_of_btaddr = bt_get_remote_devices(inquired_bt_devices);
   for( i = 0; i < number_of_btaddr; i++)
   {
@@ -68,7 +68,7 @@ void entry_to_h2h_ongoing_connecting(state_ptr state)
 {
   /* Set state name */
   strcpy(state->name, "h2h_ongoing_connecting");
-  
+
   /* - Initialize with default implementation
    * - Set event behaviour
    * - Set parent events behaviour (bottom-up)

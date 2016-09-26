@@ -11,9 +11,15 @@
 #include "cmsis_os.h"
 #include "menu.h"
 
+/* Mutexes */
+extern osMutexId mutex_menuHandle;
+
 /* Queues */
 extern osMailQId queue_input_menuHandle;
 extern osMailQId queue_lcdHandle;
+
+/* Objects */
+extern menu_t current_menu;
 
 /* State behaviour */
 void behaviour_settings_configtabs_bluetooth(state_ptr state)
@@ -21,28 +27,21 @@ void behaviour_settings_configtabs_bluetooth(state_ptr state)
   /* Set events to react to */
 
   /* Do state actions */
-  menu_copy(&menu_settings_configtabs, &current_menu);
-  
-  current_menu.items[1].item.area.is_active = GUI_ACTIVE;
-  current_menu.items[1].item.area.text_color = (color_t) COLOR_WHITE;
-  current_menu.items[1].item.area.bg_color = (color_t) COLOR_BLUE;
-  
-  current_menu.items[2].item.area.is_active = GUI_ACTIVE;
-  current_menu.items[2].item.area.text_color = (color_t) COLOR_WHITE;
-  current_menu.items[2].item.area.bg_color = (color_t) COLOR_BLUE;
 
-  current_menu.items[3].item.area.is_active = GUI_INACTIVE;
-  current_menu.items[3].item.area.text_color = (color_t) COLOR_BLUE;
-  current_menu.items[3].item.area.bg_color = (color_t) COLOR_WHITE;
-  
-  current_menu.items[4].item.area.is_active = GUI_ACTIVE;
-  current_menu.items[4].item.area.text_color = (color_t) COLOR_WHITE;
-  current_menu.items[4].item.area.bg_color = (color_t) COLOR_BLUE;
-  
-  current_menu.items[5].item.area.is_active = GUI_ACTIVE;
-  current_menu.items[5].item.area.text_color = (color_t) COLOR_WHITE;
-  current_menu.items[5].item.area.bg_color = (color_t) COLOR_BLUE;
-  
+  /* Set menu */
+  osMutexWait(mutex_menuHandle, osWaitForever);
+  menu_copy(&menu_settings_configtabs_bluetooth, &current_menu);
+  osMutexRelease(mutex_menuHandle);
+
+  /* Display menu */
+  uint32_t i;
+  for (i = 0; i < menu_settings_configtabs_about.item_num; i++)
+  {
+    while (osMailPut(queue_lcdHandle, (void *) &menu_settings_configtabs_bluetooth.items[i]) != osOK)
+    {
+      osDelay(1);
+    }
+  }
 }
 
 /* Entry point to the state */
@@ -50,7 +49,7 @@ void entry_to_settings_configtabs_bluetooth(state_ptr state)
 {
   /* Set state name */
   strcpy(state->name, "settings_configtabs_bluetooth");
-  
+
   /* - Initialize with default implementation
    * - Set event behaviour
    * - Set parent events behaviour (bottom-up)

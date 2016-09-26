@@ -302,7 +302,7 @@ void Start_ecg_keyGenTask(void const * argument)
         }
         else
         {
-          while(osMailPut(queue_ecg_keyHandle, (void *) &key) != osOK)
+          while (osMailPut(queue_ecg_keyHandle, (void *) &key) != osOK)
           {
             osDelay(1);
           }

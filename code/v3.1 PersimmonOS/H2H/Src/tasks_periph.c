@@ -42,11 +42,11 @@ void tasks_periph_init()
 
   /* Queues */
   /* queue_periph_buzzer */
-  osMailQDef(queue_periph_buzzer, 1, buzzer_note_t);
+  osMailQDef(queue_periph_buzzer, 8, buzzer_note_t);
   queue_periph_buzzerHandle = osMailCreate(osMailQ(queue_periph_buzzer), NULL);
 
   /* queue_lcd */
-  osMailQDef(queue_lcd, 2, item_action_t);
+  osMailQDef(queue_lcd, 8, item_action_t);
   queue_lcdHandle = osMailCreate(osMailQ(queue_lcd), NULL);
 }
 
@@ -62,11 +62,11 @@ void tasks_periph_start()
   periph_screenTaskHandle = osThreadCreate(osThread(periph_screenTask), NULL);
 
   /* periph_batteryTask */
-  osThreadDef(periph_batteryTask, Start_periph_batteryTask, osPriorityLow, 0, 100);
+  osThreadDef(periph_batteryTask, Start_periph_batteryTask, osPriorityNormal, 0, 100);
   periph_batteryTaskHandle = osThreadCreate(osThread(periph_batteryTask), NULL);
 
   /* periph_rtcTask */
-  osThreadDef(periph_rtcTask, Start_periph_rtcTask, osPriorityLow, 0, 100);
+  osThreadDef(periph_rtcTask, Start_periph_rtcTask, osPriorityNormal, 0, 100);
   periph_rtcTaskHandle = osThreadCreate(osThread(periph_rtcTask), NULL);
 }
 

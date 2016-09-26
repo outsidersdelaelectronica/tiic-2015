@@ -41,10 +41,8 @@ static void ecg_2_lead_gui_tick(state_ptr state)
     bpm = (((uint32_t) event.value.v) >> 10);
     sprintf(str_bpm, "%u", bpm);
 
-    menu_copy(&menu_ecg, &current_menu);
-
-    item_area_set_text(&current_menu.items[1].item.area, str_bpm);
-    while(osMailPut(queue_lcdHandle, (void *) &current_menu.items[1]) != osOK)
+    item_area_set_text(&menu_ecg.items[1].item.area, str_bpm);
+    while (osMailPut(queue_lcdHandle, (void *) &menu_ecg.items[1]) != osOK)
     {
       osDelay(1);
     }
@@ -62,7 +60,7 @@ static void ecg_2_lead_gui_tick(state_ptr state)
   for (i = 0; i < graph_ecg_2_lead.item_num; i++)
   {
     graph_ecg_2_lead.items[i].item_print_function = lcd_update_graph;
-    while(osMailPut(queue_lcdHandle, (void *) &graph_ecg_2_lead.items[i]) != osOK)
+    while (osMailPut(queue_lcdHandle, (void *) &graph_ecg_2_lead.items[i]) != osOK)
     {
       osDelay(1);
     }
@@ -78,14 +76,13 @@ void behaviour_ecg_2_lead(state_ptr state)
   state->gui_tick = ecg_2_lead_gui_tick;
 
   /* Do state actions */
-  menu_copy(&menu_ecg, &current_menu);
 
   /* Print graphs */
   for (i = 0; i < graph_ecg_2_lead.item_num; i++)
   {
     item_graph_reset_value(&graph_ecg_2_lead.items[i].item.graph);
     graph_ecg_2_lead.items[i].item_print_function = lcd_print_graph;
-    while(osMailPut(queue_lcdHandle, (void *) &graph_ecg_2_lead.items[i]) != osOK)
+    while (osMailPut(queue_lcdHandle, (void *) &graph_ecg_2_lead.items[i]) != osOK)
     {
       osDelay(1);
     }
@@ -94,7 +91,7 @@ void behaviour_ecg_2_lead(state_ptr state)
   /* Print tags */
   for (i = 0; i < tags_ecg_2_lead.item_num; i++)
   {
-    while(osMailPut(queue_lcdHandle, (void *) &tags_ecg_2_lead.items[i]) != osOK)
+    while (osMailPut(queue_lcdHandle, (void *) &tags_ecg_2_lead.items[i]) != osOK)
     {
       osDelay(1);
     }

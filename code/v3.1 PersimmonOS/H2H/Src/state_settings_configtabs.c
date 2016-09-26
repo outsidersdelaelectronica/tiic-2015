@@ -14,9 +14,15 @@
 #include "cmsis_os.h"
 #include "menu.h"
 
+/* Mutexes */
+extern osMutexId mutex_menuHandle;
+
 /* Queues */
 extern osMailQId queue_input_menuHandle;
 extern osMailQId queue_lcdHandle;
+
+/* Objects */
+extern menu_t current_menu;
 
 static void settings_configtabs_to_main(state_ptr state)
 {
@@ -78,17 +84,17 @@ void behaviour_settings_configtabs(state_ptr state)
   state->settings_touch = settings_configtabs_to_settings_configtabs_touch;
 
   /* Do state actions */
-  
+
   /* Set menu */
-  while(osMailPut(queue_input_menuHandle, (void *) &menu_settings_configtabs) != osOK)
-  {
-    osDelay(1);
-  }
+  osMutexWait(mutex_menuHandle, osWaitForever);
+  menu_copy(&menu_settings_configtabs, &current_menu);
+  osMutexRelease(mutex_menuHandle);
+
   /* Display menu */
   uint32_t i;
   for (i = 0; i < menu_settings_configtabs.item_num; i++)
   {
-    while(osMailPut(queue_lcdHandle, (void *) &menu_settings_configtabs.items[i]) != osOK)
+    while (osMailPut(queue_lcdHandle, (void *) &menu_settings_configtabs.items[i]) != osOK)
     {
       osDelay(1);
     }
@@ -100,7 +106,7 @@ void entry_to_settings_configtabs(state_ptr state)
 {
   /* Set state name */
   strcpy(state->name, "settings_configtabs");
-  
+
   /* Go to child default state */
   entry_to_settings_configtabs_screen(state);
 }

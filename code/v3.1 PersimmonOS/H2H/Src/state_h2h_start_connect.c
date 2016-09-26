@@ -14,9 +14,16 @@
 #include "bluetooth_internal.h"
 
 #define TIMEOUT 3
+
+/* Mutexes */
+extern osMutexId mutex_menuHandle;
+
 /* Queues */
 extern osMailQId queue_input_menuHandle;
 extern osMailQId queue_lcdHandle;
+
+/* Objects */
+extern menu_t current_menu;
 
 static void h2h_start_connect_to_main(state_ptr state)
 {
@@ -44,21 +51,20 @@ void behaviour_h2h_start_connect(state_ptr state)
   /* Do state actions */
 
   /* Set menu */
-  while(osMailPut(queue_input_menuHandle, (void *) &menu_h2h_connect) != osOK)
-  {
-    osDelay(1);
-  }
+  osMutexWait(mutex_menuHandle, osWaitForever);
+  menu_copy(&menu_h2h_connect, &current_menu);
+  osMutexRelease(mutex_menuHandle);
 
   /* Display menu */
   uint32_t i;
   for (i = 0; i < menu_h2h_connect.item_num; i++)
   {
-    while(osMailPut(queue_lcdHandle, (void *) &menu_h2h_connect.items[i]) != osOK)
+    while (osMailPut(queue_lcdHandle, (void *) &menu_h2h_connect.items[i]) != osOK)
     {
       osDelay(1);
     }
   }
-  
+
   /* Do state actions */
   bluetooth_init();
   Inquiry(TIMEOUT);
@@ -69,7 +75,7 @@ void entry_to_h2h_start_connect(state_ptr state)
 {
   /* Set state name */
   strcpy(state->name, "h2h_connect");
-  
+
   /* - Initialize with default implementation
    * - Set event behaviour
    * - Set parent events behaviour (bottom-up)

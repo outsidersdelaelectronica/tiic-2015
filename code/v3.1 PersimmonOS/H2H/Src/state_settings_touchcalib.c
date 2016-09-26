@@ -30,7 +30,7 @@ void entry_to_settings_touchcalib(state_ptr state)
 {
   /* Set state name */
   strcpy(state->name, "settings_touchcalib");
-  
+
   /* Go to child default state */
   entry_to_settings_touchcalib_point_1(state);
 }

@@ -17,38 +17,38 @@ extern osMailQId queue_bt_packet_sendHandle;
 extern osMailQId queue_fsm_eventsHandle;
 
 /* Holds the Handle of the opened Bluetooth Protocol Stack                      */
-unsigned int               BluetoothStackID;              
+unsigned int               BluetoothStackID;
 /* Holds the UI Mode.                                                           */
-int                        UI_Mode;                 
+int                        UI_Mode;
 /* Contains the Handle of the most recent SPP Port.                             */
-static int                 SerialPortID;           
+static int                 SerialPortID;
 /* Contains the Handle of the SPP Server Port.                                  */
-static int                 ServerPortID;            
+static int                 ServerPortID;
 /* Holds the Connection Handle of the most recent SPP Connection.               */
-static Word_t              Connection_Handle;       
+static Word_t              Connection_Handle;
 /* Flags whether or not there is currently an active connection                 */
-static Boolean_t           Connected;               
+static Boolean_t           Connected;
 /* Hold the Serial Port Service Record of SDP Service Record.                   */
 static DWord_t             SPPServerSDPHandle;
 /* Contains the inquiry result received from the last performed inquiry.        */
-static device_info_t       InquiryResultList[MAX_INQUIRY_RESULTS]; 
+static device_info_t       InquiryResultList[MAX_INQUIRY_RESULTS];
 /* Holds the number of valid inquiry results within the inquiry results array.  */
-static unsigned int        NumberofValidResponses;  
+static unsigned int        NumberofValidResponses;
 /* Holds BD_ADDR <-> Link Keys for pairing.                                     */
 static LinkKeyInfo_t       LinkKeyInfo[MAX_SUPPORTED_LINK_KEYS];
 /* Holds the current BD_ADDR which is currently pairing or authenticating.      */
 static BD_ADDR_t           CurrentRemoteBD_ADDR;
 /* Holds the current BD_ADDR of the device which is paired/connected.           */
-static BD_ADDR_t           SelectedBD_ADDR;    
+static BD_ADDR_t           SelectedBD_ADDR;
 /* Holds the current I/O Capabilities that are to be used for SSP.              */
-static GAP_IO_Capability_t IOCapability; 
+static GAP_IO_Capability_t IOCapability;
 /* Flags whether or not Out of Band Secure Simple Pairing exchange is supported.*/
-static Boolean_t           OOBSupport;              
+static Boolean_t           OOBSupport;
 /* Flags whether or not Man in the Middle (MITM) protection is to be requested  */
 /* during a Secure Simple Pairing procedure.                                    */
-static Boolean_t           MITMProtection;                              
+static Boolean_t           MITMProtection;
 /* Holds a NULL BD_ADDR for compataration purposes                              */
-static BD_ADDR_t           NullADDR;                
+static BD_ADDR_t           NullADDR;
 
    /* The following function is responsible for opening the SS1         */
    /* Bluetooth Protocol Stack.  This function accepts a pre-populated  */
@@ -226,7 +226,7 @@ void bluetooth_init(void)
            }
         }
      }
-   }   
+   }
 }
 
    /* The following function is responsible for closing the SS1         */
@@ -243,7 +243,7 @@ int CloseStack(void)
    {
       /* Simply close the Stack                                         */
       BSC_Shutdown(BluetoothStackID);
-      
+
       /* Flag that the Stack is no longer initialized.                  */
       BluetoothStackID = 0;
 
@@ -348,7 +348,7 @@ int CloseServer(void)
       ret_val = FUNCTION_ERROR;
     }
     else
-    {          
+    {
       /* Flag that there is no Serial Port Server currently open.    */
       ServerPortID = 0;
       SerialPortID = 0;
@@ -356,7 +356,7 @@ int CloseServer(void)
       /* Flag that we are no longer connected.                       */
       Connected    = FALSE;
     }
-    
+
   }
 
    return(ret_val);
@@ -449,7 +449,7 @@ int CloseRemoteServer(void)
    /*          Bluetooth chipset.                                       */
 int SetBaudRate(DWord_t baud_rate)
 {
-  int ret_val = INVALID_STACK_ID_ERROR; 
+  int ret_val = INVALID_STACK_ID_ERROR;
 
   /* First check to see if the parameters required for the execution of*/
   /* this function appear to be semi-valid.                            */
@@ -527,7 +527,7 @@ static int SetPairabilityMode(GAP_Pairability_Mode_t  PairabilityMode)
          {
             /* The Mode was changed successfully.                       */
             Result = GAP_Register_Remote_Authentication(BluetoothStackID, GAP_Event_Callback, (unsigned long)0);
-            
+
             ret_val = (Result)?Result:0;
          }
    }
@@ -611,7 +611,7 @@ int SetQueueParams(unsigned int maximum_number_data_packets,unsigned int queue_t
     ret_val = SPP_Set_Queuing_Parameters(BluetoothStackID,
                                           maximum_number_data_packets,
                                           queue_threshold);
-    
+
     ret_val = (ret_val >= 0)?0:FUNCTION_ERROR;
   }
 
@@ -765,7 +765,7 @@ int GetConfigParams(SPP_Configuration_Params_t *SPPConfigurationParams)
    {
       /* Simply query the configuration parameters.                     */
       ret_val = SPP_Get_Configuration_Parameters(BluetoothStackID, SPPConfigurationParams);
-      
+
       ret_val = (ret_val < 0)?FUNCTION_ERROR:ret_val;
    }
 
@@ -798,14 +798,14 @@ int Inquiry(uint32_t timeout)
          NumberofValidResponses = 0;
       }
    }
-   
+
    return(ret_val);
 }
 
 uint32_t bt_get_remote_devices(device_info_t* inquired_addr)
 {
   uint32_t i;
-  
+
   for( i = 0; i < NumberofValidResponses; i++ )
   {
     inquired_addr[i] = InquiryResultList[i];
@@ -1143,10 +1143,10 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
   int                               Result;
   int                               Index,character_index = 0;
   GAP_Inquiry_Event_Data_t         *GAP_Inquiry_Event_Data;
-  GAP_Remote_Name_Event_Data_t     *GAP_Remote_Name_Event_Data;   
+  GAP_Remote_Name_Event_Data_t     *GAP_Remote_Name_Event_Data;
   GAP_Authentication_Information_t  GAP_Authentication_Information;
   fsm_event_f gap_event = fsm_no_event;
-  wchar_t character = 0;    
+  wchar_t character = 0;
   /* First, check to see if the required parameters appear to be       */
   /* semi-valid.                                                       */
   if((BluetoothStackID) && (GAP_Event_Data))
@@ -1155,16 +1155,16 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
     /* type the incoming event is.                                    */
     switch(GAP_Event_Data->Event_Data_Type)
     {
-      case etInquiry_Entry_Result:   
+      case etInquiry_Entry_Result:
         /* Yet to study if it's neccesary */
         break;
-      case etInquiry_With_RSSI_Entry_Result:   
+      case etInquiry_With_RSSI_Entry_Result:
         /* Yet to study if it's neccesary */
         break;
-      case etExtended_Inquiry_Entry_Result:    
+      case etExtended_Inquiry_Entry_Result:
         /* Yet to study if it's neccesary */
         break;
-      case etInquiry_Result:   
+      case etInquiry_Result:
         /* The GAP event received was of type Inquiry_Result.       */
         GAP_Inquiry_Event_Data = GAP_Event_Data->Event_Data.GAP_Inquiry_Event_Data;
         /* Store a list of all the devices found performing the inquiry.  */
@@ -1175,19 +1175,19 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
         NumberofValidResponses = GAP_Inquiry_Event_Data->Number_Devices;
         gap_event = fsm_h2h_start_connect;
         break;
-      case etEncryption_Change_Result:   
+      case etEncryption_Change_Result:
         /* Yet to study if it's neccesary */
-        break;    
-      case etEncryption_Refresh_Complete:   
+        break;
+      case etEncryption_Refresh_Complete:
         /* Yet to study if it's neccesary */
-        break;   
-      case etRemote_Features_Result:   
+        break;
+      case etRemote_Features_Result:
         /* Yet to study if it's neccesary */
-        break;   
-      case etRemote_Version_Information_Result:   
+        break;
+      case etRemote_Version_Information_Result:
         /* Yet to study if it's neccesary */
-        break;  
-      case etRemote_Name_Result:   
+        break;
+      case etRemote_Name_Result:
         /* Yet to study if it's neccesary */
         GAP_Remote_Name_Event_Data = GAP_Event_Data->Event_Data.GAP_Remote_Name_Event_Data;
         for( Index = 0; Index < NumberofValidResponses; Index++)
@@ -1223,13 +1223,13 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
           osDelay(500);
           HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin, GPIO_PIN_RESET);
         }
-        break;  
-      case etAuthentication:   
+        break;
+      case etAuthentication:
         /* An authentication event occurred, determine which type of*/
         /* authentication event occurred.                           */
         switch(GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->GAP_Authentication_Event_Type)
         {
-          case atLinkKeyRequest:   
+          case atLinkKeyRequest:
             /* Setup the authentication information response structure.       */
             GAP_Authentication_Information.GAP_Authentication_Type    = atLinkKey;
             GAP_Authentication_Information.Authentication_Data_Length = 0;
@@ -1238,7 +1238,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
             /* device.                                            */
             for(Index = 0 ;Index < MAX_SUPPORTED_LINK_KEYS; Index++)
             {
-              if(COMPARE_BD_ADDR(LinkKeyInfo[Index].BD_ADDR, 
+              if(COMPARE_BD_ADDR(LinkKeyInfo[Index].BD_ADDR,
                         GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device))
               {
                 /* Link Key information stored,  respond with the stored Link Key */
@@ -1249,8 +1249,8 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
               }
             }
             /* Submit the authentication response.                */
-            Result = GAP_Authentication_Response(BluetoothStackID, 
-                        GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, 
+            Result = GAP_Authentication_Response(BluetoothStackID,
+                        GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device,
                         &GAP_Authentication_Information);
 
             /* Check the result of the submitted command.         */
@@ -1259,22 +1259,22 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
               /* Notify of error */
               HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
             }
-            break;  
-          case atPINCodeRequest:   
+            break;
+          case atPINCodeRequest:
             /* Since we are using with "just work" this is unnecessary*/
-            break;  
-          case atAuthenticationStatus:   
+            break;
+          case atAuthenticationStatus:
             /* Flag that there is no longer a current             */
             /* Authentication procedure in progress.              */
             ASSIGN_BD_ADDR(CurrentRemoteBD_ADDR, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
-            break;  
-          case atLinkKeyCreation:   
+            break;
+          case atLinkKeyCreation:
             /* Store the link Key in either a free location OR    */
             /* over the old key location.                         */
             // Vaya mierdon se montan pa buscar una direccion
             for(Index = 0, Result = -1 ;Index < MAX_SUPPORTED_LINK_KEYS; Index++)
             {
-              if(COMPARE_BD_ADDR(LinkKeyInfo[Index].BD_ADDR, 
+              if(COMPARE_BD_ADDR(LinkKeyInfo[Index].BD_ADDR,
                       GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device))
               {
                 break;
@@ -1305,9 +1305,9 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
               /* Notify of error */
               HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
             }
-              
-            break;  
-          case atIOCapabilityRequest:   
+
+            break;
+          case atIOCapabilityRequest:
             /* Setup the Authentication Information Response structure.      */
             GAP_Authentication_Information.GAP_Authentication_Type                                      = atIOCapabilities;
             GAP_Authentication_Information.Authentication_Data_Length                                   = sizeof(GAP_IO_Capabilities_t);
@@ -1316,8 +1316,8 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
             GAP_Authentication_Information.Authentication_Data.IO_Capabilities.OOB_Data_Present         = OOBSupport;
 
             /* Submit the Authentication Response.                */
-            Result = GAP_Authentication_Response(BluetoothStackID, 
-                         GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, 
+            Result = GAP_Authentication_Response(BluetoothStackID,
+                         GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device,
                          &GAP_Authentication_Information);
 
             /* Check the result of the submitted command.         */
@@ -1326,8 +1326,8 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
               /* Notify of error */
               HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
             }
-            break;  
-          case atUserConfirmationRequest:   
+            break;
+          case atUserConfirmationRequest:
             CurrentRemoteBD_ADDR = GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device;
             /* Invoke JUST Works Process...                    */
             GAP_Authentication_Information.GAP_Authentication_Type          = atUserConfirmation;
@@ -1336,8 +1336,8 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
 
             /* Submit the Authentication Response.             */
 
-            Result = GAP_Authentication_Response(BluetoothStackID, 
-                         GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device, 
+            Result = GAP_Authentication_Response(BluetoothStackID,
+                         GAP_Event_Data->Event_Data.GAP_Authentication_Event_Data->Remote_Device,
                          &GAP_Authentication_Information);
             if( Result == 0)
             {
@@ -1350,37 +1350,37 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
               /* Notify error in confirmation */
               HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
             }
-            break;  
-          case atPasskeyRequest:   
+            break;
+          case atPasskeyRequest:
             /* Since we are using with "just work" this is unnecessary*/
-            break;  
-          case atPasskeyNotification:   
+            break;
+          case atPasskeyNotification:
             /* Since we are using with "just work" this is unnecessary*/
-            break;  
-          case atKeypressNotification:   
+            break;
+          case atKeypressNotification:
             /* Yet to study if it's neccesary */
-            break;  
-          case atRemoteOutOfBandDataRequest:   
+            break;
+          case atRemoteOutOfBandDataRequest:
             /* Yet to study if it's neccesary */
-            break;  
-          case atIOCapabilityResponse:   
+            break;
+          case atIOCapabilityResponse:
             /* Remote ioCapabities, this should be used, but not yet */
-            break;  
-          case atSecureSimplePairingComplete:   
+            break;
+          case atSecureSimplePairingComplete:
             /* Yet to study if it's neccesary */
-            break;   
+            break;
           default:
             /* An unknown/unexpected GAP event was received.            */
             HAL_GPIO_WritePin(GPIOC,UI_LED_G_Pin, GPIO_PIN_SET);
-            break;    
+            break;
         }
         break;
       default:
         /* An unknown/unexpected GAP event was received.            */
         HAL_GPIO_WritePin(GPIOC,UI_LED_G_Pin, GPIO_PIN_SET);
-        break;    
+        break;
     }
-    while(osMailPut(queue_fsm_eventsHandle, (void *) &gap_event) != osOK)
+    while (osMailPut(queue_fsm_eventsHandle, (void *) &gap_event) != osOK)
     {
       osDelay(1);
     }
@@ -1434,8 +1434,8 @@ void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t 
         /* Flag that we are now connected.                          */
         Connected  = TRUE;
         /* Query the connection handle.                             */
-        Result = GAP_Query_Connection_Handle(BluetoothStackID, 
-                        SPP_Event_Data->Event_Data.SPP_Open_Port_Indication_Data->BD_ADDR, 
+        Result = GAP_Query_Connection_Handle(BluetoothStackID,
+                        SPP_Event_Data->Event_Data.SPP_Open_Port_Indication_Data->BD_ADDR,
                         &Connection_Handle);
         if(Result != 0)
         {
@@ -1495,7 +1495,7 @@ void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t 
         /* We recieve a packet and send it to bt_rx task */
         SPP_Data_Read(BluetoothStackID, SerialPortID, PACKET_SIZE, (Byte_t *)packet.packet_content);
         /* put into the queue */
-        while(osMailPut(queue_bt_packet_recievedHandle, (void *) &packet) != osOK)
+        while (osMailPut(queue_bt_packet_recievedHandle, (void *) &packet) != osOK)
         {
           osDelay(1);
         }
@@ -1510,8 +1510,8 @@ void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t 
       case etPort_Send_Port_Information_Indication:
         /* This should be OUR INFO, consider redo it */
         /* Simply Respond with the information that was sent to us. */
-        Result = SPP_Respond_Port_Information(BluetoothStackID, 
-                     SPP_Event_Data->Event_Data.SPP_Send_Port_Information_Indication_Data->SerialPortID, 
+        Result = SPP_Respond_Port_Information(BluetoothStackID,
+                     SPP_Event_Data->Event_Data.SPP_Send_Port_Information_Indication_Data->SerialPortID,
                      &SPP_Event_Data->Event_Data.SPP_Send_Port_Information_Indication_Data->SPPPortInformation);
         break;
       case etPort_Send_Port_Information_Confirmation:
@@ -1523,7 +1523,7 @@ void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t 
       case etPort_Open_Request_Indication:
         /* A remote port is requesting a connection.                */
         /* Accept the connection always.                            */
-        Result = SPP_Open_Port_Request_Response(BluetoothStackID, 
+        Result = SPP_Open_Port_Request_Response(BluetoothStackID,
                    SPP_Event_Data->Event_Data.SPP_Open_Port_Request_Indication_Data->SerialPortID,
                    TRUE);
         if( Result == 0)
@@ -1534,7 +1534,7 @@ void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t 
       default:
         /* An unknown/unexpected SPP event was received.            */
         HAL_GPIO_WritePin(GPIOC,UI_LED_G_Pin, GPIO_PIN_SET);
-        break;    
+        break;
     }
   }
   else
@@ -1609,7 +1609,7 @@ static int ExtractRFCOMMPortNumber(SDP_Service_Search_Attribute_Response_Data_t 
   for(RecordIndex = 0; RecordIndex < NumberOfRecords; RecordIndex++)
   {
     NumberOfAttributes = SDPServiceSearchAttributeResponse->SDP_Service_Attribute_Response_Data[RecordIndex].Number_Attribute_Values;
-        
+
     if(NumberOfAttributes)
     {
       SDP_Data_Element = SDPServiceSearchAttributeResponse->SDP_Service_Attribute_Response_Data[RecordIndex].SDP_Service_Attribute_Value_Data[0].SDP_Data_Element;
@@ -1621,13 +1621,13 @@ static int ExtractRFCOMMPortNumber(SDP_Service_Search_Attribute_Response_Data_t 
         /* Sequence. */
         for(Index=0; Index < SDP_Data_Element->SDP_Data_Element_Length;Index++)
         {
-          if(((SDP_Data_Element1 = &(SDP_Data_Element->SDP_Data_Element.SDP_Data_Element_Sequence[Index])) != NULL) 
+          if(((SDP_Data_Element1 = &(SDP_Data_Element->SDP_Data_Element.SDP_Data_Element_Sequence[Index])) != NULL)
              && (SDP_Data_Element1->SDP_Data_Element_Type == deSequence)
-               && ((NumberElements = SDP_Data_Element1->SDP_Data_Element_Length) > 0) 
+               && ((NumberElements = SDP_Data_Element1->SDP_Data_Element_Length) > 0)
                  && ((SDP_Data_Element1 = SDP_Data_Element1->SDP_Data_Element.SDP_Data_Element_Sequence) != NULL))
           {
-            if((SDP_Data_Element1->SDP_Data_Element_Type == deUUID_16) || 
-               (SDP_Data_Element1->SDP_Data_Element_Type == deUUID_32) || 
+            if((SDP_Data_Element1->SDP_Data_Element_Type == deUUID_16) ||
+               (SDP_Data_Element1->SDP_Data_Element_Type == deUUID_32) ||
                  (SDP_Data_Element1->SDP_Data_Element_Type == deUUID_128))
               {
                 /* Initialize the BASE UUID. */
@@ -1682,11 +1682,11 @@ static int ExtractRFCOMMPortNumber(SDP_Service_Search_Attribute_Response_Data_t 
     }
 
   }
-   
+
   return(RetVal);
 }
 
-void BTPSAPI SDP_EventCallback(unsigned int BluetoothStackID, unsigned int SDPRequestID, 
+void BTPSAPI SDP_EventCallback(unsigned int BluetoothStackID, unsigned int SDPRequestID,
                 SDP_Response_Data_t *SDP_Response_Data, unsigned long CallbackParameter)
 {
   int Index;
@@ -1717,7 +1717,7 @@ void BTPSAPI SDP_EventCallback(unsigned int BluetoothStackID, unsigned int SDPRe
         if(SDP_Response_Data->SDP_Response_Data.SDP_Service_Search_Response_Data.Total_Service_Record_Count)
         {
 //          Display(("Record Handles:\r\n"));
-        
+
           for(Index = 0; (Word_t)Index < SDP_Response_Data->SDP_Response_Data.SDP_Service_Search_Response_Data.Total_Service_Record_Count; Index++)
           {
 //            Display(("Record %u: 0x%08X\r\n", (Index + 1), (unsigned int)SDP_Response_Data->SDP_Response_Data.SDP_Service_Search_Response_Data.Service_Record_List[Index]));
@@ -1728,9 +1728,9 @@ void BTPSAPI SDP_EventCallback(unsigned int BluetoothStackID, unsigned int SDPRe
         /* Yet to study if it's neccesary */
         break;
       case rdServiceSearchAttributeResponse:
-        /* A SDP Service Search Attribute Response was received, */   
+        /* A SDP Service Search Attribute Response was received, */
         BTPS_MemInitialize(RFCOMMPortList, 0, sizeof(RFCOMMPortList));
-      
+
         /* Call only when you queried for Attribute ID PROTOCOL DESCRIPTOR LIST (0x0004) */
         if(ExtractRFCOMMPortNumber(&SDP_Response_Data->SDP_Response_Data.SDP_Service_Search_Attribute_Response_Data, RFCOMMPortList) == 0)
         {
@@ -1740,7 +1740,7 @@ void BTPSAPI SDP_EventCallback(unsigned int BluetoothStackID, unsigned int SDPRe
       case rdServiceAttributeResponse_Raw:
         /* Yet to study if it's neccesary */
         break;
-      case rdServiceSearchAttributeResponse_Raw: 
+      case rdServiceSearchAttributeResponse_Raw:
         /* Yet to study if it's neccesary */
         break;
       default:
@@ -1771,7 +1771,7 @@ int SPPServiceDiscovery(BD_ADDR_t RemoteBDAddr)
     AttributeID.End_Attribute_ID = 0;
 
     /* Finally submit the SDP Request. */
-    Result = SDP_Service_Search_Attribute_Request(BluetoothStackID, RemoteBDAddr, 
+    Result = SDP_Service_Search_Attribute_Request(BluetoothStackID, RemoteBDAddr,
                       1, &SDPUUIDEntry, 1, &AttributeID, SDP_EventCallback,(unsigned long)0);
 
     if(Result > 0)

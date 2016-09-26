@@ -26,9 +26,8 @@ void behaviour_h2h_ongoing(state_ptr state)
 {
 
   /* Set events to react to */
-  
   state->back = h2h_ongoing_to_h2h_connect;
-  
+
   /* Do state actions */
 
 }
@@ -38,7 +37,7 @@ void entry_to_h2h_ongoing(state_ptr state)
 {
   /* Set state name */
   strcpy(state->name, "h2h_ongoing");
-  
+
   /* Go to child default state */
   entry_to_h2h_ongoing_connecting(state);
 }

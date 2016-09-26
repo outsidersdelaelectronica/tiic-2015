@@ -1,7 +1,5 @@
 #include "menu.h"
 
-menu_t current_menu;
-
 int32_t menu_search_click(menu_t *menu, click_t *click, item_t *item)
 {
   int i;
@@ -46,6 +44,6 @@ int32_t menu_copy(menu_t const *orig_menu, menu_t *dest_menu)
   {
     dest_menu->items[i] = orig_menu->items[i];
   }
-  
+
   return 1;
 }

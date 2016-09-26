@@ -6,12 +6,16 @@
 #include "cmsis_os.h"
 #include "menu.h"
 
+/* Mutexes */
+extern osMutexId mutex_menuHandle;
+
 /* Queues */
 extern osMailQId queue_input_menuHandle;
 extern osMailQId queue_lcdHandle;
 
 /* Objects */
 extern RTC_HandleTypeDef hrtc;
+extern menu_t current_menu;
 
 /* State behaviour */
 void behaviour_goodbye(state_ptr state)
@@ -21,17 +25,15 @@ void behaviour_goodbye(state_ptr state)
   /* Do state actions */
 
   /* Set menu */
-  while(osMailPut(queue_input_menuHandle, (void *) &menu_goodbye) != osOK)
-  {
-    osDelay(1);
-  }
+  osMutexWait(mutex_menuHandle, osWaitForever);
+  menu_copy(&menu_goodbye, &current_menu);
+  osMutexRelease(mutex_menuHandle);
 
   /* Display menu */
   uint32_t i;
-  
   for (i = 0; i < menu_goodbye.item_num; i++)
   {
-    while(osMailPut(queue_lcdHandle, (void *) &menu_goodbye.items[i]) != osOK)
+    while (osMailPut(queue_lcdHandle, (void *) &menu_goodbye.items[i]) != osOK)
     {
       osDelay(1);
     }
@@ -59,7 +61,7 @@ void entry_to_goodbye(state_ptr state)
 {
   /* Set state name */
   strcpy(state->name, "goodbye");
-  
+
   /* - Initialize with default implementation
    * - Set event behaviour
    * - Set parent events behaviour (bottom-up)
