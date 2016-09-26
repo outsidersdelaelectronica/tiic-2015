@@ -9,7 +9,6 @@
 
 /* State includes */
 #include "cmsis_os.h"
-#include "menu.h"
 
 /* State behaviour */
 void behaviour_h2h_waitkey(state_ptr state)
@@ -17,6 +16,7 @@ void behaviour_h2h_waitkey(state_ptr state)
   /* Set events to react to */
 
   /* Do state actions */
+  osDelay(500);
 }
 
 /* Entry point to the state */
@@ -27,9 +27,12 @@ void entry_to_h2h_waitkey(state_ptr state)
 
   /* - Initialize with default implementation
    * - Set event behaviour
-   * - Set parent events behaviour (bottom-up)
+   * - Set parent events behaviour
    */
   default_implementation(state);
-  behaviour_h2h_waitkey(state);
   behaviour_running(state);
+  behaviour_h2h_waitkey(state);
+
+  // TEST
+  entry_to_h2h_auth(state);
 }

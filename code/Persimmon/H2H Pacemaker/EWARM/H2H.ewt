@@ -1113,126 +1113,6 @@
         </file>
       </group>
       <group>
-        <name>gui</name>
-        <group>
-          <name>graphs</name>
-          <file>
-            <name>$PROJ_DIR$\..\Inc\graph_ecg.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\..\Src\tags_ecg.c</name>
-          </file>
-        </group>
-        <group>
-          <name>menus</name>
-          <group>
-            <name>running</name>
-            <group>
-              <name>ecg</name>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu_ecg.c</name>
-              </file>
-            </group>
-            <group>
-              <name>h2h</name>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu_h2h_connect.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu_h2h_devices.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_action.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_connecting.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu_h2h_ongoing_error.c</name>
-              </file>
-            </group>
-            <group>
-              <name>settings</name>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_about.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_bluetooth.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_screen.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_timedate.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\Src\menu_settings_configtabs_touch.c</name>
-              </file>
-            </group>
-            <file>
-              <name>$PROJ_DIR$\..\Src\menu_main.c</name>
-            </file>
-          </group>
-          <file>
-            <name>$PROJ_DIR$\..\Src\menu.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\..\Src\menu_goodbye.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\..\Src\menu_top_bar.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$\..\Src\menu_welcome.c</name>
-          </file>
-        </group>
-        <group>
-          <name>res</name>
-          <group>
-            <name>color</name>
-            <file>
-              <name>$PROJ_DIR$\..\Src\color.c</name>
-            </file>
-          </group>
-          <group>
-            <name>fonts</name>
-            <file>
-              <name>$PROJ_DIR$\..\Src\font_awesome.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\..\Inc\fonts.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\..\Src\myriad_pro.c</name>
-            </file>
-          </group>
-          <group>
-            <name>item</name>
-            <file>
-              <name>$PROJ_DIR$\..\Inc\item.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\..\Src\item_area.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\..\Src\item_graph.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\..\Inc\item_gui.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\..\Src\item_lcd_config.c</name>
-            </file>
-          </group>
-          <file>
-            <name>$PROJ_DIR$\..\Inc\click.h</name>
-          </file>
-        </group>
-      </group>
-      <group>
         <name>hardware</name>
         <group>
           <name>afe</name>
@@ -1294,54 +1174,6 @@
             <name>$PROJ_DIR$\..\Src\gauge.c</name>
           </file>
         </group>
-        <group>
-          <name>lcd</name>
-          <group>
-            <name>primitives</name>
-            <group>
-              <name>hal</name>
-              <file>
-                <name>$PROJ_DIR$\..\Inc\lcd_constants.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\Src\lcd_hal.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$\..\Inc\lcd_position.h</name>
-              </file>
-            </group>
-            <file>
-              <name>$PROJ_DIR$\..\Src\lcd_primitives.c</name>
-            </file>
-          </group>
-          <file>
-            <name>$PROJ_DIR$\..\Src\lcd.c</name>
-          </file>
-        </group>
-        <group>
-          <name>touch</name>
-          <group>
-            <name>calibration</name>
-            <file>
-              <name>$PROJ_DIR$\..\Src\touch_calib.c</name>
-            </file>
-          </group>
-          <group>
-            <name>hal</name>
-            <file>
-              <name>$PROJ_DIR$\..\Inc\touch_constants.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\..\Src\touch_hal.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$\..\Inc\touch_position.h</name>
-            </file>
-          </group>
-          <file>
-            <name>$PROJ_DIR$\..\Src\touch.c</name>
-          </file>
-        </group>
       </group>
       <group>
         <name>modules</name>
@@ -1386,9 +1218,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$\..\Src\tasks_fsm.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Src\tasks_gui.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\Src\tasks_input.c</name>

@@ -12,7 +12,6 @@
 
 /* State includes */
 #include "cmsis_os.h"
-#include "menu.h"
 #include "buzzer.h"
 
 /* Queues */
@@ -20,9 +19,18 @@ extern osMailQId queue_periph_buzzerHandle;
 
 static void running_action_button_short(state_ptr state)
 {
+  uint32_t i;
   buzzer_note_t beep;
 
   /* Do transition actions */
+
+  /* Blink green LED */
+  HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin|UI_LED_B_Pin|UI_LED_G_Pin,GPIO_PIN_RESET);
+  for (i = 0; i < 4; i++)
+  {
+    HAL_GPIO_TogglePin(GPIOC,UI_LED_G_Pin);
+    osDelay(200);
+  }
 
   /* Beep */
   beep.note = A6;

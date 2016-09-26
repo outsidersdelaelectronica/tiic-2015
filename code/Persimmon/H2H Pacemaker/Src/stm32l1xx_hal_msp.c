@@ -45,7 +45,6 @@ extern osSemaphoreId sem_bt_data_receiveHandle;
 extern osSemaphoreId sem_ecg_afe_dma_rxHandle;
 extern osSemaphoreId sem_ecg_afe_drdyHandle;
 
-extern osSemaphoreId sem_input_touch_penHandle;
 extern osSemaphoreId sem_input_button_short_pressHandle;
 extern osSemaphoreId sem_input_button_long_pressHandle;
 
@@ -214,10 +213,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   /* Touch interrupt handler */
   if(GPIO_Pin == TP_PEN_Pin)
   {
-    if(sem_input_touch_penHandle != NULL)
-    {
-      osSemaphoreRelease(sem_input_touch_penHandle);
-    }
   }
 }
 

@@ -4,7 +4,8 @@
 
 /* State includes */
 #include "cmsis_os.h"
-#include "menu.h"
+#include "gpio.h"
+#include "rtc.h"
 
 /* Objects */
 extern RTC_HandleTypeDef hrtc;
@@ -48,7 +49,7 @@ void entry_to_goodbye(state_ptr state)
 
   /* - Initialize with default implementation
    * - Set event behaviour
-   * - Set parent events behaviour (bottom-up)
+   * - Set parent events behaviour
    */
   default_implementation(state);
   behaviour_goodbye(state);

@@ -230,15 +230,15 @@ void Start_ecg_bpmDetTask(void const * argument)
       ecg_lead = (int32_t) event.value.v;
     }
 
-    /* If signal crosses certain threshold */
-    if (ecg_lead > threshold_high)
-    {
-      HAL_GPIO_WritePin(GPIOC, UI_LED_G_Pin, GPIO_PIN_SET);
-    }
-    else
-    {
-      HAL_GPIO_WritePin(GPIOC, UI_LED_G_Pin, GPIO_PIN_RESET);
-    }
+//    /* If signal crosses certain threshold */
+//    if (ecg_lead > threshold_high)
+//    {
+//      HAL_GPIO_WritePin(GPIOC, UI_LED_G_Pin, GPIO_PIN_SET);
+//    }
+//    else
+//    {
+//      HAL_GPIO_WritePin(GPIOC, UI_LED_G_Pin, GPIO_PIN_RESET);
+//    }
 
     /* BPM detection in progress */
     if((ecg_lead > threshold_high)&&(flag_qrs_zone == 0))

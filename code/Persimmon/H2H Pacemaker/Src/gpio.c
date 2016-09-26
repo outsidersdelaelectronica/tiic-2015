@@ -45,9 +45,9 @@
 
 /* USER CODE END 1 */
 
-/** Configure pins as 
-        * Analog 
-        * Input 
+/** Configure pins as
+        * Analog
+        * Input
         * Output
         * EVENT_OUT
         * EXTI
@@ -84,11 +84,11 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PCPin PCPin PCPin PCPin 
-                           PCPin PCPin PCPin PCPin 
+  /*Configure GPIO pins : PCPin PCPin PCPin PCPin
+                           PCPin PCPin PCPin PCPin
                            PCPin */
-  GPIO_InitStruct.Pin = VDD_AFE_D_EN_Pin|VDD_AFE_A_EN_Pin|VDD_SCREEN_EN_Pin|VDD_RF_PW_EN_Pin 
-                          |VDD_RF_IO_EN_Pin|BT_nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin 
+  GPIO_InitStruct.Pin = VDD_AFE_D_EN_Pin|VDD_AFE_A_EN_Pin|VDD_SCREEN_EN_Pin|VDD_RF_PW_EN_Pin
+                          |VDD_RF_IO_EN_Pin|BT_nSHUTD_Pin|UI_LED_R_Pin|UI_LED_G_Pin
                           |UI_LED_B_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -181,7 +181,7 @@ void MX_GPIO_Init(void)
   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 7, 0);
-  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+//  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
 
