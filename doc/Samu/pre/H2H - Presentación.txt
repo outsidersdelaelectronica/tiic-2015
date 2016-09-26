@@ -1,10 +1,20 @@
 {Apertura}
 Muchas gracias a todos por venir. [Voy a realizar la presentación de mi Proyecto Fin de Carrera titulado "Diseño e implementación de una plataforma hardware para un sistema de acceso inalámbrico a dispositivos médicos mediante Heart-To-Heart"].
 
-{Introducción y objetivos}
-
 {Esquema}
 Voy a comenzar la presentación realizando una breve introducción del proyecto y comentando los objetivos principales del mismo. Este proyecto ha sido realizado en conjunto con el Proyecto Fin de Carrera "Diseño e implementación de un servicio de acceso inalámbrico a dispositivos médicos mediante Heart-to-Heart" realizado por Tomás Valencia Noheda, por lo que comentaré también los objetivos globales de ambos proyectos. Explicaré de forma esquemática la arquitectura del sistema y el desarrollo de sus tres versiones, así como el desarrollo de la capa de abstracción hardware de la última versión. A continuación mostraré los prototipos fabricados de la última versión y realizaré una demostración de su funcionamiento. Por último, expondré las conclusiones y una serie de posibles líneas futuras del proyecto.
+
+{Introducción y objetivos}
+Los avances médicos están haciendo posible el desarrollo de una gran variedad de dispositivos médicos implantables.
+
+Estos deben ser configurados de forma no invasiva e inalámbrica mediante otros dispositivos externos. Esta necesidad conlleva un gran inconveniente: si no se toman medidas de precaución, su manipulación maliciosa puede provocar daños al paciente. Existe por tanto una disyuntiva entre dos requisitos esenciales de un dispositivo médico implantable: por un lado, debe ofrecer políticas de acceso permisivas durante situaciones de emergencia médica. Por el otro, deben ser lo suficientemente estrictos para evitar accesos no autorizados.
+
+Una de las soluciones que existen es el uso de políticas de acceso Heart-to-Heart. Ésta permite acceder al dispositivo médico implantable si y sólo si éste tiene contacto físico directo con el paciente. El protocolo se basa en la adquisición de una variable fisiológica. En el caso de un marcapasos, éste realiza una medida del electrocardiograma del paciente. Al mismo tiempo, el dispositivo de acceso toma su propia medida. Si ambas son lo suficientemente parecidas, el dispositivo de acceso puede acceder al marcapasos.
+Este esquema intenta seguir una regla de sentido común: la posibilidad de tener acceso físico a una persona implica la posibilidad de hacerle daño o curarle.
+
+El objetivo de este proyecto es desarrollar una plataforma hardware para implementar servicios de acceso Heart-to-Heart. Esta incluye el prototipo de un dispositivo que haga las veces de marcapasos, un disposivo de acceso, una fuente de alimentación para recargar sus baterías y una capa de abstracción hardware para facilitar el acceso a los recursos de la plataforma.
+
+Los objetivos globales de los dos proyectos se resumen en la realización de dicha plataforma, y en el desarrollo del software que implementa el servicio de acceso a dispositivos médicos mediante Heart-to-Heart.
 
 {Arquitectura}
 Tanto el dispositivo de acceso como el marcapasos realizan las mismas funciones: extraen datos del paciente, establecen conexiones inalámbricas, necesitan energía para funcionar y muestran información al operador.
