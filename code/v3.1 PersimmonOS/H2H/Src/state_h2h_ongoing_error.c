@@ -1,7 +1,7 @@
 #include "state_h2h_ongoing_error.h"
 
 /* Possible transition to the following states */
-#include "state_h2h_start_connect.h"
+#include "state_main.h"
 
 /* Parent states */
 #include "state_h2h_ongoing.h"
@@ -22,11 +22,19 @@ extern osMailQId queue_lcdHandle;
 /* Objects */
 extern menu_t current_menu;
 
+static void h2h_ongoing_error_to_main(state_ptr state)
+{
+  /* Do transition actions */
+
+  /* Change state */
+  entry_to_main(state);
+}
+
 /* State behaviour */
 void behaviour_h2h_ongoing_error(state_ptr state)
 {
   /* Set events to react to */
-
+  state->back = h2h_ongoing_error_to_main;
   /* Do state actions */
 
   /* Set menu */
@@ -38,7 +46,7 @@ void behaviour_h2h_ongoing_error(state_ptr state)
   uint32_t i;
   for (i = 0; i < menu_h2h_ongoing_error.item_num; i++)
   {
-    while (osMailPut(queue_lcdHandle, (void *) &menu_h2h_ongoing_error.items[i]) != osOK)
+    while(osMailPut(queue_lcdHandle, (void *) &menu_h2h_ongoing_error.items[i]) != osOK)
     {
       osDelay(1);
     }
@@ -50,7 +58,7 @@ void entry_to_h2h_ongoing_error(state_ptr state)
 {
   /* Set state name */
   strcpy(state->name, "h2h_ongoing_error");
-
+  
   /* - Initialize with default implementation
    * - Set event behaviour
    * - Set parent events behaviour (bottom-up)

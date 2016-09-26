@@ -1100,6 +1100,15 @@
                 <name>$PROJ_DIR$\..\Src\state_h2h_connect_1.c</name>
               </file>
               <file>
+                <name>$PROJ_DIR$\..\Src\state_h2h_connect_2.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\state_h2h_connect_3.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\state_h2h_connect_4.c</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$\..\Src\state_h2h_ongoing.c</name>
               </file>
               <file>
@@ -1113,6 +1122,9 @@
               </file>
               <file>
                 <name>$PROJ_DIR$\..\Src\state_h2h_start_connect.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\state_h2h_start_gen.c</name>
               </file>
             </group>
             <group>

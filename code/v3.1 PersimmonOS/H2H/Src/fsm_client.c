@@ -57,6 +57,36 @@ void fsm_h2h_connect_1(fsm_client_ptr fsm)
   fsm->state.h2h_connect_1(&fsm->state);
 }
 
+void fsm_h2h_connect_2(fsm_client_ptr fsm)
+{
+  /* Trigger event function */
+  fsm->state.h2h_connect_2(&fsm->state);
+}
+
+void fsm_h2h_connect_3(fsm_client_ptr fsm)
+{
+  /* Trigger event function */
+  fsm->state.h2h_connect_3(&fsm->state);
+}
+
+void fsm_h2h_connect_4(fsm_client_ptr fsm)
+{
+  /* Trigger event function */
+  fsm->state.h2h_connect_4(&fsm->state);
+}
+
+void fsm_h2h_start_gen(fsm_client_ptr fsm)
+{
+  /* Trigger event function */
+  fsm->state.h2h_start_gen(&fsm->state);
+}
+
+void fsm_h2h_pass_ready(fsm_client_ptr fsm)
+{
+  /* Trigger event function */
+  fsm->state.h2h_pass_ready(&fsm->state);
+}
+
 void fsm_h2h_start_connect(fsm_client_ptr fsm)
 {
   /* Trigger event function */

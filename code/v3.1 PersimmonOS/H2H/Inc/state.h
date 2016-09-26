@@ -32,6 +32,11 @@ typedef struct state_t
 
   event_f h2h_start_connect;
   event_f h2h_connect_1;
+  event_f h2h_connect_2;
+  event_f h2h_connect_3;
+  event_f h2h_connect_4;
+  event_f h2h_start_gen;
+  event_f h2h_pass_ready;
   event_f h2h_ok;
   event_f h2h_error;
 

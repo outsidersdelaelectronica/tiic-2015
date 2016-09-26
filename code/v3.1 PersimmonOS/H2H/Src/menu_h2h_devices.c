@@ -40,7 +40,7 @@ menu_t menu_h2h_devices =
         .text_color           = COLOR_BLACK,
         .bg_color             = COLOR_CYAN,
         .border_color         = COLOR_CYAN,
-        .event                = fsm_back
+        .event                = fsm_h2h_connect_2
       }
     },
     {
@@ -59,7 +59,7 @@ menu_t menu_h2h_devices =
         .text_color           = COLOR_BLACK,
         .bg_color             = COLOR_CYAN,
         .border_color         = COLOR_CYAN,
-        .event                = fsm_back
+        .event                = fsm_h2h_connect_3
       }
     },
     {
@@ -78,7 +78,7 @@ menu_t menu_h2h_devices =
         .text_color           = COLOR_BLACK,
         .bg_color             = COLOR_CYAN,
         .border_color         = COLOR_CYAN,
-        .event                = fsm_back
+        .event                = fsm_h2h_connect_4
       }
     },
         {

@@ -39,6 +39,11 @@ void fsm_ecg_6_lead(fsm_client_ptr fsm);
 
 void fsm_h2h_start_connect(fsm_client_ptr fsm);
 void fsm_h2h_connect_1(fsm_client_ptr fsm);
+void fsm_h2h_connect_2(fsm_client_ptr fsm);
+void fsm_h2h_connect_3(fsm_client_ptr fsm);
+void fsm_h2h_connect_4(fsm_client_ptr fsm);
+void fsm_h2h_start_gen(fsm_client_ptr fsm);
+void fsm_h2h_pass_ready(fsm_client_ptr fsm);
 void fsm_h2h_ok(fsm_client_ptr fsm);
 void fsm_h2h_error(fsm_client_ptr fsm);
 

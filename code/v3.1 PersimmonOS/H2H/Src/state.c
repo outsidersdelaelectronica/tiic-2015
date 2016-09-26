@@ -45,6 +45,31 @@ static void default_h2h_connect_1(state_ptr state)
   /* Run if this state isn't supported in the state we are in */
 }
 
+static void default_h2h_connect_2(state_ptr state)
+{
+  /* Run if this state isn't supported in the state we are in */
+}
+
+static void default_h2h_connect_3(state_ptr state)
+{
+  /* Run if this state isn't supported in the state we are in */
+}
+
+static void default_h2h_connect_4(state_ptr state)
+{
+  /* Run if this state isn't supported in the state we are in */
+}
+
+static void default_h2h_start_gen(state_ptr state)
+{
+  /* Run if this state isn't supported in the state we are in */
+}
+
+static void default_h2h_pass_ready(state_ptr state)
+{
+  /* Run if this state isn't supported in the state we are in */
+}
+
 static void default_h2h_ok(state_ptr state)
 {
   /* Run if this state isn't supported in the state we are in */
@@ -116,6 +141,11 @@ void default_implementation(state_ptr state)
   state->ecg_6_lead           = default_ecg_6_lead;
   state->h2h_start_connect    = default_h2h_start_connect;
   state->h2h_connect_1        = default_h2h_connect_1;
+  state->h2h_connect_2        = default_h2h_connect_2;
+  state->h2h_connect_3        = default_h2h_connect_3;
+  state->h2h_connect_4        = default_h2h_connect_4;
+  state->h2h_start_gen        = default_h2h_start_gen;
+  state->h2h_pass_ready       = default_h2h_pass_ready;
   state->h2h_ok               = default_h2h_ok;
   state->h2h_error            = default_h2h_error;
   state->settings_screen      = default_settings_screen;

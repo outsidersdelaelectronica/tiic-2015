@@ -1,4 +1,4 @@
-#include "state_h2h_connect_1.h"
+#include "state_h2h_connect_3.h"
 
 /* Possible transition to the following states */
 #include "state_main.h"
@@ -15,10 +15,8 @@
 #include "bluetooth_internal.h"
 
 /* Queues */
-extern osMailQId queue_input_menuHandle;
-extern osMailQId queue_lcdHandle;
 
-static void h2h_connect_1_to_main(state_ptr state)
+static void h2h_connect_3_to_main(state_ptr state)
 {
   /* Do transition actions */
 
@@ -26,7 +24,7 @@ static void h2h_connect_1_to_main(state_ptr state)
   entry_to_main(state);
 }
 
-static void h2h_connect_1_to_start_gen(state_ptr state)
+static void h2h_connect_3_to_start_gen(state_ptr state)
 {
   /* Do transition actions */
 
@@ -34,7 +32,7 @@ static void h2h_connect_1_to_start_gen(state_ptr state)
   entry_to_h2h_start_gen(state);
 }
 
-static void h2h_connect_1_to_ongoing_error(state_ptr state)
+static void h2h_connect_3_to_ongoing_error(state_ptr state)
 {
   /* Do transition actions */
 
@@ -43,32 +41,33 @@ static void h2h_connect_1_to_ongoing_error(state_ptr state)
 }
 
 /* State behaviour */
-void behaviour_h2h_connect_1(state_ptr state)
+void behaviour_h2h_connect_3(state_ptr state)
 {
   device_info_t inquired_bt_devices[MAX_INQUIRY_RESULTS];
+
   /* Set events to react to */
-  state->back = h2h_connect_1_to_main;
-  state->h2h_start_gen = h2h_connect_1_to_start_gen;
-  state->h2h_error = h2h_connect_1_to_ongoing_error;
+  state->back = h2h_connect_3_to_main;
+  state->h2h_start_gen = h2h_connect_3_to_start_gen;
+  state->h2h_error = h2h_connect_3_to_ongoing_error;
   
   /* Do state actions */
   bt_get_remote_devices(inquired_bt_devices);
-  SPPServiceDiscovery(inquired_bt_devices[0].physical_address);
-
+  SPPServiceDiscovery(inquired_bt_devices[2].physical_address);
+  
 }
 
 /* Entry point to the state */
-void entry_to_h2h_connect_1(state_ptr state)
+void entry_to_h2h_connect_3(state_ptr state)
 {
   /* Set state name */
-  strcpy(state->name, "h2h_connect_1");
+  strcpy(state->name, "h2h_connect_3");
   
   /* - Initialize with default implementation
    * - Set event behaviour
    * - Set parent events behaviour (bottom-up)
    */
   default_implementation(state);
-  behaviour_h2h_connect_1(state);
+  behaviour_h2h_connect_3(state);
   behaviour_h2h(state);
   behaviour_running(state);
 }
