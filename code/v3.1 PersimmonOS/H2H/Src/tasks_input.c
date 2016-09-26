@@ -1,5 +1,8 @@
 #include "tasks_input.h"
 
+/* Mutexes */
+osMutexId mutex_menuHandle;
+
 /* Semaphores */
 osSemaphoreId sem_input_touch_penHandle;
 osSemaphoreId sem_input_button_short_pressHandle;
@@ -22,9 +25,14 @@ void Start_input_buttonTask(void const * argument);
 
 /* Objects */
 extern touch_t touch;
+menu_t current_menu;
 
 void tasks_input_init()
 {
+  /* Mutexes */
+  osMutexDef(mutex_menu);
+  mutex_menuHandle = osMutexCreate(osMutex(mutex_menu));
+
   /* Semaphores */
   /* sem_input_touch_pen */
   osSemaphoreDef(sem_input_touch_pen);
@@ -40,11 +48,11 @@ void tasks_input_init()
 
   /* Queues */
   /* queue_input_click */
-  osMailQDef(queue_input_click, 4, click_t);
+  osMailQDef(queue_input_click, 16, click_t);
   queue_input_clickHandle = osMailCreate(osMailQ(queue_input_click), NULL);
 
   /* queue_input_menu */
-  osMailQDef(queue_input_menu, 1, menu_t *);
+  osMailQDef(queue_input_menu, 4, menu_t *);
   queue_input_menuHandle = osMailCreate(osMailQ(queue_input_menu), NULL);
 }
 
@@ -60,7 +68,7 @@ void tasks_input_start()
   input_clickTaskHandle = osThreadCreate(osThread(input_clickTask), NULL);
 
   /* input_buttonTask */
-  osThreadDef(input_buttonTask, Start_input_buttonTask, osPriorityHigh, 0, 64);
+  osThreadDef(input_buttonTask, Start_input_buttonTask, osPriorityAboveNormal, 0, 64);
   input_buttonTaskHandle = osThreadCreate(osThread(input_buttonTask), NULL);
 }
 
@@ -157,17 +165,7 @@ void Start_input_clickTask(void const * argument)
   item_t item;
 
   click_t *click;
-  menu_t *static_menu;
   buzzer_note_t beep;
-
-  /* Block task until a concrete state is reached */
-  event_menu = osMailGet(queue_input_menuHandle, osWaitForever);
-  if (event_menu.status == osEventMail)
-  {
-    /* Get menu */
-      static_menu = (menu_t *) event_menu.value.p;
-      menu_copy(static_menu, &current_menu);
-  }
 
   /* Infinite loop */
   for(;;)
@@ -187,16 +185,18 @@ void Start_input_clickTask(void const * argument)
         case CLICK_HOLD:
           break;
         case CLICK_UP:
-          /* Check if a new state put a new menu in the queue */
-          event_menu = osMailGet(queue_input_menuHandle, 0);
-          if (event_menu.status == osEventMail)
-          {
-            /* Get menu */
-              static_menu = (menu_t *) event_menu.value.p;
-              menu_copy(static_menu, &current_menu);
-          }
+//
+//          /* Check if a new state put a new menu in the queue */
+//          event_menu = osMailGet(queue_input_menuHandle, 0);
+//          if (event_menu.status == osEventMail)
+//          {
+//              /* Get menu */
+//              current_menu_ptr = (menu_t *) event_menu.value.p;
+//              menu_copy(current_menu_ptr, &current_menu);
+//          }
 
           /* Search item in menu on click position */
+          osMutexWait(mutex_menuHandle, osWaitForever);
           if (menu_search_click(&current_menu, click, &item))
           {
             /* Send item event */
@@ -204,6 +204,7 @@ void Start_input_clickTask(void const * argument)
             {
               osDelay(1);
             }
+
             /* Beep */
             beep.note = A5;
             beep.ms = 50;
@@ -212,7 +213,7 @@ void Start_input_clickTask(void const * argument)
               osDelay(1);
             }
           }
-
+          osMutexRelease(mutex_menuHandle);
           break;
         default:
           break;
@@ -225,8 +226,7 @@ void Start_input_buttonTask(void const * argument)
 {
   GPIO_InitTypeDef GPIO_InitStruct;
   fsm_event_f button_fsm_event;
-  buzzer_note_t beep;
-  
+
   /* Take both semaphores for the first time */
   osSemaphoreWait(sem_input_button_short_pressHandle, osWaitForever);
   osSemaphoreWait(sem_input_button_long_pressHandle, osWaitForever);
@@ -242,8 +242,10 @@ void Start_input_buttonTask(void const * argument)
       GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
       GPIO_InitStruct.Pull = GPIO_NOPULL;
       HAL_GPIO_Init(WAKEUP_GPIO_Port, &GPIO_InitStruct);
-      
+
+      // TEST
       osSemaphoreRelease(sem_ecg_keygenHandle);
+
       /* Wait for falling edge */
       if (osSemaphoreWait(sem_input_button_long_pressHandle, 2000) == osErrorOS)
       {
@@ -268,12 +270,6 @@ void Start_input_buttonTask(void const * argument)
          * we have a short press
          */
         button_fsm_event = fsm_button_short;
-        beep.note = A6;
-        beep.ms = 100;
-        while(osMailPut(queue_periph_buzzerHandle, (void *) &beep) != osOK)
-        {
-          osDelay(1);
-        }
         while(osMailPut(queue_fsm_eventsHandle, (void *) &button_fsm_event) != osOK)
         {
           osDelay(1);
