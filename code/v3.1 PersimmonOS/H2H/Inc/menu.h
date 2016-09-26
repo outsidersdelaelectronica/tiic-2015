@@ -28,7 +28,7 @@ int32_t menu_copy(menu_t const *orig_menu, menu_t *dest_menu);
 /* Menus */
 extern const menu_t menu_welcome;
 extern const menu_t menu_goodbye;
-extern const menu_t menu_top_bar;
+extern menu_t menu_top_bar;
 
 extern const menu_t menu_main;
 extern const menu_t menu_ecg;

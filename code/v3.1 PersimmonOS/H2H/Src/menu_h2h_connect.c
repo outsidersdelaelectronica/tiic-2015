@@ -28,9 +28,9 @@ const menu_t menu_h2h_connect =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 150,
+        .width                = 156,
         .height               = 100,
-        .pos                  = {.x_pos = 650, .y_pos = 380},
+        .pos                  = {.x_pos = 644, .y_pos = 380},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
         .string               = L"\xF064",
@@ -47,9 +47,9 @@ const menu_t menu_h2h_connect =
       .item_print_function = lcd_print_area,
       .item.area =
       {
-        .width                = 610,
+        .width                = 639,
         .height               = 100,
-        .pos                  = {.x_pos = 20, .y_pos = 380},
+        .pos                  = {.x_pos = 0, .y_pos = 380},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
         .string               = L"Show Devices",

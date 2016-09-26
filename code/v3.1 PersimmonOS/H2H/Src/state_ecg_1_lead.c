@@ -72,22 +72,16 @@ void behaviour_ecg_1_lead(state_ptr state)
   /* Do state actions */
   menu_copy(&menu_ecg, &current_menu);
 
-  current_menu.items[3].item.area.is_active = GUI_INACTIVE;
-  current_menu.items[3].item.area.text_color = (color_t) COLOR_BLUE;
-  current_menu.items[3].item.area.bg_color = (color_t) COLOR_WHITE;
-
-  current_menu.items[4].item.area.is_active = GUI_ACTIVE;
-  current_menu.items[4].item.area.text_color = (color_t) COLOR_WHITE;
-  current_menu.items[4].item.area.bg_color = (color_t) COLOR_BLUE;
-
-  current_menu.items[5].item.area.is_active = GUI_ACTIVE;
-  current_menu.items[5].item.area.text_color = (color_t) COLOR_WHITE;
-  current_menu.items[5].item.area.bg_color = (color_t) COLOR_BLUE;
-
   /* Print graphs */
   item_graph_reset_value(&graph_ecg_1_lead.items[0].item.graph);
   graph_ecg_1_lead.items[0].item_print_function = lcd_print_graph;
   while(osMailPut(queue_lcdHandle, (void *) &graph_ecg_1_lead.items[0]) != osOK)
+  {
+    osDelay(1);
+  }
+
+  /* Print tags */
+  while(osMailPut(queue_lcdHandle, (void *) &tags_ecg_1_lead.items[0]) != osOK)
   {
     osDelay(1);
   }

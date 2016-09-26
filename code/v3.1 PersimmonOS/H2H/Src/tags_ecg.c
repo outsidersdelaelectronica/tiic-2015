@@ -12,7 +12,7 @@ const menu_t tags_ecg_1_lead =
       {
         .width                = 80,
         .height               = 40,
-        .pos                  = {.x_pos = 50, .y_pos = 70},
+        .pos                  = {.x_pos = 48, .y_pos = 67},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_ACTIVE,
         .string               = L"Lead I",
