@@ -167,15 +167,15 @@ void Start_periph_batteryTask(void const * argument)
         {
           item_area_set_text_16(&menu_top_bar.items[1].item.area, L"\xF244");
         }
-        else if (gauge.last_data.soc < 25)
+        else if (gauge.last_data.soc < 30)
         {
           item_area_set_text_16(&menu_top_bar.items[1].item.area, L"\xF243");
         }
-        else if (gauge.last_data.soc < 50)
+        else if (gauge.last_data.soc < 60)
         {
           item_area_set_text_16(&menu_top_bar.items[1].item.area, L"\xF242");
         }
-        else if (gauge.last_data.soc < 75)
+        else if (gauge.last_data.soc < 80)
         {
           item_area_set_text_16(&menu_top_bar.items[1].item.area, L"\xF241");
         }
