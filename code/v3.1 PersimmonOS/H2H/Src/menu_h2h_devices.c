@@ -2,9 +2,28 @@
 
 menu_t menu_h2h_devices =
 {
-  .item_num = 6,
+  .item_num = 7,
   .items =
   {
+    {
+      .item_print_function = lcd_print_area,
+      .item.area =
+      {
+        .width                = 800,
+        .height               = 450,
+        .pos                  = {.x_pos = 0, .y_pos = 30},
+        .border               = GUI_NO_BORDER,
+        .is_active            = GUI_INACTIVE,
+        .string               = L"",
+        .font                 = myriad_pro_semibold_16,
+        .string_h_align       = CENTER,
+        .string_v_align       = MID,
+        .text_color           = COLOR_BLACK,
+        .bg_color             = COLOR_BLACK,
+        .border_color         = COLOR_BLACK,
+        .event                = fsm_no_event
+      }
+    },
     {
       .item_print_function = lcd_print_area,
       .item.area =
@@ -109,7 +128,7 @@ menu_t menu_h2h_devices =
         .pos                  = {.x_pos = 0, .y_pos = 380},
         .border               = GUI_NO_BORDER,
         .is_active            = GUI_INACTIVE,
-        .string               = L"",
+        .string               = L"Searching for devices...",
         .font                 = myriad_pro_semibold_16,
         .string_h_align       = CENTER,
         .string_v_align       = MID,

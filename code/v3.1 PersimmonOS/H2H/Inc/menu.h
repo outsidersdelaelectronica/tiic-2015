@@ -39,7 +39,6 @@ extern const menu_t tags_ecg_1_lead;
 extern const menu_t tags_ecg_2_lead;
 extern const menu_t tags_ecg_6_lead;
 
-extern const menu_t menu_h2h_connect;
 extern const menu_t menu_h2h_ongoing_connecting;
 extern const menu_t menu_h2h_ongoing_error;
 extern const menu_t menu_h2h_ongoing_action;

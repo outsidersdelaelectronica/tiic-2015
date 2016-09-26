@@ -87,23 +87,24 @@ void behaviour_h2h_ongoing_action(state_ptr state)
   /*Clean devices names */
   for( i = 0; i < 4;i++)
   {
-    item_area_set_text(&menu_h2h_devices.items[i].item.area," ");
+    item_area_set_text(&menu_h2h_devices.items[i + 1].item.area," ");
+    menu_h2h_devices.items[i + 1].item.area.is_active = GUI_INACTIVE;
   }
 
   /* Set new devices */
   for( i = 0; i < (( number_of_btaddr < 4)? number_of_btaddr:4);i++)
   {
-    sprintf(full_string, "%s(%X:%X:%X:%X:%X:%X)", inquired_bt_devices[i].Name
+    sprintf(full_string, "%s (%X:%X:%X:%X:%X:%X)", inquired_bt_devices[i].Name
            ,inquired_bt_devices[i].physical_address.BD_ADDR0
             , inquired_bt_devices[i].physical_address.BD_ADDR1
               , inquired_bt_devices[i].physical_address.BD_ADDR2
                 , inquired_bt_devices[i].physical_address.BD_ADDR3
                   , inquired_bt_devices[i].physical_address.BD_ADDR4
                     , inquired_bt_devices[i].physical_address.BD_ADDR5);
-    item_area_set_text(&menu_h2h_devices.items[i].item.area,full_string);
-    menu_h2h_devices.items[i].item.area.is_active = GUI_ACTIVE;
-    }
-
+    item_area_set_text(&menu_h2h_devices.items[i + 1].item.area,full_string);
+    menu_h2h_devices.items[i + 1].item.area.is_active = GUI_ACTIVE;
+  }
+  item_area_set_text(&menu_h2h_devices.items[6].item.area,"Select device");
   /* Set menu */
   osMutexWait(mutex_menuHandle, osWaitForever);
   menu_copy(&menu_h2h_devices, &current_menu);

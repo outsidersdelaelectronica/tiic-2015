@@ -1223,9 +1223,14 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
         if( Index == NumberofValidResponses - 1)
         {
           /* Signal that all the names have been retrieved */
-          HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin, GPIO_PIN_SET);
-          osDelay(500);
-          HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin, GPIO_PIN_RESET);
+//          HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin, GPIO_PIN_SET);
+//          osDelay(500);
+//          HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin, GPIO_PIN_RESET);
+          gap_event = fsm_h2h_ok;
+          while(osMailPut(queue_fsm_eventsHandle, (void *) &gap_event) != osOK)
+          {
+            osDelay(1);
+          }
         }
         break;  
       case etAuthentication:   

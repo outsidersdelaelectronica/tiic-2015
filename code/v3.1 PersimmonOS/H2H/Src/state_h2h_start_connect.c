@@ -13,7 +13,7 @@
 #include "menu.h"
 #include "bluetooth_internal.h"
 
-#define TIMEOUT 3
+#define TIMEOUT 10
 
 /* Mutexes */
 extern osMutexId mutex_menuHandle;
@@ -44,22 +44,28 @@ static void h2h_start_connect_to_h2h_ongoing(state_ptr state)
 /* State behaviour */
 void behaviour_h2h_start_connect(state_ptr state)
 {
+  uint8_t i;
   /* Set events to react to */
   state->back = h2h_start_connect_to_main;
   state->h2h_start_connect = h2h_start_connect_to_h2h_ongoing;
 
   /* Do state actions */
 
+  /*Clean devices names */
+  for( i = 1; i < 5;i++)
+  {
+    item_area_set_text(&menu_h2h_devices.items[i].item.area," ");
+    menu_h2h_devices.items[i].item.area.is_active = GUI_INACTIVE;
+  }
   /* Set menu */
   osMutexWait(mutex_menuHandle, osWaitForever);
-  menu_copy(&menu_h2h_connect, &current_menu);
+  menu_copy(&menu_h2h_devices, &current_menu);
   osMutexRelease(mutex_menuHandle);
 
   /* Display menu */
-  uint32_t i;
-  for (i = 0; i < menu_h2h_connect.item_num; i++)
+  for (i = 0; i < menu_h2h_devices.item_num; i++)
   {
-    while (osMailPut(queue_lcdHandle, (void *) &menu_h2h_connect.items[i]) != osOK)
+    while (osMailPut(queue_lcdHandle, (void *) &menu_h2h_devices.items[i]) != osOK)
     {
       osDelay(1);
     }
