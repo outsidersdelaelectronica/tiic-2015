@@ -31,7 +31,4 @@ void entry_to_h2h_keygen(state_ptr state)
   default_implementation(state);
   behaviour_running(state);
   behaviour_h2h_keygen(state);
-
-  // TEST
-  entry_to_h2h_waitkey(state);
 }

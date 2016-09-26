@@ -6,6 +6,10 @@
 #include "cmsis_os.h"
 #include "gpio.h"
 #include "rtc.h"
+#include "buzzer.h"
+
+/* Queues */
+extern osMailQId queue_periph_buzzerHandle;
 
 /* Objects */
 extern RTC_HandleTypeDef hrtc;
@@ -14,6 +18,7 @@ extern RTC_HandleTypeDef hrtc;
 void behaviour_goodbye(state_ptr state)
 {
   uint32_t i;
+  buzzer_note_t beep;
 
   /* Set events to react to */
 
@@ -26,6 +31,23 @@ void behaviour_goodbye(state_ptr state)
     HAL_GPIO_TogglePin(GPIOC,UI_LED_G_Pin);
     osDelay(200);
   }
+
+  /* Beep */
+  beep.note = A4;
+  beep.ms = 100;
+  while(osMailPut(queue_periph_buzzerHandle, (void *) &beep) != osOK)
+  {
+    osDelay(1);
+  }
+  osDelay(105);
+
+  beep.note = D4;
+  beep.ms = 80;
+  while(osMailPut(queue_periph_buzzerHandle, (void *) &beep) != osOK)
+  {
+    osDelay(1);
+  }
+  osDelay(80);
 
   // Sleep well little prince
   /* Turn off LED */

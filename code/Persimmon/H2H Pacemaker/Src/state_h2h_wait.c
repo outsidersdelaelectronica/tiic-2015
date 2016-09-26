@@ -31,7 +31,4 @@ void entry_to_h2h_wait(state_ptr state)
   default_implementation(state);
   behaviour_running(state);
   behaviour_h2h_wait(state);
-
-  // TEST
-  entry_to_h2h_connected(state);
 }

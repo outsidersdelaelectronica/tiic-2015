@@ -33,8 +33,8 @@ static void running_action_button_short(state_ptr state)
   }
 
   /* Beep */
-  beep.note = A6;
-  beep.ms = 100;
+  beep.note = A4;
+  beep.ms = 50;
   while(osMailPut(queue_periph_buzzerHandle, (void *) &beep) != osOK)
   {
     osDelay(1);

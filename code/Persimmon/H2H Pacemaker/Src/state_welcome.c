@@ -6,11 +6,16 @@
 /* State includes */
 #include "cmsis_os.h"
 #include "gpio.h"
+#include "buzzer.h"
+
+/* Queues */
+extern osMailQId queue_periph_buzzerHandle;
 
 /* State behaviour */
 void behaviour_welcome(state_ptr state)
 {
   uint32_t i;
+  buzzer_note_t beep;
 
   /* Set events to react to */
 
@@ -22,6 +27,22 @@ void behaviour_welcome(state_ptr state)
   {
     HAL_GPIO_TogglePin(GPIOC,UI_LED_G_Pin);
     osDelay(200);
+  }
+
+  /* Beep */
+  beep.note = D4;
+  beep.ms = 100;
+  while(osMailPut(queue_periph_buzzerHandle, (void *) &beep) != osOK)
+  {
+    osDelay(1);
+  }
+  osDelay(105);
+
+  beep.note = A4;
+  beep.ms = 80;
+  while(osMailPut(queue_periph_buzzerHandle, (void *) &beep) != osOK)
+  {
+    osDelay(1);
   }
 
   entry_to_running(state);
