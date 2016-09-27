@@ -1149,6 +1149,9 @@
           <file>
             <name>$PROJ_DIR$\..\Src\bluetooth_internal.c</name>
           </file>
+          <file>
+            <name>$PROJ_DIR$\..\Inc\bt_const_and_struct.h</name>
+          </file>
         </group>
         <group>
           <name>buzzer</name>
@@ -1203,9 +1206,6 @@
         <name>tasks</name>
         <group>
           <name>res</name>
-          <file>
-            <name>$PROJ_DIR$\..\Inc\bt_const_and_struct.h</name>
-          </file>
           <file>
             <name>$PROJ_DIR$\..\Inc\leads.h</name>
           </file>

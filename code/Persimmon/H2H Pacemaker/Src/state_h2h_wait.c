@@ -24,7 +24,9 @@ void behaviour_h2h_wait(state_ptr state)
   /* Set events to react to */
   state->h2h_start_connect = h2h_wait_to_start_connect;
   /* Do state actions */
-  bluetooth_init();
+  /* We close and reopen the spp port */
+  CloseServer();
+  OpenServer();
 }
 
 /* Entry point to the state */

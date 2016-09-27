@@ -44,7 +44,9 @@ void behaviour_welcome(state_ptr state)
   {
     osDelay(1);
   }
-
+  
+  bluetooth_init();
+  
   entry_to_running(state);
 }
 

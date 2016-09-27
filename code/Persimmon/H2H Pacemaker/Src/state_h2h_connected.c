@@ -29,7 +29,7 @@ void behaviour_h2h_connected(state_ptr state)
 {
   bt_packet_t fsm_send_packet = {.packet_content = {0}};
   /* Set events to react to */
-//  state->h2h_ok       = h2h_connect_to_keygen;
+  state->h2h_ok       = h2h_connect_to_keygen;
   /* Do state actions */
   
   sprintf(&fsm_send_packet.packet_content[8],"%s",gen_init);

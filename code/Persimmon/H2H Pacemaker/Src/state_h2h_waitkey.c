@@ -13,7 +13,7 @@
 #include "authentication.h"
 
 extern osMailQId queue_bt_packet_sendHandle;
-extern osMailQId queue_ecg_keyHandle;
+extern osMailQId queue_ecg_keybtHandle;
 
 static void h2h_waitkey_to_wait(state_ptr state)
 {
@@ -46,7 +46,7 @@ void behaviour_h2h_waitkey(state_ptr state)
    /* Send Key ready */ 
   osMailPut(queue_bt_packet_sendHandle, (void *) &fsm_send_packet_1);
   
-  event = osMailGet(queue_ecg_keyHandle, osWaitForever);
+  event = osMailGet(queue_ecg_keybtHandle, osWaitForever);
   if (event.status == osEventMail)
   {
     inter_key = *((validation_key_t*) event.value.v);

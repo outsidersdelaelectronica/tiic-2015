@@ -23,8 +23,10 @@ osMessageQId queue_ecg_lead_aVFHandle;
 osMessageQId queue_ecg_bpmHandle;
 osMessageQId queue_ecg_bpm_screenHandle;
 osMailQId queue_ecg_keyHandle;
+osMailQId queue_ecg_keybtHandle;
 extern osMailQId queue_fsm_eventsHandle;
 extern osMailQId queue_bt_packet_sendHandle;
+
 /* Tasks */
 osThreadId ecg_afeTaskHandle;
 osThreadId ecg_filterTaskHandle;
@@ -109,6 +111,10 @@ void tasks_ecg_init()
   /* queue_ecg_key */
   osMailQDef(queue_ecg_key, 2, validation_key_t);
   queue_ecg_keyHandle = osMailCreate(osMailQ(queue_ecg_key), NULL);
+  
+  /* queue_ecg_key */
+  osMailQDef(queue_ecg_btkey, 2, validation_key_t);
+  queue_ecg_keybtHandle = osMailCreate(osMailQ(queue_ecg_btkey), NULL);
 }
 
 void tasks_ecg_start()
@@ -233,16 +239,6 @@ void Start_ecg_bpmDetTask(void const * argument)
       ecg_lead = (int32_t) event.value.v;
     }
 
-//    /* If signal crosses certain threshold */
-//    if (ecg_lead > threshold_high)
-//    {
-//      HAL_GPIO_WritePin(GPIOC, UI_LED_G_Pin, GPIO_PIN_SET);
-//    }
-//    else
-//    {
-//      HAL_GPIO_WritePin(GPIOC, UI_LED_G_Pin, GPIO_PIN_RESET);
-//    }
-
     /* BPM detection in progress */
     if((ecg_lead > threshold_high)&&(flag_qrs_zone == 0))
     {
@@ -284,7 +280,7 @@ void Start_ecg_keyGenTask(void const * argument)
   osEvent event;
   validation_key_t key;
   uint32_t bpm = 0;
-
+  fsm_event_f key_event;
   init_key(&key,INTERN);
   osSemaphoreWait(sem_ecg_keygenHandle, osWaitForever);
   /* Infinite loop */
@@ -309,11 +305,12 @@ void Start_ecg_keyGenTask(void const * argument)
           {
             osDelay(1);
           }       
-          while (osMailPut(queue_ecg_keyHandle, (void *) &key) != osOK)
+          while (osMailPut(queue_ecg_keybtHandle, (void *) &key) != osOK)
           {
             osDelay(1);
-          }   
-          while(osMailPut(queue_fsm_eventsHandle, (void *) &fsm_h2h_pass_ready) != osOK)
+          }    
+          key_event = fsm_h2h_pass_ready;
+          while(osMailPut(queue_fsm_eventsHandle, (void *) &key_event) != osOK)
           {
             osDelay(1);
           }
@@ -329,7 +326,8 @@ void Start_ecg_validationTask(void const * argument)
   validation_key_t inter_key, extern_key, incomming_key;
   autentitication_t auth_reponse;
   bt_packet_t fsm_send_packet = {.packet_content = {0}};
-  
+  fsm_event_f valid_event;
+    
   init_key(&inter_key,INTERN);
   init_key(&extern_key,EXTERN);
   init_key(&incomming_key,INTERN);
@@ -364,8 +362,8 @@ void Start_ecg_validationTask(void const * argument)
         osMailPut(queue_bt_packet_sendHandle, (void *) &fsm_send_packet);
         erase_key(&inter_key);
         erase_key(&extern_key);
-        
-        while(osMailPut(queue_fsm_eventsHandle, (void *) &fsm_h2h_ok) != osOK)
+        valid_event = fsm_h2h_ok;
+        while(osMailPut(queue_fsm_eventsHandle, (void *) &valid_event) != osOK)
         {
           osDelay(1);
         }

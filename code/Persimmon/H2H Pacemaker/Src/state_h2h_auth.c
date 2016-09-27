@@ -9,7 +9,7 @@
 /* State includes */
 #include "cmsis_os.h"
 
-static void h2h_auth_to_aut(state_ptr state)
+static void h2h_auth_to_wait(state_ptr state)
 {
   /* Do transition actions */
 

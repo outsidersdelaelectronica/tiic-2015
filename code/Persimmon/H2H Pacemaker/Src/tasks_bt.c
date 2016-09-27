@@ -2,9 +2,6 @@
 
 #include "fsm_client.h"
 #include "authentication.h"
-/* This will be probably moved to hacitrans */
-/* Semaphores */
-osSemaphoreId sem_bt_conectedHandle;
 
 /* Queues */
 osMailQId queue_bt_packet_recievedHandle;
@@ -22,10 +19,6 @@ void Start_bt_rxTask(void const * argument);
 
 void tasks_bt_init()
 {
-  /* Semaphores */
-  osSemaphoreDef(sem_bt_conected);
-  sem_bt_conectedHandle = osSemaphoreCreate(osSemaphore(sem_bt_conected), 1);
-
   /* Queues */
   osMailQDef(queue_bt_packet_recieve, 4, bt_packet_t);
   queue_bt_packet_recievedHandle = osMailCreate(osMailQ(queue_bt_packet_recieve), NULL);
@@ -74,6 +67,7 @@ void Start_bt_rxTask(void const * argument)
   validation_key_t rec_key;
   
   init_key(&rec_key,EXTERN);
+
   /* Infinite loop */
   for(;;)
   {
@@ -86,15 +80,10 @@ void Start_bt_rxTask(void const * argument)
       if(!rec_packet.packet_content[0])
       {
         sprintf(command_str, "%s", &rec_packet.packet_content[8]);
-        bt_event =fsm_no_event;
         if(!strcmp(command_str,gen_ack))
         {
           bt_event = fsm_h2h_ok;
-        }else if(!strcmp(command_str,key_ready))
-        {
-          bt_event = fsm_h2h_pass_ready;
-        }
-        
+        } 
       }
       else if(rec_packet.packet_content[0]) /* Key */
       {
@@ -103,10 +92,6 @@ void Start_bt_rxTask(void const * argument)
           token |= (((uint64_t)rec_packet.packet_content[0]) << (4*i));
         }
         write_token_key(&rec_key,token);
-        while (osMailPut(queue_ecg_keyHandle, (void *) &rec_key) != osOK)
-        {
-          osDelay(1);
-        }
         while (osMailPut(queue_ecg_keyHandle, (void *) &rec_key) != osOK)
         {
           osDelay(1);

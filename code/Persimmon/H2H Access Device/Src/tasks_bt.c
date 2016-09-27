@@ -6,8 +6,8 @@
 /* Queues */
 osMailQId queue_bt_packet_recievedHandle;
 osMailQId queue_bt_packet_sendHandle;
-extern osMailQId queue_fsm_eventsHandle;
 extern osMailQId queue_ecg_keyHandle;
+extern osMailQId queue_fsm_eventsHandle;
 
 /* Tasks */
 osThreadId bt_txTaskHandle;
@@ -52,7 +52,6 @@ void Start_bt_txTask(void const * argument)
     {
       send_packet = *((bt_packet_t *) event_pk_to_send.value.p);
       SendData(PACKET_SIZE, send_packet.packet_content);
-      osDelay(1);
     }
   }
 }
@@ -77,6 +76,31 @@ void Start_bt_rxTask(void const * argument)
     {
       rec_packet = *((bt_packet_t *) event_pk_rec.value.p);
       /* Command */
+      bt_event = fsm_no_event;
+      if(!rec_packet.packet_content[0])
+      {
+        sprintf(command_str, "%s", &rec_packet.packet_content[8]);
+        if(!strcmp(command_str,gen_ack))
+        {
+          bt_event = fsm_h2h_ok;
+        } 
+      }
+      else if(rec_packet.packet_content[0]) /* Key */
+      {
+        for( i = 0; i < 24; i++)
+        {
+          token |= (((uint64_t)rec_packet.packet_content[0]) << (4*i));
+        }
+        write_token_key(&rec_key,token);
+        while (osMailPut(queue_ecg_keyHandle, (void *) &rec_key) != osOK)
+        {
+          osDelay(1);
+        }
+        /* signal key havent' recieved*/
+        bt_event = fsm_h2h_ok;
+      }
+      
+      
       if(!rec_packet.packet_content[0])
       {
         sprintf(command_str, "%s", &rec_packet.packet_content[8]);

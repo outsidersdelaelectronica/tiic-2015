@@ -40,8 +40,8 @@ void behaviour_h2h_wait_key(state_ptr state)
 {
   bt_packet_t fsm_send_packet = {.packet_content = {0}};
   /* Set events to react to */
-  state->back = h2h_wait_key_to_main;
-  state->h2h_pass_ready       = h2h_wait_key_to_autentication;
+  state->back                 = h2h_wait_key_to_main;
+  state->h2h_ok               = h2h_wait_key_to_autentication;
   
   /* Do state actions */
   sprintf(&fsm_send_packet.packet_content[8],"%s",gen_ack);

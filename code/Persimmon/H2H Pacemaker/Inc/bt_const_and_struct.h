@@ -109,8 +109,8 @@
 #define gen_init "INICIO GENERACION"
 #define gen_ack  "ACK GENERACION"
 #define key_ready "CONTRASEÑA LISTA"
-#define access_ok "ACCESO RECHAZADO"
-#define access_denied "ACCESO ACEPTADO"
+#define access_ok "ACCESO ACEPTADO"
+#define access_denied "ACCESO RECHAZADO"
    /* The following type definition represents the container type which */
    /* holds the mapping between Bluetooth devices (based on the BD_ADDR)*/
    /* and the Link Key (BD_ADDR <-> Link Key Mapping).                  */

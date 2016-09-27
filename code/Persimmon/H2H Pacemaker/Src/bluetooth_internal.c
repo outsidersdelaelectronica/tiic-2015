@@ -74,9 +74,6 @@ int OpenStack(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_Initializatio
   /* it was successful.                                          */
   if(Result > 0)
   {
-    HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin,GPIO_PIN_SET);
-    osDelay(500);
-    HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin,GPIO_PIN_RESET);
     /* The Stack was initialized successfully, inform the user  */
     /* and set the return value of the initialization function  */
     /* to the Bluetooth Stack ID.                               */
@@ -112,7 +109,7 @@ int OpenStack(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_Initializatio
     /* The Stack was NOT initialized successfully, inform the   */
     /* user and set the return value of the initialization      */
     /* function to an error.                                    */
-//    HAL_GPIO_WritePin(GPIOC, UI_LED_R_Pin,GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOC, UI_LED_R_Pin,GPIO_PIN_SET);
     BluetoothStackID = 0;
     ret_val          = UNABLE_TO_INITIALIZE_STACK;
   }
@@ -153,9 +150,16 @@ int InitializeApplication(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_I
          SetPairabilityMode(pmPairableMode_EnableSecureSimplePairing);
          HCI_Register_Event_Callback(BluetoothStackID, HCI_Event_Callback, (unsigned long)NULL);
          ASSIGN_BD_ADDR(NullADDR, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
-         OpenServer();
-
-         ret_val = (int)BluetoothStackID;
+         ret_val = OpenServer();
+         if( ret_val == 0)
+         {
+           ret_val = (int)BluetoothStackID;
+         }
+         else
+         {
+           ret_val = -1;
+         }
+         
       }
       else
       {
@@ -206,6 +210,9 @@ void bluetooth_init(void)
      /* Initialize the application.                                       */
      if((Result = InitializeApplication(&HCI_DriverInformation, &BTPS_Initialization)) > 0)
      {
+        HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin,GPIO_PIN_SET);
+        osDelay(500);
+        HAL_GPIO_WritePin(GPIOC, UI_LED_B_Pin,GPIO_PIN_RESET);
         /* Register a sleep mode callback if we are using HCILL Mode.     */
         if((HCI_DriverInformation.DriverInformation.COMMDriverInformation.Protocol == cpHCILL)
            || (HCI_DriverInformation.DriverInformation.COMMDriverInformation.Protocol == cpHCILL_RTS_CTS))
@@ -1266,7 +1273,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
             if( Result != 0)
             {
               /* Notify of error */
-//              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
+              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
             }
             break;
           case atPINCodeRequest:
@@ -1312,7 +1319,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
             else
             {
               /* Notify of error */
-//              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
+              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
             }
 
             break;
@@ -1333,7 +1340,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
             if( Result != 0)
             {
               /* Notify of error */
-//              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
+              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
             }
             break;
           case atUserConfirmationRequest:
@@ -1357,7 +1364,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
             else
             {
               /* Notify error in confirmation */
-//              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
+              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
             }
             break;
           case atPasskeyRequest:
@@ -1393,7 +1400,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
   else
   {
     /* There was an error with one or more of the input parameters.   */
-//    HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
   }
 }
 
@@ -1555,7 +1562,7 @@ void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t 
   else
   {
     /* There was an error with one or more of the input parameters.   */
-//    HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
   }
 }
 

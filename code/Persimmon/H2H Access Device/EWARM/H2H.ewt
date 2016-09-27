@@ -1127,6 +1127,12 @@
                 <name>$PROJ_DIR$\..\Src\state_h2h_start_connect.c</name>
               </file>
               <file>
+                <name>$PROJ_DIR$\..\Src\state_h2h_validation_error.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\..\Src\state_h2h_validation_ok.c</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$\..\Src\state_h2h_wait_key.c</name>
               </file>
             </group>
