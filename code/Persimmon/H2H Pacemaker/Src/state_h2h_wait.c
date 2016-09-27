@@ -8,14 +8,23 @@
 
 /* State includes */
 #include "cmsis_os.h"
+#include "bluetooth_internal.h"
+
+static void h2h_wait_to_start_connect(state_ptr state)
+{
+  /* Do transition actions */
+
+  /* Change state */
+  entry_to_h2h_connected(state);
+}
 
 /* State behaviour */
 void behaviour_h2h_wait(state_ptr state)
 {
   /* Set events to react to */
-
+  state->h2h_start_connect = h2h_wait_to_start_connect;
   /* Do state actions */
-  osDelay(500);
+  bluetooth_init();
 }
 
 /* Entry point to the state */

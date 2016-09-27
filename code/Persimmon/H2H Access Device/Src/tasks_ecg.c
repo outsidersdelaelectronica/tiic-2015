@@ -1,5 +1,6 @@
 #include "tasks_ecg.h"
 
+#include "fsm_client.h"
 /* Mutexes */
 osMutexId mutex_ecg_leadsHandle;
 
@@ -21,7 +22,7 @@ osMessageQId queue_ecg_lead_aVFHandle;
 osMessageQId queue_ecg_bpmHandle;
 osMessageQId queue_ecg_bpm_screenHandle;
 osMailQId queue_ecg_keyHandle;
-
+extern osMailQId queue_fsm_eventsHandle;
 /* Tasks */
 osThreadId ecg_afeTaskHandle;
 osThreadId ecg_filterTaskHandle;
@@ -281,7 +282,7 @@ void Start_ecg_keyGenTask(void const * argument)
   osEvent event;
   validation_key_t key;
   uint32_t bpm = 0;
-
+  fsm_event_f bt_event;
   init_key(&key,INTERN);
   osSemaphoreWait(sem_ecg_keygenHandle, osWaitForever);
   /* Infinite loop */
@@ -303,6 +304,11 @@ void Start_ecg_keyGenTask(void const * argument)
         else
         {
           while (osMailPut(queue_ecg_keyHandle, (void *) &key) != osOK)
+          {
+            osDelay(1);
+          }
+          bt_event = fsm_h2h_pass_ready;
+          while(osMailPut(queue_fsm_eventsHandle, (void *) &bt_event) != osOK)
           {
             osDelay(1);
           }

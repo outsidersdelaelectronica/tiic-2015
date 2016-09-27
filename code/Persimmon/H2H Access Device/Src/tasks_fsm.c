@@ -49,7 +49,7 @@ void Start_fsm_managerTask(void const * argument)
       fsm_event = *((fsm_event_f *) event.value.v);
 
       /* Trigger event */
-        fsm_event(&fsm);
+      fsm_event(&fsm);
 
     }
   }

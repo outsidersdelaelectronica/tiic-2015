@@ -88,7 +88,7 @@
                                                          /* any Mode.         */
 
    /* Determine the Name we will use for this compilation.              */
-#define APP_DEMO_NAME                              "BETE_TURBO_3000"
+#define APP_DEMO_NAME                              "H2H_PACEMAKER"
 
 
    /* The following represent the possible values of UI_Mode variable.  */
@@ -105,6 +105,12 @@
 #define APPLICATION_ERROR_UNABLE_TO_OPEN_STACK     (-1001)
 
 #define MAX_STRING_LENGTH 50
+
+#define gen_init "INICIO GENERACION"
+#define gen_ack  "ACK GENERACION"
+#define key_ready "CONTRASEÑA LISTA"
+#define access_ok "ACCESO RECHAZADO"
+#define access_denied "ACCESO ACEPTADO"
    /* The following type definition represents the container type which */
    /* holds the mapping between Bluetooth devices (based on the BD_ADDR)*/
    /* and the Link Key (BD_ADDR <-> Link Key Mapping).                  */

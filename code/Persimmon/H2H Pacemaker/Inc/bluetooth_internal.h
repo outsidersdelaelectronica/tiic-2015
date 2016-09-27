@@ -17,7 +17,7 @@
 #include "command_interpreter.h"
 
 #define VENDOR_BAUD_RATE          2000000L
-#define PACKET_SIZE               16
+#define PACKET_SIZE               32
 
 typedef struct bt_packet_t{
   unsigned char       packet_content[PACKET_SIZE];

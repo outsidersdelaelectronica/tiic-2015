@@ -9,13 +9,24 @@
 /* State includes */
 #include "cmsis_os.h"
 
+extern osSemaphoreId sem_ecg_keygenHandle;
+
+static void h2h_keygen_to_waitkey(state_ptr state)
+{
+  /* Do transition actions */
+
+  /* Change state */
+  entry_to_h2h_waitkey(state);
+}
+
 /* State behaviour */
 void behaviour_h2h_keygen(state_ptr state)
 {
   /* Set events to react to */
-
+  state->h2h_pass_ready       = h2h_keygen_to_waitkey;
+  
   /* Do state actions */
-  osDelay(500);
+  osSemaphoreRelease(sem_ecg_keygenHandle);
 }
 
 /* Entry point to the state */

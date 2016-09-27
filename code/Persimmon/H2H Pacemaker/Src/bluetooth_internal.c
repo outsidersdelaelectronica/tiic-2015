@@ -112,7 +112,7 @@ int OpenStack(HCI_DriverInformation_t *HCI_DriverInformation, BTPS_Initializatio
     /* The Stack was NOT initialized successfully, inform the   */
     /* user and set the return value of the initialization      */
     /* function to an error.                                    */
-    HAL_GPIO_WritePin(GPIOC, UI_LED_R_Pin,GPIO_PIN_SET);
+//    HAL_GPIO_WritePin(GPIOC, UI_LED_R_Pin,GPIO_PIN_SET);
     BluetoothStackID = 0;
     ret_val          = UNABLE_TO_INITIALIZE_STACK;
   }
@@ -1266,7 +1266,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
             if( Result != 0)
             {
               /* Notify of error */
-              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
+//              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
             }
             break;
           case atPINCodeRequest:
@@ -1312,7 +1312,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
             else
             {
               /* Notify of error */
-              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
+//              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
             }
 
             break;
@@ -1333,7 +1333,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
             if( Result != 0)
             {
               /* Notify of error */
-              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
+//              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
             }
             break;
           case atUserConfirmationRequest:
@@ -1357,7 +1357,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
             else
             {
               /* Notify error in confirmation */
-              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
+//              HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
             }
             break;
           case atPasskeyRequest:
@@ -1393,7 +1393,7 @@ void BTPSAPI GAP_Event_Callback(unsigned int BluetoothStackID, GAP_Event_Data_t 
   else
   {
     /* There was an error with one or more of the input parameters.   */
-    HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
+//    HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
   }
 }
 
@@ -1451,12 +1451,19 @@ void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t 
         }else{
           /* think for some actions when we already connected */
           HAL_GPIO_WritePin(GPIOC,UI_LED_G_Pin, GPIO_PIN_SET);
+          osDelay(500);
+          HAL_GPIO_WritePin(GPIOC,UI_LED_G_Pin, GPIO_PIN_RESET);
+          spp_event = fsm_h2h_start_connect;
+        }
+        
+        while(osMailPut(queue_fsm_eventsHandle, (void *) &spp_event) != osOK)
+        {
+          osDelay(1);
         }
         break;
       case etPort_Open_Confirmation:
         /* A Client Port was opened.  The Status indicates the      */
         /* Status of the Open.                                      */
-        spp_event =fsm_h2h_error;
         /* Check the Status to make sure that an error did not      */
         /* occur.                                                   */
         if(SPP_Event_Data->Event_Data.SPP_Open_Port_Confirmation_Data->PortOpenStatus)
@@ -1482,15 +1489,8 @@ void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t 
             Result           = 0;
             Connection_Handle = 0;
           }
-          else
-          {
-            spp_event = fsm_no_event;
-          }
         }
-        while(osMailPut(queue_fsm_eventsHandle, (void *) &spp_event) != osOK)
-        {
-          osDelay(1);
-        }
+
         break;
       case etPort_Close_Port_Indication:
         /* The Remote Port was Disconnected.                        */
@@ -1555,7 +1555,7 @@ void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t 
   else
   {
     /* There was an error with one or more of the input parameters.   */
-    HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
+//    HAL_GPIO_WritePin(GPIOC,UI_LED_R_Pin, GPIO_PIN_SET);
   }
 }
 

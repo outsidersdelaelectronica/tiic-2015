@@ -9,13 +9,20 @@
 /* State includes */
 #include "cmsis_os.h"
 
+static void h2h_auth_to_aut(state_ptr state)
+{
+  /* Do transition actions */
+
+  /* Change state */
+  entry_to_h2h_wait(state);
+}
+
 /* State behaviour */
 void behaviour_h2h_auth(state_ptr state)
 {
   /* Set events to react to */
-
+  state->h2h_ok       = h2h_auth_to_aut;
   /* Do state actions */
-  osDelay(500);
 }
 
 /* Entry point to the state */

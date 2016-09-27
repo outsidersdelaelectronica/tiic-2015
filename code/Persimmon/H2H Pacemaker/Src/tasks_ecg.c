@@ -1,5 +1,7 @@
 #include "tasks_ecg.h"
 
+#include "fsm_client.h"
+#include "bluetooth_internal.h"
 /* Mutexes */
 osMutexId mutex_ecg_leadsHandle;
 
@@ -21,7 +23,8 @@ osMessageQId queue_ecg_lead_aVFHandle;
 osMessageQId queue_ecg_bpmHandle;
 osMessageQId queue_ecg_bpm_screenHandle;
 osMailQId queue_ecg_keyHandle;
-
+extern osMailQId queue_fsm_eventsHandle;
+extern osMailQId queue_bt_packet_sendHandle;
 /* Tasks */
 osThreadId ecg_afeTaskHandle;
 osThreadId ecg_filterTaskHandle;
@@ -305,6 +308,14 @@ void Start_ecg_keyGenTask(void const * argument)
           while (osMailPut(queue_ecg_keyHandle, (void *) &key) != osOK)
           {
             osDelay(1);
+          }       
+          while (osMailPut(queue_ecg_keyHandle, (void *) &key) != osOK)
+          {
+            osDelay(1);
+          }   
+          while(osMailPut(queue_fsm_eventsHandle, (void *) &fsm_h2h_pass_ready) != osOK)
+          {
+            osDelay(1);
           }
         }
       }
@@ -317,7 +328,8 @@ void Start_ecg_validationTask(void const * argument)
   osEvent event;
   validation_key_t inter_key, extern_key, incomming_key;
   autentitication_t auth_reponse;
-
+  bt_packet_t fsm_send_packet = {.packet_content = {0}};
+  
   init_key(&inter_key,INTERN);
   init_key(&extern_key,EXTERN);
   init_key(&incomming_key,INTERN);
@@ -332,21 +344,31 @@ void Start_ecg_validationTask(void const * argument)
       if(incomming_key.origin == INTERN)
       {
         inter_key = incomming_key;
-        /* Esto esta mal, pero tempus fugit. Hay que fixearlo */
-        erase_key((validation_key_t*) event.value.v);
       }
       else
       {
         extern_key = incomming_key;
-        /* Esto esta mal, pero tempus fugit. Hay que fixearlo */
-        erase_key((validation_key_t*) event.value.v);
       }
 
       if((inter_key.state == READY)&&(extern_key.state == READY))
       {
         auth_reponse = validate(&inter_key,&extern_key);
+        if ( auth_reponse == ACCEPTED)
+        {
+          sprintf(&fsm_send_packet.packet_content[8],"%s",access_ok);
+        }
+        else
+        {
+          sprintf(&fsm_send_packet.packet_content[8],"%s",access_denied);
+        }
+        osMailPut(queue_bt_packet_sendHandle, (void *) &fsm_send_packet);
         erase_key(&inter_key);
         erase_key(&extern_key);
+        
+        while(osMailPut(queue_fsm_eventsHandle, (void *) &fsm_h2h_ok) != osOK)
+        {
+          osDelay(1);
+        }
       }
     }
   }

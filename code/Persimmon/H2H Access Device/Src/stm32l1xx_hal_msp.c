@@ -148,7 +148,7 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
   /* BT UART error */
   if (huart->Instance == USART1)
   {
-    HAL_GPIO_WritePin(GPIOC, UI_LED_R_Pin,GPIO_PIN_SET);
+//    HAL_GPIO_WritePin(GPIOC, UI_LED_R_Pin,GPIO_PIN_SET);
   }
 }
 

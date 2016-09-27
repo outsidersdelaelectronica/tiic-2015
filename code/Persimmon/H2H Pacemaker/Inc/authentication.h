@@ -26,6 +26,7 @@ typedef struct validation_key_t
 
 void init_key(validation_key_t* key, key_origin_t origin);
 void erase_key(validation_key_t* key);
+void write_token_key(validation_key_t* key, uint64_t token);
 key_state_t write_key(uint32_t bpm, validation_key_t* key);
 autentitication_t validate(validation_key_t* master_key, validation_key_t* received_key);
 
