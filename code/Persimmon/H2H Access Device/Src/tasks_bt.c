@@ -1,11 +1,13 @@
 #include "tasks_bt.h"
 
 #include "fsm_client.h"
+#include "authentication.h"
 
 /* Queues */
 osMailQId queue_bt_packet_recievedHandle;
 osMailQId queue_bt_packet_sendHandle;
 extern osMailQId queue_fsm_eventsHandle;
+extern osMailQId queue_ecg_keyHandle;
 
 /* Tasks */
 osThreadId bt_txTaskHandle;
@@ -60,7 +62,13 @@ void Start_bt_rxTask(void const * argument)
   osEvent event_pk_rec;
   bt_packet_t rec_packet;
   char command_str[24] = "";
+  int i;
+  uint64_t token;
   fsm_event_f bt_event;
+  validation_key_t rec_key;
+  
+  init_key(&rec_key,EXTERN);
+  
   /* Infinite loop */
   for(;;)
   {
@@ -83,7 +91,17 @@ void Start_bt_rxTask(void const * argument)
         
       }
       else if(rec_packet.packet_content[0]) /* Key */
-      {}
+      {
+        for( i = 0; i < 24; i++)
+        {
+          token |= (((uint64_t)rec_packet.packet_content[0]) << (4*i));
+        }
+        write_token_key(&rec_key,token);
+        while (osMailPut(queue_ecg_keyHandle, (void *) &rec_key) != osOK)
+        {
+          osDelay(1);
+        }
+      }
       
       while(osMailPut(queue_fsm_eventsHandle, (void *) &bt_event) != osOK)
       {

@@ -1021,6 +1021,9 @@
                 <name>$PROJ_DIR$\..\Src\state_h2h.c</name>
               </file>
               <file>
+                <name>$PROJ_DIR$\..\Src\state_h2h_autentication.c</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$\..\Src\state_h2h_connect_1.c</name>
               </file>
               <file>

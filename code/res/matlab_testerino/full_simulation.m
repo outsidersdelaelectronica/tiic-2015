@@ -2,16 +2,16 @@ clear
 load('ecg.mat');
 
 % %  RETRASO MEDIO ENTRE DC_BLOQUED Y INTEGRATED 97
-L = max(size(EKG3));     % Length of signal
+L = max(size(EKG1));     % Length of signal
 Fs = 1000;         % Sampling frequency
 T = 1/Fs;          % Sampling period
 t = (0:(L-1))*T;   % Time vector
 
 f = Fs*(0:(L-1))/L;
 
-x = show_filtering(EKG3);
+x = show_filtering(EKG1);
 
-hold on
+% hold on
 
 % norm = max(x);
 % plot(t, x./norm,'black');
@@ -41,7 +41,7 @@ Q_matrix = zeros(6);
 preprocessed_clean = bpm_preprocessing(x);
 % norm = max(preprocessed_clean);
 % plot(t, preprocessed_clean./norm,'black');
-plot(t, preprocessed_clean,'black');
+plot(t, preprocessed_clean,'green');
 
 bpm_log_clean = bpm_decision_module(preprocessed_clean);
 
@@ -103,7 +103,7 @@ for i = 1:6
     Q_matrix(2,i) = quality_measures_20dB(i);
 end
 
-x_10db = awgn(x,10,'measured');
+x_10db = awgn(x,15,'measured');
 % norm = max(x_10db);
 % plot(t, x_10db./norm,'green');
 
