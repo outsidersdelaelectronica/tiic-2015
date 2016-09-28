@@ -1049,7 +1049,7 @@ int ExitSniffMode(void)
    /* function receives a parameter that indicates the number of byte to*/
    /* be transferred.  This function will return zero on successful     */
    /* execution and a negative value on errors.                         */
-int SendData(uint16_t length, unsigned char *buff)
+int SendData(uint16_t length, char *buff)
 {
   int ret_val = -1; /* -1 means the transmision couldn't be done */
 
@@ -1057,7 +1057,7 @@ int SendData(uint16_t length, unsigned char *buff)
 
   if(SerialPortID)
   {
-    ret_val = SPP_Data_Write(BluetoothStackID, SerialPortID, length, buff);
+    ret_val = SPP_Data_Write(BluetoothStackID, SerialPortID, length, (Byte_t *)buff);
   }
 
   return ret_val;

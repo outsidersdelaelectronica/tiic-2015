@@ -18,7 +18,7 @@ extern osSemaphoreId sem_ecg_keygenHandle;
 extern osMailQId queue_bt_packet_sendHandle;
 extern osMailQId queue_lcdHandle;
 
-static void h2h_start_connect_to_main(state_ptr state)
+static void h2h_validation_error_to_main(state_ptr state)
 {
   /* Do transition actions */
 
@@ -31,7 +31,7 @@ void behaviour_h2h_validation_error(state_ptr state)
 {
   bt_packet_t fsm_send_packet = {.packet_content = {0}};
   /* Set events to react to */
-  state->back = h2h_start_connect_to_main;
+  state->back = h2h_validation_error_to_main;
   /* Do state actions */
 
   sprintf(&fsm_send_packet.packet_content[8],"%s",access_denied);

@@ -61,7 +61,7 @@ void behaviour_h2h_wait_key(state_ptr state)
 void entry_to_h2h_wait_key(state_ptr state)
 {
   /* Set state name */
-  strcpy(state->name, "h2h_start_gen");
+  strcpy(state->name, "h2h_wait_key");
   
   /* - Initialize with default implementation
    * - Set event behaviour

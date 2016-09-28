@@ -26,7 +26,7 @@ static void h2h_connect_1_to_main(state_ptr state)
   entry_to_main(state);
 }
 
-static void h2h_connect_1_to_start_gen(state_ptr state)
+static void h2h_connect_1_to_wait_key(state_ptr state)
 {
   /* Do transition actions */
 
@@ -48,7 +48,7 @@ void behaviour_h2h_connect_1(state_ptr state)
   device_info_t inquired_bt_devices[MAX_INQUIRY_RESULTS];
   /* Set events to react to */
   state->back = h2h_connect_1_to_main;
-  state->h2h_start_gen = h2h_connect_1_to_start_gen;
+  state->h2h_start_gen = h2h_connect_1_to_wait_key;
   state->h2h_error = h2h_connect_1_to_ongoing_error;
   
   /* Do state actions */

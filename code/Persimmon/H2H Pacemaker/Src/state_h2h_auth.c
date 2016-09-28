@@ -21,7 +21,7 @@ static void h2h_auth_to_wait(state_ptr state)
 void behaviour_h2h_auth(state_ptr state)
 {
   /* Set events to react to */
-  state->h2h_ok       = h2h_auth_to_aut;
+  state->h2h_ok       = h2h_auth_to_wait;
   /* Do state actions */
 }
 

@@ -238,7 +238,17 @@ void Start_ecg_bpmDetTask(void const * argument)
       /* Retrieve value */
       ecg_lead = (int32_t) event.value.v;
     }
-
+    
+    /* If signal crosses certain threshold signal visually*/
+    if (ecg_lead > threshold_high)
+    {
+      HAL_GPIO_WritePin(GPIOC, UI_LED_G_Pin, GPIO_PIN_SET);
+    }
+    else
+    {
+      HAL_GPIO_WritePin(GPIOC, UI_LED_G_Pin, GPIO_PIN_RESET);
+    }
+    
     /* BPM detection in progress */
     if((ecg_lead > threshold_high)&&(flag_qrs_zone == 0))
     {
@@ -255,11 +265,11 @@ void Start_ecg_bpmDetTask(void const * argument)
         {
           /* 60 * 1024 * FS / SC */
           bpm = ((61440 * FS ) / sample_counter);
+          osMessagePut(queue_ecg_bpmHandle, (uint32_t) sample_counter, 0);
+          osMessagePut(queue_ecg_bpm_screenHandle, (uint32_t) bpm, 0);
           sample_counter = -1;
           maxerino = 0;
           flag_qrs_zone = 0;
-          osMessagePut(queue_ecg_bpmHandle, (uint32_t) bpm, 0);
-          osMessagePut(queue_ecg_bpm_screenHandle, (uint32_t) bpm, 0);
         }
       }
     }
@@ -314,6 +324,7 @@ void Start_ecg_keyGenTask(void const * argument)
           {
             osDelay(1);
           }
+          key.index = 0;
         }
       }
     }

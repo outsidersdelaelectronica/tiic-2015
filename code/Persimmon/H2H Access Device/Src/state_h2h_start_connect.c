@@ -57,6 +57,7 @@ void behaviour_h2h_start_connect(state_ptr state)
     item_area_set_text(&menu_h2h_devices.items[i].item.area," ");
     menu_h2h_devices.items[i].item.area.is_active = GUI_INACTIVE;
   }
+  item_area_set_text(&menu_h2h_devices.items[6].item.area,"Searching for devices...");
   /* Set menu */
   osMutexWait(mutex_menuHandle, osWaitForever);
   menu_copy(&menu_h2h_devices, &current_menu);
@@ -72,7 +73,9 @@ void behaviour_h2h_start_connect(state_ptr state)
   }
 
   /* Do state actions */
-  bluetooth_init();
+  /* We close and reopen the spp port in case of "zombie" connection*/
+  CloseServer();
+  OpenServer(); 
   Inquiry(TIMEOUT);
 }
 

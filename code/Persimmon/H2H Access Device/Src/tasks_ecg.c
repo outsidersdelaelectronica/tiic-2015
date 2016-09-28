@@ -24,6 +24,7 @@ osMessageQId queue_ecg_bpmHandle;
 osMessageQId queue_ecg_bpm_screenHandle;
 osMailQId queue_ecg_keyHandle;
 osMailQId queue_ecg_keybtHandle;
+osMailQId queue_ecg_keyfsmHandle;
 extern osMailQId queue_fsm_eventsHandle;
 extern osMailQId queue_bt_packet_sendHandle;
 /* Tasks */
@@ -103,13 +104,22 @@ void tasks_ecg_init()
   osMessageQDef(queue_ecg_bpm, 2, uint32_t);
   queue_ecg_bpmHandle = osMessageCreate(osMessageQ(queue_ecg_bpm), NULL);
 
-  /* queue_ecg_bpm */
+  /* queue_ecg_screen_bpm */
   osMessageQDef(queue_ecg_bpm_screen, 2, uint32_t);
   queue_ecg_bpm_screenHandle = osMessageCreate(osMessageQ(queue_ecg_bpm_screen), NULL);
 
   /* queue_ecg_key */
   osMailQDef(queue_ecg_key, 2, validation_key_t);
   queue_ecg_keyHandle = osMailCreate(osMailQ(queue_ecg_key), NULL);
+  
+  /* queue_ecg_key */
+  osMailQDef(queue_ecg_btkey, 2, validation_key_t);
+  queue_ecg_keybtHandle = osMailCreate(osMailQ(queue_ecg_btkey), NULL);
+  
+  /* queue_ecg_key */
+  osMailQDef(queue_ecg_fsmkey, 2, validation_key_t);
+  queue_ecg_keyfsmHandle = osMailCreate(osMailQ(queue_ecg_fsmkey), NULL);
+
 }
 
 void tasks_ecg_start()
@@ -132,7 +142,7 @@ void tasks_ecg_start()
   ecg_keyGenTaskHandle = osThreadCreate(osThread(ecg_keyGenTask), NULL);
 
   /* ecg_validationTask */
-  osThreadDef(ecg_validationTask, Start_ecg_validationTask, osPriorityNormal, 0, 128);
+  osThreadDef(ecg_validationTask, Start_ecg_validationTask, osPriorityLow, 0, 128);
   ecg_validationTaskHandle = osThreadCreate(osThread(ecg_validationTask), NULL);
 }
 
@@ -260,11 +270,11 @@ void Start_ecg_bpmDetTask(void const * argument)
         {
           /* 60 * 1024 * FS / SC */
           bpm = ((61440 * FS ) / sample_counter);
+          osMessagePut(queue_ecg_bpmHandle, (uint32_t) sample_counter, 0);
+          osMessagePut(queue_ecg_bpm_screenHandle, (uint32_t) bpm, 0);
           sample_counter = -1;
           maxerino = 0;
           flag_qrs_zone = 0;
-          osMessagePut(queue_ecg_bpmHandle, (uint32_t) bpm, 0);
-          osMessagePut(queue_ecg_bpm_screenHandle, (uint32_t) bpm, 0);
         }
       }
     }
@@ -285,7 +295,7 @@ void Start_ecg_keyGenTask(void const * argument)
   osEvent event;
   validation_key_t key;
   uint32_t bpm = 0;
-  fsm_event_f bt_event;
+
   init_key(&key,INTERN);
   osSemaphoreWait(sem_ecg_keygenHandle, osWaitForever);
   /* Infinite loop */
@@ -314,11 +324,6 @@ void Start_ecg_keyGenTask(void const * argument)
           {
             osDelay(1);
           }
-//          bt_event = fsm_h2h_pass_ready;
-//          while(osMailPut(queue_fsm_eventsHandle, (void *) &bt_event) != osOK)
-//          {
-//            osDelay(1);
-//          }
         }
       }
     }
@@ -347,30 +352,26 @@ void Start_ecg_validationTask(void const * argument)
       if(incomming_key.origin == INTERN)
       {
         inter_key = incomming_key;
-        /* Esto esta mal, pero tempus fugit. Hay que fixearlo */
-        erase_key((validation_key_t*) event.value.v);
       }
       else
       {
         extern_key = incomming_key;
-        /* Esto esta mal, pero tempus fugit. Hay que fixearlo */
-        erase_key((validation_key_t*) event.value.v);
       }
 
       if((inter_key.state == READY)&&(extern_key.state == READY))
       {
-        auth_reponse = validate(&inter_key,&extern_key);
+//        auth_reponse = validate(&inter_key,&extern_key);
+        auth_reponse = validate(&inter_key,&inter_key);
         if ( auth_reponse == ACCEPTED)
         {
-          sprintf(&fsm_send_packet.packet_content[8],"%s",access_ok);
           valid_event = fsm_h2h_ok;
         }
         else
         {
           sprintf(&fsm_send_packet.packet_content[8],"%s",access_denied);
+          osMailPut(queue_bt_packet_sendHandle, (void *) &fsm_send_packet);
           valid_event = fsm_h2h_error;
         }
-        osMailPut(queue_bt_packet_sendHandle, (void *) &fsm_send_packet);
         erase_key(&inter_key);
         erase_key(&extern_key);
         

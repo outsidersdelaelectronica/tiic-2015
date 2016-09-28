@@ -1050,7 +1050,7 @@ int SendData(uint16_t length, char *buff)
 
   if(SerialPortID)
   {
-    ret_val = SPP_Data_Write(BluetoothStackID, SerialPortID, length, buff);
+    ret_val = SPP_Data_Write(BluetoothStackID, SerialPortID, length, (Byte_t *)buff);
   }
 
   return ret_val;
@@ -1481,9 +1481,8 @@ void BTPSAPI SPP_Event_Callback(unsigned int BluetoothStackID, SPP_Event_Data_t 
           }
           else
           {
-//            spp_event = fsm_no_event;
-            spp_event = fsm_h2h_start_gen;
-            /* TEST */
+//            spp_event = fsm_h2h_start_gen;
+            spp_event = fsm_no_event;
           }
         }
         while(osMailPut(queue_fsm_eventsHandle, (void *) &spp_event) != osOK)

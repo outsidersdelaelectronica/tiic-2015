@@ -6,6 +6,7 @@
 /* State includes */
 #include "cmsis_os.h"
 #include "menu.h"
+#include "bluetooth_internal.h"
 
 /* Mutexes */
 extern osMutexId mutex_menuHandle;
@@ -40,6 +41,7 @@ void behaviour_welcome(state_ptr state)
   }
 
   /* Do state actions */
+  bluetooth_init();
   osDelay(2500);
   entry_to_running(state);
 }

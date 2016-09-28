@@ -161,7 +161,7 @@ void Start_input_touchTask(void const * argument)
 
 void Start_input_clickTask(void const * argument)
 {
-  osEvent event_click, event_menu;
+  osEvent event_click;
   item_t item;
 
   click_t *click;

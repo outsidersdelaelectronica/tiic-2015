@@ -2,13 +2,15 @@
 
 #include "fsm_client.h"
 #include "authentication.h"
+#include "menu.h"
 
 /* Queues */
 osMailQId queue_bt_packet_recievedHandle;
 osMailQId queue_bt_packet_sendHandle;
 extern osMailQId queue_ecg_keyHandle;
 extern osMailQId queue_fsm_eventsHandle;
-
+extern osMailQId queue_lcdHandle;
+extern osMailQId queue_ecg_keyfsmHandle;
 /* Tasks */
 osThreadId bt_txTaskHandle;
 osThreadId bt_rxTaskHandle;
@@ -61,8 +63,6 @@ void Start_bt_rxTask(void const * argument)
   osEvent event_pk_rec;
   bt_packet_t rec_packet;
   char command_str[24] = "";
-  int i;
-  uint64_t token;
   fsm_event_f bt_event;
   validation_key_t rec_key;
   
@@ -80,57 +80,47 @@ void Start_bt_rxTask(void const * argument)
       if(!rec_packet.packet_content[0])
       {
         sprintf(command_str, "%s", &rec_packet.packet_content[8]);
-        if(!strcmp(command_str,gen_ack))
-        {
-          bt_event = fsm_h2h_ok;
-        } 
-      }
-      else if(rec_packet.packet_content[0]) /* Key */
-      {
-        for( i = 0; i < 24; i++)
-        {
-          token |= (((uint64_t)rec_packet.packet_content[0]) << (4*i));
-        }
-        write_token_key(&rec_key,token);
-        while (osMailPut(queue_ecg_keyHandle, (void *) &rec_key) != osOK)
-        {
-          osDelay(1);
-        }
-        /* signal key havent' recieved*/
-        bt_event = fsm_h2h_ok;
-      }
-      
-      
-      if(!rec_packet.packet_content[0])
-      {
-        sprintf(command_str, "%s", &rec_packet.packet_content[8]);
-        bt_event =fsm_no_event;
         if(!strcmp(command_str,gen_init))
         {
           bt_event = fsm_h2h_start_gen;
-        }else if(!strcmp(command_str,key_ready))
+          while(osMailPut(queue_fsm_eventsHandle, (void *) &bt_event) != osOK)
+          {
+            osDelay(1);
+          }
+        } 
+        else if(!strcmp(command_str,access_ok))
         {
-          bt_event = fsm_h2h_pass_ready;
+          item_area_set_text(&menu_h2h_devices.items[6].item.area,"Access granted");
+          while (osMailPut(queue_lcdHandle, (void *) &menu_h2h_devices.items[6]) != osOK)
+          {
+            osDelay(1);
+          }  
         }
-        
+        else if(!strcmp(command_str,access_denied))
+        {
+          item_area_set_text(&menu_h2h_devices.items[6].item.area,"Access denied");
+          while (osMailPut(queue_lcdHandle, (void *) &menu_h2h_devices.items[6]) != osOK)
+          {
+            osDelay(1);
+          }  
+        }
       }
       else if(rec_packet.packet_content[0]) /* Key */
       {
-        for( i = 0; i < 24; i++)
+        sprintf((char *)&(rec_key.token),"%s",&rec_packet.packet_content[8]);
+        rec_key.state = READY;
+        while (osMailPut(queue_ecg_keyfsmHandle, (void *) &rec_key) != osOK)
         {
-          token |= (((uint64_t)rec_packet.packet_content[0]) << (4*i));
+          osDelay(1);
         }
-        write_token_key(&rec_key,token);
-        while (osMailPut(queue_ecg_keyHandle, (void *) &rec_key) != osOK)
+        /* signal key have been recieved*/
+        bt_event = fsm_h2h_ok;
+        while(osMailPut(queue_fsm_eventsHandle, (void *) &bt_event) != osOK)
         {
           osDelay(1);
         }
       }
       
-      while(osMailPut(queue_fsm_eventsHandle, (void *) &bt_event) != osOK)
-      {
-        osDelay(1);
-      }
     }
   }
 }

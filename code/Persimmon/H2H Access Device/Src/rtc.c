@@ -44,8 +44,8 @@ RTC_HandleTypeDef hrtc;
 /* RTC init function */
 void MX_RTC_Init(void)
 {
-  RTC_TimeTypeDef sTime;
-  RTC_DateTypeDef sDate;
+//  RTC_TimeTypeDef sTime;
+//  RTC_DateTypeDef sDate;
   RTC_AlarmTypeDef sAlarm;
 
     /**Initialize RTC and set the Time and Date
@@ -62,8 +62,8 @@ void MX_RTC_Init(void)
     Error_Handler();
   }
 
-//  sTime.Hours = 17;
-//  sTime.Minutes = 36;
+//  sTime.Hours = 0;
+//  sTime.Minutes = 0;
 //  sTime.Seconds = 0;
 //  sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
 //  sTime.StoreOperation = RTC_STOREOPERATION_RESET;
@@ -74,14 +74,13 @@ void MX_RTC_Init(void)
 //
 //  sDate.WeekDay = RTC_WEEKDAY_MONDAY;
 //  sDate.Month = RTC_MONTH_SEPTEMBER;
-//  sDate.Date = 26;
-//  sDate.Year = 16;
+//  sDate.Date = 1;
+//  sDate.Year = 1;
 //
 //  if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN) != HAL_OK)
 //  {
 //    Error_Handler();
 //  }
-
     /**Enable the Alarm A
     */
   sAlarm.AlarmTime.Hours = 0;

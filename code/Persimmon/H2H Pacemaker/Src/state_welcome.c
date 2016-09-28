@@ -7,6 +7,7 @@
 #include "cmsis_os.h"
 #include "gpio.h"
 #include "buzzer.h"
+#include "bluetooth_internal.h"
 
 /* Queues */
 extern osMailQId queue_periph_buzzerHandle;

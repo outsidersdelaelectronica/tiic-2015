@@ -9,7 +9,7 @@
 /* State includes */
 #include "cmsis_os.h"
 #include "bluetooth_internal.h"
-
+#include "authentication.h"
 static void h2h_wait_to_start_connect(state_ptr state)
 {
   /* Do transition actions */
@@ -26,7 +26,7 @@ void behaviour_h2h_wait(state_ptr state)
   /* Do state actions */
   /* We close and reopen the spp port */
   CloseServer();
-  OpenServer();
+  OpenServer(); 
 }
 
 /* Entry point to the state */

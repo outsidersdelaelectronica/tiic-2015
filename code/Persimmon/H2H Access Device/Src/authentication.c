@@ -12,7 +12,7 @@
 #define MASK_X2 0x4444444444444444
 #define MASK_X1 0x8888888888888888
 
-#define N_P_THRESHOLD -24274098
+#define N_P_THRESHOLD -1028987
 
 /* Tables with the log of the probabilty of each position x4,x3,x2,x1 and the */
 /* adversary probability( which is constant for every position)               */
@@ -54,8 +54,12 @@ key_state_t write_key(uint32_t bpm, validation_key_t* key)
 {
   uint64_t IPI = 0;
   
-  IPI = (( ((uint64_t)bpm) & 0xF) << ( 4 * key->index));
-  key->token |= IPI;
+  IPI =  (((uint64_t)bpm) & 0xF);
+  if( IPI == 0xF)
+  {
+    IPI = 0;
+  }
+  key->token |= ( IPI << ( 4 * key->index));
   key->index++;
   if (key->index > 15 )
   {
@@ -68,7 +72,7 @@ void write_token_key(validation_key_t* key, uint64_t token)
 {
   key->token = token;
   key->index = 15;
-  key->token = READY;
+  key->state = READY;
 }
 
 void erase_key(validation_key_t* key)

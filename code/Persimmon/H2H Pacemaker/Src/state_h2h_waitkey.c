@@ -37,6 +37,7 @@ void behaviour_h2h_waitkey(state_ptr state)
   bt_packet_t fsm_send_packet_1 = {.packet_content = {0}}, fsm_send_packet_2 = {.packet_content = {0}};
   osEvent event;
   validation_key_t inter_key;
+  
   /* Set events to react to */
   state->h2h_ok       = h2h_waitkey_to_aut;
   state->h2h_error    = h2h_waitkey_to_wait;
@@ -50,10 +51,10 @@ void behaviour_h2h_waitkey(state_ptr state)
   if (event.status == osEventMail)
   {
     inter_key = *((validation_key_t*) event.value.v);
-    sprintf(&fsm_send_packet_2.packet_content[8],"%u",&(inter_key.token));
+    sprintf(&fsm_send_packet_2.packet_content[8],"%s",(char *)&(inter_key.token));
     fsm_send_packet_2.packet_content[0] = 1;
     /* Send Key */ 
-    osMailPut(queue_bt_packet_sendHandle, (void *) &fsm_send_packet_1);
+    osMailPut(queue_bt_packet_sendHandle, (void *) &fsm_send_packet_2);
   }
 }
 

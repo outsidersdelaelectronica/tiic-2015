@@ -12,12 +12,15 @@
 #include "cmsis_os.h"
 #include "menu.h"
 #include "bluetooth_internal.h"
+#include "authentication.h"
 
 /* Semaphores */
 extern osSemaphoreId sem_ecg_keygenHandle;
 /* Queues */
 extern osMailQId queue_bt_packet_sendHandle;
 extern osMailQId queue_lcdHandle;
+extern osMailQId queue_ecg_keyfsmHandle;
+extern osMailQId queue_ecg_keyHandle;
 
 static void h2h_autentication_to_validation_ok(state_ptr state)
 {
@@ -38,8 +41,10 @@ static void h2h_autentication_to_validation_error(state_ptr state)
 /* State behaviour */
 void behaviour_h2h_autentication(state_ptr state)
 {
+  osEvent event;
+  validation_key_t bt_key;
   /* Set events to react to */
-  state->back                   = h2h_autentication_to_validation_ok;
+  state->h2h_ok                 = h2h_autentication_to_validation_ok;
   state->h2h_error              = h2h_autentication_to_validation_error;
   /* Do state actions */
   
@@ -49,6 +54,12 @@ void behaviour_h2h_autentication(state_ptr state)
     osDelay(1);
   }  
   
+  event = osMailGet(queue_ecg_keyfsmHandle, osWaitForever);
+  if (event.status == osEventMail)
+  {
+    bt_key = *((validation_key_t*) event.value.v);
+    osMailPut(queue_ecg_keyHandle, (void *) &bt_key);  
+  }
 }
 
 /* Entry point to the state */
