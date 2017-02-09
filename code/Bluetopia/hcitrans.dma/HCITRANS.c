@@ -92,7 +92,7 @@ int BTPSAPI HCITR_COMOpen(HCI_COMMDriverInformation_t *COMMDriverInformation,
       {
         HAL_UART_Init(&huart1);                                           
         BTPS_Delay(10);
-        HAL_GPIO_WritePin(GPIOC,BT_nSHUTD_Pin,GPIO_PIN_SET);
+        HAL_GPIO_WritePin(GPIOC,nSHUTD_Pin,GPIO_PIN_SET);
         BTPS_Delay(250);
         
         /* Flag that the HCI Transport is open.                           */
@@ -140,7 +140,7 @@ void BTPSAPI HCITR_COMClose(unsigned int HCITransportID)
       /* We use the HAL de init function                                */ 
       HAL_UART_MspDeInit(&huart1);
       /* Place the Bluetooth Device in Reset.                           */
-      HAL_GPIO_WritePin(GPIOC,BT_nSHUTD_Pin,GPIO_PIN_RESET);
+      HAL_GPIO_WritePin(GPIOC,nSHUTD_Pin,GPIO_PIN_RESET);
 
       /* Signal the receive thread to terminate and wait for it to      */
       /* close.                                                         */
