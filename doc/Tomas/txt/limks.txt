@@ -1,0 +1,4 @@
+http://percepio.com/docs/FreeRTOS/manual/Recorder.html#Recorder_Library_FreeRTOS_Integration
+https://e2e.ti.com/support/wireless_connectivity/bluetooth_cc256x/f/660/t/203464
+https://www.researchgate.net/publication/275413868_Security_and_Privacy_Issues_in_Implantable_Medical_Devices_A_Comprehensive_Survey
+http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3883654/

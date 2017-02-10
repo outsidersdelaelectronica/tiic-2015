@@ -1,0 +1,329 @@
+Diseño
+	El desarrollo de la plataforma comienza con el desarrollo del primer prototipo del dispositivo de acceso / marcapasos. 
+
+	Este primer diseño fue desarrollado para el Texas Instruments Innovation Challenge (TIIC) - Europe Design Contest 2015, por lo que varios de sus componentes electrónicos fueron seleccionados del catálogo de Texas Instruments sin tener en cuenta la oferta de componentes de otros fabricantes.
+
+	Arquitectura
+		El diseño del dispositivo se divide en varios módulos:
+			Front-end analógico: encargado de adaptar, capturar y enviar al microcontrolador la señal eléctrica medida por los electrodos.
+			Interfaz radio: permite crear un enlace inalámbrico entre el dispositivo de acceso y el marcapasos.
+			Microcontrolador: aloja al programa principal y controla al resto de módulos.
+			Alimentación: gestiona la energía del sistema. Se divide en varios submódulos:
+				Batería: batería LiPo.
+				Fuel gauge: mide diferentes parámetros de la batería como su tensión, corriente media y carga restante.
+				Reguladores de tensión: generan una serie de tensiones estables a partir de la proporcionada por la batería para alimentar al resto del sistema.
+				Supervisor de tensión: controla la línea de reset del microcontrolador y le permite encenderse sólo cuando existe una tensión de alimentación estable.
+
+		En el caso del dispositivo de acceso, se incluye un módulo adicional:
+			Interfaz de usuario: compuesta por una pantalla táctil y un indicador acústico, permite al usuario controlar el dispositivo.
+
+	Front-end analógico
+		Las tensiones que aparecen en los electrodos al ser aplicados sobre la piel de un paciente deben ser adaptadas al sistema electrónico con el fin de adquirir y poder reproducir fielmente la señal, teniendo en cuenta la seguridad eléctrica del paciente.
+
+		El circuito de adquisición se divide en varias etapas:
+			Seguridad: debe existir algún elemento que limite la corriente que circula por el cuerpo del paciente a través del sistema electrónico, como resistencias de protección. Esta etapa siempre debe situarse entre el paciente y cualquier elemento activo del sistema.
+
+			Filtrado: necesario para minimizar ruido e interferencias electromagnéticas y poder capturar la señal ECG con una SNR aceptable.
+
+			Amplificación: dado que la señal ECG tiene generalmente una amplitud del orden de varios milivoltios, es necesario en muchos casos amplificarla para adaptarla al rango dinámico del conversor analógico-digital.
+
+			Filtrado (post-amplificación): se necesita también un filtro anti-aliasing a la entrada del conversor, así como etapas de filtrado adicionales.
+
+			Conversión: por último, la señal es convertida a digital a través de un conversor que, dada la relativa baja frecuencia de la señal y la precisión necesaria, suele ser de tipo sigma-delta.
+
+		Existen dos formas de implementar esta etapa de adaptación en función del nivel de integración de los distintos componentes electrónicos de todas las etapas:
+			Implementación por etapas:
+				Se puede diseñar cada una de las etapas por separado utilizando amplificadores, filtros y conversores individuales. De esta manera se pueden ajustar muchos parámetros de cada una de las etapas del circuito.
+
+			Circuito integrado dedicado: 
+				Existe una serie de circuitos que integran gran parte del circuito en un solo chip, permitiendo implementar todas las etapas anteriores en un espacio más reducido y realizar un diseño menos propenso a errores.
+
+		Por otra parte, existen también dos maneras de implementar la etapa de adaptación en función de la resolución del conversor analógico-digital:
+			Baja resolución (<= 16 bits): 
+				Se pueden utilizar amplificadores de bajo ruido para amplificar la señal y poder utilizar un ADC de baja resolución, de aproximadamente 16 bits. Para realizar una implementación según esta idea, hay que incluir varios elementos:
+
+				En primer lugar, se utiliza un primer amplificador como buffer de la señal ECG y como primera etapa de ganancia. A continuación, es necesario eliminar la continua con un filtro paso alto de como máximo 0.05 Hz de frecuencia de corte para evitar saturar las siguientes etapas, que poseen una ganancia elevada. Después, se amplifica la señal lo suficiente para abarcar lo máximo posible del margen de tensión de entrada del ADC y por último, se incluye el filtro anti-aliasing.
+
+				La ventaja de esta solución es que permite utilizar conversores de baja resolución que generalmente son más baratos y se pueden implementar con arquitecturas distintas a la sigma-delta. El inconveniente es que hay que tener cuidado para que el ruido de los amplificadores, que también es amplificado, no domine el ruido total del sistema.
+
+			Alta resolución (>= 16 bits / 24 bits):
+				Existe otra forma de implemetar el sistema de adquisición utilizando amplificadores de menor ganancia y un ADC de mayor resolución. Tanto en este caso como en el anterior, el rango dinámico del ADC libre de ruido es el mismo, ya que tanto el ruido como la señal se amplifican de la misma forma.
+
+				Sin embargo, en este caso no es necesario incluir etapas de bloqueo de continua ni añadir ganancia adicional, lo que conlleva una disminución en el coste y el tamaño del circuito. Además, los ADCs sigma-delta utilizados en este tipo de implementación no necesitan filtros de anti-aliasing muy selectivos, por lo que se pueden sustituir por filtros RC simples.
+
+		Para este desarrollo, se ha optado por utilizar un circuito dedicado por cuestiones de facilidad de diseño y espacio, ya que el sistema debe ser lo más compacto posible. El circuito seleccionado es el ADS1291 de Texas Instruments: un front-end analógico de un canal para medidas de diferentes tipos de biopotenciales. Este circuito integrado utiliza un conversor sigma-delta de alta resolución de 24 bits.
+
+		El chip consta de un amplificador de instrumentación con una impedancia de entrada de mínimo 100 Mohm, una relación de rechazo al modo común de mínimo -105 dB y un ruido referido a la entrada de 8 uVpp para un ancho de banda de 150 Hz. Todas estas especificaciones superan los requisitos mínimos necesarios de adquisición de la señal ECG.
+
+		El circuito integra a continuación un conversor analógico-digital sigma-delta de 24 bits con una tasa de muestreo máxima de 8 KSPS, superior a la tasa de 1 KSPS necesaria para medir con suficiente precisión la variación de la frecuencia cardíaca.
+
+		En cuanto a la comunicación, el circuito dispone de una interfaz de comunicación SPI, una línea de interrupción para avisar de la finalización de las conversiones, una línea de reset y varias líneas GPIO. Posee capacidad para funcionar con su reloj interno de 512 kHz o un reloj externo de hasta 2.048 MHz.
+
+		El circuito integrado dispone de una línea de alimentación analógica y una línea de alimentación digital, ambas alimentadas a 3.3 V través de dos reguladores lineales.
+
+		Electrodos
+			Los electrodos se conectan a 3 conectores hembra de banana de 4 mm alojados en la carcasa del prototipo, que a su vez se conectan a la PCB a través de un conector JST-PH de 3 pines.
+
+		Filtrado de entrada
+			Filtro diferencial y de modo común
+				Los dos electrodos que forman la derivación miden una tensión diferencial en la piel del paciente. Esta señal es filtrada de dos maneras:
+					Filtrado diferencial
+						Un filtro diferencial es aquel con una entrada diferencial y una salida diferencial. Una característica muy importante de un filtro diferencial es su CMRR, que se pone de manifiesto cuando se implementa un filtro de este tipo mediante dos filtros unipolares no acoplados. Idealmente, el CMRR de esta configuración es infinito, pero si se consideran las tolerancias de los componentes la frecuencia de corte de los filtros necesaria para mantener un CMRR mínimo aumenta considerablemente, haciendo que el filtro sea menos eficiente frente al ruido.
+
+						Es interesante por tanto encontrar un tipo de filtros cuyo ancho de banda dependa exclusivamente de la señal diferencial y no del CMRR que se quiera obtener. Este tipo de filtros se implementan basándose en filtros unipolares que se acoplan entre sí conectándolos a un punto común que no está conectado a masa. De esta forma se obtiene un CMRR infinito independientemente de las tolerancias de los componentes, ya que no hay forma que una señal en modo común produzca una señal diferencial a la salida del filtro.
+
+						Se ha colocado un filtro diferencial con una frecuencia de corte de aproximadamente 250 Hz a la entrada del amplificador.
+
+					Filtrado de modo común
+						Una característica del filtro diferencial implementado es que posee una ganancia en modo común de 1 a todas las frecuencias. Es decir, no realiza función de filtrado en modo común y es necesario añadir componentes adicionales para eliminar ruido de modo común a la entrada del amplificador.
+
+						Para ello, se añaden dos condensadores de ambas entradas diferenciales del amplificador a masa, formando dos filtros RC no acoplados entre sí. Esto, como se ha mencionado en el apartado anterior, provoca una disminución notable del CMRR de la etapa, pero este problema se puede evitar si la frecuencia de corte de estos dos filtros es lo suficientemente mayor que la del filtro diferencial.
+
+						Por ello, se han añadido los dos condensadores con valores que establecen una frecuencia de corte del modo común de aproximadamente 72 kHz. 
+
+			Resistencias de protección
+				Las dos resistencias del filtro diferencial actúan como limitadores de corriente en caso de que el amplificador de entrada sufra algún daño y deje pasar las tensiones de alimentación hacia los electrodos. En el caso peor, la corriente máxima viene dada por 3.3 V/47 kohm = 70 uA.
+
+		Filtro antialiasing
+			La salida del amplificador de instrumentación del ADS1291 está disponible en dos de sus pines en forma diferencial. Esto es así para poder añadir un condensador, formando un filtro RC diferencial con dos resistencias de 2 kohm internas al chip. Este filtro actúa como un filtro anti-aliasing para el conversor sigma-delta.
+
+			El valor mínimo del condensador es de 4 nF y el valor recomendado por el fabricante de 4.7 nF, que establece una frecuencia de corte de 8.4 kHz. La frecuencia de corte se puede hacer más pequeña aumentando el valor del condensador, pero condensadores más grandes degradan la distorsión armónica total de la señal. Para 10 Hz, y el condensador recomendado, la THD es de -104 dB.
+
+			Aunque hay margen hasta los 150 Hz máximos de la señal ECG, se prefiere dejar el valor recomendado para no empeorar la distorsión ya que la señal se filtra también a la entrada y el posible ruido introducido por los amplificadores en la banda del filtro anti-aliasing no es significativo.
+
+			Otra consideración a tener en cuenta es la capacidad parásita de cada uno de los pines a masa. Esta debe ser minimizada y lo menos diferente posible´entre sí para evitar la degradación del CMRR. Para ello, se ha tenido especial cuidado en el diseño de la PCB, eliminando planos de masa cerca de los condensadores, colocando a estos últimos cerca de los pines del chip e intentando trazar un circuito lo más simétrico posible.
+
+		Reloj
+			El chip funciona con un reloj externo proporcionado por un módulo del microcontrolador que genera un submúltiplo de su propia frecuencia de reloj y saca una señal a esa frecuencia por uno de sus pines. En este caso, la frecuencia seleccionada es de 2 MHz, que es la máxima frecuencia de reloj soportada por el ADS1291.
+
+			Se ha elegido utilizar un reloj externo porque el microcontrolador utilizado dispone de una salida dedicada generada a partir de su propio reloj. A su vez, el módulo SPI que se comunica con el ADS1291 utiliza una señal de reloj que es síncrona con el reloj del microcontrolador. Esto quiere decir que si se utiliza la misma frecuencida de 2 MHz tanto para el reloj externo como para el reloj de la interfaz serie ambos serán también síncronos. Esta es una característica deseable en los sistemas de conversión analógico-digital ya que los flancos del reloj del puerto serie no ocurrirán durante la conversión, sino a la vez que los del reloj interno del ADC, minimizando el ruido que puede generar la comunicación digital en la captura de la señal analógica.
+
+		Interfaz de comunicación
+			El ADS1291 dispone de un puerto serie SPI de 4 líneas (SCLK, MOSI, MISO y CS) conectado a un puerto SPI del microcontrolador, dedicado exclusivamente a él. Además, dispone de una línea de entrada (START) para ordenar al ADC que comience las conversiones, y una línea de salida (DRDY) pensada para generar una interrupción en el microcontrolador cada vez que termina una conversión y hay datos nuevos por leer. Por último, tiene una línea de reset conectada de igual manera al microcontrolador.
+
+			La velocidad máxima del SPI viene determinada por el ADS1291, que limita la frecuencia máxima al doble de su frecuencia de reloj. Para este desarrollo una velocidad de 2 Mbit/s es más que suficiente, ya que el ADC envía 48 bits por cada conversión y hay una conversión cada 1 ms. A esa velocidad la trama completa se envía en 24 us, mucho menos de lo que dura el intervalo entre conversiones.
+
+	Interfaz radio
+		El dispositivo de acceso tiene que ser capaz de comunicarse de forma inalámbrica con el marcapasos, preferiblemente en una banda de frecuencias ISM y utilizando algún estándar incluido en dispositivos electrónicos comerciales y que sea relativamente fácil de integrar en el diseño.
+
+		Por ello, se ha optado por escoger el estándar Bluetooth ya que opera en la banda ISM de 2.45 GHz, existen librerías con la pila de protocolos software disponibles para varios tipos de microcontroladores y está incluido en la gran mayoría de móviles y tablets del mercado.
+
+		Bluetooth Classic y BLE
+			Actualmente existen dos estándares dentro de la especificación Bluetooth 4.0: Bluetooth Classic y BLE (Bluetooth Low Energy). Ambos están pensados para distintos escenarios de comunicación y por tanto tienen características diferentes:
+				Bluetooth Classic:
+					Este estándar se utiliza en dispositivos que necesitan una conexión mantenida en el tiempo, y generalmente de alta velocidad.
+				BLE:
+					Los dispositivos que soportan Bluetooth Low Energy están optimizados para casos de uso que necesitan conexiones esporádicas de baja velocidad. Comercialmente, se dice que estos dispositivos son Bluetooth Smart. Estos no pueden comunicarse directamente con dispositivos Bluetooth Classic.
+				Dual mode:
+					Por último, existe la posibilidad de que un dispositivo soporte ambos modos de comunicación. En este caso, se dice que es un dispositivo Bluetooth Smart Ready.
+
+		Módulos radio integrados vs. solución específica
+			Normalmente los fabricantes ofrecen módulos transceptores encapsulados en circuitos integrados a los que hay que añadirles componentes externos, reguladores de tensión, etapas de adaptación y una antena. A su vez, existen también módulos prefabricados que incluyen todos estos componentes integrados en una PCB que se puede conectar a la placa principal.
+
+			Los módulos prefabricados tienen la ventaja de que reducen el tiempo de desarrollo y su funcionamiento está ya probado, y sólo es necesario conectar la interfaz de comunicación correspondiente al microcontrolador y proporcionarle la alimentación necesaria para que funcione. En algunos casos estos módulos incluyen también certificación de compatiblidad electromagnética.
+
+			Por otro lado, los desarrollos específicos realizados a partir de un circuito integrado permiten mayor flexibilidad de diseño, mayor integración, menor tamaño, y hace que el diseño no dependa de la disponibilidad de módulos prefabricados en el mercado.
+
+		En este caso, se ha optado por realizar un desarrollo específico alrededor de un transceptor Bluetooth Classic, ya que la aplicación necesita establecer un canal de comunicación durante un tiempo relativamente largo y con una tasa de datos elevada. El circuito seleccionado es el CC2560 de Texas Instruments: un transceptor Bluetooth 4.0 (4.1 para la versión CC2560B).
+
+		El chip tiene un módulo transceptor a 2.45 GHz adaptado a 50 ohm, un procesador de información y sistemas de gestión de reloj y de alimentación. En cuanto a la comunicación, el circuito dispone de una interfaz de comunicación serie asíncrona, una interfaz PCM para la transmisión de audio y una línea de reset.
+
+		El módulo necesita un reloj rápido de 26 o 38.4 MHz y un reloj lento de 32.768 kHz con una deriva total de +-250 ppm para funcionar.
+
+		El chip dispone de una línea de alimentación general, utilizada entre otras cosas para alimentar las etapas de amplificación del transceptor y una línea de alimentación digital, que alimenta los pines de entrada y salida del módulo. La alimentación general está alimentada a 3.3 V y la alimentación digital a 1.8 V través de dos reguladores lineales.
+
+		Etapa de salida y antena
+			El CC2560 posee una salida de RF unipolar adaptada a 50 ohm, por lo que no se necesita añadir ninguna red de adaptación de impedancias ni utilizar balunes si se utiliza uno de los diseños de antenas proporcionados por el fabricante.
+
+			Los únicos elementos que se añaden entre el transceptor y la antena son un condensador de 22 pF en serie a la línea de RF para bloquear el posible nivel de continua fijado por el circuito y un filtro paso banda centrado en 2.45 GHz con un ancho de banda de 100 MHz. Este es un filtro LC integrado en un único componente diseñado específicamente para interfaces radio Bluetooth.
+
+			Se ha utilizado una antena en PCB en "F invertida" a 2.4 GHz adaptada a 50 ohm, cuya forma y dimensiones son proporcionadas por el fabricante en la nota de aplicación del circuito integrado.
+
+		Reguladores de tensión internos
+			El sistema de gestión de alimentación del chip consta de una serie de reguladores lineales de tensión para alimentar correctamente todos los circuitos internos. De cara a la implementación, lo único que es necesario hacer es añadir los condensadores de desacoplo recomendados por el fabricante en cada una de sus entradas y salidas.
+
+		Relojes
+			Para el reloj rápido se ha elegido el cristal de 26 MHz NX3225GA-26.000, que es similar en características al de la nota de aplicación del chip. Para el reloj lento, se utiliza una salida de reloj del microcontrolador que genera la señal de 32.768 kHz a partir de otro cristal AB26T-32.768KHZ. Este tiene una tolerancia de +-20ppm, por debajo de la deriva máxima permitida por el estándar Bluetooth.
+
+		Interfaz de comunicación
+			El CC2560 se comunica con el microcontrolador a través de una interfaz serie asíncrona con control de flujo hardware, es decir, una UART de 4 líneas (RX, TX, RTS y CTS). Además posee una línea de reset conectada también al microcontrolador.
+
+			El microcontrolador está alimentado a 3.3 V, y por tanto todas sus señales trabajan a esa tensión. Sin embargo, la alimentación de las entradas y salidas del transceptor es de 1.8 V, por lo que se necesita incorporar un traductor de tensión entre ambos circuitos. En este caso se ha elegido el traductor de tensión bidireccional de 6 bits TXB0106 de Texas Instruments. A través de este se conectan las 4 señales de la interfaz serie, la señal del reloj de 32.768 kHz y la línea de reset.
+
+	Microcontrolador
+		Los dispositivos médicos implantables tienen unas especificaciones de consumo muy restrictivas, ya que sólo se puede acceder a sus baterías mediante intervención quirúrgica. Por ello, el microcontrolador escogido debe ser de bajo consumo, ya que la plataforma está pensada para ejecutar algoritmos que deben ir implementados en un marcapasos.
+
+		El microcontrolador debe tener interfaces de comunicación para comunicarse con todos los demás módulos del sistema. Debe incluir 2 módulos de comunicación serie síncrona SPI, 1 módulo UART, 1 módulo I2C, así como suficientes pines de entrada y salida para conectar la interfaz de la pantalla. Además, tiene que disponer de una salida PWM para el indicador acústico y varios GPIOs para los LEDs de indicación.
+
+		Además, el chip debe incluir 2 salidas de reloj de 2 MHz y 32.768 kHz para el front-end analógico y la interfaz radio respectivamente. El de 32.768 kHz es generado por un oscilador con el cristal mencionado en el apartado de relojes de la interfaz radio.
+
+		Por último, es conveniente que el chip integre un módulo hardware de cifrado AES para evitar tener que realizar las operaciones por software y optimizar el consumo y la velocidad durante su utilización.
+
+		El microcontrolador escogido es el MSP430FR5972. Tiene un consumo de aproximadamente 100 uA/MHz, llegando a los 40 nA en el modo de más bajo consumo. Posee todas las interfaces y salidas necesarias, incluyendo los dos relojes. Además, contiene un coprocesador para cifrado AES de 128 o 256 bits, así como un multiplicador hardware de 32 bits. Tiene una frecuencia máxima de 16 MHz.
+
+		JTAG
+			Para programar al microcontrolador hace falta una interfaz de comunicación a través de la cual un dispositivo programador pueda descargar el archivo binario que contiene el código del programa al chip. En este microcontrolador esta es una interfaz estándar denominada JTAG. En este dispositivo se utilizan 5 líneas (TDO, TDI, TMS, TCK y JTAG_RST) que se conectan al dispositivo programador MSP-FET430UIF mediante un conector de 14 pines.
+
+		Reloj
+			El reloj principal del sistema es generado con un cristal E3SB16.0000F09G11AE de 16 MHz similar al de la nota de aplicación del microcontrolador.
+
+		Alimentación y reset
+			El chip está alimentado a 3.3 V a través de uno de los reguladores lineales. El reset está controlado por un supervisor de tensión que impide que se encienda si la tensión cae por debajo de un umbral, aunque también está controlado por una línea del JTAG para controlar el proceso de programación.
+
+	Alimentación
+		Ambos dispositivos deben contar con un sistema de gestión de energía para alimentar correctamente el sistema, cargar las baterías y medir el nivel de carga restante en las mismas.
+
+		Batería
+			La batería usada para dar energía a los dispositivos es una batería de polímero de litio (LiPo) de 1050 mAh. La capacidad máxima no es un problema crítico ya que el sistema, aún siendo portátil, no necesita funcionar durante mucho tiempo antes de tener que ser recargado.
+
+			Haciendo una estimación a partir de los consumos medios de todos los módulos, se calcula una corriente media de 150 mA a pleno funcionamiento, lo que proporciona una autonomía teórica de 7 horas.
+
+			Cabe añadir que la capacidad nominal de la batería no representa la capacidad real en un caso de uso normal, y que esta viene determinada por múltiples factores: la corriente de carga y descarga, las tensiones de funcionamiento y terminación, la temperatura, el envejecimiento, y otras muchas causas que hacen que la capacidad real sea inferior a la nominal. Haciendo otra estimación desde el caso improbable de que la capacidad real sea del 50% de la nominal, la batería proporciona una autonomía de 3.5 horas, aún suficiente para realizar una gran cantidad de medidas.
+
+			Este tipo de baterías viene con un circuito de protección contra sobretensión, sobrecarga y cortocircuitos, por lo que no es necesario incluirlos en el sistema.
+
+			La batería se conecta al dispositivo a través de un conector JST-PH de 2 pines. El encendido y apagado del sistema se controla mediante un interruptor mecánico que conecta y desconecta la batería.
+
+		Fuel gauge
+			Para medir el nivel de carga restante de una batería de polímero de litio no basta con medir la tensión en bornas de la misma. La tensión de salida de la batería depende del nivel de carga, pero también depende fuertemente de la corriente de carga y descarga, de la temperatura, del envejecimiento y de otras tantas variables. Por ello es necesario disponer de un circuito especializado dedicado a monitorizar la batería que tenga en cuenta dichos parámetros.
+
+			Varios fabricantes ofrecen circuitos integrados que utilizan algoritmos propietarios para calcular una serie de parámetros de la batería, como su carga restante, su impedancia interna o su estado de salud, midiendo su tensión y la corriente que entrega al sistema o recibe del cargador.
+
+			Circuito en sistema vs. circuito en pack
+				Existen dos implementaciones posibles de este tipo de circuitos. Una posibilidad es incluir el circuito de medición junto con el pack de la batería. Esta arquitectura suele realizarse con circuitos que integran el fuel gauge, funciones de protección de la batería y, en algunos casos, autenticación de baterías.
+
+				La otra posibilidad implementa el circuito en la placa principal del sistema. Estos circuitos integrados generalmente delegan las funciones de protección en el circuito de la batería y se limitan a realizar las mediciones. Son más flexibles ya que permiten no depender de un diseño específico de batería que incluya el circuito de medida.
+
+			Para este desarrollo se ha elegido el BQ27421-G1 de Texas Instruments. Es un circuito fuel gauge de medición en sistema para baterías LiPo de una sola celda de entre 100 y 8000 mAh. Se prefiere utilizar el esquema de medida en sistema porque no necesitan una batería específica.
+
+			El circuito consta de una serie de conversores analógico-digitales que monitorizan continuamente la tensión de la batería y la corriente que circula por ella. La medida de corriente se traduce en tensión mediante una resistencia integrada en el chip de unos 7 mohm. A su vez, contiene un procesador de información y una interfaz de comunicación serie, así como una línea de interrupción y un detector de presencia de batería.
+
+			El chip se alimenta directamente de la batería que esté midiendo, por lo que permanece siempre encendido mientras esta se encuentre conectada al sistema.
+
+			Reguladores de tensión internos
+				Hay que añadir un condensador de desacoplo del valor recomendado por el fabricante a la salida del regulador lineal de tensión interno de 1.8 V.
+
+			Medida de la batería
+				Únicamente hay que conectar el terminal positivo de la batería al pin correspondiente del fuel gauge. Se añade también el condensador de desacoplo recompendado.
+
+				En cuanto al pin de detección de inserción de batería, dado que el pack no es extraíble se prefiere fijar la tensión de dicho pin a masa a través de un pulldown para informar al chip de que hay una batería conectada en todo momento.
+
+			Interfaz de comunicación
+				El BQ27421-G1 se comunica con el microcontrolador a través de una interfaz I2C (SCL, SDA). Además dispone de una línea de interrupción que informa al microcontrolador de eventos relacionados con la carga y descarga de la batería.
+			
+		Cargador
+			En este primer prototipo, el circuito cargador está localizado en la fuente de alimentación. Esta se conecta al dispositivo a través de un conector JST-PH de 3 pines.
+
+		Reguladores de tensión
+			La tensión de la batería debe ser regulada para alimentar todos los distintos módulos del sistema. Para ello, se han establecido 3 líneas de alimentación: una de 3.3 V dedicada exclusivamente a la parte analógica del front-end, una de 1.8 V para los circuitos de entrada y salida del chip Bluetooth, y una de 3.3 V para el resto del sistema, que incluye al microcontrolador, la etapa de amplificación del transceptor radio y la interfaz de usuario. La parte digital del front-end también es alimentada por este último regulador, pero está separada del resto por una ferrita para eliminar ruido de alta frecuencia.
+
+			Se descartan para el prototipo los reguladores conmutados por varios motivos:
+				No se necesitan tensiones superiores a las de la batería.
+				Las corrientes medias de todos los circuitos son en general pequeñas, lo que permite considerar eficiencias peores sin niveles de disipación de potencia elevados.
+				Las tensiones de alimentación de 3.3 V están cerca de la tensión nominal de la batería de 3.7 V, lo que permite mantener una eficiencia aceptable. El caso de la de 1.8 V se puede justificar porque la corriente que suministra es pequeña.
+				Son menos complejos y por tanto más fáciles de implementar, así como más baratos.
+				Son menos ruidosos, característica crítica para el diseño del front-end analógico.
+
+			Una de los problemas de las baterías LiPo es que su tensión disminuye a medida que pierden carga. Si se utiliza un regulador lineal es necesario mantener un nivel mínimo de tensión a su entrada, lo que puede significar un menor aprovechamiento de la capacidad total de la batería si su tensión cae por debajo de ese nivel. Por ello hay que escoger reguladores que tengan un dropout (diferencia entre la tensión de entrada y de salida) lo más pequeño posible. Considerando que una batería ha entregado la mayor parte de su energía cuando alcanza los 3.5 o 3.6 V, se necesita un dropout máximo de 200 mV en los reguladores.
+
+			Corrientes
+				Front-end analógico: el ADS1291 consume 205 uA a los que hay que añadir 20 uA de la referencia de tensión interna. Se puede estimar un valor máximo de 1 mA.
+				Interfaz radio: a pleno funcionamiento, es decir, en el caso de una transmisión continua utilizando EDR (Enhanced Data Rate), el CC22560 presenta un consumo de corriente máximo de 112.5 mA. Este valor se reduce a 105 uA en modo deep sleep y a un máximo de 7 uA en shutdown. Cada traductor de tensión tiene un consumo máximo de 10 uA. Se estima por tanto un valor de 115 mA de consumo máximo.
+				Microcontrolador: la corriente máxima del microcontrolador es de aproximadamente 3 mA para el modo de mayor consumo.
+				Pantalla táctil: el consumo de la pantalla está determinado por el consumo de la luz trasera que, para el módulo seleccionado, presenta un máximo de 80 mA. El controlador de display puede consumir hasta 6 mA en determinados casos. El controlador del panel resistivo consume hasta 780 uA sobre los que aparecen picos de 50 mA de 100 ms de duración cuando se realiza una conversión. Estos picos son lo suficientemente largos para vaciar el condensador de salida del regulador y lo suficientemente numerosos como para estimar que la corriente máxima del controlador viene determinada por ellos. En total, se estima un total de 136 mA de consumo máximo. 
+
+			Se han elegido dos reguladores lineales LP5907-3.3 y un LP5907-1.8 de Texas Instruments para suministrar energía a las tres líneas. Los tres pueden proporcionar hasta 250 mA de corriente con un dropout máximo de 250 mV.
+
+			El regulador de 3.3 V de la parte analógica del front-end va a entregar corrientes siempre inferiores a 0.5 mA, por lo que podemos considerar que su dropout no va a superar en ningún caso los 50 mV.
+
+			Los circuitos de entrada y salida del transceptor Bluetooth tienen un máximo de 1 mA, por lo que el regulador de 1.8 V también va a presentar un dropout inferior a 50 mV. En este caso existe margen para que la batería se descargue hasta 1.85 V, situación que nunca debe darse ya que no se debe descargar una batería LiPo por debajo de un umbral que suele estar en torno a los 3 V. Por lo tanto, este valor de dropout no es importante.
+
+			El regulador de 3.3 V restante es el que más corriente debe entregar de los tres. Sumando las corrientes máximas de los circuitos a los que suministra energía, se obtiene un valor de aproximadamente 115 + 3 + 136 = 254 mA, por lo que se obtiene un dropout máximo de aproximadamente 250 mV. Este es el que determina la tensión mínima que puede alcanzar la batería, que queda en 3.55 V.
+
+		Supervisor de tensión
+			Un supervisor mide la tensión de una línea de alimentación y activa o desactiva la línea de reset de otro circuito para que no comience a encenderse hasta que exista una tensión adecuada y estable en la línea.
+
+			Para gestionar el reset del microcontrolador se ha escogido el supervisor de tensión LMS33460 de Texas Instruments. Este circuito activa la señal de reset cuando la tensión cae por debajo de los 3 V.
+
+	Interfaz de usuario
+		La interfaz de usuario es un módulo exclusivo del dispositivo de acceso. Contiene un indicador acústico, leds de notificación y una pantalla táctil.
+
+		Indicador acústico
+			Para implementar el indicador acústico se ha utilizado un buzzer magnético KSSG74B16 de Kingstate. Este buzzer puede operar con una alimentación de 3.3 V y tiene una frecuencia de resonancia de aproximadamente 2.7 kHz, pero produce sonidos con suficiente volumen a lo largo de un margen de frecuencias bastante amplio.
+
+			El buzzer se excita mediante una salida PWM del microcontrolador a través de un transistor que aguanta los 90 mA de corriente media que necesita.
+
+		Leds de notificación
+			En la placa hay 3 LEDs de colores controlados por 3 salidas GPIO del microcontrolador a través de 3 transistores que los activan y desactivan. Cada uno de ellos representa distintos eventos
+				LED verde: enciendido y apagado del sistema
+				LED amarillo: cargador de la batería conectado
+				LED rojo: error genérico de software
+
+			Como cada uno de los LEDs de colores tiene una luminosidad y una tensión de codo diferente, las resistencias de limitación de corriente están ajustadas para que den la misma sensación de brillo.
+
+		Pantalla táctil
+			El dispositivo de acceso debe tener una pantalla táctil para mostrar al usuario una interfaz gráfica con la que poder controlar el acceso al marcapasos y dibujar las señales ECG obtenidas.
+
+			Existen varios tipos de pantallas según la tecnología que utilizan para generar sus píxels, pero las más extendidas para el rango de tamaños que necesita el dispositivo, que está entre las 2 y 5 pulgadas, son las TFT LCD (Thin-Film-Transistor Liquid-Crystal Display). Los píxels de este tipo de pantallas funcionan ajustando la cantidad de luz que bloquean de una fuente de luz colocada tras ellos. Tienen un precio asequible y el consumo de energía se puede ajustar modulando la intensidad de la luz trasera.
+
+			Arquitectura de un sistema gráfico
+				Hay 4 componentes básicos que existen en un subsistema de interfaz gráfica:
+					Display: es el dispositivo que interpreta la representación digital de cada color y los muestra en cada píxel de la pantalla. Este componente tiene una serie de parámetros característicos como la tasa de refresco, el contraste, el tipo de luz trasera o el ángulo máximo de visión. No tiene memoria y debe ser constantemente actualizado de forma similar a una memoria DRAM.
+					Controlador de display: es el que lleva a cabo dicha tarea de actualización. Captura la información almacenada en el buffer de imagen y se la transmite al display en el formato adecuado y junto con las señales de control necesarias.
+					Buffer de imagen: es una memoria que contiene los datos de la imagen que se quiere mostrar en la pantalla.
+					Microcontrolador: es el encargado de decidir y escribir los datos que haya que almacenar en el buffer de imagen.
+
+				Existen varias formas de integrar estos 4 componentes, pero la más común y más sencilla de implementar es la que incluye el display, el controlador y el frame buffer en un módulo que proporciona una interfaz de comunicación entre el frame buffer el microcontrolador del sistema. Hay multitud de estos módulos en el mercado de gran variedad de tamaños y resoluciones.
+
+				Esta interfaz que ofrece el módulo puede ser de varios tipos, pero están englobados en dos categorías: serie y paralelo. Las interfaces paralelo permiten tasas de datos más altas pero tienen el inconveniente de requerir una mayor cantidad de líneas para controlar el módulo. Por el contrario, las interfaces serie tienen menos líneas digitales y pueden conectarse directamente a los submódulos hardware de comunicación serie del microcontrolador.
+
+			Paneles táctiles resistivos vs. capacitivos
+				Para convertir una pantalla en una pantalla táctil se coloca encima del display una superficie resistiva o capacitiva. Las señales que genera esta superficie deben ser capturadas y decodificadas para obtener las coordenadas de cada uno de los toques.
+
+				En las pantallas táctiles resistivas, cuando el usuario toca la pantalla, la resistencia de la superficie varía. Midiendo la resistencia en las direcciones horizontal y vertical se obtienen las coordenadas. Por el contrario, en las capacitivas lo que se produce es un cambio en la capacidad local de la zona en la que se produce el toque. Midiendo esta variación se puede determinar las coordenadas del mismo.
+
+				Las superficies capacitivas pueden detectar varios puntos de presión simultáneamente, pero son más complejas de implementar. Las resistivas sólo pueden detectar uno a la vez, pero su implementación es más sencilla.
+
+			Para este prototipo se ha escogido un módulo TFT LCD de 2.4 pulgadas y 320x240 píxels de resolución, que incluye el display y un controlador ILI9325 con frame buffer integrado. Tiene capacidad para configurar la interfaz en modo serie o paralelo de 8 o 16 bits. Incluye también un panel resistivo gestionado por el controlador XPT2046, que posee una interfaz de comunicación serie síncrona. Además, tiene una línea de alimentación para la luz trasera y una línea de reset. El módulo se alimenta a 3.3 V.
+
+			Interfaz de comunicación con la pantalla
+				Se ha optado por utilizar la interfaz de comunicación con el frame buffer en modo paralelo de 8 bits. Esta configuración utiliza 8 bits de datos y 4 bits de control (CS, RD, WR y RS), formando lo que se denomina interfaz paralelo I80. Todas las líneas están conectadas a pines GPIO del microcontrolador.
+
+			Interfaz de comunicación con el controlador de panel resistivo
+				El XPT2046 dispone de un puerto serie SPI de 4 líneas (SCLK, MOSI, MISO y CS) conectado a un puerto SPI del microcontrolador, dedicado exclusivamente a él. Además, dispone de una línea de interrupción (T_IRQ) pensada para generar una interrupción en el microcontrolador cada vez que se detecta un toque en la pantalla.
+
+			Luz trasera
+				El módulo tiene una línea que sirve para alimentar al LED que genera la luz trasera del display. Esta se controla desde un pin GPIO del microcontrolador a través de un transistor que soporta la corriente máxima del LED. La pantalla asegura un nivel de corriente determinado cuando se fijan 3.3 V en el pin del LED, por lo que no hace falta añadir resistencias de limitación de corriente.
+
+	Diseño de la PCB
+		Se han tenido en cuenta ciertas consideraciones a la hora de colocar los componentes y rutar las líneas en la placa de circuito impreso.
+
+		Dimensiones y forma de la PCB
+			El tamaño y la forma de la PCB son los mismos que los de la placa de la pantalla. Esta última posee 4 agujeros de montaje, por lo que se han dispuesto otros 4 agujeros en la PCB del sistema en la misma posición. De esta forma la pantalla se puede encajar en uno de los conectores y atornillar mediante separadores a la PCB del dispositivo para a continuación montar todo el sistema en una carcasa de plástico.
+
+		Planos de masa
+			Es conveniente separar los circuitos digitales, que son ruidosos y generan picos de corriente durante la conmutación de sus transistores, de los circuitos analógicos, que generalmente son sensibles al ruido. 
+
+			Uno de los métodos que existen para reducir este tipo de problemas es el uso de planos de masa. Para implementarlos se definen zonas de la PCB cubiertas completamente de metal y se usan como masa. La idea es que dichas zonas tendrán la menor resistencia e inductancia posible, lo cual minimiza las diferencias de tensión entre distintos puntos del plano provocadas por posibles picos de corriente.
+
+			Para que el uso de planos sea efectivo hay que colocar varios planos de manera que las zonas sensibles del circuito permanezcan aisladas de aquellas que produzcan corrientes altas. A continuación, se unen todos los planos en un punto de referencia común, normalmente lo más cerca posible de la fuente de alimentación del circuito. Así se evita que las perturbaciones de corriente no perjudiquen a los circuitos analógicos.
+
+			En esta PCB se ha definido un plano de masa exclusivo para el front-end analógico y otro para el resto del circuito, así como varios planos para cada una de las líneas de alimentación.
+
+		Antena
+			La antena escogida ha sido seleccionada de la nota de aplicación de Texas Instruments en la que se exponen diferentes diseños de antenas para varias bandas de frecuencia. Desde chips cerámicos a antenas impresas directamente en la PCB, existen diferentes formas de diseñar la antena de un sistema de RF.
+
+			Por su facilidad de implementación, su flexibilidad a la hora de ser ajustada o sustituída por otro diseño y por la posibilidad de no depender de un componente externo, se ha optado por incluir una antena en PCB. La antena escogida es una antena en "F invertida" a 2.4 GHz adaptada a 50 ohm, descrita en el documento DN0007 de Texas Instruments.
+
+		Fabricación y soldadura
+			Para el montaje de los componentes electrónicos se ha utilizado un horno de soldadura. Se ha fabricado un stencil de acero inoxidable a partir de los archivos generados para la fabricación de la PCB con el que se puede aplicar una capa de pasta de estaño sobre los pads de los componentes de montaje superficial.
+
+			Todos los componentes SMD se han colocado en la capa superior de la placa. De esta forma se evita fabricar dos stencils para colocar la pasta de estaño y se puede soldar la placa completa de una sola vez en el horno, lo que también permite que los componentes soporten altas temperaturas durante menos tiempo.
+
+			Los componentes con pines "through hole" han de ser colocados y soldados de forma manual a continuación. Entre ellos se encuentran los conectores y el interruptor de encendido y apagado.
+
+		Batería
+			Se ha dejado suficiente espacio en la cara inferior de la PCB para colocar la batería LiPo entre un hueco de la carcasa de plástico y la misma placa de circuito impreso. Todos los pines de los componentes "through hole" están colocados lejos del espacio en el que se aloja la batería para evitar perforaciones o cortes accidentales.
+
+	Conclusiones acerca del primer prototipo
+		

@@ -1,0 +1,5 @@
+El desarrollo del software del microcontrolador de esta versión del dispositivo de acceso y del marcapasos no se llegó a completar por una serie de problemas que se comentarán posteriormente. Se han desarrollado las siguientes partes del sistema:
+Front-end analógico: se ha escrito una capa de abstracción de la configuración y utilización del circuito de adquisición del ECG.
+Interfaz de usuario:
+Indicador acústico: se ha encapsulado el funcionamiento del zumbador y se han configurado los temporizadores necesarios para generar sus señales de control.
+Pantalla táctil: se ha desarrollado una capa de abstracción de la configuración y utilización del módulo LCD y el panel táctil, así como funciones de trazado de gráficos.

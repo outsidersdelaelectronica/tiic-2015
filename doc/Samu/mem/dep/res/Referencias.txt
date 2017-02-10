@@ -1,0 +1,33 @@
+WEBSTER, J. G. Medical Instrumentation: Application and Design. 4th ed. Wiley, 2010. 720 p. ISBN 978-0-471-67600-3
+
+Electrical Engineering Stack Exchange. Techniques to make art with PCB silkscreen in Altium. [Consulta 12 de febrero de 2016]. <http://electronics.stackexchange.com/questions/51219/techniques-to-make-art-with-pcb-silkscreen-in-altium>
+
+INTERNATIONAL ELECTROTECHNICAL COMMISSION. IEC 60601-1 Medical electrical equipment. 3rd ed. IEC, 2005. p. 221
+
+BECCHETTI, C., NERI, A. Medical Instrument Design and Development: From Requirements to Market Placements. 1st ed. Wiley, 2013. 600 p. ISBN 978-1-118-65246-6
+
+BEEN, Y. Designing medical devices for isolation and safety. EDN Network, 2007. [Consulta 14 de enero de 2016]. <http://www.edn.com/design/medical/4314949/Designing-medical-devices-for-isolation-and-safety>
+
+ARM INFOCENTER. Cortex-M Debug Connectors. 2011. <http://infocenter.arm.com/help/topic/com.arm.doc.faqs/attached/13634/cortex_debug_connectors.pdf>
+
+OLDNYSKI, C. EC53 Basics – the ANSI/AAMI standard for ECG Cables and Leadwires. Affinity Medical, 2007. [Consulta: 28 de diciembre de 2015]. <http://www.affinitymed.com/news/2007/june.aspx>
+
+JARA, C. ECG Leads and Leadwires. Affinity Medical, 2010. [Consulta: 28 de diciembre de 2015]. <http://www.affinitymed.com/news/2010/april.aspx>
+
+CUI INC. IEC 60601-1 Medical Design Standards. 3rd ed. CUI Inc., 2013. <http://www.cui.com/catalog/resource/iec-60601-1-medical-design-standards.pdf>
+
+ECGPEDIA. The free ECG tutorial and textbook. <http://en.ecgpedia.org/>
+
+SOUNDARAPANDIAN, K., BERARDUCCI, M. Analog Front-End Design for ECG Systems Using Delta-Sigma ADCs. Texas Instruments, 2010. Lit. no.: SBAA160A
+
+BACKES, J. A Practical Guide to IEC 60601-1. Rigel Medical, 2007. <http://www.rigelmedical.com/downloads/Rigel-Medical-A-Practical-guide-to-IEC-60601-1.pdf>
+
+CRONE, B. Common-Mode Rejection: How It Relates to ECG Subsystems and the Techniques Used to Provide Superior Performance. Analog Devices, 2011. Lit. no.: MS-2125
+
+SOUNDARAPANDIAN, K. Analog Signal Chain Considerations for Bio-Sensing Applications. Texas Instruments. <http://web.mit.edu/6.101/www/s2014/handouts/L15.pdf>
+
+CLIFFORD, G. D. Signal Processing Methods for Heart Rate Variability. 2002. <http://web.mit.edu/~gari/www/papers/GDCliffordThesis.pdf>
+
+ACHARYA, V. Improving Common-Mode Rejection Using the Right-Leg Drive Amplifier. Texas Instruments, 2011. Lit. no.: SBAA188
+
+ROSTAMI, M., JUELS, A., KOUSHANFAR, F. Heart-to-Heart (H2H): Authentication for Implanted Medical Devices. Proceedings of the 2013 ACM SIGSAC conference on Computer & communications security, Noviembre de 2013.

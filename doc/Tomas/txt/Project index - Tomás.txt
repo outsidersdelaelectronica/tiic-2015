@@ -1,0 +1,130 @@
+Diseño e implementación de un servicio de
+acceso inalámbrico a dispositivos médicos
+mediante H2H
+
+Tomás Valencia Noheda
+
+Resumen
+	Palabras clave
+
+Agradecimientos
+
+Indice
+Indice de figuras
+Indice de tablas
+
+Introducción
+	Motivación
+		H2H
+	Objetivos
+		Servicio de acceso a dispositivos medicos mediante H2H
+			Software para el master(Persimmon Pacemaker)
+			Software para el slave(Persimmon Access Device) 
+
+Análisis de requisitos
+	Introducción
+
+	Servicio
+		Tratamiento de la señal cardiaca
+			Algoritmos de deteccion de ritmo cardiaco
+				The Hamilton and Tompkins QRS detector
+			Requisitos de resolución y fase de los filtros
+				
+
+		Algoritmo de autenticación
+			Generacion de la clave de cifrado en slave
+			Validacion de la clave en master
+
+		Comunicación inalámbrica
+			Pila de protocolos para el enlace radio
+			Sistema de conexion segura
+
+		Interfaz de usuario
+			Controles básicos del sistema electrónico
+			Visualización del ECG
+			Conexión con el marcapasos
+			Manipulación de los parámetros del marcapasos
+	
+	Servicios similares
+		Identificacion de locutor
+		Reconocimiento de huella dactilar/retina
+
+Diseño del sistema
+	Analisis de la plataforma hardware
+	Arquitectura Software
+		Tratamiento de la señal
+			Filtrado digital
+				Selecccion del tipo de filtros
+			Deteccion de ritmo cardiaco
+				Umbrales estaticos 
+				Umbrales dinamicos
+				
+		Algoritmo de autenticación
+			Uso del ritmo cardiaco como contraseña dinamica
+			Estimacion del umbral de validacion
+		RF
+			Pila de protocolos
+			Gestion de la red por el master
+			Conexion segura
+
+		Interfaz de usuario
+			Visualizacion de la señal ECG
+			Inicio de comunicacion con un IMD
+
+		Modulo de gestion de consumo
+			Apagado por software
+			Control de consumo de la pantalla
+			Apagado de elementos hardware 
+			Gestion de consumo en RF
+
+Implementación de los prototipos software
+	Primera version
+		Implementacion de las etapas de tratamiento de la señal
+			Filtro paso banda FIR  
+			Diferenciador
+			Elevar al cuadrado punto por punto
+			Integrador
+		Interfaz de usuario
+			Presentacion de la señal ECG
+		Problematica y abandono
+			
+	Segunda version (persimon)
+		Filtrado digital
+			Optimizacion en los filtros
+		Algoritmo de autentificacion
+			Extraccion de los bits de alta entropia 
+			Calculo de distancia hamming y umbral de validacion
+			Etapas de emparejamiento master-slave
+			Modo promiscuo
+		Interfaz de usuario
+			Pantalla tactil
+			Menu
+			Indicador de bateria
+		Bluetooth
+		Gestion de consumo
+
+Pruebas y caracterización
+	Pruebas con un generador de señal cardiaca
+	Pruebas con un individuo real
+	Respuesta del modo promiscuo
+	Respuesta a un ataque
+	
+Manual de uso
+
+
+Conclusiones y líneas futuras
+	Seguridad
+	Mejora sobre otros sistemas actuales
+	Mejoras/Otros posibles usos
+		Detección automática de segmentos del ECG
+		Cálculo del eje eléctrico
+		Ayuda al diagnóstico
+		Detección de marcapasos
+
+Apéndices
+
+
+Referencias
+
+
+Lista de acrónimos
