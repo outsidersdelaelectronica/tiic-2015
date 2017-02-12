@@ -1053,7 +1053,7 @@
     <group>
       <name>EWARM</name>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32L1xx\Source\Templates\iar\startup_stm32l162xd.s</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\CMSIS\Device\ST\STM32L1xx\Source\Templates\iar\startup_stm32l162xd.s</name>
       </file>
     </group>
     <group>
@@ -1335,16 +1335,16 @@
           <group>
             <name>Bluetopia</name>
             <file>
-              <name>$PROJ_DIR$\..\Bluetopia\btpskrnl\BTPSKRNL.c</name>
+              <name>$PROJ_DIR$\..\..\..\Bluetopia\btpskrnl\BTPSKRNL.c</name>
             </file>
             <file>
-              <name>$PROJ_DIR$\..\Bluetopia\btpsvend\BTPSVEND.c</name>
+              <name>$PROJ_DIR$\..\..\..\Bluetopia\btpsvend\BTPSVEND.c</name>
             </file>
             <file>
-              <name>$PROJ_DIR$\..\Bluetopia\btvs\BTVS.c</name>
+              <name>$PROJ_DIR$\..\..\..\Bluetopia\btvs\BTVS.c</name>
             </file>
             <file>
-              <name>$PROJ_DIR$\..\Bluetopia\hcitrans.dma\HCITRANS.c</name>
+              <name>$PROJ_DIR$\..\..\..\Bluetopia\hcitrans.dma\HCITRANS.c</name>
             </file>
           </group>
           <file>
@@ -1497,73 +1497,73 @@
     <group>
       <name>CMSIS</name>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32L1xx\Source\Templates\system_stm32l1xx.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\CMSIS\Device\ST\STM32L1xx\Source\Templates\system_stm32l1xx.c</name>
       </file>
     </group>
     <group>
       <name>STM32L1xx_HAL_Driver</name>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_cortex.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_cortex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_dma.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_dma.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_flash.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_flash.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_flash_ex.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_flash_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_flash_ramfunc.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_flash_ramfunc.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_gpio.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_gpio.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_i2c.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_i2c.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_pwr.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_pwr.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_pwr_ex.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_pwr_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_rcc.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_rcc.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_rcc_ex.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_rcc_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_rtc.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_rtc.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_rtc_ex.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_rtc_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_spi.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_spi.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_spi_ex.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_spi_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_sram.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_sram.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_tim.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_tim.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_tim_ex.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_tim_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_uart.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_hal_uart.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Drivers\STM32L1xx_HAL_Driver\Src\stm32l1xx_ll_fsmc.c</name>
+        <name>$PROJ_DIR$\..\..\..\Devices\STM32L1\STM32L1xx_HAL_Driver\Src\stm32l1xx_ll_fsmc.c</name>
       </file>
     </group>
   </group>
@@ -1572,53 +1572,53 @@
     <group>
       <name>FreeRTOS</name>
       <file>
-        <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS\cmsis_os.c</name>
+        <name>$PROJ_DIR$\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS\cmsis_os.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\croutine.c</name>
+        <name>$PROJ_DIR$\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\croutine.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\event_groups.c</name>
+        <name>$PROJ_DIR$\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\event_groups.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang\heap_4.c</name>
+        <name>$PROJ_DIR$\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang\heap_4.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\list.c</name>
+        <name>$PROJ_DIR$\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM3\port.c</name>
+        <name>$PROJ_DIR$\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM3\port.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM3\portasm.s</name>
+        <name>$PROJ_DIR$\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM3\portasm.s</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\queue.c</name>
+        <name>$PROJ_DIR$\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\queue.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\tasks.c</name>
+        <name>$PROJ_DIR$\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\tasks.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\timers.c</name>
+        <name>$PROJ_DIR$\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\timers.c</name>
       </file>
     </group>
   </group>
   <group>
     <name>Tracer</name>
     <file>
-      <name>$PROJ_DIR$\..\GenericRecorderLibSrc\trcBase.c</name>
+      <name>$PROJ_DIR$\..\..\..\GenericRecorderLibSrc\trcBase.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\GenericRecorderLibSrc\trcHardwarePort.c</name>
+      <name>$PROJ_DIR$\..\..\..\GenericRecorderLibSrc\trcHardwarePort.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\GenericRecorderLibSrc\trcKernel.c</name>
+      <name>$PROJ_DIR$\..\..\..\GenericRecorderLibSrc\trcKernel.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\GenericRecorderLibSrc\trcKernelPortFreeRTOS.c</name>
+      <name>$PROJ_DIR$\..\..\..\GenericRecorderLibSrc\trcKernelPortFreeRTOS.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\GenericRecorderLibSrc\trcUser.c</name>
+      <name>$PROJ_DIR$\..\..\..\GenericRecorderLibSrc\trcUser.c</name>
     </file>
   </group>
 </project>
